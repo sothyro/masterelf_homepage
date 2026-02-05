@@ -5,6 +5,7 @@ import 'package:video_player/video_player.dart';
 import '../../../config/app_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
+import '../../../utils/hero_video_preloader.dart';
 
 class HeroSection extends StatefulWidget {
   const HeroSection({super.key});
@@ -21,7 +22,29 @@ class _HeroSectionState extends State<HeroSection> {
   void initState() {
     super.initState();
     // Defer video init until after first frame so the hero always paints immediately.
-    WidgetsBinding.instance.addPostFrameCallback((_) => _initVideo());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _usePreloadedOrInitVideo();
+    });
+  }
+
+  Future<void> _usePreloadedOrInitVideo() async {
+    if (!mounted) return;
+    // Use preloaded controller if ready (loaded in advance from main).
+    final preloaded = HeroVideoPreloader.takePreloaded();
+    if (preloaded != null && preloaded.value.isInitialized && mounted) {
+      preloaded.setLooping(true);
+      preloaded.setVolume(0);
+      await preloaded.play();
+      if (!mounted) return;
+      setState(() {
+        _videoController = preloaded;
+        _videoReady = true;
+      });
+      return;
+    }
+    preloaded?.dispose();
+    await _initVideo();
   }
 
   Future<void> _initVideo() async {
@@ -42,7 +65,6 @@ class _HeroSectionState extends State<HeroSection> {
         _videoReady = true;
       });
     } catch (_) {
-      // Keep showing gradient + image; do not update state to avoid any risk.
       if (mounted) setState(() {});
     }
   }
@@ -61,36 +83,28 @@ class _HeroSectionState extends State<HeroSection> {
     final minHeight = width < 600 ? 320.0 : (width < 900 ? 500.0 : 1000.0);
     final height = width > 0 ? (width * 9 / 16).clamp(minHeight, 1600.0) : 1000.0;
 
-    return SizedBox(
-      width: double.infinity,
-      height: height,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          // 1) Solid gradient – always visible, no dependency on assets
+    return RepaintBoundary(
+      child: SizedBox(
+        width: double.infinity,
+        height: height,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+          // 1) Solid gradient – rich dark base
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  AppColors.primary,
-                  AppColors.primary.withValues(alpha: 0.9),
+                  AppColors.backgroundDark,
+                  AppColors.surfaceDark,
+                  AppColors.primary.withValues(alpha: 0.95),
                 ],
               ),
             ),
           ),
-          // 2) Background image (with error handling so a bad asset doesn’t break the UI)
-          if (!_videoReady)
-            Positioned.fill(
-              child: Image.asset(
-                AppContent.assetHeroBackground,
-                fit: BoxFit.cover,
-                opacity: const AlwaysStoppedAnimation<double>(0.4),
-                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
-              ),
-            ),
-          // 3) Video layer – BoxFit.contain so full video is visible (no cropping)
+          // 2) Video layer – BoxFit.contain so full video is visible (no cropping)
           if (_videoReady && _videoController != null && _videoController!.value.isInitialized)
             Positioned.fill(
               child: FittedBox(
@@ -102,7 +116,7 @@ class _HeroSectionState extends State<HeroSection> {
                 ),
               ),
             ),
-          // 4) Overlay for text contrast
+          // 3) Overlay for text contrast
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -115,10 +129,11 @@ class _HeroSectionState extends State<HeroSection> {
               ),
             ),
           ),
-          // 5) Content
+          // 4) Content – near center, slightly left and below middle
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Center(
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+            child: Align(
+              alignment: const Alignment(-0.25, 0.15),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 900),
                 child: Column(
@@ -129,62 +144,92 @@ class _HeroSectionState extends State<HeroSection> {
                       header: true,
                       child: Text(
                         l10n.heroHeadline1,
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              color: AppColors.onPrimary,
-                              fontWeight: FontWeight.w600,
-                            ),
+                        style: (Theme.of(context).textTheme.headlineLarge ?? const TextStyle()).copyWith(
+                          color: AppColors.onPrimary,
+                          fontWeight: FontWeight.w600,
+                          fontSize: width < 600 ? 26 : (width < 900 ? 32 : 40),
+                          height: 1.25,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 10),
                     RichText(
                       text: TextSpan(
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              color: AppColors.onPrimary,
-                              fontWeight: FontWeight.w600,
-                            ),
+                        style: (Theme.of(context).textTheme.headlineLarge ?? const TextStyle()).copyWith(
+                          color: AppColors.onPrimary,
+                          fontWeight: FontWeight.w600,
+                          fontSize: width < 600 ? 26 : (width < 900 ? 32 : 40),
+                          height: 1.25,
+                        ),
                         children: [
                           TextSpan(text: l10n.heroHeadline2Prefix),
                           TextSpan(
                             text: l10n.heroHeadline2Highlight,
                             style: TextStyle(
-                                color: AppColors.accent,
-                                fontWeight: FontWeight.bold),
+                              color: AppColors.accent,
+                              fontWeight: FontWeight.bold,
+                              fontSize: width < 600 ? 26 : (width < 900 ? 32 : 40),
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 28),
                     Text(
                       l10n.heroSubline,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: AppColors.onPrimary.withValues(alpha: 0.9),
-                            height: 1.5,
-                          ),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: AppColors.onPrimary.withValues(alpha: 0.9),
+                        height: 1.5,
+                        fontSize: width < 600 ? 15 : (width < 900 ? 17 : 19),
+                      ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 36),
                     Wrap(
-                      spacing: 16,
-                      runSpacing: 12,
+                      spacing: 20,
+                      runSpacing: 14,
                       children: [
-                        FilledButton(
-                          onPressed: () => context.push('/appointments'),
-                          style: FilledButton.styleFrom(
-                            backgroundColor: AppColors.accent,
-                            foregroundColor: AppColors.onAccent,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 28, vertical: 16),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: AppShadows.accentButton,
                           ),
-                          child: Text(l10n.bookConsultation),
+                          child: FilledButton(
+                            onPressed: () => context.push('/appointments'),
+                            style: FilledButton.styleFrom(
+                              backgroundColor: AppColors.accent,
+                              foregroundColor: AppColors.onAccent,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: width < 600 ? 24 : 32,
+                                vertical: width < 600 ? 14 : 18,
+                              ),
+                              elevation: 0,
+                            ),
+                            child: Text(
+                              l10n.bookConsultation,
+                              style: TextStyle(
+                                fontSize: width < 600 ? 15 : 17,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
                         ),
                         OutlinedButton(
                           onPressed: () => context.push('/about'),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: AppColors.onPrimary,
                             side: const BorderSide(color: AppColors.onPrimary),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 28, vertical: 16),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: width < 600 ? 24 : 32,
+                              vertical: width < 600 ? 14 : 18,
+                            ),
                           ),
-                          child: Text(l10n.aboutMasterElf),
+                          child: Text(
+                            l10n.aboutMasterElf,
+                            style: TextStyle(
+                              fontSize: width < 600 ? 15 : 17,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -194,6 +239,7 @@ class _HeroSectionState extends State<HeroSection> {
             ),
           ),
         ],
+        ),
       ),
     );
   }

@@ -16,6 +16,103 @@ class AppColors {
   static const Color onAccent = Color(0xFF1A1A1A);
   static const Color onSurface = Color(0xFF1A1A1A);
   static const Color onSurfaceVariant = Color(0xFF666666);
+
+  // Dark palette (rich darks for depth and glassmorphism)
+  static const Color backgroundDark = Color(0xFF0A0A0C);
+  static const Color surfaceElevatedDark = Color(0xFF1A1A1E);
+  static const Color overlayDark = Color(0xFF0D0D0F);
+  static const Color borderDark = Color(0xFF2A2A2E);
+  static const Color borderLight = Color(0xFFC9A227); // gold, for glass border
+  static const Color accentGlow = Color(0xFFC9A227); // use with alpha for shadows
+
+  /// Muted text on dark backgrounds (WCAG AA–compliant on surfaceDark/backgroundDark).
+  static const Color onSurfaceVariantDark = Color(0xFFB5B5B5);
+}
+
+/// Layered shadow system for cards, header, dialogs, and accent CTAs.
+/// Cached as static final to avoid allocating new lists on every access.
+class AppShadows {
+  AppShadows._();
+
+  static const double _blurCard = 12;
+  static const double _blurCardHover = 20;
+  static const double _blurHeader = 16;
+  static const double _blurDialog = 24;
+  static const double _blurStickyCta = 16;
+  static const double _blurAccent = 12;
+
+  static final List<BoxShadow> card = [
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.25),
+      blurRadius: _blurCard,
+      offset: const Offset(0, 4),
+    ),
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.12),
+      blurRadius: _blurCard * 2,
+      offset: const Offset(0, 2),
+    ),
+  ];
+
+  static final List<BoxShadow> cardHover = [
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.3),
+      blurRadius: _blurCardHover,
+      offset: const Offset(0, 6),
+    ),
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.15),
+      blurRadius: _blurCardHover * 1.5,
+      offset: const Offset(0, 3),
+    ),
+  ];
+
+  static final List<BoxShadow> header = [
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.35),
+      blurRadius: _blurHeader,
+      offset: const Offset(0, 4),
+    ),
+  ];
+
+  static final List<BoxShadow> dialog = [
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.4),
+      blurRadius: _blurDialog,
+      offset: const Offset(0, 8),
+    ),
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.2),
+      blurRadius: _blurDialog * 1.5,
+      offset: const Offset(0, 4),
+    ),
+  ];
+
+  static final List<BoxShadow> stickyCta = [
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.4),
+      blurRadius: _blurStickyCta,
+      offset: const Offset(-2, 0),
+    ),
+    BoxShadow(
+      color: AppColors.accentGlow.withValues(alpha: 0.2),
+      blurRadius: _blurStickyCta,
+      offset: const Offset(-2, 0),
+    ),
+  ];
+
+  static final List<BoxShadow> accentButton = [
+    BoxShadow(
+      color: AppColors.accentGlow.withValues(alpha: 0.4),
+      blurRadius: _blurAccent,
+      offset: const Offset(0, 4),
+    ),
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.2),
+      blurRadius: _blurAccent,
+      offset: const Offset(0, 2),
+    ),
+  ];
 }
 
 class AppTheme {
@@ -67,6 +164,92 @@ class AppTheme {
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         color: AppColors.surface,
+      ),
+    );
+  }
+
+  static ThemeData dark() {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme.dark(
+        primary: AppColors.primary,
+        onPrimary: AppColors.onPrimary,
+        secondary: AppColors.accent,
+        onSecondary: AppColors.onAccent,
+        surface: AppColors.surfaceElevatedDark,
+        onSurface: AppColors.onPrimary,
+        onSurfaceVariant: AppColors.onSurfaceVariantDark,
+        surfaceContainerHighest: AppColors.surfaceDark,
+        error: AppColors.error,
+        outline: AppColors.borderDark,
+      ),
+      scaffoldBackgroundColor: AppColors.backgroundDark,
+      focusColor: AppColors.accent.withValues(alpha: 0.4),
+      hoverColor: AppColors.accent.withValues(alpha: 0.12),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.backgroundDark,
+        foregroundColor: AppColors.onPrimary,
+        elevation: 0,
+      ),
+      // For accent glow on primary CTAs, wrap FilledButtons in a Container with boxShadow: AppShadows.accentButton.
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.accent,
+          foregroundColor: AppColors.onAccent,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          elevation: 0,
+        ).copyWith(
+          overlayColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.hovered) || states.contains(WidgetState.focused)) {
+              return AppColors.onAccent.withValues(alpha: 0.15);
+            }
+            return null;
+          }),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.onPrimary,
+          side: const BorderSide(color: AppColors.accent),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ).copyWith(
+          overlayColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.hovered)) {
+              return AppColors.accent.withValues(alpha: 0.12);
+            }
+            if (states.contains(WidgetState.focused)) {
+              return AppColors.accent.withValues(alpha: 0.25);
+            }
+            return null;
+          }),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: AppColors.surfaceElevatedDark,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: AppColors.borderDark),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: AppColors.borderLight, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: AppColors.error),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      ),
+      cardTheme: CardThemeData(
+        elevation: 0,
+        shadowColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        color: AppColors.surfaceElevatedDark,
       ),
     );
   }

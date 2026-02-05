@@ -11,10 +11,13 @@ import '../screens/academy/academy_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavKey = GlobalKey<NavigatorState>();
 
-GoRouter createAppRouter() {
+/// Creates the app router once. Pass [refreshListenable] (e.g. LocaleNotifier)
+/// so route/redirect logic can react to changes without recreating the router.
+GoRouter createAppRouter({Listenable? refreshListenable}) {
   return GoRouter(
     navigatorKey: _rootNavKey,
     initialLocation: '/',
+    refreshListenable: refreshListenable,
     routes: [
       ShellRoute(
         builder: (_, __, child) => AppShell(child: child),

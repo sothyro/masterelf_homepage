@@ -22,8 +22,13 @@ class AppFooter extends StatelessWidget {
     final isNarrow = Breakpoints.isMobile(width);
 
     return Container(
-      color: AppColors.primary,
       width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.surfaceDark,
+        border: Border(
+          top: BorderSide(color: AppColors.borderLight.withValues(alpha: 0.5), width: 1),
+        ),
+      ),
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -36,12 +41,12 @@ class AppFooter extends StatelessWidget {
                 : _footerBlocksRow(context, l10n, company),
           ),
           const SizedBox(height: 28),
-          const Divider(color: AppColors.onSurfaceVariant, height: 1),
+          Divider(height: 1, color: AppColors.onPrimary.withValues(alpha: 0.3)),
           const SizedBox(height: 16),
           Text(
             l10n.copyright(year, company),
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.onSurfaceVariant,
+                  color: AppColors.onPrimary.withValues(alpha: 0.75),
                   fontSize: 13,
                 ),
             textAlign: TextAlign.center,
@@ -56,21 +61,21 @@ class AppFooter extends StatelessWidget {
                 onPressed: () => showLegalPopup(context, LegalPage.terms),
                 child: Text(
                   l10n.termsOfService,
-                  style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 14),
+                  style: TextStyle(color: AppColors.onPrimary.withValues(alpha: 0.8), fontSize: 14),
                 ),
               ),
               TextButton(
                 onPressed: () => showLegalPopup(context, LegalPage.disclaimer),
                 child: Text(
                   l10n.disclaimer,
-                  style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 14),
+                  style: TextStyle(color: AppColors.onPrimary.withValues(alpha: 0.8), fontSize: 14),
                 ),
               ),
               TextButton(
                 onPressed: () => showLegalPopup(context, LegalPage.privacy),
                 child: Text(
                   l10n.privacyPolicy,
-                  style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 14),
+                  style: TextStyle(color: AppColors.onPrimary.withValues(alpha: 0.8), fontSize: 14),
                 ),
               ),
             ],
@@ -215,11 +220,11 @@ class _OfficeBlock extends StatelessWidget {
           textAlign: textAlign,
         ),
         SizedBox(height: gap),
-        Text(company, style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: f), textAlign: textAlign),
+        Text(company, style: TextStyle(color: AppColors.onPrimary.withValues(alpha: 0.75), fontSize: f), textAlign: textAlign),
         SizedBox(height: gap / 2),
-        Text(address, style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: f), textAlign: textAlign),
+        Text(address, style: TextStyle(color: AppColors.onPrimary.withValues(alpha: 0.75), fontSize: f), textAlign: textAlign),
         SizedBox(height: gap / 2),
-        Text(phone, style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: f), textAlign: textAlign),
+        Text(phone, style: TextStyle(color: AppColors.onPrimary.withValues(alpha: 0.75), fontSize: f), textAlign: textAlign),
       ],
     );
   }
@@ -338,7 +343,7 @@ class _LinkColumn extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: Text(
                   e.label,
-                  style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: compact ? 11 : 14),
+                  style: TextStyle(color: AppColors.onPrimary.withValues(alpha: 0.75), fontSize: compact ? 11 : 14),
                 ),
               ),
             ),

@@ -7,6 +7,7 @@ import '../config/app_content.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
 import '../providers/locale_provider.dart';
+import 'glass_container.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -19,13 +20,14 @@ class AppDrawer extends StatelessWidget {
 
     return Drawer(
       backgroundColor: Colors.transparent,
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFF2A2A2A).withValues(alpha: 0.88),
-          border: const Border(
-            right: BorderSide(color: Color(0xFFC9A227), width: 1.5),
-          ),
+      child: GlassContainer(
+        blurSigma: 10,
+        color: AppColors.overlayDark.withValues(alpha: 0.88),
+        borderRadius: BorderRadius.zero,
+        border: const Border(
+          right: BorderSide(color: AppColors.borderLight, width: 1.5),
         ),
+        padding: EdgeInsets.zero,
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

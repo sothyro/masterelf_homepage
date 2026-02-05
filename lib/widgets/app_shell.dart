@@ -53,15 +53,24 @@ class _AppShellState extends State<AppShell> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: AppColors.backgroundDark,
       drawer: const AppDrawer(),
       floatingActionButton: _showBackToTop
           ? Padding(
               padding: const EdgeInsets.only(bottom: 60),
-              child: FloatingActionButton.small(
-                onPressed: _scrollToContent,
-                backgroundColor: AppColors.accent,
-                foregroundColor: AppColors.onAccent,
-                child: const Icon(Icons.keyboard_arrow_up),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: AppShadows.stickyCta,
+                ),
+                child: FloatingActionButton.small(
+                  onPressed: _scrollToContent,
+                  backgroundColor: AppColors.accent,
+                  foregroundColor: AppColors.onAccent,
+                  elevation: 0,
+                  highlightElevation: 0,
+                  child: const Icon(Icons.keyboard_arrow_up),
+                ),
               ),
             )
           : null,

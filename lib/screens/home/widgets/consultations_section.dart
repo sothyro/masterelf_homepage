@@ -64,7 +64,7 @@ class ConsultationsSection extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.black.withValues(alpha: 0.45),
+          color: AppColors.overlayDark.withValues(alpha: 0.6),
         ),
         child: Center(
           child: ConstrainedBox(
@@ -75,7 +75,7 @@ class ConsultationsSection extends StatelessWidget {
             Text(
               l10n.sectionMapHeading,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: AppColors.onSurface,
+                    color: AppColors.onPrimary,
                     fontWeight: FontWeight.w600,
                   ),
               textAlign: TextAlign.center,
@@ -83,7 +83,10 @@ class ConsultationsSection extends StatelessWidget {
             const SizedBox(height: 24),
             Text(
               l10n.sectionMapIntro,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.5),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                height: 1.5,
+                color: AppColors.onPrimary.withValues(alpha: 0.9),
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 40),
@@ -144,12 +147,19 @@ class _ConsultBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Card(
-      clipBehavior: Clip.antiAlias,
+    return Material(
+      color: Colors.transparent,
       child: InkWell(
         onTap: onGetConsultation,
-        child: Padding(
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
           padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: AppColors.surfaceElevatedDark,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppColors.borderDark, width: 1),
+            boxShadow: AppShadows.card,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -159,7 +169,7 @@ class _ConsultBlock extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: AppColors.accent.withValues(alpha: 0.12),
+                      color: AppColors.accent.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(icon, size: 28, color: AppColors.accent),
@@ -180,7 +190,7 @@ class _ConsultBlock extends StatelessWidget {
                         Text(
                           method,
                           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                                color: AppColors.onSurfaceVariant,
+                                color: AppColors.onPrimary.withValues(alpha: 0.7),
                               ),
                         ),
                       ],
@@ -193,7 +203,7 @@ class _ConsultBlock extends StatelessWidget {
                 question,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontStyle: FontStyle.italic,
-                      color: AppColors.onSurface,
+                      color: AppColors.onPrimary,
                     ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -202,18 +212,25 @@ class _ConsultBlock extends StatelessWidget {
               Text(
                 description,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.onSurfaceVariant,
+                      color: AppColors.onPrimary.withValues(alpha: 0.8),
                       height: 1.45,
                     ),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  onPressed: onGetConsultation,
-                  child: Text(l10n.getConsultation),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: AppShadows.accentButton,
+                ),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: onGetConsultation,
+                    style: FilledButton.styleFrom(elevation: 0),
+                    child: Text(l10n.getConsultation),
+                  ),
                 ),
               ),
             ],

@@ -11,7 +11,6 @@ import '../../../utils/launcher_utils.dart';
 class AcademiesSection extends StatelessWidget {
   const AcademiesSection({super.key});
 
-  static const Color _cardBackground = Color(0xFF1A1A1A);
   static const Color _textLight = Color(0xFFE8E8E8);
   static const Color _textMuted = Color(0xFFB0B0B0);
 
@@ -32,7 +31,7 @@ class AcademiesSection extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.black.withValues(alpha: 0.5),
+          color: AppColors.overlayDark.withValues(alpha: 0.6),
         ),
         child: Center(
           child: ConstrainedBox(
@@ -208,7 +207,6 @@ class _AcademyCard extends StatelessWidget {
   final String description;
   final VoidCallback onExplore;
 
-  static const Color _cardBg = Color(0xFF1A1A1A);
   static const Color _textLight = Color(0xFFE8E8E8);
   static const Color _textMuted = Color(0xFFB0B0B0);
 
@@ -218,15 +216,10 @@ class _AcademyCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: _cardBg,
+        color: AppColors.surfaceElevatedDark,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.3),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: AppColors.borderDark, width: 1),
+        boxShadow: AppShadows.card,
       ),
       child: Material(
         color: Colors.transparent,
@@ -245,6 +238,8 @@ class _AcademyCard extends StatelessWidget {
                       AppContent.assetAcademy,
                       width: 80,
                       height: 80,
+                      cacheWidth: 160,
+                      cacheHeight: 160,
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => Container(
                         width: 80,

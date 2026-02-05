@@ -14,7 +14,16 @@ class CtaSection extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 56, horizontal: 24),
-      color: AppColors.primary,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            AppColors.backgroundDark,
+            AppColors.primary,
+          ],
+        ),
+      ),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 700),
         child: Column(
@@ -37,14 +46,21 @@ class CtaSection extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 28),
-            FilledButton(
-              onPressed: () => context.push('/contact'),
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.accent,
-                foregroundColor: AppColors.onAccent,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: AppShadows.accentButton,
               ),
-              child: Text(l10n.contactUs),
+              child: FilledButton(
+                onPressed: () => context.push('/contact'),
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.accent,
+                  foregroundColor: AppColors.onAccent,
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  elevation: 0,
+                ),
+                child: Text(l10n.contactUs),
+              ),
             ),
           ],
         ),

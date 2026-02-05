@@ -8,15 +8,11 @@ import '../theme/app_theme.dart';
 import '../providers/locale_provider.dart';
 import '../config/app_content.dart';
 import '../utils/breakpoints.dart';
+import 'glass_container.dart';
 
-/// Menu bar colors: translucent dark bar, gold accents.
+/// Menu bar colors: gold accents and link text (glass fill uses [AppColors.overlayDark]).
 class _MenuColors {
   _MenuColors._();
-  /// Dark translucent background (semi-transparent so content shows through).
-  static Color barBackground(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.dark
-          ? Colors.black.withValues(alpha: 0.65)
-          : const Color(0xFF2A2A2A).withValues(alpha: 0.88);
   static const Color barBorder = Color(0xFFC9A227);
   static const Color linkText = Color(0xFFF0F0F0);
   static const Color goldDark = Color(0xFFA68520);
@@ -60,45 +56,48 @@ class _MobileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 64,
-      decoration: BoxDecoration(
-        color: _MenuColors.barBackground(context),
-        borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: _MenuColors.barBorder, width: 1.5),
-      ),
-      child: Row(
-        children: [
-          IconButton(
-            icon: const Icon(LucideIcons.menu, color: _MenuColors.linkText, size: 24),
-            onPressed: onOpenDrawer ?? () {},
-            tooltip: 'Menu',
-          ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () => context.go('/'),
-              child: Center(
-                child: Image.asset(
-                  AppContent.assetLogo,
-                  height: 40,
-                  fit: BoxFit.contain,
-                  color: AppColors.accent,
-                  errorBuilder: (_, __, ___) => Text(
-                    AppContent.shortName,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: AppColors.accent,
-                          fontWeight: FontWeight.bold,
-                        ),
+    return GlassContainer(
+      blurSigma: 10,
+      color: AppColors.overlayDark.withValues(alpha: 0.88),
+      borderRadius: BorderRadius.circular(32),
+      border: Border.all(color: _MenuColors.barBorder, width: 1.5),
+      boxShadow: AppShadows.header,
+      padding: EdgeInsets.zero,
+      child: SizedBox(
+        height: 64,
+        child: Row(
+          children: [
+            IconButton(
+              icon: const Icon(LucideIcons.menu, color: _MenuColors.linkText, size: 24),
+              onPressed: onOpenDrawer ?? () {},
+              tooltip: 'Menu',
+            ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () => context.go('/'),
+                child: Center(
+                  child: Image.asset(
+                    AppContent.assetLogo,
+                    height: 40,
+                    fit: BoxFit.contain,
+                    color: AppColors.accent,
+                    errorBuilder: (_, __, ___) => Text(
+                      AppContent.shortName,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: AppColors.accent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: _ContactUsButton(l10n: l10n),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: _ContactUsButton(l10n: l10n),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -113,17 +112,18 @@ class _DesktopHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        constraints: const BoxConstraints(maxWidth: 1280, minHeight: 56),
+      child: GlassContainer(
+        blurSigma: 10,
+        color: AppColors.overlayDark.withValues(alpha: 0.88),
+        borderRadius: BorderRadius.circular(34),
+        border: Border.all(color: _MenuColors.barBorder, width: 1.5),
+        boxShadow: AppShadows.header,
         padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 10),
-        decoration: BoxDecoration(
-          color: _MenuColors.barBackground(context),
-          borderRadius: BorderRadius.circular(34),
-          border: Border.all(color: _MenuColors.barBorder, width: 1.5),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1280, minHeight: 56),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
             GestureDetector(
               onTap: () => context.go('/'),
               child: Image.asset(
@@ -178,7 +178,8 @@ class _DesktopHeader extends StatelessWidget {
             _LocaleSwitcher(notifier: localeNotifier),
             const SizedBox(width: 20),
             _ContactUsButton(l10n: l10n),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -315,7 +316,6 @@ class _NavDropdown extends StatelessWidget {
   final String label;
   final List<_NavItem> items;
 
-  static const _menuWidth = 220.0;
   static const _itemHeight = 48.0;
 
   Future<void> _showDropdown(BuildContext context, RenderBox button) async {
@@ -334,7 +334,7 @@ class _NavDropdown extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         side: const BorderSide(color: _MenuColors.barBorder, width: 1.5),
       ),
-      color: const Color(0xFF2A2A2A).withValues(alpha: 0.88),
+      color: AppColors.overlayDark.withValues(alpha: 0.92),
       elevation: 12,
       items: items
           .map((e) => PopupMenuItem<String>(
@@ -456,7 +456,6 @@ class _LocaleSwitcher extends StatelessWidget {
     ('zh', 'ZH'),
   ];
 
-  static const _menuWidth = 100.0;
   static const _itemHeight = 44.0;
 
   Future<void> _showLocaleMenu(BuildContext context, RenderBox button) async {
@@ -475,7 +474,7 @@ class _LocaleSwitcher extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         side: const BorderSide(color: _MenuColors.barBorder, width: 1.5),
       ),
-      color: const Color(0xFF2A2A2A).withValues(alpha: 0.88),
+      color: AppColors.overlayDark.withValues(alpha: 0.92),
       elevation: 12,
       items: _locales
           .map((e) => PopupMenuItem<String>(
