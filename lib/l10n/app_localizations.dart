@@ -244,6 +244,24 @@ abstract class AppLocalizations {
   /// **'Awareness always comes before outcome.'**
   String get heroHeadline1;
 
+  /// No description provided for @heroHeadline1Prefix.
+  ///
+  /// In en, this message translates to:
+  /// **''**
+  String get heroHeadline1Prefix;
+
+  /// No description provided for @heroHeadline1Highlight.
+  ///
+  /// In en, this message translates to:
+  /// **'Awareness'**
+  String get heroHeadline1Highlight;
+
+  /// No description provided for @heroHeadline1Suffix.
+  ///
+  /// In en, this message translates to:
+  /// **' always comes before outcome.'**
+  String get heroHeadline1Suffix;
+
   /// No description provided for @heroHeadline2Prefix.
   ///
   /// In en, this message translates to:
@@ -693,6 +711,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Real achievement. Real outputs.'**
   String get aboutBullet4;
+
+  /// No description provided for @appointmentIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your consultation type, pick a time, and receive an SMS confirmation to your phone.'**
+  String get appointmentIntro;
+
+  /// No description provided for @stepChooseService.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose service'**
+  String get stepChooseService;
+
+  /// No description provided for @stepDateAndTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Date & time'**
+  String get stepDateAndTime;
+
+  /// No description provided for @stepYourDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Your details'**
+  String get stepYourDetails;
+
+  /// No description provided for @stepConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get stepConfirm;
+
+  /// No description provided for @yourName.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get yourName;
+
+  /// No description provided for @yourPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get yourPhone;
+
+  /// No description provided for @phoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll send your confirmation via SMS'**
+  String get phoneHint;
+
+  /// No description provided for @selectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select date'**
+  String get selectDate;
+
+  /// No description provided for @selectTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred time'**
+  String get selectTime;
+
+  /// No description provided for @confirmAndBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm & book'**
+  String get confirmAndBook;
+
+  /// No description provided for @bookingSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking confirmed'**
+  String get bookingSuccessTitle;
+
+  /// No description provided for @bookingSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your consultation has been reserved.'**
+  String get bookingSuccessMessage;
+
+  /// No description provided for @smsConfirmationNote.
+  ///
+  /// In en, this message translates to:
+  /// **'An SMS confirmation has been sent to your phone.'**
+  String get smsConfirmationNote;
+
+  /// No description provided for @bookAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Book another'**
+  String get bookAnother;
+
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @smartMoveHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Every Move Can Be A Smart Move'**
+  String get smartMoveHeading;
+
+  /// No description provided for @smartMoveIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Behind every breakthrough is a moment of clarity. When you see the full picture, opportunities arise, decisions become easier, and progress flows naturally. That\'s what we help you with: seeing clearly turns your next step into the right one. A consultation with our team gives you more than insight. It gives you structure to move forward with confidence.'**
+  String get smartMoveIntro;
+
+  /// No description provided for @smartMoveCard1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach Your Personal Goals'**
+  String get smartMoveCard1Title;
+
+  /// No description provided for @smartMoveCard1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn ambitions into achievable milestones with clear guidance.'**
+  String get smartMoveCard1Desc;
+
+  /// No description provided for @smartMoveCard2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a Roadmap That Fits'**
+  String get smartMoveCard2Title;
+
+  /// No description provided for @smartMoveCard2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Get a structured plan tailored to your life, career, or business.'**
+  String get smartMoveCard2Desc;
+
+  /// No description provided for @smartMoveCard3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Hidden Roadblocks'**
+  String get smartMoveCard3Title;
+
+  /// No description provided for @smartMoveCard3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Identify obstacles you didn\'t see and learn how to move past them.'**
+  String get smartMoveCard3Desc;
+
+  /// No description provided for @smartMoveCard4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Gain Situational Awareness'**
+  String get smartMoveCard4Title;
+
+  /// No description provided for @smartMoveCard4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'See your situation as it is so decisions feel lighter and easier.'**
+  String get smartMoveCard4Desc;
+
+  /// No description provided for @smartMoveCard5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Better Options'**
+  String get smartMoveCard5Title;
+
+  /// No description provided for @smartMoveCard5Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover choices you didn\'t know you had and select the one that serves you best.'**
+  String get smartMoveCard5Desc;
+
+  /// No description provided for @smartMoveCard6Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Move in the Right Direction'**
+  String get smartMoveCard6Title;
+
+  /// No description provided for @smartMoveCard6Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Act with timing and alignment so progress feels natural and sustainable.'**
+  String get smartMoveCard6Desc;
 }
 
 class _AppLocalizationsDelegate

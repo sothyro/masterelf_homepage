@@ -83,6 +83,15 @@ class AppLocalizationsKm extends AppLocalizations {
   String get heroHeadline1 => 'ការយល់ដឹងតែងតែមកមុនលទ្ធផល។';
 
   @override
+  String get heroHeadline1Prefix => '';
+
+  @override
+  String get heroHeadline1Highlight => 'ការយល់ដឹង';
+
+  @override
+  String get heroHeadline1Suffix => 'តែងតែមកមុនលទ្ធផល។';
+
+  @override
   String get heroHeadline2Prefix => 'Its true value lies in guiding better ';
 
   @override
@@ -336,4 +345,106 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get aboutBullet4 => 'Real achievement. Real outputs.';
+
+  @override
+  String get appointmentIntro =>
+      'Choose your consultation type, pick a time, and receive an SMS confirmation to your phone.';
+
+  @override
+  String get stepChooseService => 'Choose service';
+
+  @override
+  String get stepDateAndTime => 'Date & time';
+
+  @override
+  String get stepYourDetails => 'Your details';
+
+  @override
+  String get stepConfirm => 'Confirm';
+
+  @override
+  String get yourName => 'Your name';
+
+  @override
+  String get yourPhone => 'Phone number';
+
+  @override
+  String get phoneHint => 'We\'ll send your confirmation via SMS';
+
+  @override
+  String get selectDate => 'Select date';
+
+  @override
+  String get selectTime => 'Preferred time';
+
+  @override
+  String get confirmAndBook => 'Confirm & book';
+
+  @override
+  String get bookingSuccessTitle => 'Booking confirmed';
+
+  @override
+  String get bookingSuccessMessage => 'Your consultation has been reserved.';
+
+  @override
+  String get smsConfirmationNote =>
+      'An SMS confirmation has been sent to your phone.';
+
+  @override
+  String get bookAnother => 'Book another';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get smartMoveHeading => 'Every Move Can Be A Smart Move';
+
+  @override
+  String get smartMoveIntro =>
+      'Behind every breakthrough is a moment of clarity. When you see the full picture, opportunities arise, decisions become easier, and progress flows naturally. That\'s what we help you with: seeing clearly turns your next step into the right one. A consultation with our team gives you more than insight. It gives you structure to move forward with confidence.';
+
+  @override
+  String get smartMoveCard1Title => 'Reach Your Personal Goals';
+
+  @override
+  String get smartMoveCard1Desc =>
+      'Turn ambitions into achievable milestones with clear guidance.';
+
+  @override
+  String get smartMoveCard2Title => 'Create a Roadmap That Fits';
+
+  @override
+  String get smartMoveCard2Desc =>
+      'Get a structured plan tailored to your life, career, or business.';
+
+  @override
+  String get smartMoveCard3Title => 'Remove Hidden Roadblocks';
+
+  @override
+  String get smartMoveCard3Desc =>
+      'Identify obstacles you didn\'t see and learn how to move past them.';
+
+  @override
+  String get smartMoveCard4Title => 'Gain Situational Awareness';
+
+  @override
+  String get smartMoveCard4Desc =>
+      'See your situation as it is so decisions feel lighter and easier.';
+
+  @override
+  String get smartMoveCard5Title => 'Unlock Better Options';
+
+  @override
+  String get smartMoveCard5Desc =>
+      'Discover choices you didn\'t know you had and select the one that serves you best.';
+
+  @override
+  String get smartMoveCard6Title => 'Move in the Right Direction';
+
+  @override
+  String get smartMoveCard6Desc =>
+      'Act with timing and alignment so progress feels natural and sustainable.';
 }

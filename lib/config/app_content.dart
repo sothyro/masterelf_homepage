@@ -35,11 +35,16 @@ class AppContent {
   /// Explore Courses / Academy link (e.g. charter.masterelf.vip)
   static const String academyExploreUrl = 'https://charter.masterelf.vip';
 
+  /// Appointment booking API: POST booking details; backend sends SMS confirmation via Unimatrix.
+  /// Leave empty to use demo mode (success UI only, no HTTP call).
+  static const String appointmentBookingApiUrl = '';
+
   // Asset paths (§1, §2, §8, §9 – use images from assets folder)
   /// Logo for header; favicon can use same. Use assets/icons/logo.png when available.
   static const String assetLogo = 'assets/icons/logo.png';
   static const String assetFavicon = 'assets/icons/logo.png';
   static const String assetHeroBackground = 'assets/images/main.jpg';
+  static const String assetBackgroundDirection = 'assets/images/backgrounddirection.jpg';
   static const String assetHeroVideo = 'assets/videos/videobackground720.mp4';
   static const String assetEventCard = 'assets/images/event.jpg';
   static const String assetEventMain = 'assets/images/main event.jpg';

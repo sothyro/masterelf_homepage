@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../config/app_content.dart';
@@ -129,11 +130,11 @@ class _HeroSectionState extends State<HeroSection> {
               ),
             ),
           ),
-          // 4) Content – near center, slightly left and below middle
+          // 4) Content – a bit further left and down from center
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
             child: Align(
-              alignment: const Alignment(-0.25, 0.15),
+              alignment: const Alignment(-0.38, 0.42),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 900),
                 child: Column(
@@ -142,13 +143,26 @@ class _HeroSectionState extends State<HeroSection> {
                   children: [
                     Semantics(
                       header: true,
-                      child: Text(
-                        l10n.heroHeadline1,
-                        style: (Theme.of(context).textTheme.headlineLarge ?? const TextStyle()).copyWith(
-                          color: AppColors.onPrimary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: width < 600 ? 26 : (width < 900 ? 32 : 40),
-                          height: 1.25,
+                      child: RichText(
+                        text: TextSpan(
+                          style: (Theme.of(context).textTheme.headlineLarge ?? const TextStyle()).copyWith(
+                            color: AppColors.onPrimary,
+                            fontWeight: FontWeight.w600,
+                            fontSize: width < 600 ? 20 : (width < 900 ? 26 : 32),
+                            height: 0.88,
+                          ),
+                          children: [
+                            TextSpan(text: l10n.heroHeadline1Prefix),
+                            TextSpan(
+                              text: l10n.heroHeadline1Highlight,
+                              style: GoogleFonts.condiment(
+                                color: AppColors.accent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: width < 600 ? 38 : (width < 900 ? 46 : 56),
+                              ),
+                            ),
+                            TextSpan(text: l10n.heroHeadline1Suffix),
+                          ],
                         ),
                       ),
                     ),
@@ -158,17 +172,17 @@ class _HeroSectionState extends State<HeroSection> {
                         style: (Theme.of(context).textTheme.headlineLarge ?? const TextStyle()).copyWith(
                           color: AppColors.onPrimary,
                           fontWeight: FontWeight.w600,
-                          fontSize: width < 600 ? 26 : (width < 900 ? 32 : 40),
-                          height: 1.25,
+                          fontSize: width < 600 ? 20 : (width < 900 ? 26 : 32),
+                          height: 0.88,
                         ),
                         children: [
                           TextSpan(text: l10n.heroHeadline2Prefix),
                           TextSpan(
                             text: l10n.heroHeadline2Highlight,
-                            style: TextStyle(
+                            style: GoogleFonts.condiment(
                               color: AppColors.accent,
                               fontWeight: FontWeight.bold,
-                              fontSize: width < 600 ? 26 : (width < 900 ? 32 : 40),
+                              fontSize: width < 600 ? 38 : (width < 900 ? 46 : 56),
                             ),
                           ),
                         ],
@@ -179,8 +193,8 @@ class _HeroSectionState extends State<HeroSection> {
                       l10n.heroSubline,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppColors.onPrimary.withValues(alpha: 0.9),
-                        height: 1.5,
-                        fontSize: width < 600 ? 15 : (width < 900 ? 17 : 19),
+                        height: 0.9,
+                        fontSize: width < 600 ? 13 : (width < 900 ? 15 : 17),
                       ),
                     ),
                     const SizedBox(height: 36),

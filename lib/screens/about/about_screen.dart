@@ -13,6 +13,7 @@ class AboutScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
+      color: AppColors.backgroundDark,
       padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 800),
@@ -27,7 +28,7 @@ class AboutScreen extends StatelessWidget {
             Text(
               l10n.aboutBreadcrumb,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppColors.onSurfaceVariant,
+                    color: AppColors.onSurfaceVariantDark,
                   ),
             ),
             const SizedBox(height: 8),
@@ -45,7 +46,7 @@ class AboutScreen extends StatelessWidget {
             Text(
               l10n.aboutHeroHeadline,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: AppColors.onSurface,
+                    color: AppColors.onPrimary,
                     fontWeight: FontWeight.w600,
                   ),
             ),
@@ -57,7 +58,10 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 32),
             Text(
               l10n.featuredIn,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.onPrimary,
+                  ),
             ),
             const SizedBox(height: 16),
             Row(
@@ -68,13 +72,17 @@ class AboutScreen extends StatelessWidget {
                   height: 48,
                   margin: const EdgeInsets.only(right: 16),
                   decoration: BoxDecoration(
-                    color: AppColors.background,
+                    color: AppColors.surfaceElevatedDark,
                     borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.borderDark, width: 1),
+                    boxShadow: AppShadows.card,
                   ),
                   child: Center(
                     child: Text(
                       'Logo ${i + 1}',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: AppColors.onSurfaceVariantDark,
+                          ),
                     ),
                   ),
                 ),
@@ -107,7 +115,10 @@ class _Bullet extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.5),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    height: 1.5,
+                    color: AppColors.onPrimary,
+                  ),
             ),
           ),
         ],

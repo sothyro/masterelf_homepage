@@ -265,11 +265,16 @@ class _TestimonialCardState extends State<_TestimonialCard> {
   Widget build(BuildContext context) {
     final shadow = _isHovered ? AppShadows.cardHover : AppShadows.card;
     final borderColor = _isHovered ? AppColors.borderLight.withValues(alpha: 0.5) : AppColors.borderDark;
+    final scale = _isHovered ? 1.02 : 1.0;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
-      child: AnimatedContainer(
+      child: AnimatedScale(
+        scale: scale,
+        duration: const Duration(milliseconds: 150),
+        curve: Curves.easeOut,
+        child: AnimatedContainer(
         duration: const Duration(milliseconds: 150),
         curve: Curves.easeOut,
         decoration: BoxDecoration(
@@ -367,6 +372,7 @@ class _TestimonialCardState extends State<_TestimonialCard> {
               ),
             ),
           ],
+        ),
         ),
       ),
     );

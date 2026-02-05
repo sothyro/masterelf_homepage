@@ -34,6 +34,7 @@ class _EventsScreenState extends State<EventsScreen> {
 
     return Container(
       width: double.infinity,
+      color: AppColors.backgroundDark,
       padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 1000),
@@ -48,14 +49,16 @@ class _EventsScreenState extends State<EventsScreen> {
             Text(
               l10n.eventsCalendarTitle,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: AppColors.onSurface,
+                    color: AppColors.onPrimary,
                     fontWeight: FontWeight.w600,
                   ),
             ),
             const SizedBox(height: 8),
             Text(
               l10n.eventsSubline,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.onSurfaceVariant),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppColors.onSurfaceVariantDark,
+                  ),
             ),
             const SizedBox(height: 24),
             Row(
@@ -82,7 +85,10 @@ class _EventsScreenState extends State<EventsScreen> {
             const SizedBox(height: 32),
             Text(
               l10n.comingUpNext,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.onPrimary,
+                  ),
             ),
             const SizedBox(height: 16),
             if (filtered.isEmpty)
@@ -91,7 +97,9 @@ class _EventsScreenState extends State<EventsScreen> {
                 child: Center(
                   child: Text(
                     'No events match your search.',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.onSurfaceVariant),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: AppColors.onSurfaceVariantDark,
+                        ),
                   ),
                 ),
               )
@@ -128,10 +136,10 @@ class _EventsTable extends StatelessWidget {
         2: FlexColumnWidth(1.5),
         3: IntrinsicColumnWidth(),
       },
-      border: TableBorder.all(color: Theme.of(context).dividerColor),
+      border: TableBorder.all(color: AppColors.borderDark),
       children: [
         TableRow(
-          decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.08)),
+          decoration: BoxDecoration(color: AppColors.surfaceElevatedDark),
           children: [
             _TableHeader(l10n.eventColumn),
             _TableHeader(l10n.dateColumn),
@@ -140,23 +148,35 @@ class _EventsTable extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
               child: Text(
                 '',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.onPrimary,
+                    ),
               ),
             ),
           ],
         ),
         ...events.map((e) => TableRow(
+              decoration: BoxDecoration(color: AppColors.surfaceDark),
               children: [
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(e.title, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+                      Text(
+                        e.title,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.onPrimary,
+                            ),
+                      ),
                       if (e.description.isNotEmpty)
                         Text(
                           e.description,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariant),
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: AppColors.onSurfaceVariantDark,
+                              ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -165,11 +185,17 @@ class _EventsTable extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(12),
-                  child: Text(e.date, style: Theme.of(context).textTheme.bodyMedium),
+                  child: Text(
+                    e.date,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onPrimary),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(12),
-                  child: Text(e.location, style: Theme.of(context).textTheme.bodyMedium),
+                  child: Text(
+                    e.location,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onPrimary),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8),
@@ -198,7 +224,7 @@ class _TableHeader extends StatelessWidget {
         label,
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
               fontWeight: FontWeight.w600,
-              color: AppColors.onSurface,
+              color: AppColors.onPrimary,
             ),
       ),
     );
@@ -214,28 +240,81 @@ class _EventsCardList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: events.map((e) {
-        return Card(
-          margin: const EdgeInsets.only(bottom: 16),
+      children: events.map((e) => _HoverableEventCard(event: e, onViewEvent: onViewEvent)).toList(),
+    );
+  }
+}
+
+class _HoverableEventCard extends StatefulWidget {
+  const _HoverableEventCard({required this.event, required this.onViewEvent});
+
+  final EventItem event;
+  final VoidCallback onViewEvent;
+
+  @override
+  State<_HoverableEventCard> createState() => _HoverableEventCardState();
+}
+
+class _HoverableEventCardState extends State<_HoverableEventCard> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final e = widget.event;
+    final shadow = _isHovered ? AppShadows.cardHover : AppShadows.card;
+    final borderColor = _isHovered ? AppColors.borderLight.withValues(alpha: 0.5) : AppColors.borderDark;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.easeOut,
+          decoration: BoxDecoration(
+            color: AppColors.surfaceElevatedDark,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: borderColor, width: 1),
+            boxShadow: shadow,
+          ),
           child: ListTile(
-            title: Text(e.title),
+            title: Text(
+              e.title,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: AppColors.onPrimary,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 4),
-                Text('${e.date} · ${e.location}', style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  '${e.date} · ${e.location}',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.onSurfaceVariantDark,
+                      ),
+                ),
                 if (e.description.isNotEmpty) ...[
                   const SizedBox(height: 4),
-                  Text(e.description, style: Theme.of(context).textTheme.bodySmall, maxLines: 2, overflow: TextOverflow.ellipsis),
+                  Text(
+                    e.description,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: AppColors.onSurfaceVariantDark,
+                        ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ],
             ),
-            trailing: const Icon(Icons.arrow_forward),
-            onTap: onViewEvent,
+            trailing: Icon(Icons.arrow_forward, color: AppColors.accent),
+            onTap: widget.onViewEvent,
           ),
-        );
-      }).toList(),
+        ),
+      ),
     );
   }
 }

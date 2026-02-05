@@ -83,6 +83,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get heroHeadline1 => '觉知永远先于结果。';
 
   @override
+  String get heroHeadline1Prefix => '';
+
+  @override
+  String get heroHeadline1Highlight => '觉知';
+
+  @override
+  String get heroHeadline1Suffix => '永远先于结果。';
+
+  @override
   String get heroHeadline2Prefix => 'Its true value lies in guiding better ';
 
   @override
@@ -313,4 +322,98 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get aboutBullet4 => 'Real achievement. Real outputs.';
+
+  @override
+  String get appointmentIntro => '选择咨询类型、预约时间，我们将通过短信向您发送确认。';
+
+  @override
+  String get stepChooseService => '选择服务';
+
+  @override
+  String get stepDateAndTime => '日期与时间';
+
+  @override
+  String get stepYourDetails => '您的信息';
+
+  @override
+  String get stepConfirm => '确认';
+
+  @override
+  String get yourName => '您的姓名';
+
+  @override
+  String get yourPhone => '手机号码';
+
+  @override
+  String get phoneHint => '我们将通过短信发送确认';
+
+  @override
+  String get selectDate => '选择日期';
+
+  @override
+  String get selectTime => '首选时间';
+
+  @override
+  String get confirmAndBook => '确认并预约';
+
+  @override
+  String get bookingSuccessTitle => '预约成功';
+
+  @override
+  String get bookingSuccessMessage => '您的咨询已预留。';
+
+  @override
+  String get smsConfirmationNote => '短信确认已发送至您的手机。';
+
+  @override
+  String get bookAnother => '再预约一次';
+
+  @override
+  String get back => '返回';
+
+  @override
+  String get next => '下一步';
+
+  @override
+  String get smartMoveHeading => '每一步都可以是明智的一步';
+
+  @override
+  String get smartMoveIntro =>
+      '每一次突破背后都有清晰的时刻。当你看清全局，机会自然出现，决策更轻松，进展更顺畅。我们正是帮助你做到这一点：看清前路，让下一步成为正确的一步。与我们的团队咨询，你得到的不仅是洞见，更是自信前行的结构。';
+
+  @override
+  String get smartMoveCard1Title => '达成个人目标';
+
+  @override
+  String get smartMoveCard1Desc => '在清晰指引下，把抱负化为可实现的里程碑。';
+
+  @override
+  String get smartMoveCard2Title => '制定适合的路线图';
+
+  @override
+  String get smartMoveCard2Desc => '获得为你的生活、事业或生意量身定制的结构化计划。';
+
+  @override
+  String get smartMoveCard3Title => '扫除隐藏障碍';
+
+  @override
+  String get smartMoveCard3Desc => '发现你未曾注意的障碍，并学会跨越它们。';
+
+  @override
+  String get smartMoveCard4Title => '提升情境认知';
+
+  @override
+  String get smartMoveCard4Desc => '如实看清现状，让决策更轻松。';
+
+  @override
+  String get smartMoveCard5Title => '发现更好选择';
+
+  @override
+  String get smartMoveCard5Desc => '发现你未曾意识到的选项，并选出最有利于你的那一个。';
+
+  @override
+  String get smartMoveCard6Title => '朝正确方向前进';
+
+  @override
+  String get smartMoveCard6Desc => '在时机与格局中行动，让进展自然可持续。';
 }

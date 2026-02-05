@@ -16,6 +16,7 @@ class ContactScreen extends StatelessWidget {
 
     return Container(
       width: double.infinity,
+      color: AppColors.backgroundDark,
       padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 800),
@@ -23,14 +24,14 @@ class ContactScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Breadcrumb(items: [
-              (label: 'Home', route: '/'),
+              (label: l10n.home, route: '/'),
               (label: l10n.contactUs, route: null),
             ]),
             const SizedBox(height: 16),
             Text(
               l10n.contactUs,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: AppColors.onSurface,
+                    color: AppColors.onPrimary,
                     fontWeight: FontWeight.w600,
                   ),
             ),
@@ -46,7 +47,10 @@ class ContactScreen extends StatelessWidget {
             const SizedBox(height: 32),
             Text(
               l10n.chatWithUs,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.onPrimary,
+                  ),
             ),
             const SizedBox(height: 16),
             Row(
@@ -68,13 +72,17 @@ class ContactScreen extends StatelessWidget {
             Container(
               height: 200,
               decoration: BoxDecoration(
-                color: AppColors.background,
+                color: AppColors.surfaceElevatedDark,
                 borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.borderDark, width: 1),
+                boxShadow: AppShadows.card,
               ),
               child: Center(
                 child: Text(
                   'Map placeholder',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onSurfaceVariant),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.onSurfaceVariantDark,
+                      ),
                 ),
               ),
             ),
@@ -109,33 +117,47 @@ class _OfficeBlock extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: AppColors.onPrimary,
+              ),
         ),
         const SizedBox(height: 8),
-        Text(company, style: Theme.of(context).textTheme.bodyMedium),
+        Text(
+          company,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onSurfaceVariantDark),
+        ),
         const SizedBox(height: 4),
         Row(
           children: [
-            const Icon(LucideIcons.mapPin, size: 16, color: AppColors.onSurfaceVariant),
+            const Icon(LucideIcons.mapPin, size: 16, color: AppColors.onSurfaceVariantDark),
             const SizedBox(width: 8),
-            Expanded(child: Text(address, style: Theme.of(context).textTheme.bodyMedium)),
+            Expanded(
+              child: Text(
+                address,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onPrimary),
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 4),
         Row(
           children: [
-            const Icon(LucideIcons.phone, size: 16, color: AppColors.onSurfaceVariant),
+            const Icon(LucideIcons.phone, size: 16, color: AppColors.onSurfaceVariantDark),
             const SizedBox(width: 8),
-            Text(phone, style: Theme.of(context).textTheme.bodyMedium),
+            Text(phone, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onPrimary)),
           ],
         ),
         if (phone2 != null) ...[
           const SizedBox(height: 4),
           Row(
             children: [
-              const Icon(LucideIcons.phone, size: 16, color: AppColors.onSurfaceVariant),
+              const Icon(LucideIcons.phone, size: 16, color: AppColors.onSurfaceVariantDark),
               const SizedBox(width: 8),
-              Text(phone2!, style: Theme.of(context).textTheme.bodyMedium),
+              Text(
+                phone2!,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onPrimary),
+              ),
             ],
           ),
         ],
@@ -143,9 +165,12 @@ class _OfficeBlock extends StatelessWidget {
           const SizedBox(height: 4),
           Row(
             children: [
-              const Icon(LucideIcons.mail, size: 16, color: AppColors.onSurfaceVariant),
+              const Icon(LucideIcons.mail, size: 16, color: AppColors.onSurfaceVariantDark),
               const SizedBox(width: 8),
-              Text(email!, style: Theme.of(context).textTheme.bodyMedium),
+              Text(
+                email!,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onPrimary),
+              ),
             ],
           ),
         ],

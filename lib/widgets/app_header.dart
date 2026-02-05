@@ -57,8 +57,8 @@ class _MobileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassContainer(
-      blurSigma: 10,
-      color: AppColors.overlayDark.withValues(alpha: 0.88),
+      blurSigma: 14,
+      color: AppColors.overlayDark.withValues(alpha: 0.42),
       borderRadius: BorderRadius.circular(32),
       border: Border.all(color: _MenuColors.barBorder, width: 1.5),
       boxShadow: AppShadows.header,
@@ -113,8 +113,8 @@ class _DesktopHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: GlassContainer(
-        blurSigma: 10,
-        color: AppColors.overlayDark.withValues(alpha: 0.88),
+        blurSigma: 14,
+        color: AppColors.overlayDark.withValues(alpha: 0.42),
         borderRadius: BorderRadius.circular(34),
         border: Border.all(color: _MenuColors.barBorder, width: 1.5),
         boxShadow: AppShadows.header,
