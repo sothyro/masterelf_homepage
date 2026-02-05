@@ -99,11 +99,20 @@ class _AppShellState extends State<AppShell> {
               ),
             ),
           ),
-          const Positioned(
-            left: 0,
+          Positioned(
             right: 0,
-            bottom: 0,
-            child: StickyCtaBar(),
+            top: 160,
+            bottom: 100,
+            child: SafeArea(
+              left: false,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 0),
+                  child: StickyCtaBar(),
+                ),
+              ),
+            ),
           ),
         ],
       ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../config/app_content.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/launcher_utils.dart';
 
 /// Dark section with split heading/body and academy cards (Joey Yap–style).
 class AcademiesSection extends StatelessWidget {
@@ -70,21 +70,21 @@ class AcademiesSection extends StatelessWidget {
                             icon: LucideIcons.compass,
                             title: l10n.academyQiMen,
                             description: l10n.academyQiMenDesc,
-                            onExplore: () => context.push('/academy'),
+                            onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
                           ),
                           const SizedBox(height: 20),
                           _AcademyCard(
                             icon: LucideIcons.user,
                             title: l10n.academyBaZi,
                             description: l10n.academyBaZiDesc,
-                            onExplore: () => context.push('/academy'),
+                            onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
                           ),
                           const SizedBox(height: 20),
                           _AcademyCard(
                             icon: LucideIcons.home,
                             title: l10n.academyFengShui,
                             description: l10n.academyFengShuiDesc,
-                            onExplore: () => context.push('/academy'),
+                            onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
                           ),
                         ],
                       );
@@ -97,7 +97,7 @@ class AcademiesSection extends StatelessWidget {
                             icon: LucideIcons.compass,
                             title: l10n.academyQiMen,
                             description: l10n.academyQiMenDesc,
-                            onExplore: () => context.push('/academy'),
+                            onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
                           ),
                         ),
                         const SizedBox(width: 24),
@@ -106,7 +106,7 @@ class AcademiesSection extends StatelessWidget {
                             icon: LucideIcons.user,
                             title: l10n.academyBaZi,
                             description: l10n.academyBaZiDesc,
-                            onExplore: () => context.push('/academy'),
+                            onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
                           ),
                         ),
                         const SizedBox(width: 24),
@@ -115,7 +115,7 @@ class AcademiesSection extends StatelessWidget {
                             icon: LucideIcons.home,
                             title: l10n.academyFengShui,
                             description: l10n.academyFengShuiDesc,
-                            onExplore: () => context.push('/academy'),
+                            onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
                           ),
                         ),
                       ],
@@ -146,7 +146,7 @@ class AcademiesSection extends StatelessWidget {
     final highlight = highlightStyle.copyWith(fontSize: baseSize);
 
     final String s = l10n.sectionKnowledgeHeading;
-    final List<InlineSpan> spans = _highlightPhrases(s, ['Real Change.', 'Knowledge.', 'Real Change', 'Knowledge'], normal, highlight);
+    final List<InlineSpan> spans = _highlightPhrases(s, ['Real Change.', 'instruction.', 'Real Change', 'instruction'], normal, highlight);
     return RichText(
       text: TextSpan(children: spans),
     );

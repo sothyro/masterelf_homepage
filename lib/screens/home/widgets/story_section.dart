@@ -45,7 +45,7 @@ class StorySection extends StatelessWidget {
             const SizedBox(height: 28),
             FilledButton(
               onPressed: () => context.push('/about'),
-              child: Text(l10n.journey),
+              child: Text(l10n.sectionStoryCtaButton),
             ),
             const SizedBox(height: 48),
             Text(

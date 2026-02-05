@@ -5,6 +5,7 @@ import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
 import 'forecast_popup.dart';
 
+/// Floating vertical bar on the right side for the Free 12 Animal Forecast CTA.
 class StickyCtaBar extends StatefulWidget {
   const StickyCtaBar({super.key});
 
@@ -29,38 +30,71 @@ class _StickyCtaBarState extends State<StickyCtaBar> {
 
     final l10n = AppLocalizations.of(context)!;
 
+    final textStyle = Theme.of(context).textTheme.titleSmall?.copyWith(
+      color: AppColors.onAccent,
+      fontWeight: FontWeight.w600,
+      fontSize: 12,
+    );
+
     return Material(
-      elevation: 8,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        color: AppColors.accent,
-        child: Row(
-          children: [
-            const Icon(LucideIcons.megaphone, color: AppColors.onAccent, size: 22),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                l10n.stickyCtaText,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppColors.onAccent,
-                      fontWeight: FontWeight.w600,
+      elevation: 12,
+      shadowColor: Colors.black38,
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(12),
+        bottomLeft: Radius.circular(12),
+      ),
+      child: IntrinsicHeight(
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+          decoration: BoxDecoration(
+            color: AppColors.accent,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(12),
+              bottomLeft: Radius.circular(12),
+            ),
+          ),
+          child: IntrinsicWidth(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(LucideIcons.x, color: AppColors.onAccent, size: 18),
+                  onPressed: () => setState(() => _dismissed = true),
+                  tooltip: 'Dismiss',
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                  style: IconButton.styleFrom(
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                InkWell(
+                  onTap: _openPopup,
+                  borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(LucideIcons.megaphone, color: AppColors.onAccent, size: 22),
+                        const SizedBox(height: 12),
+                        RotatedBox(
+                          quarterTurns: 3,
+                          child: Text(
+                            l10n.stickyCtaText,
+                            style: textStyle,
+                            textAlign: TextAlign.center,
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
-              ),
+                  ),
+                ),
+              ],
             ),
-            TextButton(
-              onPressed: _openPopup,
-              child: Text(
-                l10n.stickyCtaText,
-                style: const TextStyle(color: AppColors.onAccent, fontWeight: FontWeight.w600),
-              ),
-            ),
-            IconButton(
-              icon: const Icon(LucideIcons.x, color: AppColors.onAccent, size: 20),
-              onPressed: () => setState(() => _dismissed = true),
-              tooltip: 'Dismiss',
-            ),
-          ],
+          ),
         ),
       ),
     );

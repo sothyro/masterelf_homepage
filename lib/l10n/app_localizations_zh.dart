@@ -80,10 +80,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get privacyPolicy => '隐私政策';
 
   @override
-  String get heroHeadline1 => '人生不会偶然改变。';
+  String get heroHeadline1 => '觉知永远先于结果。';
 
   @override
-  String get heroHeadline2 => '它因策略而改变。';
+  String get heroHeadline2Prefix => 'Its true value lies in guiding better ';
+
+  @override
+  String get heroHeadline2Highlight => 'Choices.';
 
   @override
   String get heroSubline => '用植根于中国形而上学的成熟系统，掌握你的时机、环境和决策——没有迷信或空谈。';
@@ -110,6 +113,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get getConsultation => '获取咨询';
 
   @override
+  String get finalCtaHeading => 'Hesitate to Start?';
+
+  @override
+  String get finalCtaBody =>
+      'Just make a phone call. Send a message to our Facebook page. Or visit us.';
+
+  @override
   String get notSureWhereToStart => '不知从何开始？';
 
   @override
@@ -132,6 +142,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sectionKnowledgeBody2 => '成功不是来自更努力地工作。它来自在正确的时间，用正确的系统，做出正确的行动。';
 
   @override
+  String get sectionKnowledgeStat => '44,000+ followers';
+
+  @override
   String get sectionMapHeading => '你不需要更多动力。你需要一张地图。让我们画一张适合你的。';
 
   @override
@@ -149,7 +162,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sectionStoryPara2 => '经过多年的学习、实践和教学，我们发现了如何将中国古代形而上学经典原则应用于现代生活。';
 
   @override
-  String get sectionStoryPara3 => '如今，这一方法已帮助数千人为自己和他人创造了更好的结果——少一些犹豫。';
+  String get sectionStoryPara3 =>
+      'Today, that method has helped 44,000 followers create better outcomes for themselves and others.';
+
+  @override
+  String get sectionStoryCtaButton => 'Master Elf\'s Endeavor';
 
   @override
   String get sectionTestimonialsHeading => '真实的洞见。可衡量的影响。';
@@ -274,4 +291,26 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get locationColumn => '地点';
+
+  @override
+  String get aboutPageTitle => 'Master Elf | The Rise of Phoenix';
+
+  @override
+  String get aboutBreadcrumb => 'About Master Elf.';
+
+  @override
+  String get aboutHeroHeadline => 'Enrich Lives Through Heavenly Knowledge';
+
+  @override
+  String get aboutBullet1 => 'It started with believe.';
+
+  @override
+  String get aboutBullet2 => 'A mission delegated by the heaven.';
+
+  @override
+  String get aboutBullet3 =>
+      'Guiding you with metaphysics into reapable outcome.';
+
+  @override
+  String get aboutBullet4 => 'Real achievement. Real outputs.';
 }

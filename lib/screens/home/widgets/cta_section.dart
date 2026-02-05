@@ -20,7 +20,7 @@ class CtaSection extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              l10n.notSureWhereToStart,
+              l10n.finalCtaHeading,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     color: AppColors.onPrimary,
                     fontWeight: FontWeight.w600,
@@ -29,7 +29,7 @@ class CtaSection extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              l10n.notSureBody,
+              l10n.finalCtaBody,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: AppColors.onPrimary.withValues(alpha: 0.9),
                     height: 1.5,

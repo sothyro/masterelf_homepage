@@ -4,9 +4,11 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 import '../config/app_content.dart';
 import '../l10n/app_localizations.dart';
+import '../screens/legal/legal_content.dart';
 import '../utils/launcher_utils.dart';
 import '../theme/app_theme.dart';
 import '../utils/breakpoints.dart';
+import 'legal_popup.dart';
 
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key});
@@ -51,21 +53,21 @@ class AppFooter extends StatelessWidget {
             runSpacing: 8,
             children: [
               TextButton(
-                onPressed: () => context.go('/terms'),
+                onPressed: () => showLegalPopup(context, LegalPage.terms),
                 child: Text(
                   l10n.termsOfService,
                   style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 14),
                 ),
               ),
               TextButton(
-                onPressed: () => context.go('/disclaimer'),
+                onPressed: () => showLegalPopup(context, LegalPage.disclaimer),
                 child: Text(
                   l10n.disclaimer,
                   style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 14),
                 ),
               ),
               TextButton(
-                onPressed: () => context.go('/privacy'),
+                onPressed: () => showLegalPopup(context, LegalPage.privacy),
                 child: Text(
                   l10n.privacyPolicy,
                   style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 14),
@@ -101,6 +103,7 @@ class AppFooter extends StatelessWidget {
               _LinkItem(l10n.about, '/about'),
               _LinkItem(l10n.events, '/events'),
               _LinkItem(l10n.consultations, '/appointments'),
+              _LinkItem(l10n.blog, '/events'),
               _LinkItem(l10n.contactUs, '/contact'),
             ],
             compact: false,
@@ -111,8 +114,8 @@ class AppFooter extends StatelessWidget {
           child: _LinkColumn(
             title: l10n.resources,
             links: [
-              _LinkItem('BaZi Plotter', '/events'),
-              _LinkItem('Flying Star Charts', '/events'),
+              _LinkItem('BaZi App', '/events'),
+              _LinkItem('Xuan Kong Charts', '/events'),
               _LinkItem('Store', '/events'),
               _LinkItem('Academy', '/academy'),
             ],
@@ -159,8 +162,8 @@ class AppFooter extends StatelessWidget {
         _LinkColumn(
           title: l10n.resources,
           links: [
-            _LinkItem('BaZi Plotter', '/events'),
-            _LinkItem('Flying Star Charts', '/events'),
+            _LinkItem('BaZi App', '/events'),
+            _LinkItem('Xuan Kong Charts', '/events'),
             _LinkItem('Store', '/events'),
             _LinkItem('Academy', '/academy'),
           ],
@@ -272,6 +275,20 @@ class _ChatAndSocial extends StatelessWidget {
                 icon: Icon(LucideIcons.instagram, color: AppColors.onPrimary, size: compact ? 18 : 22),
                 onPressed: () => launchUrlExternal(AppContent.instagramUrl!),
                 tooltip: 'Instagram',
+                style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
+              ),
+            if (AppContent.tiktokUrl != null)
+              IconButton(
+                icon: Icon(LucideIcons.video, color: AppColors.onPrimary, size: compact ? 18 : 22),
+                onPressed: () => launchUrlExternal(AppContent.tiktokUrl!),
+                tooltip: 'TikTok',
+                style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
+              ),
+            if (AppContent.telegramUrl != null)
+              IconButton(
+                icon: Icon(LucideIcons.send, color: AppColors.onPrimary, size: compact ? 18 : 22),
+                onPressed: () => launchUrlExternal(AppContent.telegramUrl!),
+                tooltip: 'Telegram',
                 style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
               ),
           ],

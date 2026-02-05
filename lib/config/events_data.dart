@@ -19,10 +19,10 @@ class EventItem {
 
 const List<EventItem> kAllEvents = [
   EventItem(
-    title: 'Feng Shui & Astrology 2026',
-    date: '24 - 25 Jan 2026',
-    location: 'MITEC, Kuala Lumpur',
-    description: 'Get practical Feng Shui, BaZi, and Qi Men insights to successfully align your wealth, career, and life with the energy of 2026.',
+    title: 'Master Elf - The Rise of Phoenix 2026',
+    date: '31/01/2026',
+    location: 'Phnom Penh',
+    description: 'The Master Revelation.',
     limitedSeats: true,
   ),
   EventItem(

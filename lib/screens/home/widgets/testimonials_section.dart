@@ -23,19 +23,19 @@ class TestimonialsSection extends StatelessWidget {
 
   static const _placeholders = [
     TestimonialItem(
-      quote: "If you're lost in life with no goals, you should start practising QiMen.",
-      name: 'Kai Wee',
-      location: 'Singapore',
+      quote: 'Master Elf is the best',
+      name: 'Chong Sarachan',
+      location: 'Phnom Penh',
     ),
     TestimonialItem(
-      quote: "QiMen unlocked something inside me that helped me understand myself better and my relationship with wealth, responsibility, and life.",
-      name: 'Graham Cox',
-      location: 'Singapore',
+      quote: 'Master Elf is the best',
+      name: 'Lana',
+      location: 'Phnom Penh',
     ),
     TestimonialItem(
-      quote: "BaZi is very clear on what you need to do, how to do it, and how to improve struggles.",
-      name: 'Susanne Schutz',
-      location: 'Hong Kong',
+      quote: 'Master Elf is the best',
+      name: 'kenway',
+      location: 'Phnom Penh',
     ),
   ];
 

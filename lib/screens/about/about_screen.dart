@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../config/app_content.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/breadcrumb.dart';
 
@@ -9,6 +10,7 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
@@ -18,12 +20,12 @@ class AboutScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Breadcrumb(items: [
-              (label: 'Home', route: '/'),
-              (label: 'About', route: null),
+              (label: l10n.home, route: '/'),
+              (label: l10n.about, route: null),
             ]),
             const SizedBox(height: 16),
             Text(
-              'About ${AppContent.shortName}',
+              l10n.aboutBreadcrumb,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: AppColors.onSurfaceVariant,
                   ),
@@ -41,20 +43,20 @@ class AboutScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'Empowering Lives Through Chinese Metaphysics',
+              l10n.aboutHeroHeadline,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     color: AppColors.onSurface,
                     fontWeight: FontWeight.w600,
                   ),
             ),
             const SizedBox(height: 32),
-            _Bullet(text: 'It started with a mission.'),
-            _Bullet(text: 'A method forged from ancient truths.'),
-            _Bullet(text: 'Turning metaphysics into real-world impact.'),
-            _Bullet(text: 'Global recognition. Real results.'),
+            _Bullet(text: l10n.aboutBullet1),
+            _Bullet(text: l10n.aboutBullet2),
+            _Bullet(text: l10n.aboutBullet3),
+            _Bullet(text: l10n.aboutBullet4),
             const SizedBox(height: 32),
             Text(
-              'Featured in',
+              l10n.featuredIn,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 16),

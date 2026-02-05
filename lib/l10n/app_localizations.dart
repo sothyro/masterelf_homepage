@@ -241,19 +241,25 @@ abstract class AppLocalizations {
   /// No description provided for @heroHeadline1.
   ///
   /// In en, this message translates to:
-  /// **'Life doesn\'t change by chance.'**
+  /// **'Awareness always comes before outcome.'**
   String get heroHeadline1;
 
-  /// No description provided for @heroHeadline2.
+  /// No description provided for @heroHeadline2Prefix.
   ///
   /// In en, this message translates to:
-  /// **'It changes with Strategy.'**
-  String get heroHeadline2;
+  /// **'Its true value lies in guiding better '**
+  String get heroHeadline2Prefix;
+
+  /// No description provided for @heroHeadline2Highlight.
+  ///
+  /// In en, this message translates to:
+  /// **'Choices.'**
+  String get heroHeadline2Highlight;
 
   /// No description provided for @heroSubline.
   ///
   /// In en, this message translates to:
-  /// **'Master your timing, environment, and decisions with a proven system rooted in Chinese Metaphysics – without the superstition or fluff.'**
+  /// **'Feng Shui & Life Planning Services'**
   String get heroSubline;
 
   /// No description provided for @exploreAllEvents.
@@ -298,6 +304,18 @@ abstract class AppLocalizations {
   /// **'Get Consultation'**
   String get getConsultation;
 
+  /// No description provided for @finalCtaHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Hesitate to Start?'**
+  String get finalCtaHeading;
+
+  /// No description provided for @finalCtaBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Just make a phone call. Send a message to our Facebook page. Or visit us.'**
+  String get finalCtaBody;
+
   /// No description provided for @notSureWhereToStart.
   ///
   /// In en, this message translates to:
@@ -319,19 +337,19 @@ abstract class AppLocalizations {
   /// No description provided for @sectionExperienceHeading.
   ///
   /// In en, this message translates to:
-  /// **'Experience guided, actionable Transformation.'**
+  /// **'Best practice guided, result Transformation.'**
   String get sectionExperienceHeading;
 
   /// No description provided for @sectionKnowledgeHeading.
   ///
   /// In en, this message translates to:
-  /// **'This isn\'t just Knowledge. It\'s a practical framework for Real Change.'**
+  /// **'This isn\'t just instruction. It\'s a practical framework for Real Change.'**
   String get sectionKnowledgeHeading;
 
   /// No description provided for @sectionKnowledgeBody.
   ///
   /// In en, this message translates to:
-  /// **'Over 60,000 students have used this system to gain clarity, make smarter moves, and create results that last. From business leaders to everyday individuals, it works – because it\'s built on structure, not guesswork.'**
+  /// **'Over 44,000 followers have used this system. Success is certain when you align with the right people, right places, and right time.'**
   String get sectionKnowledgeBody;
 
   /// No description provided for @sectionKnowledgeBody2.
@@ -340,58 +358,70 @@ abstract class AppLocalizations {
   /// **'Success doesn\'t come from working harder. It comes from making the right moves, at the right time, with the right system.'**
   String get sectionKnowledgeBody2;
 
+  /// No description provided for @sectionKnowledgeStat.
+  ///
+  /// In en, this message translates to:
+  /// **'44,000+ followers'**
+  String get sectionKnowledgeStat;
+
   /// No description provided for @sectionMapHeading.
   ///
   /// In en, this message translates to:
-  /// **'You don\'t need more motivation. You need a Map. Let\'s Draw One That Fits.'**
+  /// **'You don\'t need more advice. You need a RoadMap. Let heaven guide you to the correct way.'**
   String get sectionMapHeading;
 
   /// No description provided for @sectionMapIntro.
   ///
   /// In en, this message translates to:
-  /// **'Planning a major move in career, business or life can feel clear at first, but often belies uncertainty beneath the surface. We help you cut through the noise, align your timing and create a clear path forward.'**
+  /// **'On your mark… We know the best way to help you align your timing and create a clear path forward.'**
   String get sectionMapIntro;
 
   /// No description provided for @sectionStoryHeading.
   ///
   /// In en, this message translates to:
-  /// **'The Story of Master Elf'**
+  /// **'The Story of Master Elf.'**
   String get sectionStoryHeading;
 
   /// No description provided for @sectionStoryPara1.
   ///
   /// In en, this message translates to:
-  /// **'Master Elf started with the same questions most of us face: What\'s next? When should I act? How do I choose the right path?'**
+  /// **'Master Elf prepared you for the first 50% of success, then guides you with another 50% to reap the benefit for you.'**
   String get sectionStoryPara1;
 
   /// No description provided for @sectionStoryPara2.
   ///
   /// In en, this message translates to:
-  /// **'Through years of study, testing, and teaching, we discovered how to apply classical principles of Chinese Metaphysics to modern life.'**
+  /// **'Through years of study, testing, and developing a proven method rooted in Chinese Metaphysics.'**
   String get sectionStoryPara2;
 
   /// No description provided for @sectionStoryPara3.
   ///
   /// In en, this message translates to:
-  /// **'Today, that method has helped thousands create better outcomes for themselves and others – with less second-guessing.'**
+  /// **'Today, that method has helped 44,000 followers create better outcomes for themselves and others.'**
   String get sectionStoryPara3;
+
+  /// No description provided for @sectionStoryCtaButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf\'s Endeavor'**
+  String get sectionStoryCtaButton;
 
   /// No description provided for @sectionTestimonialsHeading.
   ///
   /// In en, this message translates to:
-  /// **'Authentic Insights. Measurable Impact.'**
+  /// **'Real Insights. Real Outcomes.'**
   String get sectionTestimonialsHeading;
 
   /// No description provided for @sectionTestimonialsSub1.
   ///
   /// In en, this message translates to:
-  /// **'They didn\'t just learn something new. They changed how they make decisions – and how they live.'**
+  /// **'They didn\'t just join the event. They witnessed the real strategy.'**
   String get sectionTestimonialsSub1;
 
   /// No description provided for @sectionTestimonialsSub2.
   ///
   /// In en, this message translates to:
-  /// **'From business leaders to everyday individuals, thousands have trusted Master Elf to navigate life\'s biggest decisions.'**
+  /// **'From business leaders to individuals.'**
   String get sectionTestimonialsSub2;
 
   /// No description provided for @featuredIn.
@@ -409,43 +439,43 @@ abstract class AppLocalizations {
   /// No description provided for @academyQiMen.
   ///
   /// In en, this message translates to:
-  /// **'QiMen Academy™'**
+  /// **'QiMen Dunjia Mastery™'**
   String get academyQiMen;
 
   /// No description provided for @academyQiMenDesc.
   ///
   /// In en, this message translates to:
-  /// **'Gain situational awareness to craft your strategy for all areas of your life.'**
+  /// **'Gain strategic advantage to maximise your wins.'**
   String get academyQiMenDesc;
 
   /// No description provided for @academyBaZi.
   ///
   /// In en, this message translates to:
-  /// **'BaZi Academy™'**
+  /// **'BaZi Revelation™'**
   String get academyBaZi;
 
   /// No description provided for @academyBaZiDesc.
   ///
   /// In en, this message translates to:
-  /// **'Understand your strength, limitation, and hidden talents. Discover your core values.'**
+  /// **'Understand your destiny, and hidden power.'**
   String get academyBaZiDesc;
 
   /// No description provided for @academyFengShui.
   ///
   /// In en, this message translates to:
-  /// **'Feng Shui Academy™'**
+  /// **'Feng Shui Charter™'**
   String get academyFengShui;
 
   /// No description provided for @academyFengShuiDesc.
   ///
   /// In en, this message translates to:
-  /// **'Master the energy flow of your environments for your personal wellbeing and professional success.'**
+  /// **'Charter Practitioner of the Qi flow.'**
   String get academyFengShuiDesc;
 
   /// No description provided for @consult1Category.
   ///
   /// In en, this message translates to:
-  /// **'Destiny/Personal Readings'**
+  /// **'Destiny Reveal'**
   String get consult1Category;
 
   /// No description provided for @consult1Method.
@@ -457,43 +487,43 @@ abstract class AppLocalizations {
   /// No description provided for @consult1Question.
   ///
   /// In en, this message translates to:
-  /// **'Are you truly living up to your fullest potential right now?'**
+  /// **'Become who you are born to be…'**
   String get consult1Question;
 
   /// No description provided for @consult1Desc.
   ///
   /// In en, this message translates to:
-  /// **'Discover what makes you special, your inherent talents, and how to live your life with your highest capabilities by learning your personal life blueprint.'**
+  /// **'Reveal your true power within.'**
   String get consult1Desc;
 
   /// No description provided for @consult2Category.
   ///
   /// In en, this message translates to:
-  /// **'Business Date Selection'**
+  /// **'Special Event Date Selection'**
   String get consult2Category;
 
   /// No description provided for @consult2Method.
   ///
   /// In en, this message translates to:
-  /// **'QiMen'**
+  /// **'QiMen DunJia'**
   String get consult2Method;
 
   /// No description provided for @consult2Question.
   ///
   /// In en, this message translates to:
-  /// **'Do you want to know when is truly the right time to make that significant leap of faith?'**
+  /// **'Strategise your wise move...'**
   String get consult2Question;
 
   /// No description provided for @consult2Desc.
   ///
   /// In en, this message translates to:
-  /// **'Understand how you can map out the optimal timing to make critical decisions by exploiting the unseen advantages and winning in life.'**
+  /// **'Defeat your enemy and maximise your benefits.'**
   String get consult2Desc;
 
   /// No description provided for @consult3Category.
   ///
   /// In en, this message translates to:
-  /// **'Home/Office Alignment'**
+  /// **'Mediation of Space'**
   String get consult3Category;
 
   /// No description provided for @consult3Method.
@@ -505,13 +535,13 @@ abstract class AppLocalizations {
   /// No description provided for @consult3Question.
   ///
   /// In en, this message translates to:
-  /// **'Did you know the arrangement of your space is silently impacting your mood and luck?'**
+  /// **'Arrange your place, define your life...'**
   String get consult3Question;
 
   /// No description provided for @consult3Desc.
   ///
   /// In en, this message translates to:
-  /// **'Understand how to harness the vital flow of environmental energy and transform it into your powerful asset in supporting your best life.'**
+  /// **'Understand how to harness the positive energy of your environment.'**
   String get consult3Desc;
 
   /// No description provided for @consult4Category.
@@ -523,19 +553,19 @@ abstract class AppLocalizations {
   /// No description provided for @consult4Method.
   ///
   /// In en, this message translates to:
-  /// **'QiMen'**
+  /// **'Date Selection'**
   String get consult4Method;
 
   /// No description provided for @consult4Question.
   ///
   /// In en, this message translates to:
-  /// **'Have you asked yourself when is the best time to launch something grand in your life?'**
+  /// **'When is the best time to choose things wisely?'**
   String get consult4Question;
 
   /// No description provided for @consult4Desc.
   ///
   /// In en, this message translates to:
-  /// **'Picking the precise day and hour to begin any big activity or event ensures the best possible outcome for a positive momentum.'**
+  /// **'Select your time and date for the best possible outcome.'**
   String get consult4Desc;
 
   /// No description provided for @stickyCtaText.
@@ -559,7 +589,7 @@ abstract class AppLocalizations {
   /// No description provided for @popupDescription.
   ///
   /// In en, this message translates to:
-  /// **'Get Your Personal 2026 Animal Sign Forecast Before the Crimson Horse Year Begins.'**
+  /// **'Get Your Personal 2026 Animal Sign Forecast…'**
   String get popupDescription;
 
   /// No description provided for @readFullArticles.
@@ -571,7 +601,7 @@ abstract class AppLocalizations {
   /// No description provided for @popupFormPrompt.
   ///
   /// In en, this message translates to:
-  /// **'Ready to receive your 2026 forecast? Enter Your Details Below and we\'ll notify you the moment your sign premieres.'**
+  /// **'Enter Your Details Below and we\'ll notify you when your sign premieres.'**
   String get popupFormPrompt;
 
   /// No description provided for @submit.
@@ -589,13 +619,13 @@ abstract class AppLocalizations {
   /// No description provided for @eventsSubline.
   ///
   /// In en, this message translates to:
-  /// **'Where learning turns into real-world breakthroughs.'**
+  /// **'Where discussion turns into real knowledge.'**
   String get eventsSubline;
 
   /// No description provided for @secureYourSeat.
   ///
   /// In en, this message translates to:
-  /// **'Secure your seat'**
+  /// **'Book your seat'**
   String get secureYourSeat;
 
   /// No description provided for @searchEvent.
@@ -621,6 +651,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Location'**
   String get locationColumn;
+
+  /// No description provided for @aboutPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf | The Rise of Phoenix'**
+  String get aboutPageTitle;
+
+  /// No description provided for @aboutBreadcrumb.
+  ///
+  /// In en, this message translates to:
+  /// **'About Master Elf.'**
+  String get aboutBreadcrumb;
+
+  /// No description provided for @aboutHeroHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Enrich Lives Through Heavenly Knowledge'**
+  String get aboutHeroHeadline;
+
+  /// No description provided for @aboutBullet1.
+  ///
+  /// In en, this message translates to:
+  /// **'It started with believe.'**
+  String get aboutBullet1;
+
+  /// No description provided for @aboutBullet2.
+  ///
+  /// In en, this message translates to:
+  /// **'A mission delegated by the heaven.'**
+  String get aboutBullet2;
+
+  /// No description provided for @aboutBullet3.
+  ///
+  /// In en, this message translates to:
+  /// **'Guiding you with metaphysics into reapable outcome.'**
+  String get aboutBullet3;
+
+  /// No description provided for @aboutBullet4.
+  ///
+  /// In en, this message translates to:
+  /// **'Real achievement. Real outputs.'**
+  String get aboutBullet4;
 }
 
 class _AppLocalizationsDelegate

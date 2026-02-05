@@ -80,10 +80,13 @@ class AppLocalizationsKm extends AppLocalizations {
   String get privacyPolicy => 'គោលការណ៍ភាពឯកជន';
 
   @override
-  String get heroHeadline1 => 'ជីវិតមិនផ្លាស់ប្តូរដោយចៃដន្យទេ។';
+  String get heroHeadline1 => 'ការយល់ដឹងតែងតែមកមុនលទ្ធផល។';
 
   @override
-  String get heroHeadline2 => 'វាផ្លាស់ប្តូរជាមួយយុទ្ធសាស្រ្ត។';
+  String get heroHeadline2Prefix => 'Its true value lies in guiding better ';
+
+  @override
+  String get heroHeadline2Highlight => 'Choices.';
 
   @override
   String get heroSubline =>
@@ -109,6 +112,13 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get getConsultation => 'ទទួលការពិគ្រោះ';
+
+  @override
+  String get finalCtaHeading => 'Hesitate to Start?';
+
+  @override
+  String get finalCtaBody =>
+      'Just make a phone call. Send a message to our Facebook page. Or visit us.';
 
   @override
   String get notSureWhereToStart => 'មិនដឹងថាចាប់ផ្តើមពីណា?';
@@ -137,6 +147,9 @@ class AppLocalizationsKm extends AppLocalizations {
       'Success doesn\'t come from working harder. It comes from making the right moves, at the right time, with the right system.';
 
   @override
+  String get sectionKnowledgeStat => '44,000+ followers';
+
+  @override
   String get sectionMapHeading =>
       'You don\'t need more motivation. You need a Map. Let\'s Draw One That Fits.';
 
@@ -157,7 +170,10 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get sectionStoryPara3 =>
-      'Today, that method has helped thousands create better outcomes for themselves and others – with less second-guessing.';
+      'Today, that method has helped 44,000 followers create better outcomes for themselves and others.';
+
+  @override
+  String get sectionStoryCtaButton => 'Master Elf\'s Endeavor';
 
   @override
   String get sectionTestimonialsHeading =>
@@ -298,4 +314,26 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get locationColumn => 'Location';
+
+  @override
+  String get aboutPageTitle => 'Master Elf | The Rise of Phoenix';
+
+  @override
+  String get aboutBreadcrumb => 'About Master Elf.';
+
+  @override
+  String get aboutHeroHeadline => 'Enrich Lives Through Heavenly Knowledge';
+
+  @override
+  String get aboutBullet1 => 'It started with believe.';
+
+  @override
+  String get aboutBullet2 => 'A mission delegated by the heaven.';
+
+  @override
+  String get aboutBullet3 =>
+      'Guiding you with metaphysics into reapable outcome.';
+
+  @override
+  String get aboutBullet4 => 'Real achievement. Real outputs.';
 }
