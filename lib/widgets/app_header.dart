@@ -9,6 +9,7 @@ import '../providers/locale_provider.dart';
 import '../config/app_content.dart';
 import '../utils/breakpoints.dart';
 import 'glass_container.dart';
+import 'media_posts_popup.dart';
 
 /// Menu bar colors: gold accents and link text (glass fill uses [AppColors.overlayDark]).
 class _MenuColors {
@@ -112,10 +113,8 @@ class _DesktopHeader extends StatelessWidget {
   /// Paths per dropdown (by index). When multiple dropdowns share a path (e.g. /events),
   /// only the last matching one is active so at most one menu is highlighted.
   static const _dropdownPaths = [
-    ['/about'],
-    ['/academy'],
-    ['/events'],  // Resources
-    ['/events'],  // News & Events — wins when on /events
+    ['/about', '/journey', '/method'],
+    ['/apps'],  // Apps & Store
   ];
 
   @override
@@ -162,37 +161,25 @@ class _DesktopHeader extends StatelessWidget {
             _NavDropdown(
               label: l10n.about,
               items: [
-                _NavItem(l10n.journey, '/about', LucideIcons.compass),
-                _NavItem(l10n.ourMethod, '/about#method', LucideIcons.lightbulb),
+                _NavItem(l10n.journey, '/journey', LucideIcons.compass),
+                _NavItem(l10n.ourMethod, '/method', LucideIcons.lightbulb),
               ],
               isActive: activeDropdownIndex == 0,
             ),
+            _NavLink(label: l10n.charteredPractitioner, path: '/academy'),
             _NavDropdown(
-              label: l10n.learning,
+              label: l10n.appsAndStore,
               items: [
-                _NavItem('QiMen Academy', '/academy', LucideIcons.compass),
-                _NavItem('Feng Shui Academy', '/academy', LucideIcons.home),
-                _NavItem('BaZi Academy', '/academy', LucideIcons.user),
+                _NavItem(l10n.masterElfSystem, '/apps', LucideIcons.cpu),
+                _NavItem(l10n.period9MobileApp, '/apps', LucideIcons.smartphone),
+                _NavItem(l10n.talismanStore, '/apps', LucideIcons.shoppingBag),
               ],
               isActive: activeDropdownIndex == 1,
             ),
-            _NavDropdown(
-              label: l10n.resources,
-              items: [
-                _NavItem('BaZi Plotter', '/events', LucideIcons.calendar),
-                _NavItem('Flying Star Charts', '/events', LucideIcons.star),
-                _NavItem('Store', '/events', LucideIcons.shoppingBag),
-              ],
-              isActive: activeDropdownIndex == 2,
-            ),
-            _NavDropdown(
-              label: l10n.newsAndEvents,
-              items: [
-                _NavItem(l10n.events, '/events', LucideIcons.calendarDays),
-                _NavItem(l10n.blog, '/events', LucideIcons.fileText),
-                _NavItem(l10n.media, '/events', LucideIcons.video),
-              ],
-              isActive: activeDropdownIndex == 3,
+            _NavLink(label: l10n.events, path: '/events'),
+            _NavActionLink(
+              label: l10n.mediaAndPosts,
+              onTap: () => showMediaPostsPopup(context),
             ),
             _NavLink(label: l10n.consultations, path: '/appointments'),
             const Spacer(),
@@ -300,6 +287,45 @@ class _NavLink extends StatelessWidget {
                 ),
               ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Nav item that runs a callback instead of navigating (e.g. opens a dialog).
+class _NavActionLink extends StatelessWidget {
+  const _NavActionLink({required this.label, required this.onTap});
+
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2),
+      child: TextButton(
+        onPressed: onTap,
+        style: TextButton.styleFrom(
+          foregroundColor: _MenuColors.linkText,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ).copyWith(
+          overlayColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.hovered)) {
+              return _MenuColors.linkText.withValues(alpha: 0.1);
+            }
+            return null;
+          }),
+        ),
+        child: Text(
+          label,
+          style: const TextStyle(
+            color: _MenuColors.linkText,
+            fontWeight: FontWeight.normal,
+            fontSize: 14,
+          ),
         ),
       ),
     );

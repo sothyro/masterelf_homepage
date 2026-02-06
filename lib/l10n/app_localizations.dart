@@ -130,17 +130,161 @@ abstract class AppLocalizations {
   /// **'Learning'**
   String get learning;
 
+  /// No description provided for @charteredPractitioner.
+  ///
+  /// In en, this message translates to:
+  /// **'Chartered Practitioner'**
+  String get charteredPractitioner;
+
   /// No description provided for @resources.
   ///
   /// In en, this message translates to:
   /// **'Resources'**
   String get resources;
 
+  /// No description provided for @appsAndStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps & Store'**
+  String get appsAndStore;
+
+  /// No description provided for @masterElfSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf System'**
+  String get masterElfSystem;
+
+  /// No description provided for @period9MobileApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Period 9 Mobile App'**
+  String get period9MobileApp;
+
+  /// No description provided for @talismanStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Talisman Store'**
+  String get talismanStore;
+
+  /// No description provided for @appsPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps & Store'**
+  String get appsPageTitle;
+
+  /// No description provided for @masterElfSystemSpotlightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf System'**
+  String get masterElfSystemSpotlightTitle;
+
+  /// No description provided for @masterElfSystemSpotlightDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The complete BaZi and Chinese metaphysics platform. Plot charts, analyse timing and access Master Elf\'s system online.'**
+  String get masterElfSystemSpotlightDesc;
+
+  /// No description provided for @openMasterElfSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Master Elf System'**
+  String get openMasterElfSystem;
+
+  /// No description provided for @period9SpotlightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Period 9 Mobile App'**
+  String get period9SpotlightTitle;
+
+  /// No description provided for @period9SpotlightDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Carry Period 9 Feng Shui and timing insights in your pocket. Available on iOS and Android.'**
+  String get period9SpotlightDesc;
+
+  /// No description provided for @downloadOnAppStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Download on the App Store'**
+  String get downloadOnAppStore;
+
+  /// No description provided for @getItOnGooglePlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Get it on Google Play'**
+  String get getItOnGooglePlay;
+
+  /// No description provided for @talismanStoreSpotlightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Talisman Store'**
+  String get talismanStoreSpotlightTitle;
+
+  /// No description provided for @talismanStoreSpotlightDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Curated talismans and remedies. More items coming soon.'**
+  String get talismanStoreSpotlightDesc;
+
   /// No description provided for @newsAndEvents.
   ///
   /// In en, this message translates to:
   /// **'News & Events'**
   String get newsAndEvents;
+
+  /// No description provided for @mediaAndPosts.
+  ///
+  /// In en, this message translates to:
+  /// **'Media & Posts'**
+  String get mediaAndPosts;
+
+  /// No description provided for @mediaPostsFacebookTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Posts & updates'**
+  String get mediaPostsFacebookTitle;
+
+  /// No description provided for @mediaPostsFacebookBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Our latest posts, event updates and news are on our Facebook page. Follow us for updates.'**
+  String get mediaPostsFacebookBody;
+
+  /// No description provided for @mediaPostsFacebookLink.
+  ///
+  /// In en, this message translates to:
+  /// **'facebook.com/masterelf'**
+  String get mediaPostsFacebookLink;
+
+  /// No description provided for @mediaPostsTelegramTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Telegram Group'**
+  String get mediaPostsTelegramTitle;
+
+  /// No description provided for @mediaPostsTelegramBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Join our community on Telegram for discussions and updates.'**
+  String get mediaPostsTelegramBody;
+
+  /// No description provided for @mediaPostsTelegramLink.
+  ///
+  /// In en, this message translates to:
+  /// **'t.me/hongchhayheng'**
+  String get mediaPostsTelegramLink;
+
+  /// No description provided for @mediaPostsCoverageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Media coverage'**
+  String get mediaPostsCoverageTitle;
+
+  /// No description provided for @mediaPostsCoverageBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample links to articles and features (to be updated):'**
+  String get mediaPostsCoverageBody;
 
   /// No description provided for @consultations.
   ///
@@ -169,7 +313,7 @@ abstract class AppLocalizations {
   /// No description provided for @journey.
   ///
   /// In en, this message translates to:
-  /// **'Master Elf\'s Journey'**
+  /// **'My Endeavour'**
   String get journey;
 
   /// No description provided for @ourMethod.
@@ -490,6 +634,126 @@ abstract class AppLocalizations {
   /// **'Charter Practitioner of the Qi flow.'**
   String get academyFengShuiDesc;
 
+  /// No description provided for @academyPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Learning & Training'**
+  String get academyPageTitle;
+
+  /// No description provided for @academyQiMenAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'Ancient strategy system based on time and space. Used for decision-making, date selection, and situational advantage.'**
+  String get academyQiMenAbout;
+
+  /// No description provided for @academyBaZiAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'Your birth chart in Eight Characters. Reveals strengths, life cycles, and hidden potential for career and relationships.'**
+  String get academyBaZiAbout;
+
+  /// No description provided for @academyFengShuiAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'The art of environmental energy. Learn to assess and align spaces for wellbeing and success.'**
+  String get academyFengShuiAbout;
+
+  /// No description provided for @academyQiMenTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Nine Palaces • Strategic timing • Business & personal decisions'**
+  String get academyQiMenTopics;
+
+  /// No description provided for @academyBaZiTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Four Pillars • Five Elements • Life potential & cycles'**
+  String get academyBaZiTopics;
+
+  /// No description provided for @academyFengShuiTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Qi flow • Form & Compass • Space alignment'**
+  String get academyFengShuiTopics;
+
+  /// No description provided for @academyDateSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Selection™'**
+  String get academyDateSelection;
+
+  /// No description provided for @academyDateSelectionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose auspicious timing for key life and business events.'**
+  String get academyDateSelectionDesc;
+
+  /// No description provided for @academyDateSelectionAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'Select favourable dates and hours using almanac, BaZi and Qimen. Apply to weddings, openings, travel and major decisions.'**
+  String get academyDateSelectionAbout;
+
+  /// No description provided for @academyDateSelectionTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Tung Shu • Auspicious hours • Events & milestones'**
+  String get academyDateSelectionTopics;
+
+  /// No description provided for @academyIChing.
+  ///
+  /// In en, this message translates to:
+  /// **'I Ching™'**
+  String get academyIChing;
+
+  /// No description provided for @academyIChingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Ancient wisdom of the Book of Changes for clarity and direction.'**
+  String get academyIChingDesc;
+
+  /// No description provided for @academyIChingAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'The 64 hexagrams offer insight into change and outcome. Learn to consult the I Ching for decisions, strategy and personal guidance.'**
+  String get academyIChingAbout;
+
+  /// No description provided for @academyIChingTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'64 Hexagrams • Divination • Change & strategy'**
+  String get academyIChingTopics;
+
+  /// No description provided for @academyMaoShan.
+  ///
+  /// In en, this message translates to:
+  /// **'Mao Shan™'**
+  String get academyMaoShan;
+
+  /// No description provided for @academyMaoShanDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Taoist tradition of ritual and practice for transformation.'**
+  String get academyMaoShanDesc;
+
+  /// No description provided for @academyMaoShanAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'Mao Shan (Mount Mao) methods and rituals within Chinese metaphysics. Understand foundations and applications for spiritual and practical use.'**
+  String get academyMaoShanAbout;
+
+  /// No description provided for @academyMaoShanTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Rituals • Tradition • Practice & application'**
+  String get academyMaoShanTopics;
+
+  /// No description provided for @academyMoreCoursesNote.
+  ///
+  /// In en, this message translates to:
+  /// **'More courses and schedules will be announced here. Contact us for early access or custom group sessions.'**
+  String get academyMoreCoursesNote;
+
   /// No description provided for @consult1Category.
   ///
   /// In en, this message translates to:
@@ -640,6 +904,18 @@ abstract class AppLocalizations {
   /// **'Where discussion turns into real knowledge.'**
   String get eventsSubline;
 
+  /// No description provided for @eventsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience the best event for Feng Shui, Chinese Metaphysics and Astrology in Cambodia—live teachings, expert insights, and a community ready to grow with you.'**
+  String get eventsDescription;
+
+  /// No description provided for @eventsDescriptionHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'best event for Feng Shui, Chinese Metaphysics and Astrology in Cambodia'**
+  String get eventsDescriptionHighlight;
+
   /// No description provided for @secureYourSeat.
   ///
   /// In en, this message translates to:
@@ -652,11 +928,71 @@ abstract class AppLocalizations {
   /// **'Search event…'**
   String get searchEvent;
 
+  /// No description provided for @registerForEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get registerForEvent;
+
   /// No description provided for @eventColumn.
   ///
   /// In en, this message translates to:
   /// **'Event'**
   String get eventColumn;
+
+  /// No description provided for @eventRegTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Registration'**
+  String get eventRegTitle;
+
+  /// No description provided for @eventRegFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Registering for'**
+  String get eventRegFor;
+
+  /// No description provided for @eventRegName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get eventRegName;
+
+  /// No description provided for @eventRegEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get eventRegEmail;
+
+  /// No description provided for @eventRegPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get eventRegPhone;
+
+  /// No description provided for @eventRegSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit registration'**
+  String get eventRegSubmit;
+
+  /// No description provided for @eventRegSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration received'**
+  String get eventRegSuccess;
+
+  /// No description provided for @eventRegSuccessNote.
+  ///
+  /// In en, this message translates to:
+  /// **'We will confirm your seat by email or phone. See you at the event!'**
+  String get eventRegSuccessNote;
+
+  /// No description provided for @noEventsMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No events match your search.'**
+  String get noEventsMatch;
 
   /// No description provided for @dateColumn.
   ///
@@ -711,6 +1047,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Real achievement. Real outputs.'**
   String get aboutBullet4;
+
+  /// No description provided for @journeyPageHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'My Endeavour'**
+  String get journeyPageHeadline;
+
+  /// No description provided for @journeyStory1.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf is a recognised practitioner of Feng Shui and Chinese Metaphysics, with a following of over 44,000 and a track record of guiding individuals and businesses toward clarity and results. His path did not begin by chance—it began with a calling.'**
+  String get journeyStory1;
+
+  /// No description provided for @journeyStory2.
+  ///
+  /// In en, this message translates to:
+  /// **'What started as a deep belief in the wisdom of the heavens grew into a mission: to bring ancient systems of timing, space and destiny into everyday life. Through years of study, practice and refinement, he built a method that turns metaphysics into actionable insight.'**
+  String get journeyStory2;
+
+  /// No description provided for @journeyStory3.
+  ///
+  /// In en, this message translates to:
+  /// **'Today, that method helps clients make better decisions, choose auspicious dates, understand their strengths and align their environments. From destiny readings to strategic date selection and Feng Shui audits, Master Elf\'s system is designed for real-world impact.'**
+  String get journeyStory3;
+
+  /// No description provided for @journeyPeriod9Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Period 9 and the New Era'**
+  String get journeyPeriod9Title;
+
+  /// No description provided for @journeyPeriod9Body.
+  ///
+  /// In en, this message translates to:
+  /// **'We are now in Period 9 (2024–2043), the Li Fire era in the Xuan Kong Nine Periods cycle. This 20-year phase emphasises fire element energy, the south direction, and themes of visibility, progress and inner clarity. Master Elf\'s practice is aligned with this shift, helping you navigate the new era with timing and placement that match the cosmic cycle.'**
+  String get journeyPeriod9Body;
+
+  /// No description provided for @journeyPhoenixTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The Rise of the Phoenix'**
+  String get journeyPhoenixTitle;
+
+  /// No description provided for @journeyPhoenixBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The Rise of the Phoenix is Master Elf\'s revelation and the name of his system. It symbolises renewal, transformation and the moment when insight leads to action. In Period 9, the phoenix rises—and with the right knowledge, so can you. His framework integrates BaZi, Qimen Dunjia, I Ching, Date Selection, Feng Shui and Mao Shan into one coherent approach for those ready to rise.'**
+  String get journeyPhoenixBody;
+
+  /// No description provided for @methodPageHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Our Method'**
+  String get methodPageHeadline;
+
+  /// No description provided for @methodIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf\'s system is built on classical Chinese metaphysics. Each discipline is applied with clear formulas and standards so that consultations and training are consistent, explainable and effective. Below is how the main pillars are practiced, calculated and used.'**
+  String get methodIntro;
+
+  /// No description provided for @methodBaZiTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'BaZi (Four Pillars of Destiny)'**
+  String get methodBaZiTitle;
+
+  /// No description provided for @methodBaZiBody.
+  ///
+  /// In en, this message translates to:
+  /// **'BaZi uses your exact birth date and time to build four pillars—Year, Month, Day, Hour—each with a Heavenly Stem and Earthly Branch (eight characters in total). The chart is calculated in true solar time where applicable. We analyse the Five Elements, strengths and clashes, and life cycles to reveal your potential, favourable directions and timing for key decisions.'**
+  String get methodBaZiBody;
+
+  /// No description provided for @methodQimenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Qimen Dunjia'**
+  String get methodQimenTitle;
+
+  /// No description provided for @methodQimenBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Qimen is built on a 3×3 Nine Palaces grid that changes with date and double-hour. We set the chart for the time of the question or event, place the Three Odd Stars (Yi, Bing, Ding), Eight Gates and Eight Deities, and interpret using Yin or Yang Dun. The formula is time-sensitive and used for strategy, date selection and situational analysis.'**
+  String get methodQimenBody;
+
+  /// No description provided for @methodIChingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'I Ching (Book of Changes)'**
+  String get methodIChingTitle;
+
+  /// No description provided for @methodIChingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The I Ching is consulted to obtain a hexagram (six lines) that reflects the situation. We use the classical three-coin or yarrow-stalk method: each line is built from bottom to top (6 = transforming yin, 7 = stable yang, 8 = stable yin, 9 = transforming yang). The resulting hexagram and any changing lines are interpreted using the classic text and Master Elf\'s framework for decisions and direction.'**
+  String get methodIChingBody;
+
+  /// No description provided for @methodDateSelectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Selection'**
+  String get methodDateSelectionTitle;
+
+  /// No description provided for @methodDateSelectionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Auspicious dates and hours are chosen using the Chinese almanac (Tung Shu), BaZi compatibility with the event and principal, and Qimen Dunjia for strategic timing. We avoid inauspicious days (e.g. conflicting stems and branches) and align with favourable energies for openings, weddings, travel and major commitments.'**
+  String get methodDateSelectionBody;
+
+  /// No description provided for @methodFengShuiTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Feng Shui (Xuan Kong Flying Star)'**
+  String get methodFengShuiTitle;
+
+  /// No description provided for @methodFengShuiBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We use Xuan Kong Fei Xing (Flying Star) Feng Shui. The building\'s period (based on completion year; the Feng Shui year starts 4 February) and facing direction (24 Mountains) determine the Flying Star chart. The nine palaces receive stars that combine with the Lo Shu layout. We assess mountain and water stars, element balance and Period 9 adjustments to recommend placement and remedies.'**
+  String get methodFengShuiBody;
+
+  /// No description provided for @methodMaoShanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mao Shan'**
+  String get methodMaoShanTitle;
+
+  /// No description provided for @methodMaoShanBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Mao Shan (Mount Mao) traditions are integrated where appropriate for ritual and practice within Master Elf\'s system. The methods are applied with respect to classical form and purpose, supporting both spiritual and practical dimensions of Chinese metaphysics as used in his framework.'**
+  String get methodMaoShanBody;
 
   /// No description provided for @appointmentIntro.
   ///

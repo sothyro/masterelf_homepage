@@ -9,6 +9,7 @@ import '../utils/launcher_utils.dart';
 import '../theme/app_theme.dart';
 import '../utils/breakpoints.dart';
 import 'legal_popup.dart';
+import 'media_posts_popup.dart';
 
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key});
@@ -114,11 +115,9 @@ class AppFooter extends StatelessWidget {
             title: l10n.quickLinks,
             links: [
               _LinkItem(l10n.home, '/'),
-              _LinkItem(l10n.about, '/about'),
+              _LinkItem(l10n.journey, '/journey'),
               _LinkItem(l10n.events, '/events'),
               _LinkItem(l10n.consultations, '/appointments'),
-              _LinkItem(l10n.blog, '/events'),
-              _LinkItem(l10n.contactUs, '/contact'),
             ],
             compact: false,
             centerContent: true,
@@ -126,11 +125,11 @@ class AppFooter extends StatelessWidget {
         ),
         Expanded(
           child: _LinkColumn(
-            title: l10n.resources,
+            title: l10n.appsAndStore,
             links: [
-              _LinkItem('BaZi App', '/events'),
-              _LinkItem('Xuan Kong Charts', '/events'),
-              _LinkItem('Store', '/events'),
+              _LinkItem(l10n.masterElfSystem, '/apps'),
+              _LinkItem(l10n.period9MobileApp, '/apps'),
+              _LinkItem(l10n.talismanStore, '/apps'),
               _LinkItem('Academy', '/academy'),
             ],
             compact: false,
@@ -164,21 +163,20 @@ class AppFooter extends StatelessWidget {
           title: l10n.quickLinks,
           links: [
             _LinkItem(l10n.home, '/'),
-            _LinkItem(l10n.about, '/about'),
+            _LinkItem(l10n.journey, '/journey'),
             _LinkItem(l10n.events, '/events'),
             _LinkItem(l10n.consultations, '/appointments'),
-            _LinkItem(l10n.contactUs, '/contact'),
           ],
           compact: false,
           centerContent: true,
         ),
         const SizedBox(height: 24),
         _LinkColumn(
-          title: l10n.resources,
+          title: l10n.appsAndStore,
           links: [
-            _LinkItem('BaZi App', '/events'),
-            _LinkItem('Xuan Kong Charts', '/events'),
-            _LinkItem('Store', '/events'),
+            _LinkItem(l10n.masterElfSystem, '/apps'),
+            _LinkItem(l10n.period9MobileApp, '/apps'),
+            _LinkItem(l10n.talismanStore, '/apps'),
             _LinkItem('Academy', '/academy'),
           ],
           compact: false,
@@ -313,9 +311,10 @@ class _ChatAndSocial extends StatelessWidget {
 }
 
 class _LinkItem {
-  const _LinkItem(this.label, this.path);
+  const _LinkItem(this.label, this.path, {this.onTap});
   final String label;
   final String path;
+  final void Function(BuildContext context)? onTap;
 }
 
 class _LinkColumn extends StatelessWidget {
@@ -346,7 +345,13 @@ class _LinkColumn extends StatelessWidget {
           (e) => Padding(
             padding: EdgeInsets.only(bottom: compact ? 0 : 8),
             child: InkWell(
-              onTap: () => context.go(e.path),
+              onTap: () {
+                if (e.onTap != null) {
+                  e.onTap!(context);
+                } else {
+                  context.go(e.path);
+                }
+              },
               borderRadius: BorderRadius.circular(4),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2),

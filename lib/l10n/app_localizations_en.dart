@@ -24,10 +24,88 @@ class AppLocalizationsEn extends AppLocalizations {
   String get learning => 'Learning';
 
   @override
+  String get charteredPractitioner => 'Chartered Practitioner';
+
+  @override
   String get resources => 'Resources';
 
   @override
+  String get appsAndStore => 'Apps & Store';
+
+  @override
+  String get masterElfSystem => 'Master Elf System';
+
+  @override
+  String get period9MobileApp => 'Period 9 Mobile App';
+
+  @override
+  String get talismanStore => 'Talisman Store';
+
+  @override
+  String get appsPageTitle => 'Apps & Store';
+
+  @override
+  String get masterElfSystemSpotlightTitle => 'Master Elf System';
+
+  @override
+  String get masterElfSystemSpotlightDesc =>
+      'The complete BaZi and Chinese metaphysics platform. Plot charts, analyse timing and access Master Elf\'s system online.';
+
+  @override
+  String get openMasterElfSystem => 'Open Master Elf System';
+
+  @override
+  String get period9SpotlightTitle => 'Period 9 Mobile App';
+
+  @override
+  String get period9SpotlightDesc =>
+      'Carry Period 9 Feng Shui and timing insights in your pocket. Available on iOS and Android.';
+
+  @override
+  String get downloadOnAppStore => 'Download on the App Store';
+
+  @override
+  String get getItOnGooglePlay => 'Get it on Google Play';
+
+  @override
+  String get talismanStoreSpotlightTitle => 'Talisman Store';
+
+  @override
+  String get talismanStoreSpotlightDesc =>
+      'Curated talismans and remedies. More items coming soon.';
+
+  @override
   String get newsAndEvents => 'News & Events';
+
+  @override
+  String get mediaAndPosts => 'Media & Posts';
+
+  @override
+  String get mediaPostsFacebookTitle => 'Posts & updates';
+
+  @override
+  String get mediaPostsFacebookBody =>
+      'Our latest posts, event updates and news are on our Facebook page. Follow us for updates.';
+
+  @override
+  String get mediaPostsFacebookLink => 'facebook.com/masterelf';
+
+  @override
+  String get mediaPostsTelegramTitle => 'Telegram Group';
+
+  @override
+  String get mediaPostsTelegramBody =>
+      'Join our community on Telegram for discussions and updates.';
+
+  @override
+  String get mediaPostsTelegramLink => 't.me/hongchhayheng';
+
+  @override
+  String get mediaPostsCoverageTitle => 'Media coverage';
+
+  @override
+  String get mediaPostsCoverageBody =>
+      'Sample links to articles and features (to be updated):';
 
   @override
   String get consultations => 'Consultations';
@@ -42,7 +120,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutMasterElf => 'About Master Elf';
 
   @override
-  String get journey => 'Master Elf\'s Journey';
+  String get journey => 'My Endeavour';
 
   @override
   String get ourMethod => 'Our Method';
@@ -219,6 +297,82 @@ class AppLocalizationsEn extends AppLocalizations {
   String get academyFengShuiDesc => 'Charter Practitioner of the Qi flow.';
 
   @override
+  String get academyPageTitle => 'Learning & Training';
+
+  @override
+  String get academyQiMenAbout =>
+      'Ancient strategy system based on time and space. Used for decision-making, date selection, and situational advantage.';
+
+  @override
+  String get academyBaZiAbout =>
+      'Your birth chart in Eight Characters. Reveals strengths, life cycles, and hidden potential for career and relationships.';
+
+  @override
+  String get academyFengShuiAbout =>
+      'The art of environmental energy. Learn to assess and align spaces for wellbeing and success.';
+
+  @override
+  String get academyQiMenTopics =>
+      'Nine Palaces • Strategic timing • Business & personal decisions';
+
+  @override
+  String get academyBaZiTopics =>
+      'Four Pillars • Five Elements • Life potential & cycles';
+
+  @override
+  String get academyFengShuiTopics =>
+      'Qi flow • Form & Compass • Space alignment';
+
+  @override
+  String get academyDateSelection => 'Date Selection™';
+
+  @override
+  String get academyDateSelectionDesc =>
+      'Choose auspicious timing for key life and business events.';
+
+  @override
+  String get academyDateSelectionAbout =>
+      'Select favourable dates and hours using almanac, BaZi and Qimen. Apply to weddings, openings, travel and major decisions.';
+
+  @override
+  String get academyDateSelectionTopics =>
+      'Tung Shu • Auspicious hours • Events & milestones';
+
+  @override
+  String get academyIChing => 'I Ching™';
+
+  @override
+  String get academyIChingDesc =>
+      'Ancient wisdom of the Book of Changes for clarity and direction.';
+
+  @override
+  String get academyIChingAbout =>
+      'The 64 hexagrams offer insight into change and outcome. Learn to consult the I Ching for decisions, strategy and personal guidance.';
+
+  @override
+  String get academyIChingTopics =>
+      '64 Hexagrams • Divination • Change & strategy';
+
+  @override
+  String get academyMaoShan => 'Mao Shan™';
+
+  @override
+  String get academyMaoShanDesc =>
+      'Taoist tradition of ritual and practice for transformation.';
+
+  @override
+  String get academyMaoShanAbout =>
+      'Mao Shan (Mount Mao) methods and rituals within Chinese metaphysics. Understand foundations and applications for spiritual and practical use.';
+
+  @override
+  String get academyMaoShanTopics =>
+      'Rituals • Tradition • Practice & application';
+
+  @override
+  String get academyMoreCoursesNote =>
+      'More courses and schedules will be announced here. Contact us for early access or custom group sessions.';
+
+  @override
   String get consult1Category => 'Destiny Reveal';
 
   @override
@@ -298,13 +452,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventsSubline => 'Where discussion turns into real knowledge.';
 
   @override
+  String get eventsDescription =>
+      'Experience the best event for Feng Shui, Chinese Metaphysics and Astrology in Cambodia—live teachings, expert insights, and a community ready to grow with you.';
+
+  @override
+  String get eventsDescriptionHighlight =>
+      'best event for Feng Shui, Chinese Metaphysics and Astrology in Cambodia';
+
+  @override
   String get secureYourSeat => 'Book your seat';
 
   @override
   String get searchEvent => 'Search event…';
 
   @override
+  String get registerForEvent => 'Register';
+
+  @override
   String get eventColumn => 'Event';
+
+  @override
+  String get eventRegTitle => 'Event Registration';
+
+  @override
+  String get eventRegFor => 'Registering for';
+
+  @override
+  String get eventRegName => 'Full name';
+
+  @override
+  String get eventRegEmail => 'Email';
+
+  @override
+  String get eventRegPhone => 'Phone';
+
+  @override
+  String get eventRegSubmit => 'Submit registration';
+
+  @override
+  String get eventRegSuccess => 'Registration received';
+
+  @override
+  String get eventRegSuccessNote =>
+      'We will confirm your seat by email or phone. See you at the event!';
+
+  @override
+  String get noEventsMatch => 'No events match your search.';
 
   @override
   String get dateColumn => 'Date';
@@ -333,6 +526,84 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutBullet4 => 'Real achievement. Real outputs.';
+
+  @override
+  String get journeyPageHeadline => 'My Endeavour';
+
+  @override
+  String get journeyStory1 =>
+      'Master Elf is a recognised practitioner of Feng Shui and Chinese Metaphysics, with a following of over 44,000 and a track record of guiding individuals and businesses toward clarity and results. His path did not begin by chance—it began with a calling.';
+
+  @override
+  String get journeyStory2 =>
+      'What started as a deep belief in the wisdom of the heavens grew into a mission: to bring ancient systems of timing, space and destiny into everyday life. Through years of study, practice and refinement, he built a method that turns metaphysics into actionable insight.';
+
+  @override
+  String get journeyStory3 =>
+      'Today, that method helps clients make better decisions, choose auspicious dates, understand their strengths and align their environments. From destiny readings to strategic date selection and Feng Shui audits, Master Elf\'s system is designed for real-world impact.';
+
+  @override
+  String get journeyPeriod9Title => 'Period 9 and the New Era';
+
+  @override
+  String get journeyPeriod9Body =>
+      'We are now in Period 9 (2024–2043), the Li Fire era in the Xuan Kong Nine Periods cycle. This 20-year phase emphasises fire element energy, the south direction, and themes of visibility, progress and inner clarity. Master Elf\'s practice is aligned with this shift, helping you navigate the new era with timing and placement that match the cosmic cycle.';
+
+  @override
+  String get journeyPhoenixTitle => 'The Rise of the Phoenix';
+
+  @override
+  String get journeyPhoenixBody =>
+      'The Rise of the Phoenix is Master Elf\'s revelation and the name of his system. It symbolises renewal, transformation and the moment when insight leads to action. In Period 9, the phoenix rises—and with the right knowledge, so can you. His framework integrates BaZi, Qimen Dunjia, I Ching, Date Selection, Feng Shui and Mao Shan into one coherent approach for those ready to rise.';
+
+  @override
+  String get methodPageHeadline => 'Our Method';
+
+  @override
+  String get methodIntro =>
+      'Master Elf\'s system is built on classical Chinese metaphysics. Each discipline is applied with clear formulas and standards so that consultations and training are consistent, explainable and effective. Below is how the main pillars are practiced, calculated and used.';
+
+  @override
+  String get methodBaZiTitle => 'BaZi (Four Pillars of Destiny)';
+
+  @override
+  String get methodBaZiBody =>
+      'BaZi uses your exact birth date and time to build four pillars—Year, Month, Day, Hour—each with a Heavenly Stem and Earthly Branch (eight characters in total). The chart is calculated in true solar time where applicable. We analyse the Five Elements, strengths and clashes, and life cycles to reveal your potential, favourable directions and timing for key decisions.';
+
+  @override
+  String get methodQimenTitle => 'Qimen Dunjia';
+
+  @override
+  String get methodQimenBody =>
+      'Qimen is built on a 3×3 Nine Palaces grid that changes with date and double-hour. We set the chart for the time of the question or event, place the Three Odd Stars (Yi, Bing, Ding), Eight Gates and Eight Deities, and interpret using Yin or Yang Dun. The formula is time-sensitive and used for strategy, date selection and situational analysis.';
+
+  @override
+  String get methodIChingTitle => 'I Ching (Book of Changes)';
+
+  @override
+  String get methodIChingBody =>
+      'The I Ching is consulted to obtain a hexagram (six lines) that reflects the situation. We use the classical three-coin or yarrow-stalk method: each line is built from bottom to top (6 = transforming yin, 7 = stable yang, 8 = stable yin, 9 = transforming yang). The resulting hexagram and any changing lines are interpreted using the classic text and Master Elf\'s framework for decisions and direction.';
+
+  @override
+  String get methodDateSelectionTitle => 'Date Selection';
+
+  @override
+  String get methodDateSelectionBody =>
+      'Auspicious dates and hours are chosen using the Chinese almanac (Tung Shu), BaZi compatibility with the event and principal, and Qimen Dunjia for strategic timing. We avoid inauspicious days (e.g. conflicting stems and branches) and align with favourable energies for openings, weddings, travel and major commitments.';
+
+  @override
+  String get methodFengShuiTitle => 'Feng Shui (Xuan Kong Flying Star)';
+
+  @override
+  String get methodFengShuiBody =>
+      'We use Xuan Kong Fei Xing (Flying Star) Feng Shui. The building\'s period (based on completion year; the Feng Shui year starts 4 February) and facing direction (24 Mountains) determine the Flying Star chart. The nine palaces receive stars that combine with the Lo Shu layout. We assess mountain and water stars, element balance and Period 9 adjustments to recommend placement and remedies.';
+
+  @override
+  String get methodMaoShanTitle => 'Mao Shan';
+
+  @override
+  String get methodMaoShanBody =>
+      'Mao Shan (Mount Mao) traditions are integrated where appropriate for ritual and practice within Master Elf\'s system. The methods are applied with respect to classical form and purpose, supporting both spiritual and practical dimensions of Chinese metaphysics as used in his framework.';
 
   @override
   String get appointmentIntro =>

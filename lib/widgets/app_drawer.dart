@@ -8,6 +8,7 @@ import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
 import '../providers/locale_provider.dart';
 import 'glass_container.dart';
+import 'media_posts_popup.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -52,28 +53,67 @@ class AppDrawer extends StatelessWidget {
                       icon: LucideIcons.user,
                       onTap: () => _go(context, '/about'),
                     ),
-                    const SizedBox(height: 16),
-                    _SectionLabel(label: l10n.learning),
                     _DrawerTile(
-                      label: l10n.learning,
+                      label: l10n.journey,
+                      path: '/journey',
+                      current: current,
+                      icon: LucideIcons.compass,
+                      onTap: () => _go(context, '/journey'),
+                    ),
+                    _DrawerTile(
+                      label: l10n.ourMethod,
+                      path: '/method',
+                      current: current,
+                      icon: LucideIcons.lightbulb,
+                      onTap: () => _go(context, '/method'),
+                    ),
+                    const SizedBox(height: 16),
+                    _SectionLabel(label: l10n.charteredPractitioner),
+                    _DrawerTile(
+                      label: l10n.charteredPractitioner,
                       path: '/academy',
                       current: current,
                       icon: LucideIcons.graduationCap,
                       onTap: () => _go(context, '/academy'),
                     ),
+                    _SectionLabel(label: l10n.appsAndStore),
                     _DrawerTile(
-                      label: l10n.resources,
+                      label: l10n.masterElfSystem,
+                      path: '/apps',
+                      current: current,
+                      icon: LucideIcons.cpu,
+                      onTap: () => _go(context, '/apps'),
+                    ),
+                    _DrawerTile(
+                      label: l10n.period9MobileApp,
+                      path: '/apps',
+                      current: current,
+                      icon: LucideIcons.smartphone,
+                      onTap: () => _go(context, '/apps'),
+                    ),
+                    _DrawerTile(
+                      label: l10n.talismanStore,
+                      path: '/apps',
+                      current: current,
+                      icon: LucideIcons.shoppingBag,
+                      onTap: () => _go(context, '/apps'),
+                    ),
+                    _DrawerTile(
+                      label: l10n.events,
                       path: '/events',
                       current: current,
-                      icon: LucideIcons.folderOpen,
+                      icon: LucideIcons.calendarDays,
                       onTap: () => _go(context, '/events'),
                     ),
                     _DrawerTile(
-                      label: l10n.newsAndEvents,
-                      path: '/events',
+                      label: l10n.mediaAndPosts,
+                      path: '',
                       current: current,
-                      icon: LucideIcons.calendar,
-                      onTap: () => _go(context, '/events'),
+                      icon: LucideIcons.fileText,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        showMediaPostsPopup(context);
+                      },
                     ),
                     const SizedBox(height: 16),
                     _SectionLabel(label: l10n.consultations),

@@ -24,10 +24,83 @@ class AppLocalizationsZh extends AppLocalizations {
   String get learning => '学习';
 
   @override
+  String get charteredPractitioner => '特许执业师';
+
+  @override
   String get resources => '资源';
 
   @override
+  String get appsAndStore => '应用与商店';
+
+  @override
+  String get masterElfSystem => 'Master Elf 系统';
+
+  @override
+  String get period9MobileApp => '九运手机应用';
+
+  @override
+  String get talismanStore => '符咒商店';
+
+  @override
+  String get appsPageTitle => '应用与商店';
+
+  @override
+  String get masterElfSystemSpotlightTitle => 'Master Elf 系统';
+
+  @override
+  String get masterElfSystemSpotlightDesc =>
+      '完整的八字与中华玄学平台。在线排盘、分析时机，使用 Master Elf 系统。';
+
+  @override
+  String get openMasterElfSystem => '打开 Master Elf 系统';
+
+  @override
+  String get period9SpotlightTitle => '九运手机应用';
+
+  @override
+  String get period9SpotlightDesc => '随身掌握九运风水与时机洞见。支持 iOS 与 Android。';
+
+  @override
+  String get downloadOnAppStore => '在 App Store 下载';
+
+  @override
+  String get getItOnGooglePlay => '在 Google Play 获取';
+
+  @override
+  String get talismanStoreSpotlightTitle => '符咒商店';
+
+  @override
+  String get talismanStoreSpotlightDesc => '精选符咒与化解用品。更多商品即将上架。';
+
+  @override
   String get newsAndEvents => '新闻与活动';
+
+  @override
+  String get mediaAndPosts => '媒体与动态';
+
+  @override
+  String get mediaPostsFacebookTitle => '动态与更新';
+
+  @override
+  String get mediaPostsFacebookBody => '我们的最新动态、活动与资讯发布在 Facebook 专页，欢迎关注。';
+
+  @override
+  String get mediaPostsFacebookLink => 'facebook.com/masterelf';
+
+  @override
+  String get mediaPostsTelegramTitle => 'Telegram 群组';
+
+  @override
+  String get mediaPostsTelegramBody => '加入我们的 Telegram 社群，参与讨论并获取更新。';
+
+  @override
+  String get mediaPostsTelegramLink => 't.me/hongchhayheng';
+
+  @override
+  String get mediaPostsCoverageTitle => '媒体报道';
+
+  @override
+  String get mediaPostsCoverageBody => '报道与专题示例链接（将陆续更新）：';
 
   @override
   String get consultations => '咨询';
@@ -42,7 +115,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get aboutMasterElf => '关于 Master Elf';
 
   @override
-  String get journey => 'Master Elf 之路';
+  String get journey => '我的奋进';
 
   @override
   String get ourMethod => '我们的方法';
@@ -92,13 +165,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get heroHeadline1Suffix => '永远先于结果。';
 
   @override
-  String get heroHeadline2Prefix => 'Its true value lies in guiding better ';
+  String get heroHeadline2Prefix => '其真正价值在于引导更好的';
 
   @override
-  String get heroHeadline2Highlight => 'Choices.';
+  String get heroHeadline2Highlight => '选择。';
 
   @override
-  String get heroSubline => '用植根于中国形而上学的成熟系统，掌握你的时机、环境和决策——没有迷信或空谈。';
+  String get heroSubline => '风水与人生规划服务';
 
   @override
   String get exploreAllEvents => '探索所有活动';
@@ -122,11 +195,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get getConsultation => '获取咨询';
 
   @override
-  String get finalCtaHeading => 'Hesitate to Start?';
+  String get finalCtaHeading => '犹豫如何开始？';
 
   @override
-  String get finalCtaBody =>
-      'Just make a phone call. Send a message to our Facebook page. Or visit us.';
+  String get finalCtaBody => '打个电话即可。给我们的 Facebook 专页发消息。或前来拜访。';
 
   @override
   String get notSureWhereToStart => '不知从何开始？';
@@ -138,54 +210,50 @@ class AppLocalizationsZh extends AppLocalizations {
   String get language => '语言';
 
   @override
-  String get sectionExperienceHeading => '体验有指导的、可执行的转变。';
+  String get sectionExperienceHeading => '最佳实践引导，成果转化。';
 
   @override
-  String get sectionKnowledgeHeading => '这不仅是知识。它是实现真正改变的实践框架。';
+  String get sectionKnowledgeHeading => '这不仅是传授。它是实现真正改变的实践框架。';
 
   @override
   String get sectionKnowledgeBody =>
-      '超过60,000名学生使用这一系统获得了清晰度，做出了更明智的决策，并创造了持久的成果。';
+      '超过 44,000 名追随者已使用这一系统。与对的人、对的地方、对的时间同频，成功必然。';
 
   @override
   String get sectionKnowledgeBody2 => '成功不是来自更努力地工作。它来自在正确的时间，用正确的系统，做出正确的行动。';
 
   @override
-  String get sectionKnowledgeStat => '44,000+ followers';
+  String get sectionKnowledgeStat => '44,000+ 追随者';
 
   @override
-  String get sectionMapHeading => '你不需要更多动力。你需要一张地图。让我们画一张适合你的。';
+  String get sectionMapHeading => '你不需要更多建议。你需要一张路线图。\n让天道指引你走上正途。';
 
   @override
-  String get sectionMapIntro =>
-      '在职业、事业或生活中规划重大转变，起初可能看似清晰，但往往隐藏着不确定性。我们帮助您拨开迷雾，对准时机，开辟清晰的前进道路。';
+  String get sectionMapIntro => '各就各位… 我们深知如何助你对准时机、开辟清晰的前进道路。';
 
   @override
-  String get sectionStoryHeading => 'Master Elf 的故事';
+  String get sectionStoryHeading => 'Master Elf 的故事。';
 
   @override
-  String get sectionStoryPara1 =>
-      'Master Elf 从我们大多数人面临的同样问题开始：下一步是什么？何时行动？如何选择正确的道路？';
+  String get sectionStoryPara1 => 'Master Elf 为你铺垫成功的前 50%，再以另外 50% 引领你收获成果。';
 
   @override
-  String get sectionStoryPara2 => '经过多年的学习、实践和教学，我们发现了如何将中国古代形而上学经典原则应用于现代生活。';
+  String get sectionStoryPara2 => '经年研习、验证与提炼，形成根植于中华玄学的可验证方法。';
 
   @override
-  String get sectionStoryPara3 =>
-      'Today, that method has helped 44,000 followers create better outcomes for themselves and others.';
+  String get sectionStoryPara3 => '如今，这套方法已帮助 44,000 多名追随者为己为人创造更好结果。';
 
   @override
-  String get sectionStoryCtaButton => 'Master Elf\'s Endeavor';
+  String get sectionStoryCtaButton => 'Master Elf 的奋进';
 
   @override
-  String get sectionTestimonialsHeading => '真实的洞见。可衡量的影响。';
+  String get sectionTestimonialsHeading => '真实洞见。真实成果。';
 
   @override
-  String get sectionTestimonialsSub1 => '他们不仅学到了新东西。他们改变了做决定的方式——以及生活的方式。';
+  String get sectionTestimonialsSub1 => '他们不仅是参加了活动。他们见证了真正的策略。';
 
   @override
-  String get sectionTestimonialsSub2 =>
-      '从财富500强领导者到普通人，数千人信任 Master Elf 来应对人生重大决策。';
+  String get sectionTestimonialsSub2 => '从商界领袖到个人。';
 
   @override
   String get featuredIn => '媒体报道';
@@ -194,70 +262,130 @@ class AppLocalizationsZh extends AppLocalizations {
   String get watch => '观看';
 
   @override
-  String get academyQiMen => '奇门学院™';
+  String get academyQiMen => '奇门遁甲精修™';
 
   @override
-  String get academyQiMenDesc => '获得情境意识，为生活的各个领域制定策略。';
+  String get academyQiMenDesc => '获得战略优势，最大化你的胜算。';
 
   @override
-  String get academyBaZi => '八字学院™';
+  String get academyBaZi => '八字启示™';
 
   @override
-  String get academyBaZiDesc => '了解你的优势、局限和隐藏天赋。发现你的核心价值。';
+  String get academyBaZiDesc => '了解你的命运与潜在力量。';
 
   @override
-  String get academyFengShui => '风水学院™';
+  String get academyFengShui => '风水执业™';
 
   @override
-  String get academyFengShuiDesc => '掌握环境能量流动，助力个人福祉与事业成功。';
+  String get academyFengShuiDesc => '气的流动之执业师。';
 
   @override
-  String get consult1Category => '命运/个人解读';
+  String get academyPageTitle => '学习与培训';
+
+  @override
+  String get academyQiMenAbout => '基于时间与空间的古老策略体系，用于决策、择日与情境优势。';
+
+  @override
+  String get academyBaZiAbout => '八字命盘揭示你的优势、人生阶段与潜能，助力事业与人际。';
+
+  @override
+  String get academyFengShuiAbout => '环境能量之学，学习评估与调整空间，促进福祉与成功。';
+
+  @override
+  String get academyQiMenTopics => '九宫 • 战略时机 • 商业与个人决策';
+
+  @override
+  String get academyBaZiTopics => '四柱 • 五行 • 人生潜能与周期';
+
+  @override
+  String get academyFengShuiTopics => '气流 • 形势与理气 • 空间布局';
+
+  @override
+  String get academyDateSelection => '择日™';
+
+  @override
+  String get academyDateSelectionDesc => '为人生与事业大事选择吉时。';
+
+  @override
+  String get academyDateSelectionAbout => '结合通书、八字与奇门择取吉日吉时，应用于婚嫁、开业、出行与重大决策。';
+
+  @override
+  String get academyDateSelectionTopics => '通书 • 吉时 • 活动与里程碑';
+
+  @override
+  String get academyIChing => '易经™';
+
+  @override
+  String get academyIChingDesc => '古老的变化之书，助你获得清晰与方向。';
+
+  @override
+  String get academyIChingAbout => '六十四卦揭示变化与结果。学习以易经占问决策、策略与个人指引。';
+
+  @override
+  String get academyIChingTopics => '六十四卦 • 占卜 • 变化与策略';
+
+  @override
+  String get academyMaoShan => '茅山™';
+
+  @override
+  String get academyMaoShanDesc => '道教仪轨与实修传统，助力转化。';
+
+  @override
+  String get academyMaoShanAbout => '茅山法脉在中国玄学中的方法与仪轨。掌握其基础与应用，用于修行与实践。';
+
+  @override
+  String get academyMaoShanTopics => '仪轨 • 传统 • 实修与应用';
+
+  @override
+  String get academyMoreCoursesNote => '更多课程与排期将在此公布。如需抢先报名或定制团体课程，请联系我们。';
+
+  @override
+  String get consult1Category => '命运揭示';
 
   @override
   String get consult1Method => '八字';
 
   @override
-  String get consult1Question => '你是否真正发挥了全部潜能？';
+  String get consult1Question => '成为你与生俱来的自己…';
 
   @override
-  String get consult1Desc => '发现你的独特之处、天赋，以及通过个人生命蓝图以最高能力生活的方式。';
+  String get consult1Desc => '揭示你内在的真正力量。';
 
   @override
-  String get consult2Category => '商业择日';
+  String get consult2Category => '重大事项择日';
 
   @override
-  String get consult2Method => '奇门';
+  String get consult2Method => '奇门遁甲';
 
   @override
-  String get consult2Question => '你是否想知道何时才是做出重大飞跃的真正时机？';
+  String get consult2Question => '谋划你的明智一步...';
 
   @override
-  String get consult2Desc => '了解如何规划最佳时机做出关键决策，利用无形优势，赢得人生。';
+  String get consult2Desc => '克敌制胜，最大化你的利益。';
 
   @override
-  String get consult3Category => '家居/办公室布局';
+  String get consult3Category => '空间调和';
 
   @override
   String get consult3Method => '风水';
 
   @override
-  String get consult3Question => '你可知道空间布置正在悄然影响你的情绪和运气？';
+  String get consult3Question => '布置你的空间，定义你的人生...';
 
   @override
-  String get consult3Desc => '了解如何利用环境能量的流动，将其转化为支持最佳生活的强大资产。';
+  String get consult3Desc => '了解如何善用环境的正面能量。';
 
   @override
   String get consult4Category => '吉时择日';
 
   @override
-  String get consult4Method => '奇门';
+  String get consult4Method => '择日';
 
   @override
-  String get consult4Question => '你可曾问过自己，何时是启动人生大事的最佳时机？';
+  String get consult4Question => '何时才是明智选择的最佳时机？';
 
   @override
-  String get consult4Desc => '选择精确的日期和时辰开始任何重大活动或事件，确保为积极势头带来最佳结果。';
+  String get consult4Desc => '选择时间与日期，争取最佳结果。';
 
   @override
   String get stickyCtaText => '免费十二生肖运势';
@@ -269,13 +397,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get popupTitle2 => '十二生肖运势';
 
   @override
-  String get popupDescription => '在赤马年到来之前，获取您的个人2026生肖运势。';
+  String get popupDescription => '获取您的个人 2026 生肖运势…';
 
   @override
   String get readFullArticles => '阅读全文';
 
   @override
-  String get popupFormPrompt => '准备接收您的2026运势？在下方填写信息，我们将在您的生肖发布时通知您。';
+  String get popupFormPrompt => '在下方填写信息，我们将在您的生肖发布时通知您。';
 
   @override
   String get submit => '提交';
@@ -284,7 +412,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get eventsCalendarTitle => 'Master Elf 活动日历';
 
   @override
-  String get eventsSubline => '在这里，学习转化为现实世界的突破。';
+  String get eventsSubline => '讨论化为真知的地方。';
+
+  @override
+  String get eventsDescription =>
+      '在柬埔寨，体验顶尖的风水、中华玄学与占星盛会——现场授课、专家解读，与志同道合的伙伴共修共进。';
+
+  @override
+  String get eventsDescriptionHighlight => '顶尖的风水、中华玄学与占星盛会';
 
   @override
   String get secureYourSeat => '预订座位';
@@ -293,7 +428,37 @@ class AppLocalizationsZh extends AppLocalizations {
   String get searchEvent => '搜索活动…';
 
   @override
+  String get registerForEvent => '报名';
+
+  @override
   String get eventColumn => '活动';
+
+  @override
+  String get eventRegTitle => '活动报名';
+
+  @override
+  String get eventRegFor => '报名活动';
+
+  @override
+  String get eventRegName => '姓名';
+
+  @override
+  String get eventRegEmail => '邮箱';
+
+  @override
+  String get eventRegPhone => '电话';
+
+  @override
+  String get eventRegSubmit => '提交报名';
+
+  @override
+  String get eventRegSuccess => '报名已收到';
+
+  @override
+  String get eventRegSuccessNote => '我们将通过邮件或电话确认您的座位。活动现场见！';
+
+  @override
+  String get noEventsMatch => '没有找到匹配的活动。';
 
   @override
   String get dateColumn => '日期';
@@ -302,26 +467,103 @@ class AppLocalizationsZh extends AppLocalizations {
   String get locationColumn => '地点';
 
   @override
-  String get aboutPageTitle => 'Master Elf | The Rise of Phoenix';
+  String get aboutPageTitle => 'Master Elf | 凤凰崛起';
 
   @override
-  String get aboutBreadcrumb => 'About Master Elf.';
+  String get aboutBreadcrumb => '关于 Master Elf。';
 
   @override
-  String get aboutHeroHeadline => 'Enrich Lives Through Heavenly Knowledge';
+  String get aboutHeroHeadline => '以天道学识丰富人生';
 
   @override
-  String get aboutBullet1 => 'It started with believe.';
+  String get aboutBullet1 => '始于信念。';
 
   @override
-  String get aboutBullet2 => 'A mission delegated by the heaven.';
+  String get aboutBullet2 => '上天托付的使命。';
 
   @override
-  String get aboutBullet3 =>
-      'Guiding you with metaphysics into reapable outcome.';
+  String get aboutBullet3 => '以玄学引领你收获可成之果。';
 
   @override
-  String get aboutBullet4 => 'Real achievement. Real outputs.';
+  String get aboutBullet4 => '真实成就。真实产出。';
+
+  @override
+  String get journeyPageHeadline => '我的奋进';
+
+  @override
+  String get journeyStory1 =>
+      'Master Elf 是公认的风水与中华玄学实践者，拥有超过 44,000 名追随者，长期为个人与企业提供清晰指引与成果。他的道路并非偶然，而是始于一份使命。';
+
+  @override
+  String get journeyStory2 =>
+      '对天道智慧的深信，逐渐化为使命：将古老的时机、空间与命运体系带入日常生活。经年累月的研究、实践与提炼，他建立起一套将玄学转化为可执行洞见的方法。';
+
+  @override
+  String get journeyStory3 =>
+      '如今，这套方法帮助客户做出更好决策、择吉日、认识自身优势并调整环境。从命运解读、战略择日到风水勘察，Master Elf 的系统旨在产生真实影响。';
+
+  @override
+  String get journeyPeriod9Title => '九运与新纪元';
+
+  @override
+  String get journeyPeriod9Body =>
+      '我们正处在九运（2024–2043），即玄空九运中的离火运。这二十年强调火元素能量、南方方位，以及能见度、进步与内在清明。Master Elf 的实践与此转换同步，助你在新纪元中以契合天时的时机与布局前行。';
+
+  @override
+  String get journeyPhoenixTitle => '凤凰崛起';
+
+  @override
+  String get journeyPhoenixBody =>
+      '「凤凰崛起」是 Master Elf 的悟道与系统之名，象征重生、转化，以及洞见化为行动的一刻。在九运中，凤凰崛起——掌握正确知识，你也能腾飞。他的框架将八字、奇门遁甲、易经、择日、风水与茅山融为一体，为准备好的人提供连贯之道。';
+
+  @override
+  String get methodPageHeadline => '我们的方法';
+
+  @override
+  String get methodIntro =>
+      'Master Elf 的系统建立在古典中华玄学之上。每一门学问均以清晰的公式与标准应用，使咨询与教学一致、可解释且有效。以下为主要支柱的实践、推算与运用方式。';
+
+  @override
+  String get methodBaZiTitle => '八字（四柱命理）';
+
+  @override
+  String get methodBaZiBody =>
+      '八字以出生年月日时排出年、月、日、时四柱，每柱一天干一地支，共八字。在适用处以真太阳时推算。我们分析五行、强弱与冲克及大运流年，以揭示潜能、利方与关键决策的时机。';
+
+  @override
+  String get methodQimenTitle => '奇门遁甲';
+
+  @override
+  String get methodQimenBody =>
+      '奇门以随日期与时辰变化的九宫格为基础。我们按问事或事件时间起盘，排布三奇、八门与八神，按阴遁或阳遁解读。公式具时效性，用于策略、择日与情境分析。';
+
+  @override
+  String get methodIChingTitle => '易经';
+
+  @override
+  String get methodIChingBody =>
+      '易经通过占得六爻卦象反映当下。我们采用传统三枚钱币或蓍草法：自下而上建爻（6 老阴、7 少阳、8 少阴、9 老阳）。所得卦象与动爻依经典与 Master Elf 的框架解读，用于决策与方向。';
+
+  @override
+  String get methodDateSelectionTitle => '择日';
+
+  @override
+  String get methodDateSelectionBody =>
+      '吉日吉时依通书、八字与事主之合、以及奇门战略时机选取。我们避开凶日（如干支冲克），并与开业、婚嫁、出行及重大事项的有利能量相合。';
+
+  @override
+  String get methodFengShuiTitle => '风水（玄空飞星）';
+
+  @override
+  String get methodFengShuiBody =>
+      '我们采用玄空飞星风水。以建筑落成年份（风水年自 2 月 4 日起）与坐向（二十四山）定飞星盘。九宫配星与洛书结合。我们审视山星向星、五行平衡与九运调整，以建议布局与化解。';
+
+  @override
+  String get methodMaoShanTitle => '茅山';
+
+  @override
+  String get methodMaoShanBody =>
+      '茅山传统在 Master Elf 系统中于适当处融入仪轨与实修。方法依古典形制与用途应用，支持中华玄学在其框架中的精神与实践面向。';
 
   @override
   String get appointmentIntro => '选择咨询类型、预约时间，我们将通过短信向您发送确认。';

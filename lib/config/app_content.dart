@@ -29,11 +29,21 @@ class AppContent {
   static const String? instagramUrl = null;
   static const String? tiktokUrl = 'https://www.tiktok.com/@masterelf';
   static const String? youtubeUrl = null;
-  static const String? telegramUrl = null;
+  static const String? telegramUrl = 'https://t.me/hongchhayheng';
   static const String? linkedInUrl = null;
+
+  /// Telegram group for Media & Posts dialog (same as telegramUrl)
+  static const String telegramGroupUrl = 'https://t.me/hongchhayheng';
 
   /// Explore Courses / Academy link (e.g. charter.masterelf.vip)
   static const String academyExploreUrl = 'https://charter.masterelf.vip';
+
+  /// Master Elf System (BaZi etc.) – open in browser
+  static const String baziSystemUrl = 'https://bazi.masterelf.vip';
+
+  /// Period 9 Mobile App – replace with real store URLs when available
+  static const String? period9AppStoreUrl = null;
+  static const String? period9PlayStoreUrl = null;
 
   /// Appointment booking API: POST booking details; backend sends SMS confirmation via Unimatrix.
   /// Leave empty to use demo mode (success UI only, no HTTP call).
