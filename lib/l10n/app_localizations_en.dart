@@ -75,6 +75,42 @@ class AppLocalizationsEn extends AppLocalizations {
       'Curated talismans and remedies. More items coming soon.';
 
   @override
+  String get appsFeatureShowcaseHeading => 'See the system in action';
+
+  @override
+  String get appFeatureQiMen => 'Qi Men Dunjia';
+
+  @override
+  String get appFeatureBaziLife => 'BaZi Life';
+
+  @override
+  String get appFeatureBaziReport => 'BaZi Report';
+
+  @override
+  String get appFeatureBaziAge => 'BaZi Age';
+
+  @override
+  String get appFeatureBaziStars => 'BaZi Stars';
+
+  @override
+  String get appFeatureBaziKhmer => 'BaZi Khmer';
+
+  @override
+  String get appFeatureBaziChart => 'BaZi Chart';
+
+  @override
+  String get appFeatureDateSelection => 'Date Selection';
+
+  @override
+  String get appFeatureMarriage => 'Marriage';
+
+  @override
+  String get appFeatureBusinessPartner => 'Business Partner';
+
+  @override
+  String get appFeatureAdvancedFeatures => 'Advanced Features';
+
+  @override
   String get newsAndEvents => 'News & Events';
 
   @override

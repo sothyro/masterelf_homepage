@@ -50,11 +50,16 @@ class HeroVideoPreloader {
 }
 
 /// Full-screen loading view that matches the hero gradient so the transition is seamless.
+/// [progress] should go from 0.0 to 1.0; the circular bar and percentage reflect this.
 class HeroLoadingScreen extends StatelessWidget {
-  const HeroLoadingScreen({super.key});
+  const HeroLoadingScreen({super.key, this.progress = 0.0});
+
+  /// Loading progress from 0.0 to 1.0. When 1.0, the bar is full and the app will switch to content.
+  final double progress;
 
   @override
   Widget build(BuildContext context) {
+    final clampedProgress = progress.clamp(0.0, 1.0);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
@@ -76,14 +81,32 @@ class HeroLoadingScreen extends StatelessWidget {
               ],
             ),
           ),
-          child: const Center(
-            child: SizedBox(
-              width: 40,
-              height: 40,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.accent),
-              ),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: 48,
+                  height: 48,
+                  child: CircularProgressIndicator(
+                    value: clampedProgress > 0 && clampedProgress <= 1
+                        ? clampedProgress
+                        : null,
+                    strokeWidth: 2,
+                    valueColor: const AlwaysStoppedAnimation<Color>(AppColors.accent),
+                    backgroundColor: AppColors.accent.withValues(alpha: 0.2),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  '${(clampedProgress * 100).round()}%',
+                  style: TextStyle(
+                    color: AppColors.accent.withValues(alpha: 0.9),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
           ),
         ),

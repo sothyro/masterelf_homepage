@@ -64,4 +64,22 @@ class AppContent {
   static const String assetTestimonialProfile = 'assets/images/profile.jpg';
   static const String assetTestimonialParticipant = 'assets/images/participant2.jpg';
   static const String assetAcademy = 'assets/images/apps.jpg';
+
+  // Apps page showcase (assets/images/apps/)
+  /// Apps page hero banner
+  static const String assetAppsHero = 'assets/images/hero1x.jpg';
+  static const String assetAppQiMen = 'assets/images/apps/qimen.jpg';
+  static const String assetAppBaziLife = 'assets/images/apps/bazi_life.jpg';
+  static const String assetAppBaziReport = 'assets/images/apps/bazi_report.jpg';
+  static const String assetAppBaziAge = 'assets/images/apps/bazi_age.jpg';
+  static const String assetAppBaziStars = 'assets/images/apps/bazi_stars.jpg';
+  static const String assetAppBaziKhmer = 'assets/images/apps/bazi_khmer.jpg';
+  static const String assetAppBaziPage2 = 'assets/images/apps/bazi_page2.jpg';
+  static const String assetAppDateSelection = 'assets/images/apps/dateselection.jpg';
+  static const String assetAppMarriage = 'assets/images/apps/marriage.jpg';
+  static const String assetAppBusinessPartner = 'assets/images/apps/business_partner.jpg';
+  static const String assetAppAdvancedFeatures = 'assets/images/apps/advancedfeatures.jpg';
+  /// Period 9 mobile app screenshots
+  static const String assetPeriod9_1 = 'assets/images/apps/period9_1.JPG';
+  static const String assetPeriod9_2 = 'assets/images/apps/period9_2.JPG';
 }

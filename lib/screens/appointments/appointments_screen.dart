@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../config/app_content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/breadcrumb.dart';
@@ -131,49 +132,74 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 120, bottom: 48, left: 24, right: 24),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 560),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Breadcrumb(items: [
-                      (label: l10n.home, route: '/'),
-                      (label: l10n.consultations, route: null),
-                    ]),
-                    const SizedBox(height: 24),
-                    Text(
-                      l10n.bookConsultation,
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: AppColors.onPrimary,
-                            fontWeight: FontWeight.w600,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      l10n.appointmentIntro,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: AppColors.onSurfaceVariantDark,
-                            height: 1.5,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 32),
-                    if (_step < _maxStep) _buildStepper(l10n),
-                    const SizedBox(height: 24),
-                    if (_step == 0) _buildStepService(l10n),
-                    if (_step == 1) _buildStepDateTime(l10n),
-                    if (_step == 2) _buildStepDetails(l10n),
-                    if (_step == 3) _buildStepConfirm(l10n),
-                    if (_step == _maxStep) _buildStepSuccess(l10n),
-                  ],
+          Stack(
+            children: [
+              Positioned.fill(
+                child: Image.asset(
+                  AppContent.assetAppsHero,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => const SizedBox.expand(),
                 ),
               ),
-            ),
+              Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        AppColors.backgroundDark.withValues(alpha: 0.72),
+                        AppColors.backgroundDark.withValues(alpha: 0.88),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 120, bottom: 48, left: 24, right: 24),
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 560),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Breadcrumb(items: [
+                          (label: l10n.home, route: '/'),
+                          (label: l10n.consultations, route: null),
+                        ]),
+                        const SizedBox(height: 24),
+                        Text(
+                          l10n.bookConsultation,
+                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                color: AppColors.onPrimary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          l10n.appointmentIntro,
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                color: AppColors.onSurfaceVariantDark,
+                                height: 1.5,
+                              ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 32),
+                        if (_step < _maxStep) _buildStepper(l10n),
+                        const SizedBox(height: 24),
+                        if (_step == 0) _buildStepService(l10n),
+                        if (_step == 1) _buildStepDateTime(l10n),
+                        if (_step == 2) _buildStepDetails(l10n),
+                        if (_step == 3) _buildStepConfirm(l10n),
+                        if (_step == _maxStep) _buildStepSuccess(l10n),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           _SmartMoveSection(),
         ],

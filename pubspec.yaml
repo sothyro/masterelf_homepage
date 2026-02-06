@@ -65,6 +65,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/apps/
     - assets/images/placeholders/
     - assets/images/backgrounddirection.jpg
     - assets/images/masterelf.jpg

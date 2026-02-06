@@ -9,7 +9,6 @@ import '../utils/launcher_utils.dart';
 import '../theme/app_theme.dart';
 import '../utils/breakpoints.dart';
 import 'legal_popup.dart';
-import 'media_posts_popup.dart';
 
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key});
@@ -311,10 +310,9 @@ class _ChatAndSocial extends StatelessWidget {
 }
 
 class _LinkItem {
-  const _LinkItem(this.label, this.path, {this.onTap});
+  const _LinkItem(this.label, this.path);
   final String label;
   final String path;
-  final void Function(BuildContext context)? onTap;
 }
 
 class _LinkColumn extends StatelessWidget {
@@ -345,13 +343,7 @@ class _LinkColumn extends StatelessWidget {
           (e) => Padding(
             padding: EdgeInsets.only(bottom: compact ? 0 : 8),
             child: InkWell(
-              onTap: () {
-                if (e.onTap != null) {
-                  e.onTap!(context);
-                } else {
-                  context.go(e.path);
-                }
-              },
+              onTap: () => context.go(e.path),
               borderRadius: BorderRadius.circular(4),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2),

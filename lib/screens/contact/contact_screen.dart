@@ -221,7 +221,6 @@ class _ContactScreenState extends State<ContactScreen> {
           _formLabel(l10n.contactFormSubject, required: false),
           const SizedBox(height: 12),
           ...List.generate(5, (i) {
-            final selected = _selectedSubjectIndex == i;
             return Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: InkWell(

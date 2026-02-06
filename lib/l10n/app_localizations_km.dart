@@ -75,6 +75,42 @@ class AppLocalizationsKm extends AppLocalizations {
       'វត្ថុមនោគម និងថ្នាំបន្ធូរបន្ថយដែលជ្រើសរើស។ មានវត្ថុបន្ថែមឆាប់ៗនេះ។';
 
   @override
+  String get appsFeatureShowcaseHeading => 'មើលប្រព័ន្ធក្នុងការអនុវត្ត';
+
+  @override
+  String get appFeatureQiMen => 'ឈីមែន ឌុនចា';
+
+  @override
+  String get appFeatureBaziLife => 'បាចី ជីវិត';
+
+  @override
+  String get appFeatureBaziReport => 'របាយការណ៍ បាចី';
+
+  @override
+  String get appFeatureBaziAge => 'បាចី អាយុ';
+
+  @override
+  String get appFeatureBaziStars => 'បាចី ផ្កាយ';
+
+  @override
+  String get appFeatureBaziKhmer => 'បាចី ខ្មែរ';
+
+  @override
+  String get appFeatureBaziChart => 'ក្រាហ្វ បាចី';
+
+  @override
+  String get appFeatureDateSelection => 'ការជ្រើសរើសកាលបរិច្ឆេទ';
+
+  @override
+  String get appFeatureMarriage => 'អាពាហ៍ពិពាហ៍';
+
+  @override
+  String get appFeatureBusinessPartner => 'ដៃគូអាជីវកម្ម';
+
+  @override
+  String get appFeatureAdvancedFeatures => 'មុខងារកម្រិតខ្ពស់';
+
+  @override
   String get newsAndEvents => 'ព័ត៌មាន និងព្រឹត្តិការណ៍';
 
   @override

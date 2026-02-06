@@ -73,6 +73,42 @@ class AppLocalizationsZh extends AppLocalizations {
   String get talismanStoreSpotlightDesc => '精选符咒与化解用品。更多商品即将上架。';
 
   @override
+  String get appsFeatureShowcaseHeading => '一览系统功能';
+
+  @override
+  String get appFeatureQiMen => '奇门遁甲';
+
+  @override
+  String get appFeatureBaziLife => '八字人生';
+
+  @override
+  String get appFeatureBaziReport => '八字报告';
+
+  @override
+  String get appFeatureBaziAge => '八字年龄';
+
+  @override
+  String get appFeatureBaziStars => '八字星宿';
+
+  @override
+  String get appFeatureBaziKhmer => '八字高棉';
+
+  @override
+  String get appFeatureBaziChart => '八字命盘';
+
+  @override
+  String get appFeatureDateSelection => '择日';
+
+  @override
+  String get appFeatureMarriage => '婚姻';
+
+  @override
+  String get appFeatureBusinessPartner => '生意伙伴';
+
+  @override
+  String get appFeatureAdvancedFeatures => '高级功能';
+
+  @override
   String get newsAndEvents => '新闻与活动';
 
   @override

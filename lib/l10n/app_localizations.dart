@@ -226,6 +226,78 @@ abstract class AppLocalizations {
   /// **'Curated talismans and remedies. More items coming soon.'**
   String get talismanStoreSpotlightDesc;
 
+  /// No description provided for @appsFeatureShowcaseHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'See the system in action'**
+  String get appsFeatureShowcaseHeading;
+
+  /// No description provided for @appFeatureQiMen.
+  ///
+  /// In en, this message translates to:
+  /// **'Qi Men Dunjia'**
+  String get appFeatureQiMen;
+
+  /// No description provided for @appFeatureBaziLife.
+  ///
+  /// In en, this message translates to:
+  /// **'BaZi Life'**
+  String get appFeatureBaziLife;
+
+  /// No description provided for @appFeatureBaziReport.
+  ///
+  /// In en, this message translates to:
+  /// **'BaZi Report'**
+  String get appFeatureBaziReport;
+
+  /// No description provided for @appFeatureBaziAge.
+  ///
+  /// In en, this message translates to:
+  /// **'BaZi Age'**
+  String get appFeatureBaziAge;
+
+  /// No description provided for @appFeatureBaziStars.
+  ///
+  /// In en, this message translates to:
+  /// **'BaZi Stars'**
+  String get appFeatureBaziStars;
+
+  /// No description provided for @appFeatureBaziKhmer.
+  ///
+  /// In en, this message translates to:
+  /// **'BaZi Khmer'**
+  String get appFeatureBaziKhmer;
+
+  /// No description provided for @appFeatureBaziChart.
+  ///
+  /// In en, this message translates to:
+  /// **'BaZi Chart'**
+  String get appFeatureBaziChart;
+
+  /// No description provided for @appFeatureDateSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Selection'**
+  String get appFeatureDateSelection;
+
+  /// No description provided for @appFeatureMarriage.
+  ///
+  /// In en, this message translates to:
+  /// **'Marriage'**
+  String get appFeatureMarriage;
+
+  /// No description provided for @appFeatureBusinessPartner.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Partner'**
+  String get appFeatureBusinessPartner;
+
+  /// No description provided for @appFeatureAdvancedFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Features'**
+  String get appFeatureAdvancedFeatures;
+
   /// No description provided for @newsAndEvents.
   ///
   /// In en, this message translates to:

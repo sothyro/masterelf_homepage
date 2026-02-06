@@ -16,7 +16,6 @@ class _MenuColors {
   _MenuColors._();
   static const Color barBorder = Color(0xFFC9A227);
   static const Color linkText = Color(0xFFF0F0F0);
-  static const Color goldDark = Color(0xFFA68520);
 }
 
 class AppHeader extends StatelessWidget implements PreferredSizeWidget {

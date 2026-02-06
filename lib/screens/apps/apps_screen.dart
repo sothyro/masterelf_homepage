@@ -24,7 +24,7 @@ class AppsScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 80),
-          const _PageHero(),
+          const _PageHero(assetPath: AppContent.assetAppsHero),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: isNarrow ? 20 : 32,
@@ -59,24 +59,56 @@ class AppsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 32),
+                    Text(
+                      l10n.appsFeatureShowcaseHeading,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: AppColors.onPrimary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                    const SizedBox(height: 20),
+                    _AppFeatureShowcase(
+                      features: [
+                        (AppContent.assetAppQiMen, l10n.appFeatureQiMen),
+                        (AppContent.assetAppBaziLife, l10n.appFeatureBaziLife),
+                        (AppContent.assetAppBaziReport, l10n.appFeatureBaziReport),
+                        (AppContent.assetAppBaziAge, l10n.appFeatureBaziAge),
+                        (AppContent.assetAppBaziStars, l10n.appFeatureBaziStars),
+                        (AppContent.assetAppBaziKhmer, l10n.appFeatureBaziKhmer),
+                        (AppContent.assetAppBaziPage2, l10n.appFeatureBaziChart),
+                        (AppContent.assetAppDateSelection, l10n.appFeatureDateSelection),
+                        (AppContent.assetAppMarriage, l10n.appFeatureMarriage),
+                        (AppContent.assetAppBusinessPartner, l10n.appFeatureBusinessPartner),
+                        (AppContent.assetAppAdvancedFeatures, l10n.appFeatureAdvancedFeatures),
+                      ],
+                    ),
                     const SizedBox(height: 40),
                     _SpotlightSection(
                       icon: LucideIcons.smartphone,
                       title: l10n.period9SpotlightTitle,
                       description: l10n.period9SpotlightDesc,
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          _StoreButton(
-                            label: l10n.downloadOnAppStore,
-                            icon: Icons.apple,
-                            url: AppContent.period9AppStoreUrl,
-                          ),
-                          const SizedBox(width: 16),
-                          _StoreButton(
-                            label: l10n.getItOnGooglePlay,
-                            icon: Icons.play_circle_filled,
-                            url: AppContent.period9PlayStoreUrl,
+                          _Period9Screenshots(),
+                          const SizedBox(height: 24),
+                          Wrap(
+                            spacing: 16,
+                            runSpacing: 12,
+                            children: [
+                              _StoreButton(
+                                label: l10n.downloadOnAppStore,
+                                icon: Icons.apple,
+                                url: AppContent.period9AppStoreUrl,
+                              ),
+                              _StoreButton(
+                                label: l10n.getItOnGooglePlay,
+                                icon: Icons.play_circle_filled,
+                                url: AppContent.period9PlayStoreUrl,
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -112,7 +144,9 @@ class AppsScreen extends StatelessWidget {
 }
 
 class _PageHero extends StatelessWidget {
-  const _PageHero();
+  const _PageHero({required this.assetPath});
+
+  final String assetPath;
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +160,7 @@ class _PageHero extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            AppContent.assetHeroBackground,
+            assetPath,
             fit: BoxFit.cover,
           ),
           Container(
@@ -247,6 +281,70 @@ class _SpotlightSection extends StatelessWidget {
   }
 }
 
+/// Two Period 9 app screenshots in two rows with a divider between. Fills card width.
+class _Period9Screenshots extends StatelessWidget {
+  const _Period9Screenshots();
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final imageHeight = (width * 0.5).clamp(280.0, 420.0);
+
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _Period9Screenshot(asset: AppContent.assetPeriod9_1, height: imageHeight),
+            const SizedBox(height: 20),
+            Divider(height: 1, color: AppColors.borderDark, indent: 0, endIndent: 0),
+            const SizedBox(height: 20),
+            _Period9Screenshot(asset: AppContent.assetPeriod9_2, height: imageHeight),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _Period9Screenshot extends StatelessWidget {
+  const _Period9Screenshot({
+    required this.asset,
+    required this.height,
+  });
+
+  final String asset;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: height,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.borderDark, width: 1),
+        boxShadow: AppShadows.card,
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Image.asset(
+        asset,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        height: height,
+        errorBuilder: (_, __, ___) => SizedBox(
+          width: double.infinity,
+          height: height,
+          child: Center(
+            child: Icon(LucideIcons.smartphone, size: 40, color: AppColors.onSurfaceVariantDark.withValues(alpha: 0.5)),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _StoreButton extends StatelessWidget {
   const _StoreButton({
     required this.label,
@@ -272,6 +370,80 @@ class _StoreButton extends StatelessWidget {
         foregroundColor: AppColors.onPrimary,
         side: BorderSide(color: enabled ? AppColors.accent : AppColors.borderDark),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      ),
+    );
+  }
+}
+
+/// Product showcase: grid of app feature screens with labels.
+class _AppFeatureShowcase extends StatelessWidget {
+  const _AppFeatureShowcase({required this.features});
+
+  final List<(String asset, String title)> features;
+
+  @override
+  Widget build(BuildContext context) {
+    final crossAxisCount = 3;
+
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
+        childAspectRatio: 3 / 4,
+      ),
+      itemCount: features.length,
+      itemBuilder: (context, index) {
+        final e = features[index];
+        return _AppFeatureCard(asset: e.$1, title: e.$2);
+      },
+    );
+  }
+}
+
+class _AppFeatureCard extends StatelessWidget {
+  const _AppFeatureCard({required this.asset, required this.title});
+
+  final String asset;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.surfaceElevatedDark,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.borderDark, width: 1),
+        boxShadow: AppShadows.card,
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: Image.asset(
+              asset,
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => Center(
+                child: Icon(LucideIcons.image, size: 48, color: AppColors.onSurfaceVariantDark.withValues(alpha: 0.5)),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    color: AppColors.onPrimary,
+                    fontWeight: FontWeight.w500,
+                  ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       ),
     );
   }
