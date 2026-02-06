@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../config/app_content.dart';
@@ -53,6 +54,8 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   final ScrollController _scrollController = ScrollController();
   static const double _cardWidth = 280;
   static const double _cardGap = 20;
+  static const double _cardsRowMinWidth = 1000;
+  static const double _cardsHeight = 380;
 
   @override
   void dispose() {
@@ -79,12 +82,19 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
     final isMobile = Breakpoints.isMobile(width);
     final textTheme = Theme.of(context).textTheme;
 
+    final headingFontSize = isMobile ? 24.0 : 28.0;
     final headingStyle = (textTheme.headlineMedium ?? textTheme.headlineSmall)?.copyWith(
       color: AppColors.onPrimary,
       fontWeight: FontWeight.bold,
       height: 1.15,
+      fontSize: headingFontSize,
     );
-    final goldStyle = headingStyle?.copyWith(color: AppColors.accent);
+    final realStyle = GoogleFonts.condiment(
+      color: AppColors.accent,
+      fontWeight: FontWeight.bold,
+      fontSize: isMobile ? 30 : 38,
+      height: 1.15,
+    );
     final whiteItalicStyle = headingStyle?.copyWith(
       fontStyle: FontStyle.italic,
     );
@@ -101,9 +111,9 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
             text: TextSpan(
               style: headingStyle,
               children: [
-                TextSpan(text: 'Real ', style: goldStyle),
+                TextSpan(text: 'Real ', style: realStyle),
                 TextSpan(text: 'Insights.\n'),
-                TextSpan(text: 'Real ', style: goldStyle),
+                TextSpan(text: 'Real ', style: realStyle),
                 TextSpan(text: 'Outcomes.', style: whiteItalicStyle),
               ],
             ),
@@ -139,16 +149,16 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                   child: hasRealInsightsOutcomes
                       ? RichText(
                           text: TextSpan(
-                            style: headingStyle?.copyWith(fontSize: (headingStyle.fontSize ?? 24) * 1.1),
+                            style: headingStyle,
                             children: [
-                              TextSpan(text: 'Real ', style: goldStyle),
+                              TextSpan(text: 'Real ', style: realStyle),
                               TextSpan(text: 'Insights.\n'),
-                              TextSpan(text: 'Real ', style: goldStyle),
+                              TextSpan(text: 'Real ', style: realStyle),
                               TextSpan(text: 'Outcomes.', style: whiteItalicStyle),
                             ],
                           ),
                         )
-                      : Text(heading, style: headingStyle?.copyWith(fontSize: (headingStyle?.fontSize ?? 24) * 1.1)),
+                      : Text(heading, style: headingStyle),
                 ),
               ),
               Expanded(
@@ -186,25 +196,42 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
               headerContent,
               const SizedBox(height: 40),
               SizedBox(
-                height: 380,
-                child: ListView.separated(
-                  controller: _scrollController,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _placeholders.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: _cardGap),
-                  itemBuilder: (context, index) {
-                    final t = _placeholders[index];
-                    return SizedBox(
-                      width: _cardWidth,
-                      child: _TestimonialCard(
-                        quote: t.quote,
-                        name: t.name,
-                        location: t.location,
-                        imageIndex: index,
+                height: _cardsHeight,
+                child: width >= _cardsRowMinWidth
+                    ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          for (var i = 0; i < _placeholders.length; i++) ...[
+                            if (i > 0) const SizedBox(width: _cardGap),
+                            Expanded(
+                              child: _TestimonialCard(
+                                quote: _placeholders[i].quote,
+                                name: _placeholders[i].name,
+                                location: _placeholders[i].location,
+                                imageIndex: i,
+                              ),
+                            ),
+                          ],
+                        ],
+                      )
+                    : ListView.separated(
+                        controller: _scrollController,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _placeholders.length,
+                        separatorBuilder: (_, __) => const SizedBox(width: _cardGap),
+                        itemBuilder: (context, index) {
+                          final t = _placeholders[index];
+                          return SizedBox(
+                            width: _cardWidth,
+                            child: _TestimonialCard(
+                              quote: t.quote,
+                              name: t.name,
+                              location: t.location,
+                              imageIndex: index,
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
               ),
             ],
           ),

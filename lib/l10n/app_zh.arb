@@ -109,7 +109,7 @@
   "aboutBullet3": "Guiding you with metaphysics into reapable outcome.",
   "aboutBullet4": "Real achievement. Real outputs.",
   "appointmentIntro": "选择咨询类型、预约时间，我们将通过短信向您发送确认。",
-  "stepChooseService": "选择服务",
+  "stepChooseService": "选择",
   "stepDateAndTime": "日期与时间",
   "stepYourDetails": "您的信息",
   "stepConfirm": "确认",
@@ -138,5 +138,17 @@
   "smartMoveCard5Title": "发现更好选择",
   "smartMoveCard5Desc": "发现你未曾意识到的选项，并选出最有利于你的那一个。",
   "smartMoveCard6Title": "朝正确方向前进",
-  "smartMoveCard6Desc": "在时机与格局中行动，让进展自然可持续。"
+  "smartMoveCard6Desc": "在时机与格局中行动，让进展自然可持续。",
+  "contactLetsConnect": "保持联系！",
+  "contactIntro": "无论您是想通过咨询获得清晰指引、了解我们的课程，还是寻求合作，我们的团队都会为您提供帮助。只需选择主题、留下留言，我们会尽快与您联系。",
+  "contactFormName": "姓名",
+  "contactFormEmail": "邮箱",
+  "contactFormPhone": "电话",
+  "contactFormSubject": "主题",
+  "contactFormMessage": "留言",
+  "contactSubjectDestiny": "命运 / 个人解读（八字）",
+  "contactSubjectBusiness": "商业与战略规划（奇门 / 商业择日）",
+  "contactSubjectFengShui": "风水（家居 / 办公布局）",
+  "contactSubjectDateSelection": "择日（培训相关）",
+  "contactSubjectUnsure": "不确定 - 需要您的推荐"
 }

@@ -137,7 +137,7 @@ class AcademiesSection extends StatelessWidget {
   Widget _buildHeading(BuildContext context, AppLocalizations l10n) {
     final width = MediaQuery.sizeOf(context).width;
     final baseSize = width < 600 ? 22.0 : (width < 900 ? 26.0 : 32.0);
-    final normal = GoogleFonts.playfairDisplay(
+    final normal = GoogleFonts.exo2(
       color: _textLight,
       fontWeight: FontWeight.w600,
       fontSize: baseSize,
@@ -190,7 +190,7 @@ class AcademiesSection extends StatelessWidget {
 
   Widget _buildBody(BuildContext context, AppLocalizations l10n) {
     final width = MediaQuery.sizeOf(context).width;
-    final bodyStyle = GoogleFonts.lora(
+    final bodyStyle = GoogleFonts.exo2(
       color: _textMuted,
       fontSize: width < 600 ? 15 : 17,
       height: 1.65,
@@ -289,7 +289,7 @@ class _AcademyCardState extends State<_AcademyCard> {
                     const SizedBox(height: 20),
                     Text(
                       widget.title,
-                      style: GoogleFonts.playfairDisplay(
+                      style: GoogleFonts.exo2(
                         color: _textLight,
                         fontWeight: FontWeight.w600,
                         fontSize: 20,
@@ -301,7 +301,7 @@ class _AcademyCardState extends State<_AcademyCard> {
                       height: 46,
                       child: Text(
                         widget.description,
-                        style: GoogleFonts.lora(
+                        style: GoogleFonts.exo2(
                           color: _textMuted,
                           fontSize: 15,
                           height: 1.55,
@@ -318,7 +318,7 @@ class _AcademyCardState extends State<_AcademyCard> {
                       children: [
                         Text(
                           l10n.exploreCourses,
-                          style: GoogleFonts.playfairDisplay(
+                          style: GoogleFonts.exo2(
                             color: AppColors.accent,
                             fontWeight: FontWeight.w600,
                             fontSize: 16,

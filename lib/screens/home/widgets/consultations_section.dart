@@ -54,7 +54,11 @@ class ConsultationsSection extends StatelessWidget {
       ),
     ];
 
+    // Stack must have a non-positioned child so it gets finite size inside
+    // SingleChildScrollView (unbounded height). Background/overlay use
+    // Positioned.fill; content is the sizing child.
     return Stack(
+      clipBehavior: Clip.none,
       children: [
         Positioned.fill(
           child: Image.asset(
@@ -70,14 +74,13 @@ class ConsultationsSection extends StatelessWidget {
         ),
         Positioned.fill(
           child: Container(
-            color: AppColors.overlayDark.withValues(alpha: 0.45),
+            color: AppColors.overlayDark.withValues(alpha: 0.58),
           ),
         ),
-        Positioned.fill(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 56, horizontal: 24),
-            child: Center(
-              child: ConstrainedBox(
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 56, horizontal: 24),
+          child: Center(
+            child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1100),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,7 +90,7 @@ class ConsultationsSection extends StatelessWidget {
                   const SizedBox(height: 20),
                   Text(
                     l10n.sectionMapIntro,
-                    style: GoogleFonts.lora(
+                    style: GoogleFonts.exo2(
                       fontSize: width < 600 ? 15 : 17,
                       height: 1.6,
                       color: AppColors.onPrimary.withValues(alpha: 0.92),
@@ -129,7 +132,6 @@ class ConsultationsSection extends StatelessWidget {
             ),
           ),
         ),
-        ),
       ],
     );
   }
@@ -137,7 +139,7 @@ class ConsultationsSection extends StatelessWidget {
   Widget _buildSectionHeading(BuildContext context, AppLocalizations l10n) {
     final width = MediaQuery.sizeOf(context).width;
     final size = width < 600 ? 22.0 : (width < 900 ? 26.0 : 32.0);
-    final normal = GoogleFonts.playfairDisplay(
+    final normal = GoogleFonts.exo2(
       color: AppColors.onPrimary,
       fontWeight: FontWeight.w600,
       fontSize: size,
@@ -150,7 +152,7 @@ class ConsultationsSection extends StatelessWidget {
       height: 1.3,
     );
     final s = l10n.sectionMapHeading;
-    final phrases = ['RoadMap.', 'RoadMap', 'Map.', 'Map', '地图'];
+    final phrases = ['RoadMap.', 'RoadMap', 'Map.', 'Map', 'correct way', '地图'];
     final spans = _highlightPhrases(s, phrases, normal, highlight);
     return Center(
       child: RichText(
@@ -241,7 +243,7 @@ class _ConsultBlockState extends State<_ConsultBlock> {
               curve: Curves.easeOut,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: AppColors.surfaceElevatedDark,
+                color: AppColors.surfaceElevatedDark.withValues(alpha: 0.82),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: borderColor, width: 1),
                 boxShadow: shadow,

@@ -80,6 +80,15 @@ class AppFooter extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: 16),
+          Text(
+            'Powered by Stonechat Communications',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppColors.onPrimary.withValues(alpha: 0.55),
+                  fontSize: 12,
+                ),
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     );

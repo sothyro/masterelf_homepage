@@ -385,7 +385,7 @@ abstract class AppLocalizations {
   /// No description provided for @sectionMapHeading.
   ///
   /// In en, this message translates to:
-  /// **'You don\'t need more advice. You need a RoadMap. Let heaven guide you to the correct way.'**
+  /// **'You don\'t need more advice. You need a RoadMap.\nLet heaven guide you to the correct way.'**
   String get sectionMapHeading;
 
   /// No description provided for @sectionMapIntro.
@@ -721,7 +721,7 @@ abstract class AppLocalizations {
   /// No description provided for @stepChooseService.
   ///
   /// In en, this message translates to:
-  /// **'Choose service'**
+  /// **'Selection'**
   String get stepChooseService;
 
   /// No description provided for @stepDateAndTime.
@@ -897,6 +897,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Act with timing and alignment so progress feels natural and sustainable.'**
   String get smartMoveCard6Desc;
+
+  /// No description provided for @contactLetsConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s Connect!'**
+  String get contactLetsConnect;
+
+  /// No description provided for @contactIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Whether you are seeking clarity through a consultation, exploring our programs, or reaching out for collaborations, our team is here to guide you. Simply choose your subject, leave your message, and we will connect with you shortly.'**
+  String get contactIntro;
+
+  /// No description provided for @contactFormName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get contactFormName;
+
+  /// No description provided for @contactFormEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get contactFormEmail;
+
+  /// No description provided for @contactFormPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get contactFormPhone;
+
+  /// No description provided for @contactFormSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get contactFormSubject;
+
+  /// No description provided for @contactFormMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get contactFormMessage;
+
+  /// No description provided for @contactSubjectDestiny.
+  ///
+  /// In en, this message translates to:
+  /// **'Destiny / Personal Reading (Bazi)'**
+  String get contactSubjectDestiny;
+
+  /// No description provided for @contactSubjectBusiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Business & Strategy Planning (Qi Men / Business Date Selection)'**
+  String get contactSubjectBusiness;
+
+  /// No description provided for @contactSubjectFengShui.
+  ///
+  /// In en, this message translates to:
+  /// **'Feng Shui (Home / Office Alignment)'**
+  String get contactSubjectFengShui;
+
+  /// No description provided for @contactSubjectDateSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Selection (Training Specifics)'**
+  String get contactSubjectDateSelection;
+
+  /// No description provided for @contactSubjectUnsure.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsure - I need your recommendation'**
+  String get contactSubjectUnsure;
 }
 
 class _AppLocalizationsDelegate

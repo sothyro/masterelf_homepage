@@ -327,7 +327,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appointmentIntro => '选择咨询类型、预约时间，我们将通过短信向您发送确认。';
 
   @override
-  String get stepChooseService => '选择服务';
+  String get stepChooseService => '选择';
 
   @override
   String get stepDateAndTime => '日期与时间';
@@ -416,4 +416,41 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get smartMoveCard6Desc => '在时机与格局中行动，让进展自然可持续。';
+
+  @override
+  String get contactLetsConnect => '保持联系！';
+
+  @override
+  String get contactIntro =>
+      '无论您是想通过咨询获得清晰指引、了解我们的课程，还是寻求合作，我们的团队都会为您提供帮助。只需选择主题、留下留言，我们会尽快与您联系。';
+
+  @override
+  String get contactFormName => '姓名';
+
+  @override
+  String get contactFormEmail => '邮箱';
+
+  @override
+  String get contactFormPhone => '电话';
+
+  @override
+  String get contactFormSubject => '主题';
+
+  @override
+  String get contactFormMessage => '留言';
+
+  @override
+  String get contactSubjectDestiny => '命运 / 个人解读（八字）';
+
+  @override
+  String get contactSubjectBusiness => '商业与战略规划（奇门 / 商业择日）';
+
+  @override
+  String get contactSubjectFengShui => '风水（家居 / 办公布局）';
+
+  @override
+  String get contactSubjectDateSelection => '择日（培训相关）';
+
+  @override
+  String get contactSubjectUnsure => '不确定 - 需要您的推荐';
 }

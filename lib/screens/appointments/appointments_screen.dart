@@ -132,7 +132,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
+            padding: const EdgeInsets.only(top: 120, bottom: 48, left: 24, right: 24),
             child: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 560),

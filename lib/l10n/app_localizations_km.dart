@@ -351,7 +351,7 @@ class AppLocalizationsKm extends AppLocalizations {
       'Choose your consultation type, pick a time, and receive an SMS confirmation to your phone.';
 
   @override
-  String get stepChooseService => 'Choose service';
+  String get stepChooseService => 'Selection';
 
   @override
   String get stepDateAndTime => 'Date & time';
@@ -447,4 +447,43 @@ class AppLocalizationsKm extends AppLocalizations {
   @override
   String get smartMoveCard6Desc =>
       'Act with timing and alignment so progress feels natural and sustainable.';
+
+  @override
+  String get contactLetsConnect => 'Let\'s Connect!';
+
+  @override
+  String get contactIntro =>
+      'Whether you are seeking clarity through a consultation, exploring our programs, or reaching out for collaborations, our team is here to guide you. Simply choose your subject, leave your message, and we will connect with you shortly.';
+
+  @override
+  String get contactFormName => 'Name';
+
+  @override
+  String get contactFormEmail => 'Email';
+
+  @override
+  String get contactFormPhone => 'Phone';
+
+  @override
+  String get contactFormSubject => 'Subject';
+
+  @override
+  String get contactFormMessage => 'Message';
+
+  @override
+  String get contactSubjectDestiny => 'Destiny / Personal Reading (Bazi)';
+
+  @override
+  String get contactSubjectBusiness =>
+      'Business & Strategy Planning (Qi Men / Business Date Selection)';
+
+  @override
+  String get contactSubjectFengShui => 'Feng Shui (Home / Office Alignment)';
+
+  @override
+  String get contactSubjectDateSelection =>
+      'Date Selection (Training Specifics)';
+
+  @override
+  String get contactSubjectUnsure => 'Unsure - I need your recommendation';
 }

@@ -109,8 +109,25 @@ class _DesktopHeader extends StatelessWidget {
   final AppLocalizations l10n;
   final LocaleNotifier localeNotifier;
 
+  /// Paths per dropdown (by index). When multiple dropdowns share a path (e.g. /events),
+  /// only the last matching one is active so at most one menu is highlighted.
+  static const _dropdownPaths = [
+    ['/about'],
+    ['/academy'],
+    ['/events'],  // Resources
+    ['/events'],  // News & Events — wins when on /events
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final current = GoRouterState.of(context).uri.path;
+    final pathOnly = current.split('#').first;
+    int activeDropdownIndex = -1;
+    for (int i = 0; i < _dropdownPaths.length; i++) {
+      if (_dropdownPaths[i].any((p) => pathOnly == p || pathOnly.startsWith('$p/'))) {
+        activeDropdownIndex = i;
+      }
+    }
     return Center(
       child: GlassContainer(
         blurSigma: 14,
@@ -148,6 +165,7 @@ class _DesktopHeader extends StatelessWidget {
                 _NavItem(l10n.journey, '/about', LucideIcons.compass),
                 _NavItem(l10n.ourMethod, '/about#method', LucideIcons.lightbulb),
               ],
+              isActive: activeDropdownIndex == 0,
             ),
             _NavDropdown(
               label: l10n.learning,
@@ -156,6 +174,7 @@ class _DesktopHeader extends StatelessWidget {
                 _NavItem('Feng Shui Academy', '/academy', LucideIcons.home),
                 _NavItem('BaZi Academy', '/academy', LucideIcons.user),
               ],
+              isActive: activeDropdownIndex == 1,
             ),
             _NavDropdown(
               label: l10n.resources,
@@ -164,6 +183,7 @@ class _DesktopHeader extends StatelessWidget {
                 _NavItem('Flying Star Charts', '/events', LucideIcons.star),
                 _NavItem('Store', '/events', LucideIcons.shoppingBag),
               ],
+              isActive: activeDropdownIndex == 2,
             ),
             _NavDropdown(
               label: l10n.newsAndEvents,
@@ -172,6 +192,7 @@ class _DesktopHeader extends StatelessWidget {
                 _NavItem(l10n.blog, '/events', LucideIcons.fileText),
                 _NavItem(l10n.media, '/events', LucideIcons.video),
               ],
+              isActive: activeDropdownIndex == 3,
             ),
             _NavLink(label: l10n.consultations, path: '/appointments'),
             const Spacer(),
@@ -186,6 +207,7 @@ class _DesktopHeader extends StatelessWidget {
   }
 }
 
+/// Contact Us button styled like the Hero section's "Book Consultation" button.
 class _ContactUsButton extends StatelessWidget {
   const _ContactUsButton({required this.l10n});
 
@@ -196,50 +218,31 @@ class _ContactUsButton extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width;
     final isNarrow = width < 500;
     final isMedium = width < 800 && !isNarrow;
-    final horizontalPadding = isNarrow ? 6.0 : (isMedium ? 14.0 : 24.0);
-    final verticalPadding = isNarrow ? 2.0 : (isMedium ? 5.0 : 12.0);
-    final fontSize = isNarrow ? 11.0 : (isMedium ? 12.0 : 14.0);
-    final minWidth = isNarrow ? 56.0 : (isMedium ? 70.0 : 100.0);
-    final minHeight = isNarrow ? 22.0 : (isMedium ? 28.0 : 44.0);
-    final radius = isNarrow ? 14.0 : (isMedium ? 18.0 : 24.0);
+    final horizontalPadding = isNarrow ? 16.0 : (isMedium ? 20.0 : 24.0);
+    final verticalPadding = isNarrow ? 8.0 : (isMedium ? 10.0 : 12.0);
+    final fontSize = isNarrow ? 12.0 : (isMedium ? 14.0 : 15.0);
 
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () => context.push('/contact'),
-        borderRadius: BorderRadius.circular(radius),
-        child: Container(
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: AppShadows.accentButton,
+      ),
+      child: FilledButton(
+        onPressed: () => context.push('/contact'),
+        style: FilledButton.styleFrom(
+          backgroundColor: AppColors.accent,
+          foregroundColor: AppColors.onAccent,
           padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: verticalPadding),
-          constraints: BoxConstraints(minHeight: minHeight, minWidth: minWidth),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(radius),
-            gradient: const LinearGradient(
-              colors: [_MenuColors.goldDark, AppColors.accent, AppColors.accentLight, AppColors.accent, _MenuColors.goldDark],
-              stops: [0.0, 0.25, 0.5, 0.75, 1.0],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.accent.withValues(alpha: 0.3),
-                blurRadius: 6,
-                offset: const Offset(0, 2),
-              ),
-            ],
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
           ),
-          alignment: Alignment.center,
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              l10n.contactUs,
-              style: TextStyle(
-                color: AppColors.onAccent,
-                fontWeight: FontWeight.w600,
-                fontSize: fontSize,
-              ),
-              overflow: TextOverflow.visible,
-              softWrap: false,
-            ),
+        ),
+        child: Text(
+          l10n.contactUs,
+          style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
@@ -311,10 +314,17 @@ class _NavItem {
 }
 
 class _NavDropdown extends StatelessWidget {
-  const _NavDropdown({required this.label, required this.items});
+  const _NavDropdown({
+    required this.label,
+    required this.items,
+    required this.isActive,
+  });
 
   final String label;
   final List<_NavItem> items;
+  /// When true, this dropdown is shown as the active nav item. Only one dropdown
+  /// should be active per route so that shared paths (e.g. /events) don't highlight multiple menus.
+  final bool isActive;
 
   static const _itemHeight = 48.0;
 
@@ -354,8 +364,6 @@ class _NavDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final current = GoRouterState.of(context).uri.path;
-    final isActive = items.any((e) => current == e.path || current.startsWith('${e.path}/'));
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Builder(

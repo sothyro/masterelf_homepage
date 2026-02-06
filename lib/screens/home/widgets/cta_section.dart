@@ -4,12 +4,79 @@ import 'package:go_router/go_router.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 
-class CtaSection extends StatelessWidget {
+class CtaSection extends StatefulWidget {
   const CtaSection({super.key});
+
+  @override
+  State<CtaSection> createState() => _CtaSectionState();
+}
+
+class _CtaSectionState extends State<CtaSection> with SingleTickerProviderStateMixin {
+  static const _duration = Duration(milliseconds: 1100);
+  static const _curve = Curves.easeOutCubic;
+  static const _slideOffset = 24.0;
+
+  late final AnimationController _controller;
+  late final Animation<double> _headingOpacity;
+  late final Animation<double> _headingSlide;
+  late final Animation<double> _bodyOpacity;
+  late final Animation<double> _bodySlide;
+  late final Animation<double> _buttonOpacity;
+  late final Animation<double> _buttonSlide;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: _duration);
+    _headingOpacity = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0, 0.35, curve: _curve),
+      ),
+    );
+    _headingSlide = Tween<double>(begin: _slideOffset, end: 0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0, 0.35, curve: _curve),
+      ),
+    );
+    _bodyOpacity = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.18, 0.52, curve: _curve),
+      ),
+    );
+    _bodySlide = Tween<double>(begin: _slideOffset, end: 0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.18, 0.52, curve: _curve),
+      ),
+    );
+    _buttonOpacity = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.35, 0.72, curve: _curve),
+      ),
+    );
+    _buttonSlide = Tween<double>(begin: _slideOffset, end: 0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.35, 0.72, curve: _curve),
+      ),
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final textTheme = Theme.of(context).textTheme;
 
     return Container(
       width: double.infinity,
@@ -27,39 +94,79 @@ class CtaSection extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 700),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              l10n.finalCtaHeading,
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: AppColors.onPrimary,
-                    fontWeight: FontWeight.w600,
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Opacity(
+                  opacity: _headingOpacity.value,
+                  child: Transform.translate(
+                    offset: Offset(0, _headingSlide.value),
+                    child: child,
                   ),
-              textAlign: TextAlign.center,
+                );
+              },
+              child: Text(
+                l10n.finalCtaHeading,
+                style: (textTheme.headlineMedium ?? textTheme.headlineSmall)?.copyWith(
+                  color: AppColors.onPrimary,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 32,
+                  height: 1.25,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
             const SizedBox(height: 16),
-            Text(
-              l10n.finalCtaBody,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: AppColors.onPrimary.withValues(alpha: 0.9),
-                    height: 1.5,
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Opacity(
+                  opacity: _bodyOpacity.value,
+                  child: Transform.translate(
+                    offset: Offset(0, _bodySlide.value),
+                    child: child,
                   ),
-              textAlign: TextAlign.center,
+                );
+              },
+              child: Text(
+                l10n.finalCtaBody,
+                style: textTheme.bodyLarge?.copyWith(
+                  color: AppColors.onPrimary.withValues(alpha: 0.9),
+                  height: 1.5,
+                  fontSize: 19,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
             const SizedBox(height: 28),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: AppShadows.accentButton,
-              ),
-              child: FilledButton(
-                onPressed: () => context.push('/contact'),
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.accent,
-                  foregroundColor: AppColors.onAccent,
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  elevation: 0,
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Opacity(
+                  opacity: _buttonOpacity.value,
+                  child: Transform.translate(
+                    offset: Offset(0, _buttonSlide.value),
+                    child: child,
+                  ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: AppShadows.accentButton,
                 ),
-                child: Text(l10n.contactUs),
+                child: FilledButton(
+                  onPressed: () => context.push('/contact'),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.accent,
+                    foregroundColor: AppColors.onAccent,
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    elevation: 0,
+                  ),
+                  child: Text(l10n.contactUs),
+                ),
               ),
             ),
           ],
