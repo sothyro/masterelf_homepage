@@ -21,14 +21,8 @@ class EventsSection extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
     final isNarrow = Breakpoints.isMobile(width);
-    final heading = l10n.sectionExperienceHeading;
-    final transformationIndex = heading.indexOf('Transformation');
-    final headlinePrefix = transformationIndex >= 0
-        ? heading.substring(0, transformationIndex)
-        : heading;
-    final headlineHighlight = transformationIndex >= 0
-        ? heading.substring(transformationIndex)
-        : null;
+    final headlinePrefix = l10n.sectionExperienceHeadingPrefix;
+    final headlineHighlight = l10n.sectionExperienceHeadingHighlight;
 
     final featuredEvent = kAllEvents.isNotEmpty ? kAllEvents.first : null;
     final otherEvents = kAllEvents.length > 1 ? kAllEvents.sublist(1) : <EventItem>[];
@@ -56,7 +50,7 @@ class EventsSection extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(text: headlinePrefix),
-                    if (headlineHighlight != null)
+                    if (headlineHighlight.isNotEmpty)
                       TextSpan(
                         text: headlineHighlight,
                         style: GoogleFonts.condiment(
@@ -165,11 +159,14 @@ class EventsSection extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            Text(
-              l10n.allUpcomingEvents,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: AppColors.onPrimary,
-                fontWeight: FontWeight.w600,
+            Expanded(
+              child: Text(
+                l10n.allUpcomingEvents,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: AppColors.onPrimary,
+                  fontWeight: FontWeight.w600,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
@@ -258,9 +255,8 @@ class _FeaturedEventCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                height: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 180 : 220,
-                width: double.infinity,
+              AspectRatio(
+                aspectRatio: 16 / 9,
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
@@ -268,7 +264,7 @@ class _FeaturedEventCard extends StatelessWidget {
                       AppContent.assetEventCard,
                       fit: BoxFit.cover,
                       cacheWidth: 800,
-                      cacheHeight: 440,
+                      cacheHeight: 450,
                       errorBuilder: (_, __, ___) => Container(
                         color: AppColors.primary.withValues(alpha: 0.2),
                       ),
@@ -442,17 +438,16 @@ class _CompactEventCard extends StatelessWidget {
                   children: [
                     ClipRRect(
                       borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-                      child: SizedBox(
-                        height: 140,
-                        width: double.infinity,
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
                             Image.asset(
                               AppContent.assetEventCard,
                               fit: BoxFit.cover,
-                              cacheWidth: 240,
-                              cacheHeight: 280,
+                              cacheWidth: 640,
+                              cacheHeight: 360,
                               errorBuilder: (_, __, ___) => Container(
                                 color: AppColors.primary.withValues(alpha: 0.2),
                               ),
@@ -586,20 +581,21 @@ class _CompactEventCard extends StatelessWidget {
                   left: Radius.circular(10),
                 ),
                 child: SizedBox(
-                  width: 120,
                   height: 120,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Image.asset(
-                        AppContent.assetEventCard,
-                        fit: BoxFit.cover,
-                        cacheWidth: 240,
-                        cacheHeight: 240,
-                        errorBuilder: (_, __, ___) => Container(
-                          color: AppColors.primary.withValues(alpha: 0.2),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Image.asset(
+                          AppContent.assetEventCard,
+                          fit: BoxFit.cover,
+                          cacheWidth: 640,
+                          cacheHeight: 360,
+                          errorBuilder: (_, __, ___) => Container(
+                            color: AppColors.primary.withValues(alpha: 0.2),
+                          ),
                         ),
-                      ),
                       if (limitedSeats)
                         Positioned(
                           top: 6,
@@ -627,6 +623,7 @@ class _CompactEventCard extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(14),
@@ -701,12 +698,15 @@ class _CompactEventCard extends StatelessWidget {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          Text(
-                            l10n.viewEvent,
-                            style: const TextStyle(
-                              color: AppColors.onPrimary,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13,
+                          Flexible(
+                            child: Text(
+                              l10n.viewEvent,
+                              style: const TextStyle(
+                                color: AppColors.onPrimary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           const SizedBox(width: 4),

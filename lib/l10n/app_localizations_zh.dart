@@ -195,6 +195,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get privacyPolicy => '隐私政策';
 
   @override
+  String get backToTop => '回到顶部';
+
+  @override
+  String get pageNotFoundTitle => '页面未找到';
+
+  @override
+  String get pageNotFoundMessage => '您访问的页面不存在或已移动。';
+
+  @override
+  String get backToHome => '返回首页';
+
+  @override
   String get heroHeadline1 => '觉知永远先于结果。';
 
   @override
@@ -253,6 +265,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get sectionExperienceHeading => '最佳实践引导，成果转化。';
+
+  @override
+  String get sectionExperienceHeadingPrefix => '最佳实践引导，';
+
+  @override
+  String get sectionExperienceHeadingHighlight => '成果转化。';
 
   @override
   String get sectionKnowledgeHeading => '这不仅是传授。它是实现真正改变的实践框架。';
@@ -650,10 +668,52 @@ class AppLocalizationsZh extends AppLocalizations {
   String get smsConfirmationNote => '短信确认已发送至您的手机。';
 
   @override
+  String get smsPoweredByPlasGate => '短信确认通过 PlasGate 发送。';
+
+  @override
+  String get sessionDurationNote => '每次咨询为 2 小时，场次间隔 30 分钟。';
+
+  @override
   String get bookAnother => '再预约一次';
 
   @override
   String get back => '返回';
+
+  @override
+  String get viewYourBookings => '查看您的预约';
+
+  @override
+  String get viewYourBookingsIntro => '输入您的手机号码以查看预约记录。';
+
+  @override
+  String get findMyBookings => '查找我的预约';
+
+  @override
+  String get bookingReference => '预约编号';
+
+  @override
+  String get noBookingsFound => '未找到该号码的预约。';
+
+  @override
+  String get cancelBookingButton => '取消预约';
+
+  @override
+  String get cancelBookingConfirm => '确定取消此预约？';
+
+  @override
+  String get bookingCancelled => '已取消预约。';
+
+  @override
+  String get loadingSlots => '正在加载可选时间…';
+
+  @override
+  String get statusPending => '待确认';
+
+  @override
+  String get statusConfirmed => '已确认';
+
+  @override
+  String get statusCancelled => '已取消';
 
   @override
   String get next => '下一步';

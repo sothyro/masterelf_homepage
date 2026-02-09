@@ -1,11 +1,28 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'app.dart';
+import 'firebase_options.dart';
 import 'utils/app_asset_preloader.dart';
 import 'utils/hero_video_preloader.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await _initFirebase();
   runApp(const HeroVideoBootstrap());
+}
+
+/// Initialize Firebase only when options are configured (not placeholder).
+Future<void> _initFirebase() async {
+  try {
+    final options = DefaultFirebaseOptions.currentPlatform;
+    if (options.projectId.isEmpty || options.projectId == 'your-project-id') {
+      return;
+    }
+    await Firebase.initializeApp(options: options);
+  } catch (_) {
+    // Run without Firebase (demo mode for booking)
+  }
 }
 
 /// Shows a loading screen with 0–100% progress until assets (video, images, fonts) are ready, then the full app.

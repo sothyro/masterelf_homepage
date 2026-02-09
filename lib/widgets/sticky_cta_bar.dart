@@ -53,45 +53,50 @@ class _StickyCtaBarState extends State<StickyCtaBar> {
       boxShadow: AppShadows.stickyCta,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
       child: IntrinsicWidth(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              icon: const Icon(LucideIcons.x, color: AppColors.onAccent, size: 18),
-              onPressed: () => setState(() => _dismissed = true),
-              tooltip: 'Dismiss',
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-              style: IconButton.styleFrom(
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-            ),
-            const SizedBox(height: 8),
-            InkWell(
-              onTap: _openPopup,
-              borderRadius: BorderRadius.circular(8),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(LucideIcons.megaphone, color: AppColors.onAccent, size: 22),
-                    const SizedBox(height: 12),
-                    RotatedBox(
-                      quarterTurns: 3,
-                      child: Text(
-                        l10n.stickyCtaText,
-                        style: textStyle,
-                        textAlign: TextAlign.center,
-                        maxLines: 4,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxHeight: 400),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(LucideIcons.x, color: AppColors.onAccent, size: 18),
+                  onPressed: () => setState(() => _dismissed = true),
+                  tooltip: 'Dismiss',
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                  style: IconButton.styleFrom(
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
                 ),
-              ),
+                const SizedBox(height: 8),
+                InkWell(
+                  onTap: _openPopup,
+                  borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(LucideIcons.megaphone, color: AppColors.onAccent, size: 22),
+                        const SizedBox(height: 12),
+                        RotatedBox(
+                          quarterTurns: 3,
+                          child: Text(
+                            l10n.stickyCtaText,
+                            style: textStyle,
+                            textAlign: TextAlign.center,
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -261,9 +261,10 @@ class _ChatAndSocial extends StatelessWidget {
               ),
         ),
         SizedBox(height: compact ? 4 : 14),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: centerContent ? MainAxisAlignment.center : MainAxisAlignment.start,
+        Wrap(
+          alignment: centerContent ? WrapAlignment.center : WrapAlignment.start,
+          spacing: 4,
+          runSpacing: 4,
           children: [
             IconButton(
               icon: Icon(LucideIcons.messageCircle, color: AppColors.onPrimary, size: compact ? 20 : 26),

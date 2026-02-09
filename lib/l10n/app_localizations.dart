@@ -466,6 +466,30 @@ abstract class AppLocalizations {
   /// **'Privacy Policy'**
   String get privacyPolicy;
 
+  /// No description provided for @backToTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to top'**
+  String get backToTop;
+
+  /// No description provided for @pageNotFoundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Page not found'**
+  String get pageNotFoundTitle;
+
+  /// No description provided for @pageNotFoundMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The page you\'re looking for doesn\'t exist or has been moved.'**
+  String get pageNotFoundMessage;
+
+  /// No description provided for @backToHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Home'**
+  String get backToHome;
+
   /// No description provided for @heroHeadline1.
   ///
   /// In en, this message translates to:
@@ -585,6 +609,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Best practice guided, result Transformation.'**
   String get sectionExperienceHeading;
+
+  /// No description provided for @sectionExperienceHeadingPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Best practice guided, result '**
+  String get sectionExperienceHeadingPrefix;
+
+  /// No description provided for @sectionExperienceHeadingHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'Transformation.'**
+  String get sectionExperienceHeadingHighlight;
 
   /// No description provided for @sectionKnowledgeHeading.
   ///
@@ -1348,6 +1384,18 @@ abstract class AppLocalizations {
   /// **'An SMS confirmation has been sent to your phone.'**
   String get smsConfirmationNote;
 
+  /// No description provided for @smsPoweredByPlasGate.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS confirmation sent via PlasGate.'**
+  String get smsPoweredByPlasGate;
+
+  /// No description provided for @sessionDurationNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Each session is 2 hours with a 30-minute break between sessions.'**
+  String get sessionDurationNote;
+
   /// No description provided for @bookAnother.
   ///
   /// In en, this message translates to:
@@ -1359,6 +1407,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Back'**
   String get back;
+
+  /// No description provided for @viewYourBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'View your bookings'**
+  String get viewYourBookings;
+
+  /// No description provided for @viewYourBookingsIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your phone number to see your upcoming and past bookings.'**
+  String get viewYourBookingsIntro;
+
+  /// No description provided for @findMyBookings.
+  ///
+  /// In en, this message translates to:
+  /// **'Find my bookings'**
+  String get findMyBookings;
+
+  /// No description provided for @bookingReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get bookingReference;
+
+  /// No description provided for @noBookingsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No bookings found for this number.'**
+  String get noBookingsFound;
+
+  /// No description provided for @cancelBookingButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel booking'**
+  String get cancelBookingButton;
+
+  /// No description provided for @cancelBookingConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this booking?'**
+  String get cancelBookingConfirm;
+
+  /// No description provided for @bookingCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking cancelled.'**
+  String get bookingCancelled;
+
+  /// No description provided for @loadingSlots.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading available times…'**
+  String get loadingSlots;
+
+  /// No description provided for @statusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get statusPending;
+
+  /// No description provided for @statusConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get statusConfirmed;
+
+  /// No description provided for @statusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get statusCancelled;
 
   /// No description provided for @next.
   ///

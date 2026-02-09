@@ -4,6 +4,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../config/app_content.dart';
 import '../../l10n/app_localizations.dart';
+import '../../models/appointment.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
 import '../../widgets/breadcrumb.dart';
@@ -39,6 +40,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   int? _selectedServiceIndex;
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
+  List<String> _availableSlots = [];
+  bool _loadingSlots = false;
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _nameFocus = FocusNode();
@@ -46,6 +49,14 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
   bool _isSubmitting = false;
   String? _submitError;
+  String? _lastBookingReference;
+
+  // Dashboard: view your bookings
+  final _dashboardPhoneController = TextEditingController();
+  List<AppointmentRecord> _dashboardBookings = [];
+  bool _dashboardLoading = false;
+  String? _dashboardError;
+  String? _cancellingId;
 
   List<_ConsultationOption> _getServices(AppLocalizations l10n) {
     return [
@@ -60,9 +71,34 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   void dispose() {
     _nameController.dispose();
     _phoneController.dispose();
+    _dashboardPhoneController.dispose();
     _nameFocus.dispose();
     _phoneFocus.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadSlotsForDate(DateTime date) async {
+    final dateStr =
+        '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+    setState(() {
+      _loadingSlots = true;
+      _availableSlots = [];
+      _selectedTime = null;
+    });
+    final slots = await getAvailableSlots(dateStr);
+    if (!mounted) return;
+    setState(() {
+      _availableSlots = slots;
+      _loadingSlots = false;
+      if (slots.isNotEmpty) _selectedTime = _parseSlotToTimeOfDay(slots.first);
+    });
+  }
+
+  static TimeOfDay _parseSlotToTimeOfDay(String slot) {
+    final parts = slot.split(':');
+    final hour = parts.isNotEmpty ? int.tryParse(parts[0]) ?? 9 : 9;
+    final minute = parts.length > 1 ? int.tryParse(parts[1]) ?? 0 : 0;
+    return TimeOfDay(hour: hour, minute: minute);
   }
 
   void _nextStep() {
@@ -83,9 +119,11 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       _selectedServiceIndex = null;
       _selectedDate = null;
       _selectedTime = null;
+      _availableSlots = [];
       _nameController.clear();
       _phoneController.clear();
       _submitError = null;
+      _lastBookingReference = null;
     });
   }
 
@@ -103,19 +141,28 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       _submitError = null;
     });
 
+    final dateStr = _selectedDate != null
+        ? '${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}'
+        : '';
+    final timeStr = _selectedTime != null
+        ? '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}'
+        : '';
+
     final result = await submitAppointmentBooking(
       name: name,
       phone: phone,
       serviceId: opt.id,
       serviceName: '${opt.category} (${opt.method})',
-      date: _selectedDate != null ? '${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}' : '',
-      time: _selectedTime != null ? '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}' : '',
+      date: dateStr,
+      time: timeStr,
+      durationMinutes: defaultSessionDurationMinutes,
     );
 
     if (!mounted) return;
     setState(() {
       _isSubmitting = false;
       if (result.success) {
+        _lastBookingReference = result.bookingReference;
         _step = _maxStep;
       } else {
         _submitError = result.errorMessage;
@@ -206,6 +253,56 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                 ),
               ),
             ],
+          ),
+          _BookingDashboardSection(
+            phoneController: _dashboardPhoneController,
+            bookings: _dashboardBookings,
+            loading: _dashboardLoading,
+            error: _dashboardError,
+            cancellingId: _cancellingId,
+            onFind: () async {
+              final phone = _dashboardPhoneController.text.trim();
+              if (phone.isEmpty) return;
+              setState(() {
+                _dashboardLoading = true;
+                _dashboardError = null;
+                _dashboardBookings = [];
+              });
+              try {
+                final list = await getMyBookings(phone);
+                if (!mounted) return;
+                setState(() {
+                  _dashboardBookings = list;
+                  _dashboardLoading = false;
+                });
+              } catch (e) {
+                if (!mounted) return;
+                setState(() {
+                  _dashboardError = e.toString();
+                  _dashboardLoading = false;
+                });
+              }
+            },
+            onCancel: (id) async {
+              final phone = _dashboardPhoneController.text.trim();
+              if (phone.isEmpty) return;
+              final messenger = ScaffoldMessenger.maybeOf(context);
+              setState(() => _cancellingId = id);
+              try {
+                await cancelBooking(id, phone);
+                if (!mounted) return;
+                final list = await getMyBookings(phone);
+                if (!mounted) return;
+                setState(() {
+                  _dashboardBookings = list;
+                  _cancellingId = null;
+                });
+              } catch (e) {
+                if (!mounted) return;
+                setState(() => _cancellingId = null);
+                messenger?.showSnackBar(SnackBar(content: Text(e.toString())));
+              }
+            },
           ),
           _SmartMoveSection(),
         ],
@@ -392,7 +489,10 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                   child: child!,
                 ),
               );
-              if (date != null) setState(() => _selectedDate = date);
+              if (date != null) {
+                setState(() => _selectedDate = date);
+                await _loadSlotsForDate(date);
+              }
             },
             icon: const Icon(LucideIcons.calendar, size: 20),
             label: Text(
@@ -410,37 +510,58 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
             l10n.selectTime,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(color: AppColors.onSurfaceVariantDark),
           ),
-          const SizedBox(height: 8),
-          OutlinedButton.icon(
-            onPressed: () async {
-              final time = await showTimePicker(
-                context: context,
-                initialTime: _selectedTime ?? const TimeOfDay(hour: 10, minute: 0),
-                builder: (context, child) => Theme(
-                  data: Theme.of(context).copyWith(
-                    colorScheme: ColorScheme.dark(
-                      primary: AppColors.accent,
-                      onPrimary: AppColors.onAccent,
-                      surface: AppColors.surfaceElevatedDark,
-                      onSurface: AppColors.onPrimary,
-                    ),
-                  ),
-                  child: child!,
+          const SizedBox(height: 6),
+          Text(
+            l10n.sessionDurationNote,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppColors.onSurfaceVariantDark,
+                  fontStyle: FontStyle.italic,
                 ),
-              );
-              if (time != null) setState(() => _selectedTime = time);
-            },
-            icon: const Icon(LucideIcons.clock, size: 20),
-            label: Text(
-              _selectedTime != null
-                  ? '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}'
-                  : l10n.selectTime,
-            ),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.onPrimary,
-              side: const BorderSide(color: AppColors.borderLight),
-            ),
           ),
+          const SizedBox(height: 8),
+          if (_loadingSlots)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accent),
+                  ),
+                  const SizedBox(width: 12),
+                  Text(l10n.loadingSlots, style: TextStyle(color: AppColors.onSurfaceVariantDark, fontSize: 14)),
+                ],
+              ),
+            )
+          else if (_availableSlots.isEmpty && _selectedDate != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                'No slots available for this date.',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariantDark),
+              ),
+            )
+          else
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: _availableSlots.map((slot) {
+                final selected = _selectedTime != null &&
+                    '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}' == slot;
+                return ChoiceChip(
+                  label: Text(slot),
+                  selected: selected,
+                  onSelected: (v) {
+                    if (v) setState(() => _selectedTime = _parseSlotToTimeOfDay(slot));
+                  },
+                  selectedColor: AppColors.accent.withValues(alpha: 0.3),
+                  side: BorderSide(
+                    color: selected ? AppColors.accent : AppColors.borderDark,
+                  ),
+                );
+              }).toList(),
+            ),
           const SizedBox(height: 24),
           Row(
             children: [
@@ -581,7 +702,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
           _ConfirmRow(
             label: l10n.stepDateAndTime,
             value: _selectedDate != null && _selectedTime != null
-                ? '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year} at ${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}'
+                ? '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year} at ${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')} (2h session)'
                 : '—',
           ),
           const SizedBox(height: 12),
@@ -668,7 +789,35 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                 ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 20),
+          if (_lastBookingReference != null) ...[
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppColors.surfaceElevatedDark,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.borderDark),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '${l10n.bookingReference}: ',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onSurfaceVariantDark),
+                  ),
+                  Text(
+                    _lastBookingReference!,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: AppColors.accent,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.2,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+          const SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -694,7 +843,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Powered by Unimatrix for reliable SMS delivery.',
+            l10n.smsPoweredByPlasGate,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: AppColors.onSurfaceVariantDark,
                   fontStyle: FontStyle.italic,
@@ -771,6 +920,220 @@ class _ConfirmRow extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Booking management dashboard: view bookings by phone, cancel.
+class _BookingDashboardSection extends StatelessWidget {
+  const _BookingDashboardSection({
+    required this.phoneController,
+    required this.bookings,
+    required this.loading,
+    this.error,
+    this.cancellingId,
+    required this.onFind,
+    required this.onCancel,
+  });
+
+  final TextEditingController phoneController;
+  final List<AppointmentRecord> bookings;
+  final bool loading;
+  final String? error;
+  final String? cancellingId;
+  final VoidCallback onFind;
+  final void Function(String appointmentId) onCancel;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final width = MediaQuery.sizeOf(context).width;
+    final isNarrow = width < 800;
+
+    return Container(
+      width: double.infinity,
+      color: AppColors.primary.withValues(alpha: 0.5),
+      padding: EdgeInsets.symmetric(
+        vertical: 48,
+        horizontal: isNarrow ? 16 : 24,
+      ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 640),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                l10n.viewYourBookings,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: AppColors.onPrimary,
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                l10n.viewYourBookingsIntro,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.onSurfaceVariantDark,
+                      height: 1.4,
+                    ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: phoneController,
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        hintText: l10n.yourPhone,
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(color: AppColors.borderDark),
+                        ),
+                        filled: true,
+                        fillColor: AppColors.backgroundDark,
+                      ),
+                      style: const TextStyle(color: AppColors.onPrimary),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  FilledButton(
+                    onPressed: loading ? null : onFind,
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.accent,
+                      foregroundColor: AppColors.onAccent,
+                    ),
+                    child: loading
+                        ? const SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.onAccent),
+                          )
+                        : Text(l10n.findMyBookings),
+                  ),
+                ],
+              ),
+              if (error != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  error!,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.error),
+                ),
+              ],
+              if (bookings.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                ...bookings.map((b) => _DashboardBookingCard(
+                      record: b,
+                      l10n: l10n,
+                      isCancelling: cancellingId == b.id,
+                      onCancel: () => onCancel(b.id),
+                    )),
+              ] else if (!loading && phoneController.text.trim().isNotEmpty && error == null) ...[
+                const SizedBox(height: 16),
+                Text(
+                  l10n.noBookingsFound,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.onSurfaceVariantDark),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DashboardBookingCard extends StatelessWidget {
+  const _DashboardBookingCard({
+    required this.record,
+    required this.l10n,
+    required this.isCancelling,
+    required this.onCancel,
+  });
+
+  final AppointmentRecord record;
+  final AppLocalizations l10n;
+  final bool isCancelling;
+  final VoidCallback onCancel;
+
+  String _statusLabel(String status) {
+    switch (status) {
+      case 'confirmed':
+        return l10n.statusConfirmed;
+      case 'cancelled':
+        return l10n.statusCancelled;
+      default:
+        return l10n.statusPending;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+      color: AppColors.surfaceElevatedDark,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    record.serviceName,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: AppColors.onPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: record.status == 'cancelled'
+                        ? AppColors.error.withValues(alpha: 0.2)
+                        : AppColors.accent.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    _statusLabel(record.status),
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: record.status == 'cancelled' ? AppColors.error : AppColors.accent,
+                        ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '${record.date} · ${record.time}',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariantDark),
+            ),
+            Text(
+              '${l10n.bookingReference}: ${record.bookingReference}',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariantDark),
+            ),
+            if (record.status != 'cancelled') ...[
+              const SizedBox(height: 12),
+              TextButton(
+                onPressed: isCancelling ? null : onCancel,
+                child: isCancelling
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accent),
+                      )
+                    : Text(l10n.cancelBookingButton, style: const TextStyle(color: AppColors.error)),
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

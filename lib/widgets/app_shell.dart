@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
 import '../utils/breakpoints.dart';
 import 'app_header.dart';
@@ -102,7 +103,7 @@ class _AppShellState extends State<AppShell> {
                   foregroundColor: AppColors.onAccent,
                   elevation: 0,
                   highlightElevation: 0,
-                  tooltip: 'Back to top',
+                  tooltip: AppLocalizations.of(context)!.backToTop,
                   child: const Icon(Icons.keyboard_arrow_up),
                 ),
               ),

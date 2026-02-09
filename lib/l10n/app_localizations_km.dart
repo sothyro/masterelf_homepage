@@ -200,6 +200,19 @@ class AppLocalizationsKm extends AppLocalizations {
   String get privacyPolicy => 'គោលការណ៍ភាពឯកជន';
 
   @override
+  String get backToTop => 'ត្រលប់ទៅលើ';
+
+  @override
+  String get pageNotFoundTitle => 'រកមិនឃើញទំព័រ';
+
+  @override
+  String get pageNotFoundMessage =>
+      'ទំព័រដែលអ្នកកំពុងរកមិនមាន ឬត្រូវបានផ្លាស់ទី។';
+
+  @override
+  String get backToHome => 'ត្រលប់ទៅដើម';
+
+  @override
   String get heroHeadline1 => 'ការយល់ដឹងតែងតែមកមុនលទ្ធផល។';
 
   @override
@@ -261,6 +274,12 @@ class AppLocalizationsKm extends AppLocalizations {
   @override
   String get sectionExperienceHeading =>
       'អនុវត្តដ៏ល្អណែនាំ ការផ្លាស់ប្តូរលទ្ធផល។';
+
+  @override
+  String get sectionExperienceHeadingPrefix => 'អនុវត្តដ៏ល្អណែនាំ ';
+
+  @override
+  String get sectionExperienceHeadingHighlight => 'ការផ្លាស់ប្តូរលទ្ធផល។';
 
   @override
   String get sectionKnowledgeHeading =>
@@ -689,10 +708,52 @@ class AppLocalizationsKm extends AppLocalizations {
       'ការបញ្ជាក់ SMS ត្រូវបានផ្ញើទៅទូរស័ព្ទរបស់អ្នក។';
 
   @override
+  String get smsPoweredByPlasGate => 'ការបញ្ជាក់ SMS ផ្ញើតាម PlasGate។';
+
+  @override
+  String get sessionDurationNote => 'ជាវគ្គ ២ ម៉ោង ចន្លោះ ៣០ នាទី។';
+
+  @override
   String get bookAnother => 'កក់មួយទៀត';
 
   @override
   String get back => 'ត្រឡប់';
+
+  @override
+  String get viewYourBookings => 'មើលការកក់របស់អ្នក';
+
+  @override
+  String get viewYourBookingsIntro => 'បញ្ចូលលេខទូរស័ព្ទដើម្បីមើលការកក់។';
+
+  @override
+  String get findMyBookings => 'រកការកក់របស់ខ្ញុំ';
+
+  @override
+  String get bookingReference => 'លេខយោង';
+
+  @override
+  String get noBookingsFound => 'រកមិនឃើញការកក់សម្រាប់លេខនេះទេ។';
+
+  @override
+  String get cancelBookingButton => 'បោះបង់ការកក់';
+
+  @override
+  String get cancelBookingConfirm => 'បោះបង់ការកក់នេះ?';
+
+  @override
+  String get bookingCancelled => 'បានបោះបង់ការកក់។';
+
+  @override
+  String get loadingSlots => 'កំពុងផ្ទុកពេលវេលា…';
+
+  @override
+  String get statusPending => 'រង់ចាំ';
+
+  @override
+  String get statusConfirmed => 'បានបញ្ជាក់';
+
+  @override
+  String get statusCancelled => 'បានបោះបង់';
 
   @override
   String get next => 'បន្ទាប់';

@@ -1,0 +1,18 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Appointments: allow create only (no list/read/update/delete from client).
+    // Reading and updates are done via Cloud Functions (getMyBookings, cancelBooking).
+    match /appointments/{docId} {
+      allow create: if request.resource.data.name is string
+                   && request.resource.data.phone is string
+                   && request.resource.data.phone.size() >= 8
+                   && request.resource.data.serviceId is string
+                   && request.resource.data.serviceName is string
+                   && request.resource.data.date is string
+                   && request.resource.data.time is string
+                   && request.resource.data.status == 'pending';
+      allow read, update, delete: if false;
+    }
+  }
+}

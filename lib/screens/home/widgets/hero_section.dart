@@ -83,12 +83,17 @@ class _HeroSectionState extends State<HeroSection> {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
     // Responsive height: 16:9 of width so video fits; lower min on small screens so hero isn’t oversized
-    final minHeight = width < 600 ? 320.0 : (width < 900 ? 500.0 : 1000.0);
-    final height = width > 0 ? (width * 9 / 16).clamp(minHeight, 1600.0) : 1000.0;
     final isMobile = Breakpoints.isMobile(width);
+    // On mobile: taller min height so hero text sits below the overlay menu and video has more presence
+    final minHeight = width < 600
+        ? 480.0
+        : (width < 900 ? 500.0 : 1000.0);
+    final height = width > 0 ? (width * 9 / 16).clamp(minHeight, 1600.0) : 1000.0;
     final horizontalPadding = isMobile ? 16.0 : 32.0;
     final verticalPadding = isMobile ? 32.0 : 48.0;
-    final contentAlignment = isMobile ? const Alignment(0, 0.35) : const Alignment(-0.38, 0.42);
+    // Mobile: reserve top space for overlay header so hero text is below the menu; align content lower so video is less blocked
+    final topInset = isMobile ? (MediaQuery.paddingOf(context).top + 12 + 64) : 0.0;
+    final contentAlignment = isMobile ? const Alignment(0, 0.55) : const Alignment(-0.38, 0.42);
     final crossAlign = isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start;
     final textAlign = isMobile ? TextAlign.center : TextAlign.left;
 
@@ -138,9 +143,14 @@ class _HeroSectionState extends State<HeroSection> {
               ),
             ),
           ),
-          // 4) Content – centered on mobile for better readability
+          // 4) Content – centered on mobile for better readability; on mobile top inset clears overlay menu
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: verticalPadding),
+            padding: EdgeInsets.only(
+              left: horizontalPadding,
+              right: horizontalPadding,
+              top: topInset + verticalPadding,
+              bottom: verticalPadding,
+            ),
             child: Align(
               alignment: contentAlignment,
               child: ConstrainedBox(

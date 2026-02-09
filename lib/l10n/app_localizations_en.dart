@@ -200,6 +200,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyPolicy => 'Privacy Policy';
 
   @override
+  String get backToTop => 'Back to top';
+
+  @override
+  String get pageNotFoundTitle => 'Page not found';
+
+  @override
+  String get pageNotFoundMessage =>
+      'The page you\'re looking for doesn\'t exist or has been moved.';
+
+  @override
+  String get backToHome => 'Back to Home';
+
+  @override
   String get heroHeadline1 => 'Awareness always comes before outcome.';
 
   @override
@@ -261,6 +274,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get sectionExperienceHeading =>
       'Best practice guided, result Transformation.';
+
+  @override
+  String get sectionExperienceHeadingPrefix => 'Best practice guided, result ';
+
+  @override
+  String get sectionExperienceHeadingHighlight => 'Transformation.';
 
   @override
   String get sectionKnowledgeHeading =>
@@ -692,10 +711,54 @@ class AppLocalizationsEn extends AppLocalizations {
       'An SMS confirmation has been sent to your phone.';
 
   @override
+  String get smsPoweredByPlasGate => 'SMS confirmation sent via PlasGate.';
+
+  @override
+  String get sessionDurationNote =>
+      'Each session is 2 hours with a 30-minute break between sessions.';
+
+  @override
   String get bookAnother => 'Book another';
 
   @override
   String get back => 'Back';
+
+  @override
+  String get viewYourBookings => 'View your bookings';
+
+  @override
+  String get viewYourBookingsIntro =>
+      'Enter your phone number to see your upcoming and past bookings.';
+
+  @override
+  String get findMyBookings => 'Find my bookings';
+
+  @override
+  String get bookingReference => 'Reference';
+
+  @override
+  String get noBookingsFound => 'No bookings found for this number.';
+
+  @override
+  String get cancelBookingButton => 'Cancel booking';
+
+  @override
+  String get cancelBookingConfirm => 'Cancel this booking?';
+
+  @override
+  String get bookingCancelled => 'Booking cancelled.';
+
+  @override
+  String get loadingSlots => 'Loading available times…';
+
+  @override
+  String get statusPending => 'Pending';
+
+  @override
+  String get statusConfirmed => 'Confirmed';
+
+  @override
+  String get statusCancelled => 'Cancelled';
 
   @override
   String get next => 'Next';
