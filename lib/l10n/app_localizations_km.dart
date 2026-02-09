@@ -156,6 +156,9 @@ class AppLocalizationsKm extends AppLocalizations {
   String get aboutMasterElf => 'អំពី Master Elf';
 
   @override
+  String get heroMasterElfCaption => 'Master Elf';
+
+  @override
   String get journey => 'ការខិតខំរបស់ខ្ញុំ';
 
   @override
@@ -163,6 +166,9 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get events => 'ព្រឹត្តិការណ៍';
+
+  @override
+  String get eventsCalendar => 'ប្រតិទិនព្រឹត្តិការណ៍';
 
   @override
   String get blog => 'ប្លុក';
@@ -230,7 +236,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get viewEvent => 'មើលព្រឹត្តិការណ៍';
 
   @override
-  String get exploreCourses => 'ស្វែងរកវគ្គសិក្សា';
+  String get exploreCourses => 'ស្វែងរក';
 
   @override
   String get getConsultation => 'ទទួលការពិគ្រោះ';

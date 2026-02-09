@@ -7,6 +7,7 @@ import '../../../config/app_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/hero_video_preloader.dart';
+import '../../../widgets/profile_dialog.dart';
 
 class HeroSection extends StatefulWidget {
   const HeroSection({super.key});
@@ -228,7 +229,7 @@ class _HeroSectionState extends State<HeroSection> {
                           ),
                         ),
                         OutlinedButton(
-                          onPressed: () => context.push('/about'),
+                          onPressed: () => showProfileDialog(context),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: AppColors.onPrimary,
                             side: const BorderSide(color: AppColors.onPrimary),
@@ -238,7 +239,7 @@ class _HeroSectionState extends State<HeroSection> {
                             ),
                           ),
                           child: Text(
-                            l10n.aboutMasterElf,
+                            l10n.heroMasterElfCaption,
                             style: TextStyle(
                               fontSize: width < 600 ? 15 : 17,
                               fontWeight: FontWeight.w500,

@@ -114,7 +114,11 @@ class _DesktopHeader extends StatelessWidget {
   static const _dropdownPaths = [
     ['/about', '/journey', '/method'],
     ['/apps'],  // Apps & Store
+    ['/events'],  // Events (Events Calendar, Media & Posts)
   ];
+
+  /// Sentinel value for Events dropdown: "Media & Posts" runs a callback instead of navigating.
+  static const _kMediaPostsAction = '__media_posts__';
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +130,78 @@ class _DesktopHeader extends StatelessWidget {
         activeDropdownIndex = i;
       }
     }
+    final width = MediaQuery.sizeOf(context).width;
+    final isTablet = width >= Breakpoints.mobile && width < Breakpoints.tablet;
+    final rowChildren = [
+      GestureDetector(
+        onTap: () => context.go('/'),
+        child: Image.asset(
+          AppContent.assetLogo,
+          height: 42,
+          fit: BoxFit.contain,
+          color: AppColors.accent,
+          errorBuilder: (_, __, ___) => Text(
+            AppContent.shortName,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: AppColors.accent,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+        ),
+      ),
+      const SizedBox(width: 36),
+      _NavLink(label: l10n.home, path: '/'),
+      _NavDropdown(
+        label: l10n.about,
+        items: [
+          _NavItem(l10n.journey, '/journey', LucideIcons.compass),
+          _NavItem(l10n.ourMethod, '/method', LucideIcons.lightbulb),
+        ],
+        isActive: activeDropdownIndex == 0,
+      ),
+      _NavLink(label: l10n.charteredPractitioner, path: '/academy'),
+      _NavDropdown(
+        label: l10n.appsAndStore,
+        items: [
+          _NavItem(l10n.masterElfSystem, '/apps#master-elf', LucideIcons.cpu),
+          _NavItem(l10n.period9MobileApp, '/apps#period9', LucideIcons.smartphone),
+          _NavItem(l10n.talismanStore, '/apps#talisman', LucideIcons.shoppingBag),
+        ],
+        isActive: activeDropdownIndex == 1,
+      ),
+      _NavDropdown(
+        label: l10n.events,
+        items: [
+          _NavItem(l10n.eventsCalendar, '/events', LucideIcons.calendarDays),
+          _NavItem(l10n.mediaAndPosts, _kMediaPostsAction, LucideIcons.fileText),
+        ],
+        isActive: activeDropdownIndex == 2,
+        actionValue: _kMediaPostsAction,
+        onAction: (context) => showMediaPostsPopup(context),
+      ),
+      _NavLink(label: l10n.consultations, path: '/appointments'),
+      if (isTablet) const SizedBox(width: 24) else const Spacer(),
+      _LocaleSwitcher(notifier: localeNotifier),
+      const SizedBox(width: 20),
+      _ContactUsButton(l10n: l10n),
+    ];
+    final row = Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: isTablet ? MainAxisSize.min : MainAxisSize.max,
+      children: rowChildren,
+    );
+    final content = ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: isTablet ? double.infinity : 1280,
+        minHeight: 56,
+      ),
+      child: isTablet
+          ? SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: row,
+            )
+          : row,
+    );
     return Center(
       child: GlassContainer(
         blurSigma: 14,
@@ -134,60 +210,7 @@ class _DesktopHeader extends StatelessWidget {
         border: Border.all(color: _MenuColors.barBorder, width: 1.5),
         boxShadow: AppShadows.header,
         padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 10),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1280, minHeight: 56),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-            GestureDetector(
-              onTap: () => context.go('/'),
-              child: Image.asset(
-                AppContent.assetLogo,
-                height: 42,
-                fit: BoxFit.contain,
-                color: AppColors.accent,
-                errorBuilder: (_, __, ___) => Text(
-                  AppContent.shortName,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AppColors.accent,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 36),
-            _NavLink(label: l10n.home, path: '/'),
-            _NavDropdown(
-              label: l10n.about,
-              items: [
-                _NavItem(l10n.journey, '/journey', LucideIcons.compass),
-                _NavItem(l10n.ourMethod, '/method', LucideIcons.lightbulb),
-              ],
-              isActive: activeDropdownIndex == 0,
-            ),
-            _NavLink(label: l10n.charteredPractitioner, path: '/academy'),
-            _NavDropdown(
-              label: l10n.appsAndStore,
-              items: [
-                _NavItem(l10n.masterElfSystem, '/apps', LucideIcons.cpu),
-                _NavItem(l10n.period9MobileApp, '/apps', LucideIcons.smartphone),
-                _NavItem(l10n.talismanStore, '/apps', LucideIcons.shoppingBag),
-              ],
-              isActive: activeDropdownIndex == 1,
-            ),
-            _NavLink(label: l10n.events, path: '/events'),
-            _NavActionLink(
-              label: l10n.mediaAndPosts,
-              onTap: () => showMediaPostsPopup(context),
-            ),
-            _NavLink(label: l10n.consultations, path: '/appointments'),
-            const Spacer(),
-            _LocaleSwitcher(notifier: localeNotifier),
-            const SizedBox(width: 20),
-            _ContactUsButton(l10n: l10n),
-            ],
-          ),
-        ),
+        child: content,
       ),
     );
   }
@@ -343,6 +366,8 @@ class _NavDropdown extends StatelessWidget {
     required this.label,
     required this.items,
     required this.isActive,
+    this.actionValue,
+    this.onAction,
   });
 
   final String label;
@@ -350,11 +375,15 @@ class _NavDropdown extends StatelessWidget {
   /// When true, this dropdown is shown as the active nav item. Only one dropdown
   /// should be active per route so that shared paths (e.g. /events) don't highlight multiple menus.
   final bool isActive;
+  /// When the user selects an item with this path, [onAction] is called instead of navigating.
+  final String? actionValue;
+  final void Function(BuildContext context)? onAction;
 
   static const _itemHeight = 48.0;
 
   Future<void> _showDropdown(BuildContext context, RenderBox button) async {
-    final current = GoRouterState.of(context).uri.path;
+    final uri = GoRouterState.of(context).uri;
+    final currentFull = uri.path + (uri.fragment.isNotEmpty ? '#${uri.fragment}' : '');
     final offset = button.localToGlobal(Offset.zero);
     final size = MediaQuery.sizeOf(context);
     final selected = await showMenu<String>(
@@ -379,12 +408,18 @@ class _NavDropdown extends StatelessWidget {
                 child: _DropdownItem(
                   label: e.label,
                   icon: e.icon,
-                  isActive: current == e.path || current.startsWith('${e.path}/'),
+                  isActive: currentFull == e.path || currentFull.startsWith('${e.path}/'),
                 ),
               ))
           .toList(),
     );
-    if (selected != null && context.mounted) context.go(selected);
+    if (selected != null && context.mounted) {
+      if (actionValue != null && selected == actionValue && onAction != null) {
+        onAction!(context);
+      } else {
+        context.go(selected);
+      }
+    }
   }
 
   @override

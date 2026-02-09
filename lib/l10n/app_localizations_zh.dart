@@ -151,6 +151,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get aboutMasterElf => '关于 Master Elf';
 
   @override
+  String get heroMasterElfCaption => 'Master Elf';
+
+  @override
   String get journey => '我的奋进';
 
   @override
@@ -158,6 +161,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get events => '活动';
+
+  @override
+  String get eventsCalendar => '活动日历';
 
   @override
   String get blog => '博客';
@@ -225,7 +231,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get viewEvent => '查看活动';
 
   @override
-  String get exploreCourses => '探索课程';
+  String get exploreCourses => '探索';
 
   @override
   String get getConsultation => '获取咨询';

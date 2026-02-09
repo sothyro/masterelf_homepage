@@ -99,7 +99,7 @@ class StorySection extends StatelessWidget {
         ),
         const SizedBox(height: 32),
         OutlinedButton(
-          onPressed: () => context.push('/about'),
+          onPressed: () => context.push('/journey'),
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.onPrimary,
             side: const BorderSide(color: AppColors.accent, width: 1.5),

@@ -17,7 +17,8 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final localeNotifier = context.read<LocaleNotifier>();
-    final current = GoRouterState.of(context).uri.path;
+    final uri = GoRouterState.of(context).uri;
+    final current = uri.path + (uri.fragment.isNotEmpty ? '#${uri.fragment}' : '');
 
     return Drawer(
       backgroundColor: Colors.transparent,
@@ -79,27 +80,28 @@ class AppDrawer extends StatelessWidget {
                     _SectionLabel(label: l10n.appsAndStore),
                     _DrawerTile(
                       label: l10n.masterElfSystem,
-                      path: '/apps',
+                      path: '/apps#master-elf',
                       current: current,
                       icon: LucideIcons.cpu,
-                      onTap: () => _go(context, '/apps'),
+                      onTap: () => _go(context, '/apps#master-elf'),
                     ),
                     _DrawerTile(
                       label: l10n.period9MobileApp,
-                      path: '/apps',
+                      path: '/apps#period9',
                       current: current,
                       icon: LucideIcons.smartphone,
-                      onTap: () => _go(context, '/apps'),
+                      onTap: () => _go(context, '/apps#period9'),
                     ),
                     _DrawerTile(
                       label: l10n.talismanStore,
-                      path: '/apps',
+                      path: '/apps#talisman',
                       current: current,
                       icon: LucideIcons.shoppingBag,
-                      onTap: () => _go(context, '/apps'),
+                      onTap: () => _go(context, '/apps#talisman'),
                     ),
+                    _SectionLabel(label: l10n.events),
                     _DrawerTile(
-                      label: l10n.events,
+                      label: l10n.eventsCalendar,
                       path: '/events',
                       current: current,
                       icon: LucideIcons.calendarDays,

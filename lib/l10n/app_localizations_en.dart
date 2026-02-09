@@ -156,6 +156,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutMasterElf => 'About Master Elf';
 
   @override
+  String get heroMasterElfCaption => 'Master Elf';
+
+  @override
   String get journey => 'My Endeavour';
 
   @override
@@ -163,6 +166,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get events => 'Events';
+
+  @override
+  String get eventsCalendar => 'Events Calendar';
 
   @override
   String get blog => 'Blog';
@@ -230,7 +236,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get viewEvent => 'View Event';
 
   @override
-  String get exploreCourses => 'Explore Courses';
+  String get exploreCourses => 'Explore';
 
   @override
   String get getConsultation => 'Get Consultation';

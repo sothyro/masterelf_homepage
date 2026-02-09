@@ -38,6 +38,22 @@ class _AppShellState extends State<AppShell> {
     super.dispose();
   }
 
+  @override
+  void didUpdateWidget(covariant AppShell oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.child != widget.child) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients) {
+          _scrollController.jumpTo(0);
+        }
+        setState(() {
+          _menuVisible = true;
+          _showBackToTop = false;
+        });
+      });
+    }
+  }
+
   void _onScroll() {
     if (!_scrollController.hasClients) return;
     final offset = _scrollController.offset;

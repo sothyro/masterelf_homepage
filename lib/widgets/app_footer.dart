@@ -126,9 +126,9 @@ class AppFooter extends StatelessWidget {
           child: _LinkColumn(
             title: l10n.appsAndStore,
             links: [
-              _LinkItem(l10n.masterElfSystem, '/apps'),
-              _LinkItem(l10n.period9MobileApp, '/apps'),
-              _LinkItem(l10n.talismanStore, '/apps'),
+              _LinkItem(l10n.masterElfSystem, '/apps#master-elf'),
+              _LinkItem(l10n.period9MobileApp, '/apps#period9'),
+              _LinkItem(l10n.talismanStore, '/apps#talisman'),
               _LinkItem('Academy', '/academy'),
             ],
             compact: false,
@@ -173,9 +173,9 @@ class AppFooter extends StatelessWidget {
         _LinkColumn(
           title: l10n.appsAndStore,
           links: [
-            _LinkItem(l10n.masterElfSystem, '/apps'),
-            _LinkItem(l10n.period9MobileApp, '/apps'),
-            _LinkItem(l10n.talismanStore, '/apps'),
+            _LinkItem(l10n.masterElfSystem, '/apps#master-elf'),
+            _LinkItem(l10n.period9MobileApp, '/apps#period9'),
+            _LinkItem(l10n.talismanStore, '/apps#talisman'),
             _LinkItem('Academy', '/academy'),
           ],
           compact: false,
@@ -266,12 +266,6 @@ class _ChatAndSocial extends StatelessWidget {
               icon: Icon(LucideIcons.messageCircle, color: AppColors.onPrimary, size: compact ? 20 : 26),
               onPressed: () => launchWhatsApp(),
               tooltip: 'WhatsApp',
-              style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
-            ),
-            IconButton(
-              icon: Icon(LucideIcons.mail, color: AppColors.onPrimary, size: compact ? 20 : 26),
-              onPressed: () => launchEmail(),
-              tooltip: 'Email',
               style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
             ),
             if (AppContent.facebookUrl != null)

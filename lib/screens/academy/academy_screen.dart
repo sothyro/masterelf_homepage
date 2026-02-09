@@ -7,7 +7,6 @@ import '../../config/app_content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
-import '../../utils/launcher_utils.dart';
 
 class AcademyScreen extends StatelessWidget {
   const AcademyScreen({super.key});
@@ -63,7 +62,7 @@ class AcademyScreen extends StatelessWidget {
                         description: l10n.academyQiMenDesc,
                         about: l10n.academyQiMenAbout,
                         topics: l10n.academyQiMenTopics,
-                        onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
+                        onExplore: () => context.push('/appointments'),
                       ),
                       const SizedBox(height: 24),
                       _AcademyDisciplineCard(
@@ -73,7 +72,7 @@ class AcademyScreen extends StatelessWidget {
                         description: l10n.academyBaZiDesc,
                         about: l10n.academyBaZiAbout,
                         topics: l10n.academyBaZiTopics,
-                        onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
+                        onExplore: () => context.push('/appointments'),
                       ),
                       const SizedBox(height: 24),
                       _AcademyDisciplineCard(
@@ -83,7 +82,7 @@ class AcademyScreen extends StatelessWidget {
                         description: l10n.academyFengShuiDesc,
                         about: l10n.academyFengShuiAbout,
                         topics: l10n.academyFengShuiTopics,
-                        onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
+                        onExplore: () => context.push('/appointments'),
                       ),
                       const SizedBox(height: 24),
                       _AcademyDisciplineCard(
@@ -93,7 +92,7 @@ class AcademyScreen extends StatelessWidget {
                         description: l10n.academyDateSelectionDesc,
                         about: l10n.academyDateSelectionAbout,
                         topics: l10n.academyDateSelectionTopics,
-                        onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
+                        onExplore: () => context.push('/appointments'),
                       ),
                       const SizedBox(height: 24),
                       _AcademyDisciplineCard(
@@ -103,7 +102,7 @@ class AcademyScreen extends StatelessWidget {
                         description: l10n.academyIChingDesc,
                         about: l10n.academyIChingAbout,
                         topics: l10n.academyIChingTopics,
-                        onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
+                        onExplore: () => context.push('/appointments'),
                       ),
                       const SizedBox(height: 24),
                       _AcademyDisciplineCard(
@@ -113,7 +112,7 @@ class AcademyScreen extends StatelessWidget {
                         description: l10n.academyMaoShanDesc,
                         about: l10n.academyMaoShanAbout,
                         topics: l10n.academyMaoShanTopics,
-                        onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
+                        onExplore: () => context.push('/appointments'),
                       ),
                     ] else
                       Column(
@@ -130,7 +129,7 @@ class AcademyScreen extends StatelessWidget {
                                     description: l10n.academyQiMenDesc,
                                     about: l10n.academyQiMenAbout,
                                     topics: l10n.academyQiMenTopics,
-                                    onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
+                                    onExplore: () => context.push('/appointments'),
                                   ),
                                 ),
                                 const SizedBox(width: 24),
@@ -142,7 +141,7 @@ class AcademyScreen extends StatelessWidget {
                                     description: l10n.academyBaZiDesc,
                                     about: l10n.academyBaZiAbout,
                                     topics: l10n.academyBaZiTopics,
-                                    onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
+                                    onExplore: () => context.push('/appointments'),
                                   ),
                                 ),
                                 const SizedBox(width: 24),
@@ -154,7 +153,7 @@ class AcademyScreen extends StatelessWidget {
                                     description: l10n.academyFengShuiDesc,
                                     about: l10n.academyFengShuiAbout,
                                     topics: l10n.academyFengShuiTopics,
-                                    onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
+                                    onExplore: () => context.push('/appointments'),
                                   ),
                                 ),
                               ],
@@ -173,7 +172,7 @@ class AcademyScreen extends StatelessWidget {
                                     description: l10n.academyDateSelectionDesc,
                                     about: l10n.academyDateSelectionAbout,
                                     topics: l10n.academyDateSelectionTopics,
-                                    onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
+                                    onExplore: () => context.push('/appointments'),
                                   ),
                                 ),
                                 const SizedBox(width: 24),
@@ -185,7 +184,7 @@ class AcademyScreen extends StatelessWidget {
                                     description: l10n.academyIChingDesc,
                                     about: l10n.academyIChingAbout,
                                     topics: l10n.academyIChingTopics,
-                                    onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
+                                    onExplore: () => context.push('/appointments'),
                                   ),
                                 ),
                                 const SizedBox(width: 24),
@@ -197,7 +196,7 @@ class AcademyScreen extends StatelessWidget {
                                     description: l10n.academyMaoShanDesc,
                                     about: l10n.academyMaoShanAbout,
                                     topics: l10n.academyMaoShanTopics,
-                                    onExplore: () => launchUrlExternal(AppContent.academyExploreUrl),
+                                    onExplore: () => context.push('/appointments'),
                                   ),
                                 ),
                               ],
@@ -327,7 +326,7 @@ class _AcademyHero extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            AppContent.assetHeroBackground,
+            AppContent.assetAppsHero,
             fit: BoxFit.cover,
           ),
           Container(
@@ -428,7 +427,7 @@ class _AcademyDisciplineCardState extends State<_AcademyDisciplineCard> {
                       ),
                       Positioned(
                         top: 12,
-                        right: 12,
+                        left: 12,
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../config/app_content.dart';
@@ -7,9 +8,51 @@ import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
 import '../../utils/launcher_utils.dart';
 
+/// Fragment IDs for Apps & Store sections (used in /apps#fragment).
+const String _sectionMasterElf = 'master-elf';
+const String _sectionPeriod9 = 'period9';
+const String _sectionTalisman = 'talisman';
+
 /// Apps & Store page: Master Elf System, Period 9 Mobile App, Talisman Store.
-class AppsScreen extends StatelessWidget {
+class AppsScreen extends StatefulWidget {
   const AppsScreen({super.key});
+
+  @override
+  State<AppsScreen> createState() => _AppsScreenState();
+}
+
+class _AppsScreenState extends State<AppsScreen> {
+  final GlobalKey _keyMasterElf = GlobalKey();
+  final GlobalKey _keyPeriod9 = GlobalKey();
+  final GlobalKey _keyTalisman = GlobalKey();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _scrollToSectionIfNeeded();
+  }
+
+  void _scrollToSectionIfNeeded() {
+    final fragment = GoRouterState.of(context).uri.fragment;
+    if (fragment.isEmpty) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final key = switch (fragment) {
+        _sectionMasterElf => _keyMasterElf,
+        _sectionPeriod9 => _keyPeriod9,
+        _sectionTalisman => _keyTalisman,
+        _ => null,
+      };
+      if (key?.currentContext != null) {
+        Scrollable.ensureVisible(
+          key!.currentContext!,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
+          alignment: 0.1,
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +67,7 @@ class AppsScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 80),
-          const _PageHero(assetPath: AppContent.assetAppsHero),
+          const _PageHero(assetPath: AppContent.assetHeroBackground),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: isNarrow ? 20 : 32,
@@ -44,7 +87,7 @@ class AppsScreen extends StatelessWidget {
                           ),
                     ),
                     const SizedBox(height: 48),
-                    _SpotlightSection(
+                    _SectionAnchor(key: _keyMasterElf, child: _SpotlightSection(
                       icon: LucideIcons.cpu,
                       title: l10n.masterElfSystemSpotlightTitle,
                       description: l10n.masterElfSystemSpotlightDesc,
@@ -58,7 +101,7 @@ class AppsScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                         ),
                       ),
-                    ),
+                    )),
                     const SizedBox(height: 32),
                     Text(
                       l10n.appsFeatureShowcaseHeading,
@@ -84,7 +127,7 @@ class AppsScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 40),
-                    _SpotlightSection(
+                    _SectionAnchor(key: _keyPeriod9, child: _SpotlightSection(
                       icon: LucideIcons.smartphone,
                       title: l10n.period9SpotlightTitle,
                       description: l10n.period9SpotlightDesc,
@@ -112,25 +155,31 @@ class AppsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
+                    )),
                     const SizedBox(height: 40),
-                    Text(
-                      l10n.talismanStoreSpotlightTitle,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            color: AppColors.onPrimary,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      l10n.talismanStoreSpotlightDesc,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: AppColors.onSurfaceVariantDark,
-                            height: 1.5,
-                          ),
-                    ),
-                    const SizedBox(height: 24),
-                    _TalismanGrid(),
+                    _SectionAnchor(key: _keyTalisman, child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          l10n.talismanStoreSpotlightTitle,
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: AppColors.onPrimary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          l10n.talismanStoreSpotlightDesc,
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                color: AppColors.onSurfaceVariantDark,
+                                height: 1.5,
+                              ),
+                        ),
+                        const SizedBox(height: 24),
+                        _TalismanGrid(),
+                      ],
+                    )),
                     const SizedBox(height: 48),
                   ],
                 ),
@@ -141,6 +190,16 @@ class AppsScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Wrapper that holds a [GlobalKey] for scroll-to-section.
+class _SectionAnchor extends StatelessWidget {
+  const _SectionAnchor({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => child;
 }
 
 class _PageHero extends StatelessWidget {

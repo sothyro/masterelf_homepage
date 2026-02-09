@@ -382,6 +382,12 @@ abstract class AppLocalizations {
   /// **'About Master Elf'**
   String get aboutMasterElf;
 
+  /// No description provided for @heroMasterElfCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf'**
+  String get heroMasterElfCaption;
+
   /// No description provided for @journey.
   ///
   /// In en, this message translates to:
@@ -399,6 +405,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Events'**
   String get events;
+
+  /// No description provided for @eventsCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Events Calendar'**
+  String get eventsCalendar;
 
   /// No description provided for @blog.
   ///
@@ -529,7 +541,7 @@ abstract class AppLocalizations {
   /// No description provided for @exploreCourses.
   ///
   /// In en, this message translates to:
-  /// **'Explore Courses'**
+  /// **'Explore'**
   String get exploreCourses;
 
   /// No description provided for @getConsultation.
