@@ -127,39 +127,46 @@ class _MethodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
+    final padding = isMobile ? 16.0 : 24.0;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 24),
       child: Container(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(padding),
         decoration: BoxDecoration(
           color: AppColors.surfaceElevatedDark,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: AppColors.borderDark, width: 1),
           boxShadow: AppShadows.card,
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: AppColors.accent.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.3)),
-              ),
-              child: Icon(icon, size: 28, color: AppColors.accent),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: Column(
+        child: isMobile
+            ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: AppColors.onPrimary,
-                          fontWeight: FontWeight.w600,
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: AppColors.accent.withValues(alpha: 0.15),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.3)),
                         ),
+                        child: Icon(icon, size: 28, color: AppColors.accent),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: AppColors.onPrimary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 12),
                   Text(
@@ -170,10 +177,44 @@ class _MethodCard extends StatelessWidget {
                         ),
                   ),
                 ],
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: AppColors.accent.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.3)),
+                    ),
+                    child: Icon(icon, size: 28, color: AppColors.accent),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: AppColors.onPrimary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          body,
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                color: AppColors.onSurfaceVariantDark,
+                                height: 1.6,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

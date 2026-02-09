@@ -6,6 +6,7 @@ import 'package:video_player/video_player.dart';
 import '../../../config/app_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
+import '../../../utils/breakpoints.dart';
 import '../../../utils/hero_video_preloader.dart';
 import '../../../widgets/profile_dialog.dart';
 
@@ -84,6 +85,12 @@ class _HeroSectionState extends State<HeroSection> {
     // Responsive height: 16:9 of width so video fits; lower min on small screens so hero isn’t oversized
     final minHeight = width < 600 ? 320.0 : (width < 900 ? 500.0 : 1000.0);
     final height = width > 0 ? (width * 9 / 16).clamp(minHeight, 1600.0) : 1000.0;
+    final isMobile = Breakpoints.isMobile(width);
+    final horizontalPadding = isMobile ? 16.0 : 32.0;
+    final verticalPadding = isMobile ? 32.0 : 48.0;
+    final contentAlignment = isMobile ? const Alignment(0, 0.35) : const Alignment(-0.38, 0.42);
+    final crossAlign = isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start;
+    final textAlign = isMobile ? TextAlign.center : TextAlign.left;
 
     return RepaintBoundary(
       child: SizedBox(
@@ -131,20 +138,21 @@ class _HeroSectionState extends State<HeroSection> {
               ),
             ),
           ),
-          // 4) Content – a bit further left and down from center
+          // 4) Content – centered on mobile for better readability
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: verticalPadding),
             child: Align(
-              alignment: const Alignment(-0.38, 0.42),
+              alignment: contentAlignment,
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 900),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: crossAlign,
                   children: [
                     Semantics(
                       header: true,
                       child: RichText(
+                        textAlign: textAlign,
                         text: TextSpan(
                           style: (Theme.of(context).textTheme.headlineLarge ?? const TextStyle()).copyWith(
                             color: AppColors.onPrimary,
@@ -169,6 +177,7 @@ class _HeroSectionState extends State<HeroSection> {
                     ),
                     const SizedBox(height: 10),
                     RichText(
+                      textAlign: textAlign,
                       text: TextSpan(
                         style: (Theme.of(context).textTheme.headlineLarge ?? const TextStyle()).copyWith(
                           color: AppColors.onPrimary,
@@ -192,6 +201,7 @@ class _HeroSectionState extends State<HeroSection> {
                     const SizedBox(height: 28),
                     Text(
                       l10n.heroSubline,
+                      textAlign: textAlign,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: AppColors.onPrimary.withValues(alpha: 0.9),
                         height: 0.9,
@@ -200,6 +210,7 @@ class _HeroSectionState extends State<HeroSection> {
                     ),
                     const SizedBox(height: 36),
                     Wrap(
+                      alignment: isMobile ? WrapAlignment.center : WrapAlignment.start,
                       spacing: 20,
                       runSpacing: 14,
                       children: [

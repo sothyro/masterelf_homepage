@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
+import '../utils/breakpoints.dart';
 import 'app_header.dart';
 import 'app_footer.dart';
 import 'app_drawer.dart';
@@ -79,13 +80,17 @@ class _AppShellState extends State<AppShell> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final isMobile = Breakpoints.isMobile(width);
+    final fabBottomPadding = isMobile ? 24.0 : 60.0;
+
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: AppColors.backgroundDark,
       drawer: const AppDrawer(),
       floatingActionButton: _showBackToTop
           ? Padding(
-              padding: const EdgeInsets.only(bottom: 60),
+              padding: EdgeInsets.only(bottom: fabBottomPadding),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -150,21 +155,23 @@ class _AppShellState extends State<AppShell> {
               ),
             ),
           ),
-          Positioned(
-            right: 0,
-            top: 160,
-            bottom: 100,
-            child: SafeArea(
-              left: false,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 0),
-                  child: StickyCtaBar(),
+          // Sticky CTA bar: hidden on mobile to avoid overlapping content and improve UX
+          if (!isMobile)
+            Positioned(
+              right: 0,
+              top: 160,
+              bottom: 100,
+              child: SafeArea(
+                left: false,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 0),
+                    child: StickyCtaBar(),
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

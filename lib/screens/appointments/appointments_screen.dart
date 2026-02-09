@@ -5,6 +5,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../../config/app_content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
+import '../../utils/breakpoints.dart';
 import '../../widgets/breadcrumb.dart';
 import '../../services/appointment_booking_service.dart';
 import '../../widgets/glass_container.dart';
@@ -156,7 +157,12 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 120, bottom: 48, left: 24, right: 24),
+                padding: EdgeInsets.only(
+                  top: 120,
+                  bottom: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 32 : 48,
+                  left: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 16 : 24,
+                  right: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 16 : 24,
+                ),
                 child: Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 560),
@@ -724,6 +730,27 @@ class _ConfirmRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
+    if (isMobile) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariantDark),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: AppColors.onPrimary,
+                  fontWeight: FontWeight.w500,
+                ),
+          ),
+        ],
+      );
+    }
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

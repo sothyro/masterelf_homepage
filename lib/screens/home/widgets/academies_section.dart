@@ -23,10 +23,12 @@ class AcademiesSection extends StatelessWidget {
     final viewportHeight = MediaQuery.sizeOf(context).height;
     final minSectionHeight = viewportHeight * 0.9;
 
+    final paddingV = isNarrow ? 48.0 : 88.0;
+    final paddingH = isNarrow ? 16.0 : 24.0;
     return Container(
       width: double.infinity,
       constraints: BoxConstraints(minHeight: minSectionHeight),
-      padding: const EdgeInsets.symmetric(vertical: 88, horizontal: 24),
+      padding: EdgeInsets.symmetric(vertical: paddingV, horizontal: paddingH),
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(AppContent.assetHeroBackground),

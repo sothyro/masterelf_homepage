@@ -546,7 +546,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get locationColumn => 'ទីតាំង';
 
   @override
-  String get aboutPageTitle => 'Master Elf | The Rise of Phoenix';
+  String get aboutPageTitle => 'Master Elf | ការកើនឡើងរបស់ Phoenix';
 
   @override
   String get aboutBreadcrumb => 'អំពី Master Elf។';
@@ -593,14 +593,14 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get journeyPhoenixBody =>
-      'The Rise of the Phoenix គឺជាការបង្ហាញរបស់ Master Elf និងឈ្មោះប្រព័ន្ធរបស់គាត់។ វាសម្គាល់ការធ្វើឱ្យបរិសុទ្ធ ការផ្លាស់ប្តូរ និងពេលវេលាដែលការយល់ដឹងនាំទៅរកសកម្មភាព។ ក្នុងរយៈកាល ៩ ភ្និកស័រកើនឡើង—ហើយជាមួយចំណេះដឹងត្រឹមត្រូវ អ្នកក៏អាចធ្វើបានដែរ។ គោលការណ៍របស់គាត់រួមបញ្ចូល BaZi, Qimen Dunjia, I Ching, Date Selection, Feng Shui និង Mao Shan ជាវិធីសាស្រ្តជាប់លាប់សម្រាប់អ្នកដែលត្រៀមរួចកើនឡើង។';
+      'ការកើនឡើងរបស់ Phoenix គឺជាការបង្ហាញរបស់ Master Elf និងឈ្មោះប្រព័ន្ធរបស់គាត់។ វាសម្គាល់ការធ្វើឱ្យបរិសុទ្ធ ការផ្លាស់ប្តូរ និងពេលវេលាដែលការយល់ដឹងនាំទៅរកសកម្មភាព។ ក្នុងរយៈកាល ៩ ភ្និកស័រកើនឡើង—ហើយជាមួយចំណេះដឹងត្រឹមត្រូវ អ្នកក៏អាចធ្វើបានដែរ។ គោលការណ៍របស់គាត់រួមបញ្ចូល BaZi, Qimen Dunjia, I Ching, Date Selection, Feng Shui និង Mao Shan ជាវិធីសាស្រ្តជាប់លាប់សម្រាប់អ្នកដែលត្រៀមរួចកើនឡើង។';
 
   @override
   String get methodPageHeadline => 'វិធីសាស្រ្តរបស់យើង';
 
   @override
   String get methodIntro =>
-      'ប្រព័ន្ធរបស់ Master Elf សាងសង់លើរូបវិទ្យាចិនបុរាណ។ រៀនគ្រប់ផ្នែកត្រូវបានអនុវត្តដោយរូបមន្ត និងស្តង់ដារច្បាស់ ដើម្បីឱ្យការពិគ្រោះ និងការបណ្តុះបណ្តល់មានភាពស្របគ្នា អាចពន្យល់បាន និងមានប្រសិទ្ធភាព។ ខាងក្រោមគឺរបៀបដែលសសរសំខាន់ត្រូវបានអនុវត្ត គណនា និងប្រើ។';
+      'ប្រព័ន្ធរបស់ Master Elf សាងសង់លើរូបវិទ្យាចិនបុរាណ។ រៀងរាល់វិជ្ជាជីវៈត្រូវបានអនុវត្តដោយរូបមន្ត និងស្តង់ដារច្បាស់ ដើម្បីឱ្យការពិគ្រោះ និងការបណ្តុះបណ្តល់មានភាពស្របគ្នា អាចពន្យល់បាន និងមានប្រសិទ្ធភាព។ ខាងក្រោមគឺរបៀបដែលសសរសំខាន់ត្រូវបានអនុវត្ត គណនា និងប្រើ។';
 
   @override
   String get methodBaZiTitle => 'BaZi (សសរបួននៃវាសនា)';
@@ -673,7 +673,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get selectDate => 'ជ្រើសរើសកាលបរិច្ឆេទ';
 
   @override
-  String get selectTime => 'ពេលវេលាដែលអ្នកច prefer';
+  String get selectTime => 'ពេលវេលាដែលអ្នកចូលចិត្ត';
 
   @override
   String get confirmAndBook => 'បញ្ជាក់ និងកក់';

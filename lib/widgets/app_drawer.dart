@@ -47,13 +47,7 @@ class AppDrawer extends StatelessWidget {
                       icon: LucideIcons.home,
                       onTap: () => _go(context, '/'),
                     ),
-                    _DrawerTile(
-                      label: l10n.about,
-                      path: '/about',
-                      current: current,
-                      icon: LucideIcons.user,
-                      onTap: () => _go(context, '/about'),
-                    ),
+                    _SectionLabel(label: l10n.charteredPractitioner),
                     _DrawerTile(
                       label: l10n.journey,
                       path: '/journey',
@@ -68,10 +62,8 @@ class AppDrawer extends StatelessWidget {
                       icon: LucideIcons.lightbulb,
                       onTap: () => _go(context, '/method'),
                     ),
-                    const SizedBox(height: 16),
-                    _SectionLabel(label: l10n.charteredPractitioner),
                     _DrawerTile(
-                      label: l10n.charteredPractitioner,
+                      label: l10n.academyPageTitle,
                       path: '/academy',
                       current: current,
                       icon: LucideIcons.graduationCap,

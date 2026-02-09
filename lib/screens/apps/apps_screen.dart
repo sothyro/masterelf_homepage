@@ -442,7 +442,8 @@ class _AppFeatureShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final crossAxisCount = 3;
+    final width = MediaQuery.sizeOf(context).width;
+    final crossAxisCount = Breakpoints.isMobile(width) ? 2 : (width < Breakpoints.tablet ? 2 : 3);
 
     return GridView.builder(
       shrinkWrap: true,

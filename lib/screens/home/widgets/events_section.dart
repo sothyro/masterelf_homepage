@@ -6,6 +6,7 @@ import '../../../config/app_content.dart';
 import '../../../config/events_data.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
+import '../../../utils/breakpoints.dart';
 
 /// Green bullet for "Coming Up Next" (reference design).
 const Color _bulletGreen = Color(0xFF2E7D32);
@@ -19,7 +20,7 @@ class EventsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = width < 800;
+    final isNarrow = Breakpoints.isMobile(width);
     final heading = l10n.sectionExperienceHeading;
     final transformationIndex = heading.indexOf('Transformation');
     final headlinePrefix = transformationIndex >= 0
@@ -32,10 +33,11 @@ class EventsSection extends StatelessWidget {
     final featuredEvent = kAllEvents.isNotEmpty ? kAllEvents.first : null;
     final otherEvents = kAllEvents.length > 1 ? kAllEvents.sublist(1) : <EventItem>[];
 
+    final paddingH = isNarrow ? 16.0 : 24.0;
     return Container(
       width: double.infinity,
       color: AppColors.surfaceDark,
-      padding: const EdgeInsets.symmetric(vertical: 56, horizontal: 24),
+      padding: EdgeInsets.symmetric(vertical: isNarrow ? 40 : 56, horizontal: paddingH),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1200),
@@ -257,7 +259,7 @@ class _FeaturedEventCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-                height: 220,
+                height: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 180 : 220,
                 width: double.infinity,
                 child: Stack(
                   fit: StackFit.expand,
@@ -418,6 +420,7 @@ class _CompactEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
 
     return Material(
       color: Colors.transparent,
@@ -432,7 +435,150 @@ class _CompactEventCard extends StatelessWidget {
             boxShadow: AppShadows.card,
           ),
           clipBehavior: Clip.antiAlias,
-          child: Row(
+          child: isMobile
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+                      child: SizedBox(
+                        height: 140,
+                        width: double.infinity,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Image.asset(
+                              AppContent.assetEventCard,
+                              fit: BoxFit.cover,
+                              cacheWidth: 240,
+                              cacheHeight: 280,
+                              errorBuilder: (_, __, ___) => Container(
+                                color: AppColors.primary.withValues(alpha: 0.2),
+                              ),
+                            ),
+                            if (limitedSeats)
+                              Positioned(
+                                top: 6,
+                                right: 6,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 3,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: _limitedSeatsRed,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    l10n.limitedSeats,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(14),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.onPrimary,
+                              height: 1.25,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 6),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.calendar_today_outlined,
+                                size: 12,
+                                color: AppColors.onPrimary.withValues(alpha: 0.7),
+                              ),
+                              const SizedBox(width: 4),
+                              Expanded(
+                                child: Text(
+                                  date,
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: AppColors.onPrimary.withValues(alpha: 0.85),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 2),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.location_on_outlined,
+                                size: 12,
+                                color: AppColors.onPrimary.withValues(alpha: 0.7),
+                              ),
+                              const SizedBox(width: 4),
+                              Expanded(
+                                child: Text(
+                                  location,
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: AppColors.onPrimary.withValues(alpha: 0.85),
+                                    fontSize: 12,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            description,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: AppColors.onPrimary.withValues(alpha: 0.9),
+                              height: 1.3,
+                              fontSize: 12,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Text(
+                                l10n.viewEvent,
+                                style: const TextStyle(
+                                  color: AppColors.onPrimary,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              const Icon(
+                                Icons.arrow_forward,
+                                size: 14,
+                                color: AppColors.onPrimary,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              : Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(

@@ -110,8 +110,9 @@ class StorySection extends StatelessWidget {
       ],
     );
 
-    // Story block: background image + overlay + left-aligned text (position preserved)
-    const double sectionMinHeight = 720;
+    // Story block: background image + overlay + left-aligned text; responsive min height on mobile
+    final sectionMinHeight = isMobile ? 420.0 : 720.0;
+    final storyPadding = isMobile ? const EdgeInsets.fromLTRB(16, 40, 16, 32) : const EdgeInsets.fromLTRB(32, 56, 32, 48);
     final storyBlock = Stack(
       children: [
         Positioned.fill(
@@ -143,7 +144,7 @@ class StorySection extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(32, 56, 32, 48),
+          padding: storyPadding,
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1100),
@@ -173,7 +174,7 @@ class StorySection extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
+            padding: EdgeInsets.symmetric(vertical: 24, horizontal: isMobile ? 16 : 32),
             decoration: BoxDecoration(
               color: AppColors.backgroundDark,
               border: Border(

@@ -78,7 +78,10 @@ class ConsultationsSection extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 56, horizontal: 24),
+          padding: EdgeInsets.symmetric(
+            vertical: isMobile ? 40 : 56,
+            horizontal: isMobile ? 16 : 24,
+          ),
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1100),

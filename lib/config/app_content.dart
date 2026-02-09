@@ -25,11 +25,11 @@ class AppContent {
   static const String office1PhoneSecondary = '+855 90 222 211';
 
   // §4 Social (Facebook, TikTok, Telegram shown in footer)
-  static const String? facebookUrl = 'https://www.facebook.com/masterelf';
+  static const String facebookUrl = 'https://www.facebook.com/masterelf';
   static const String? instagramUrl = null;
-  static const String? tiktokUrl = 'https://www.tiktok.com/@masterelf';
+  static const String tiktokUrl = 'https://www.tiktok.com/@masterelf';
   static const String? youtubeUrl = null;
-  static const String? telegramUrl = 'https://t.me/hongchhayheng';
+  static const String telegramUrl = 'https://t.me/hongchhayheng';
   static const String? linkedInUrl = null;
 
   /// Telegram group for Media & Posts dialog (same as telegramUrl)

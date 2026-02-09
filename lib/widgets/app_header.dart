@@ -112,7 +112,7 @@ class _DesktopHeader extends StatelessWidget {
   /// Paths per dropdown (by index). When multiple dropdowns share a path (e.g. /events),
   /// only the last matching one is active so at most one menu is highlighted.
   static const _dropdownPaths = [
-    ['/about', '/journey', '/method'],
+    ['/about', '/journey', '/method', '/academy'],
     ['/apps'],  // Apps & Store
     ['/events'],  // Events (Events Calendar, Media & Posts)
   ];
@@ -152,14 +152,14 @@ class _DesktopHeader extends StatelessWidget {
       const SizedBox(width: 36),
       _NavLink(label: l10n.home, path: '/'),
       _NavDropdown(
-        label: l10n.about,
+        label: l10n.charteredPractitioner,
         items: [
           _NavItem(l10n.journey, '/journey', LucideIcons.compass),
           _NavItem(l10n.ourMethod, '/method', LucideIcons.lightbulb),
+          _NavItem(l10n.academyPageTitle, '/academy', LucideIcons.graduationCap),
         ],
         isActive: activeDropdownIndex == 0,
       ),
-      _NavLink(label: l10n.charteredPractitioner, path: '/academy'),
       _NavDropdown(
         label: l10n.appsAndStore,
         items: [
@@ -309,45 +309,6 @@ class _NavLink extends StatelessWidget {
                 ),
               ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Nav item that runs a callback instead of navigating (e.g. opens a dialog).
-class _NavActionLink extends StatelessWidget {
-  const _NavActionLink({required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2),
-      child: TextButton(
-        onPressed: onTap,
-        style: TextButton.styleFrom(
-          foregroundColor: _MenuColors.linkText,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          minimumSize: Size.zero,
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        ).copyWith(
-          overlayColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.hovered)) {
-              return _MenuColors.linkText.withValues(alpha: 0.1);
-            }
-            return null;
-          }),
-        ),
-        child: Text(
-          label,
-          style: const TextStyle(
-            color: _MenuColors.linkText,
-            fontWeight: FontWeight.normal,
-            fontSize: 14,
-          ),
         ),
       ),
     );

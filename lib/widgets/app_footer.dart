@@ -29,7 +29,10 @@ class AppFooter extends StatelessWidget {
           top: BorderSide(color: AppColors.borderLight.withValues(alpha: 0.5), width: 1),
         ),
       ),
-      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+      padding: EdgeInsets.symmetric(
+        vertical: isNarrow ? 32 : 40,
+        horizontal: isNarrow ? 16 : 24,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -268,13 +271,12 @@ class _ChatAndSocial extends StatelessWidget {
               tooltip: 'WhatsApp',
               style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
             ),
-            if (AppContent.facebookUrl != null)
-              IconButton(
-                icon: Icon(LucideIcons.facebook, color: AppColors.onPrimary, size: compact ? 18 : 22),
-                onPressed: () => launchUrlExternal(AppContent.facebookUrl!),
-                tooltip: 'Facebook',
-                style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
-              ),
+            IconButton(
+              icon: Icon(LucideIcons.facebook, color: AppColors.onPrimary, size: compact ? 18 : 22),
+              onPressed: () => launchUrlExternal(AppContent.facebookUrl),
+              tooltip: 'Facebook',
+              style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
+            ),
             if (AppContent.instagramUrl != null)
               IconButton(
                 icon: Icon(LucideIcons.instagram, color: AppColors.onPrimary, size: compact ? 18 : 22),
@@ -282,20 +284,18 @@ class _ChatAndSocial extends StatelessWidget {
                 tooltip: 'Instagram',
                 style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
               ),
-            if (AppContent.tiktokUrl != null)
-              IconButton(
-                icon: Icon(LucideIcons.video, color: AppColors.onPrimary, size: compact ? 18 : 22),
-                onPressed: () => launchUrlExternal(AppContent.tiktokUrl!),
-                tooltip: 'TikTok',
-                style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
-              ),
-            if (AppContent.telegramUrl != null)
-              IconButton(
-                icon: Icon(LucideIcons.send, color: AppColors.onPrimary, size: compact ? 18 : 22),
-                onPressed: () => launchUrlExternal(AppContent.telegramUrl!),
-                tooltip: 'Telegram',
-                style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
-              ),
+            IconButton(
+              icon: Icon(LucideIcons.video, color: AppColors.onPrimary, size: compact ? 18 : 22),
+              onPressed: () => launchUrlExternal(AppContent.tiktokUrl),
+              tooltip: 'TikTok',
+              style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
+            ),
+            IconButton(
+              icon: Icon(LucideIcons.send, color: AppColors.onPrimary, size: compact ? 18 : 22),
+              onPressed: () => launchUrlExternal(AppContent.telegramUrl),
+              tooltip: 'Telegram',
+              style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
+            ),
           ],
         ),
       ],

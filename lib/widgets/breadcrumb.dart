@@ -24,7 +24,7 @@ class Breadcrumb extends StatelessWidget {
               child: Text(
                 '›',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.onSurfaceVariant,
+                      color: AppColors.onSurfaceVariantDark,
                     ),
               ),
             ),
@@ -48,7 +48,7 @@ class Breadcrumb extends StatelessWidget {
             Text(
               items[i].label,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppColors.onSurfaceVariant,
+                    color: AppColors.onSurfaceVariantDark,
                     fontWeight: FontWeight.w500,
                   ),
             ),

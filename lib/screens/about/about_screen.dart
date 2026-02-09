@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../config/app_content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
+import '../../utils/breakpoints.dart';
 import '../../widgets/breadcrumb.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -11,10 +12,12 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
+    final paddingH = isMobile ? 16.0 : 24.0;
     return Container(
       width: double.infinity,
       color: AppColors.backgroundDark,
-      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 32 : 48, horizontal: paddingH),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 800),
         child: Column(
@@ -64,30 +67,60 @@ class AboutScreen extends StatelessWidget {
                   ),
             ),
             const SizedBox(height: 16),
-            Row(
-              children: List.generate(
-                4,
-                (i) => Container(
-                  width: 100,
-                  height: 48,
-                  margin: const EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceElevatedDark,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColors.borderDark, width: 1),
-                    boxShadow: AppShadows.card,
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Logo ${i + 1}',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.onSurfaceVariantDark,
+            // Logo row: horizontal scroll on mobile so all logos are accessible
+            isMobile
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                        4,
+                        (i) => Container(
+                          width: 88,
+                          height: 44,
+                          margin: const EdgeInsets.only(right: 12),
+                          decoration: BoxDecoration(
+                            color: AppColors.surfaceElevatedDark,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: AppColors.borderDark, width: 1),
+                            boxShadow: AppShadows.card,
                           ),
+                          child: Center(
+                            child: Text(
+                              'Logo ${i + 1}',
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: AppColors.onSurfaceVariantDark,
+                                    fontSize: 11,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : Row(
+                    children: List.generate(
+                      4,
+                      (i) => Container(
+                        width: 100,
+                        height: 48,
+                        margin: const EdgeInsets.only(right: 16),
+                        decoration: BoxDecoration(
+                          color: AppColors.surfaceElevatedDark,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: AppColors.borderDark, width: 1),
+                          boxShadow: AppShadows.card,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Logo ${i + 1}',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: AppColors.onSurfaceVariantDark,
+                                ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ),
           ],
         ),
       ),

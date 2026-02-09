@@ -77,10 +77,14 @@ class _CtaSectionState extends State<CtaSection> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
+    final width = MediaQuery.sizeOf(context).width;
+    final isMobile = width < 768;
+    final paddingV = isMobile ? 40.0 : 56.0;
+    final paddingH = isMobile ? 16.0 : 24.0;
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 56, horizontal: 24),
+      padding: EdgeInsets.symmetric(vertical: paddingV, horizontal: paddingH),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -112,7 +116,7 @@ class _CtaSectionState extends State<CtaSection> with SingleTickerProviderStateM
                 style: (textTheme.headlineMedium ?? textTheme.headlineSmall)?.copyWith(
                   color: AppColors.onPrimary,
                   fontWeight: FontWeight.w600,
-                  fontSize: 32,
+                  fontSize: isMobile ? 24 : 32,
                   height: 1.25,
                 ),
                 textAlign: TextAlign.center,
@@ -135,7 +139,7 @@ class _CtaSectionState extends State<CtaSection> with SingleTickerProviderStateM
                 style: textTheme.bodyLarge?.copyWith(
                   color: AppColors.onPrimary.withValues(alpha: 0.9),
                   height: 1.5,
-                  fontSize: 19,
+                  fontSize: isMobile ? 16 : 19,
                 ),
                 textAlign: TextAlign.center,
               ),

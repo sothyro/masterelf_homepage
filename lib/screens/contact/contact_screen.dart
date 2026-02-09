@@ -4,6 +4,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../../config/app_content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
+import '../../utils/breakpoints.dart';
 import '../../utils/launcher_utils.dart';
 import '../../widgets/glass_container.dart';
 
@@ -61,7 +62,7 @@ class _ContactScreenState extends State<ContactScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = width < 800;
+    final isNarrow = Breakpoints.isMobile(width);
 
     return Container(
       width: double.infinity,
@@ -220,38 +221,44 @@ class _ContactScreenState extends State<ContactScreen> {
           const SizedBox(height: 24),
           _formLabel(l10n.contactFormSubject, required: false),
           const SizedBox(height: 12),
-          ...List.generate(5, (i) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: InkWell(
-                onTap: () => setState(() => _selectedSubjectIndex = i),
-                borderRadius: BorderRadius.circular(8),
-                child: Row(
-                  children: [
-                    Radio<int>(
-                      value: i,
-                      groupValue: _selectedSubjectIndex,
-                      onChanged: (v) => setState(() => _selectedSubjectIndex = v ?? 0),
-                      activeColor: AppColors.accent,
-                      fillColor: WidgetStateProperty.resolveWith((states) {
-                        if (states.contains(WidgetState.selected)) return AppColors.accent;
-                        return AppColors.onSurfaceVariantDark;
-                      }),
+          RadioGroup<int>(
+            groupValue: _selectedSubjectIndex,
+            onChanged: (v) => setState(() => _selectedSubjectIndex = v ?? 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(5, (i) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: InkWell(
+                    onTap: () => setState(() => _selectedSubjectIndex = i),
+                    borderRadius: BorderRadius.circular(8),
+                    child: Row(
+                      children: [
+                        Radio<int>(
+                          value: i,
+                          activeColor: AppColors.accent,
+                          fillColor: WidgetStateProperty.resolveWith((states) {
+                            if (states.contains(WidgetState.selected)) return AppColors.accent;
+                            return AppColors.onSurfaceVariantDark;
+                          }),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            _getSubjectLabel(l10n, i),
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: AppColors.onPrimary,
+                                ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        _getSubjectLabel(l10n, i),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: AppColors.onPrimary,
-                            ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
+                  ),
+                );
+              }),
+            ),
+          ),
           const SizedBox(height: 24),
           _formLabel(l10n.contactFormMessage, required: true),
           const SizedBox(height: 8),
