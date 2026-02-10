@@ -262,5 +262,19 @@
   "contactSubjectBusiness": "Business & Strategy Planning (Qi Men / Business Date Selection)",
   "contactSubjectFengShui": "Feng Shui (Home / Office Alignment)",
   "contactSubjectDateSelection": "Date Selection (Training Specifics)",
-  "contactSubjectUnsure": "Unsure - I need your recommendation"
+  "contactSubjectUnsure": "Unsure - I need your recommendation",
+  "forecastAuspiciousStars": "Auspicious Stars",
+  "forecastInauspiciousStars": "Inauspicious Stars",
+  "zodiacRat": "Rat",
+  "zodiacOx": "Ox",
+  "zodiacTiger": "Tiger",
+  "zodiacRabbit": "Rabbit",
+  "zodiacDragon": "Dragon",
+  "zodiacSnake": "Snake",
+  "zodiacHorse": "Horse",
+  "zodiacGoat": "Goat",
+  "zodiacMonkey": "Monkey",
+  "zodiacRooster": "Rooster",
+  "zodiacDog": "Dog",
+  "zodiacPig": "Pig"
 }

@@ -797,4 +797,46 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get contactSubjectUnsure => '不确定 - 需要您的推荐';
+
+  @override
+  String get forecastAuspiciousStars => '吉星';
+
+  @override
+  String get forecastInauspiciousStars => '凶星';
+
+  @override
+  String get zodiacRat => '鼠';
+
+  @override
+  String get zodiacOx => '牛';
+
+  @override
+  String get zodiacTiger => '虎';
+
+  @override
+  String get zodiacRabbit => '兔';
+
+  @override
+  String get zodiacDragon => '龙';
+
+  @override
+  String get zodiacSnake => '蛇';
+
+  @override
+  String get zodiacHorse => '马';
+
+  @override
+  String get zodiacGoat => '羊';
+
+  @override
+  String get zodiacMonkey => '猴';
+
+  @override
+  String get zodiacRooster => '鸡';
+
+  @override
+  String get zodiacDog => '狗';
+
+  @override
+  String get zodiacPig => '猪';
 }

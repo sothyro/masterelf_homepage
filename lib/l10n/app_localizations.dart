@@ -1641,6 +1641,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unsure - I need your recommendation'**
   String get contactSubjectUnsure;
+
+  /// No description provided for @forecastAuspiciousStars.
+  ///
+  /// In en, this message translates to:
+  /// **'Auspicious Stars'**
+  String get forecastAuspiciousStars;
+
+  /// No description provided for @forecastInauspiciousStars.
+  ///
+  /// In en, this message translates to:
+  /// **'Inauspicious Stars'**
+  String get forecastInauspiciousStars;
+
+  /// No description provided for @zodiacRat.
+  ///
+  /// In en, this message translates to:
+  /// **'Rat'**
+  String get zodiacRat;
+
+  /// No description provided for @zodiacOx.
+  ///
+  /// In en, this message translates to:
+  /// **'Ox'**
+  String get zodiacOx;
+
+  /// No description provided for @zodiacTiger.
+  ///
+  /// In en, this message translates to:
+  /// **'Tiger'**
+  String get zodiacTiger;
+
+  /// No description provided for @zodiacRabbit.
+  ///
+  /// In en, this message translates to:
+  /// **'Rabbit'**
+  String get zodiacRabbit;
+
+  /// No description provided for @zodiacDragon.
+  ///
+  /// In en, this message translates to:
+  /// **'Dragon'**
+  String get zodiacDragon;
+
+  /// No description provided for @zodiacSnake.
+  ///
+  /// In en, this message translates to:
+  /// **'Snake'**
+  String get zodiacSnake;
+
+  /// No description provided for @zodiacHorse.
+  ///
+  /// In en, this message translates to:
+  /// **'Horse'**
+  String get zodiacHorse;
+
+  /// No description provided for @zodiacGoat.
+  ///
+  /// In en, this message translates to:
+  /// **'Goat'**
+  String get zodiacGoat;
+
+  /// No description provided for @zodiacMonkey.
+  ///
+  /// In en, this message translates to:
+  /// **'Monkey'**
+  String get zodiacMonkey;
+
+  /// No description provided for @zodiacRooster.
+  ///
+  /// In en, this message translates to:
+  /// **'Rooster'**
+  String get zodiacRooster;
+
+  /// No description provided for @zodiacDog.
+  ///
+  /// In en, this message translates to:
+  /// **'Dog'**
+  String get zodiacDog;
+
+  /// No description provided for @zodiacPig.
+  ///
+  /// In en, this message translates to:
+  /// **'Pig'**
+  String get zodiacPig;
 }
 
 class _AppLocalizationsDelegate

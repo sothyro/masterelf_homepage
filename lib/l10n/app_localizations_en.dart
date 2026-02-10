@@ -850,4 +850,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contactSubjectUnsure => 'Unsure - I need your recommendation';
+
+  @override
+  String get forecastAuspiciousStars => 'Auspicious Stars';
+
+  @override
+  String get forecastInauspiciousStars => 'Inauspicious Stars';
+
+  @override
+  String get zodiacRat => 'Rat';
+
+  @override
+  String get zodiacOx => 'Ox';
+
+  @override
+  String get zodiacTiger => 'Tiger';
+
+  @override
+  String get zodiacRabbit => 'Rabbit';
+
+  @override
+  String get zodiacDragon => 'Dragon';
+
+  @override
+  String get zodiacSnake => 'Snake';
+
+  @override
+  String get zodiacHorse => 'Horse';
+
+  @override
+  String get zodiacGoat => 'Goat';
+
+  @override
+  String get zodiacMonkey => 'Monkey';
+
+  @override
+  String get zodiacRooster => 'Rooster';
+
+  @override
+  String get zodiacDog => 'Dog';
+
+  @override
+  String get zodiacPig => 'Pig';
 }

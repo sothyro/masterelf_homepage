@@ -262,5 +262,19 @@
   "contactSubjectBusiness": "ការរៀបចំអាជីវកម្ម និងយុទ្ធសាស្រ្ត (Qi Men / ការជ្រើសរើសកាលបរិច្ឆេទអាជីវកម្ម)",
   "contactSubjectFengShui": "Feng Shui (ការសម្របផ្ទះ / ការិយាល័យ)",
   "contactSubjectDateSelection": "Date Selection (ព័ត៌មានលម្អិតបណ្តុះបណ្តល់)",
-  "contactSubjectUnsure": "មិនច្បាស់ - ខ្ញុំត្រូវការការណែនាំរបស់អ្នក"
+  "contactSubjectUnsure": "មិនច្បាស់ - ខ្ញុំត្រូវការការណែនាំរបស់អ្នក",
+  "forecastAuspiciousStars": "តារាសំណាង",
+  "forecastInauspiciousStars": "តារាគ្រោះ",
+  "zodiacRat": "កណ្តុរ",
+  "zodiacOx": "គោ",
+  "zodiacTiger": "ខ្លា",
+  "zodiacRabbit": "ទន្សាយ",
+  "zodiacDragon": "នាគ",
+  "zodiacSnake": "ពស់",
+  "zodiacHorse": "សេះ",
+  "zodiacGoat": "ពពែ",
+  "zodiacMonkey": "ស្វ",
+  "zodiacRooster": "មាន់",
+  "zodiacDog": "ឆ្កែ",
+  "zodiacPig": "ជ្រូក"
 }

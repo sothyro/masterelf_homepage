@@ -846,4 +846,46 @@ class AppLocalizationsKm extends AppLocalizations {
   @override
   String get contactSubjectUnsure =>
       'មិនច្បាស់ - ខ្ញុំត្រូវការការណែនាំរបស់អ្នក';
+
+  @override
+  String get forecastAuspiciousStars => 'តារាសំណាង';
+
+  @override
+  String get forecastInauspiciousStars => 'តារាគ្រោះ';
+
+  @override
+  String get zodiacRat => 'កណ្តុរ';
+
+  @override
+  String get zodiacOx => 'គោ';
+
+  @override
+  String get zodiacTiger => 'ខ្លា';
+
+  @override
+  String get zodiacRabbit => 'ទន្សាយ';
+
+  @override
+  String get zodiacDragon => 'នាគ';
+
+  @override
+  String get zodiacSnake => 'ពស់';
+
+  @override
+  String get zodiacHorse => 'សេះ';
+
+  @override
+  String get zodiacGoat => 'ពពែ';
+
+  @override
+  String get zodiacMonkey => 'ស្វ';
+
+  @override
+  String get zodiacRooster => 'មាន់';
+
+  @override
+  String get zodiacDog => 'ឆ្កែ';
+
+  @override
+  String get zodiacPig => 'ជ្រូក';
 }

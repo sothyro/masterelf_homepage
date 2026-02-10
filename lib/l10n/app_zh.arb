@@ -262,5 +262,19 @@
   "contactSubjectBusiness": "商业与战略规划（奇门 / 商业择日）",
   "contactSubjectFengShui": "风水（家居 / 办公布局）",
   "contactSubjectDateSelection": "择日（培训相关）",
-  "contactSubjectUnsure": "不确定 - 需要您的推荐"
+  "contactSubjectUnsure": "不确定 - 需要您的推荐",
+  "forecastAuspiciousStars": "吉星",
+  "forecastInauspiciousStars": "凶星",
+  "zodiacRat": "鼠",
+  "zodiacOx": "牛",
+  "zodiacTiger": "虎",
+  "zodiacRabbit": "兔",
+  "zodiacDragon": "龙",
+  "zodiacSnake": "蛇",
+  "zodiacHorse": "马",
+  "zodiacGoat": "羊",
+  "zodiacMonkey": "猴",
+  "zodiacRooster": "鸡",
+  "zodiacDog": "狗",
+  "zodiacPig": "猪"
 }
