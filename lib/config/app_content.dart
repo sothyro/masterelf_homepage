@@ -64,6 +64,14 @@ class AppContent {
   static const String assetTestimonialProfile = 'assets/images/profile.jpg';
   static const String assetTestimonialParticipant = 'assets/images/participant2.jpg';
   static const String assetAcademy = 'assets/images/apps.jpg';
+  /// Consultation / appointments page (Smart Move cards).
+  static const String assetConsultation = 'assets/images/consultation.jpg';
+  /// BaZi Harmony card image on main page (Academies section).
+  static const String assetBaziHarmony = 'assets/icons/baziharmony.jpg';
+  /// QiMen card image on main page (Academies section).
+  static const String assetAcademyQiMen = 'assets/icons/qimendunjia.jpg';
+  /// Feng Shui card image on main page (Academies section).
+  static const String assetAcademyFengShui = 'assets/images/backgrounddirection.jpg';
 
   // Apps page showcase (assets/images/apps/)
   /// Apps page hero banner

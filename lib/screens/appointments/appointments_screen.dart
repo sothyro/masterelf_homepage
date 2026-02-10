@@ -1269,34 +1269,55 @@ class _SmartMoveCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: AppColors.surfaceElevatedDark,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.borderDark, width: 1),
         boxShadow: AppShadows.card,
       ),
+      clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 40, color: AppColors.accent),
-          const SizedBox(height: 20),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppColors.onPrimary,
-                  fontWeight: FontWeight.w600,
+          ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(11)),
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.asset(
+                AppContent.assetConsultation,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Container(
+                  color: AppColors.borderDark,
+                  child: Icon(icon, size: 40, color: AppColors.accent),
                 ),
+              ),
+            ),
           ),
-          const SizedBox(height: 10),
-          Expanded(
-            child: Text(
-              description,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.onPrimary.withValues(alpha: 0.9),
-                    height: 1.5,
-                  ),
+          Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icon, size: 40, color: AppColors.accent),
+                const SizedBox(height: 20),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: AppColors.onPrimary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  description,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.onPrimary.withValues(alpha: 0.9),
+                        height: 1.5,
+                      ),
+                ),
+              ],
             ),
           ),
         ],

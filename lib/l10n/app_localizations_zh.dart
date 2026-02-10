@@ -328,7 +328,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get academyQiMenDesc => '获得战略优势，最大化你的胜算。';
 
   @override
-  String get academyBaZi => '八字启示™';
+  String get academyBaZi => '八字和谐™';
 
   @override
   String get academyBaZiDesc => '了解你的命运与潜在力量。';

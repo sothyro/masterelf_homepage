@@ -346,7 +346,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Gain strategic advantage to maximise your wins.';
 
   @override
-  String get academyBaZi => 'BaZi Revelation™';
+  String get academyBaZi => 'BaZi Harmony™';
 
   @override
   String get academyBaZiDesc => 'Understand your destiny, and hidden power.';

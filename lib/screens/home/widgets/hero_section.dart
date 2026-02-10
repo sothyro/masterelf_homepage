@@ -25,6 +25,7 @@ class _HeroSectionState extends State<HeroSection> {
   void initState() {
     super.initState();
     // Defer video init until after first frame so the hero always paints immediately.
+    // Mobile: static image shows first; preloaded video (or init) runs in background, then we show video when ready.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _usePreloadedOrInitVideo();
@@ -118,7 +119,15 @@ class _HeroSectionState extends State<HeroSection> {
               ),
             ),
           ),
-          // 2) Video layer – BoxFit.contain so full video is visible (no cropping)
+          // 2a) On mobile: static hero image while video loads; desktop uses gradient until video ready
+          if (isMobile && !_videoReady)
+            Positioned.fill(
+              child: Image.asset(
+                AppContent.assetHeroBackground,
+                fit: BoxFit.cover,
+              ),
+            ),
+          // 2b) Video layer – when ready (mobile or desktop); BoxFit.contain so full video is visible (no cropping)
           if (_videoReady && _videoController != null && _videoController!.value.isInitialized)
             Positioned.fill(
               child: FittedBox(

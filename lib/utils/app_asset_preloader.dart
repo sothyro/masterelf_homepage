@@ -1,11 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../config/app_content.dart';
 import 'hero_video_preloader.dart';
 
-/// Best practice: critical assets first; only block on main fonts (Exo 2 + Condiment).
-/// Weights: critical (logo + hero image + video) 50%, rest images 30%, main fonts 20%.
+/// Load critical assets before showing the main page so video plays smoothly,
+/// images display correctly, and all fonts are fully loaded and rendered.
+/// Weights: critical (logo + hero image + video) 50%, rest images 30%, fonts 20%.
 const double _criticalWeight = 0.50;
 const double _restImagesWeight = 0.30;
 
@@ -15,7 +18,7 @@ List<String> get _criticalImageAssets => [
   AppContent.assetHeroBackground,
 ];
 
-/// Rest of images (below-the-fold); loaded after critical.
+/// All other images (home and other screens); loaded after critical so nothing pops in.
 List<String> get _restImageAssets => [
   AppContent.assetBackgroundDirection,
   AppContent.assetEventCard,
@@ -25,6 +28,8 @@ List<String> get _restImageAssets => [
   AppContent.assetTestimonialProfile,
   AppContent.assetTestimonialParticipant,
   AppContent.assetAcademy,
+  AppContent.assetBaziHarmony,
+  AppContent.assetAcademyQiMen,
   AppContent.assetAppsHero,
   AppContent.assetAppQiMen,
   AppContent.assetAppBaziLife,
@@ -46,30 +51,62 @@ List<String> get _restImageAssets => [
 class AppAssetPreloader {
   AppAssetPreloader._();
 
-  /// Critical path first (logo, hero image, video), then rest of images, then main fonts (Exo 2 + Condiment).
-  /// Dangrek, Siemreap, Noto Sans SC are triggered in background for locale switch.
+  /// Critical path first: logo + hero image, then video, then all images, then all fonts.
+  /// Main page is shown only when everything is ready so video plays smoothly, images display correctly, and fonts render without FOUT.
   static Future<void> preloadAll(void Function(double progress) onProgress) async {
     onProgress(0.0);
 
-    // 1) Critical images then video — 0% → 50%
+    // 1) Critical images (logo + hero background)
     await _loadImageList(_criticalImageAssets, (completed, total) {
       final fraction = total > 0 ? completed / total : 1.0;
       onProgress(_criticalWeight * 0.6 * fraction);
     });
     onProgress(_criticalWeight * 0.6);
+
+    // 2) Hero video — must finish so video plays smoothly when hero is shown
     await _loadVideo();
     onProgress(_criticalWeight);
 
-    // 2) Rest of images — 50% → 80%
+    // 3) Rest of images — so all images display correctly with no pop-in
     await _loadImageList(_restImageAssets, (completed, total) {
       final fraction = total > 0 ? completed / total : 1.0;
       onProgress(_criticalWeight + _restImagesWeight * fraction);
     });
 
-    // 3) Main fonts only (Exo 2 + Condiment). Other locales load in background.
-    await _loadMainFonts();
+    // 4) All fonts: trigger main + other locales, then wait for all so text renders correctly.
+    // Report progress during this phase so the bar doesn't sit at 80% (0.8) while fonts load.
     _triggerOtherLocaleFontsInBackground();
+    onProgress(0.82);
+    await _loadMainFonts();
+    onProgress(0.90);
+    // While waiting for other-locale fonts, inch progress toward 99% so the UI keeps moving.
+    final fontWait = _awaitOtherLocaleFonts();
+    const step = Duration(milliseconds: 400);
+    const stepsUntil99 = 24; // ~9.6s of 0.9 -> 0.99
+    for (int i = 0; i <= stepsUntil99; i++) {
+      // Update progress at start of each step so 90%, 91%, ... are always shown.
+      onProgress((0.90 + (0.09 * (i / stepsUntil99).clamp(0.0, 1.0))).clamp(0.0, 0.99));
+      final done = await Future.any<bool>([
+        fontWait.then((_) => true),
+        Future<void>.delayed(step).then((_) => false),
+      ]);
+      if (done) break;
+    }
+    await fontWait;
+    // Always ramp visibly to 100% so the user sees the bar complete before the page is shown.
+    onProgress(0.95);
+    await Future<void>.delayed(const Duration(milliseconds: 80));
+    onProgress(0.98);
+    await Future<void>.delayed(const Duration(milliseconds: 80));
     onProgress(1.0);
+  }
+
+  /// Awaits KH/ZH fonts so all locale fonts are ready before showing the app.
+  static Future<void> _awaitOtherLocaleFonts() async {
+    await GoogleFonts.pendingFonts().timeout(
+      const Duration(seconds: 20),
+      onTimeout: () => <void>[],
+    );
   }
 
   static Future<void> _loadVideo() async {
@@ -105,7 +142,7 @@ class AppAssetPreloader {
     );
   }
 
-  /// Trigger KH/ZH fonts in background so they're ready if user switches locale.
+  /// Trigger KH/ZH fonts and ensure they load in background so switching to Chinese/Khmer is fast.
   static void _triggerOtherLocaleFontsInBackground() {
     GoogleFonts.dangrek(fontSize: 14);
     GoogleFonts.siemreap(fontSize: 14);

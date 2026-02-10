@@ -346,7 +346,7 @@ class AppLocalizationsKm extends AppLocalizations {
       'ទទួលបានអត្ថប្រយោជន៍យុទ្ធសាស្រ្តដើម្បីបង្កើនជោគជ័យរបស់អ្នក។';
 
   @override
-  String get academyBaZi => 'BaZi Revelation™';
+  String get academyBaZi => 'BaZi Harmony™';
 
   @override
   String get academyBaZiDesc => 'យល់ពីវាសនារបស់អ្នក និងអំណាចកំបាំង។';

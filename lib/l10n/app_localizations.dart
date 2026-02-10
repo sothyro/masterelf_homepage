@@ -733,7 +733,7 @@ abstract class AppLocalizations {
   /// No description provided for @academyBaZi.
   ///
   /// In en, this message translates to:
-  /// **'BaZi Revelation™'**
+  /// **'BaZi Harmony™'**
   String get academyBaZi;
 
   /// No description provided for @academyBaZiDesc.
