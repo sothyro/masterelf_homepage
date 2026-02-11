@@ -110,18 +110,18 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
           padding: EdgeInsets.only(
             top: 120,
             bottom: 48,
-            left: isNarrow ? 16 : 32,
-            right: isNarrow ? 16 : 32,
+            left: isNarrow ? 16 : 24,
+            right: isNarrow ? 16 : 24,
           ),
           child: Center(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 1200),
+              constraints: const BoxConstraints(maxWidth: 1100),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Breadcrumb(items: [
                     (label: l10n.home, route: '/'),
-                    (label: l10n.consultations, route: '/appointments'),
+                    (label: l10n.consultations, route: '/consultations'),
                     (label: l10n.dashboardTitle, route: null),
                   ]),
                   const SizedBox(height: 24),
@@ -153,7 +153,7 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
                         runSpacing: 8,
                         children: [
                           TextButton.icon(
-                            onPressed: () => context.go('/appointments'),
+                            onPressed: () => context.go('/consultations'),
                             icon: const Icon(LucideIcons.arrowLeft),
                             label: Text(l10n.back),
                             style: TextButton.styleFrom(
@@ -226,28 +226,31 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
       color: AppColors.backgroundDark,
       padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 24),
       child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(LucideIcons.lock, size: 64, color: AppColors.accent),
-            const SizedBox(height: 24),
-            Text(
-              l10n.loginRequired,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: AppColors.onPrimary,
-                  ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 24),
-            FilledButton(
-              onPressed: () => context.go('/appointments'),
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.accent,
-                foregroundColor: AppColors.onAccent,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1100),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(LucideIcons.lock, size: 64, color: AppColors.accent),
+              const SizedBox(height: 24),
+              Text(
+                l10n.loginRequired,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: AppColors.onPrimary,
+                    ),
+                textAlign: TextAlign.center,
               ),
-              child: Text(l10n.consultations),
-            ),
-          ],
+              const SizedBox(height: 24),
+              FilledButton(
+                onPressed: () => context.go('/consultations'),
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.accent,
+                  foregroundColor: AppColors.onAccent,
+                ),
+                child: Text(l10n.consultations),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -539,7 +542,7 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
 
     return DataRow(
       cells: [
-        DataCell(Text(a.bookingReference, style: const TextStyle(color: AppColors.accent, fontFamily: 'monospace'))),
+        DataCell(Text(a.bookingReference, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.accent))),
         DataCell(Text(a.name, style: const TextStyle(color: AppColors.onPrimary))),
         DataCell(Text(a.phone, style: const TextStyle(color: AppColors.onPrimary))),
         DataCell(Text(a.serviceName, style: const TextStyle(color: AppColors.onPrimary))),

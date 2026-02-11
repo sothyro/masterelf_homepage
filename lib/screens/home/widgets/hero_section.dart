@@ -239,7 +239,7 @@ class _HeroSectionState extends State<HeroSection> {
                             boxShadow: AppShadows.accentButton,
                           ),
                           child: FilledButton(
-                            onPressed: () => context.push('/appointments'),
+                            onPressed: () => context.push('/consultations'),
                             style: FilledButton.styleFrom(
                               backgroundColor: AppColors.accent,
                               foregroundColor: AppColors.onAccent,

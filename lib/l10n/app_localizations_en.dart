@@ -124,7 +124,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Our latest posts, event updates and news are on our Facebook page. Follow us for updates.';
 
   @override
-  String get mediaPostsFacebookLink => 'facebook.com/masterelf';
+  String get mediaPostsFacebookLink => 'facebook.com/masterelf.vip';
 
   @override
   String get mediaPostsTelegramTitle => 'Telegram Group';
@@ -343,19 +343,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get academyQiMenDesc =>
-      'Gain strategic advantage to maximise your wins.';
+      'Gain strategic advantage to maximise your wins. Your road to victory!';
 
   @override
   String get academyBaZi => 'BaZi Harmony™';
 
   @override
-  String get academyBaZiDesc => 'Understand your destiny, and hidden power.';
+  String get academyBaZiDesc =>
+      'Reveal your destiny, and understand your hidden power. Maximise your potentials.';
 
   @override
   String get academyFengShui => 'Feng Shui Charter™';
 
   @override
-  String get academyFengShuiDesc => 'Charter Practitioner of the Qi flow.';
+  String get academyFengShuiDesc =>
+      'Chartered Practitioner of the Qi flow. Assign best Feng Shui for your home and office.';
 
   @override
   String get academyPageTitle => 'Learning & Training';

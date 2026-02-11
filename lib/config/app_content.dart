@@ -25,7 +25,7 @@ class AppContent {
   static const String office1PhoneSecondary = '+855 90 222 211';
 
   // §4 Social (Facebook, TikTok, Telegram shown in footer)
-  static const String facebookUrl = 'https://www.facebook.com/masterelf';
+  static const String facebookUrl = 'https://www.facebook.com/masterelf.vip';
   static const String? instagramUrl = null;
   static const String tiktokUrl = 'https://www.tiktok.com/@masterelf';
   static const String? youtubeUrl = null;
@@ -63,6 +63,12 @@ class AppContent {
   static const String assetStoryBackground = 'assets/images/story.PNG';
   static const String assetTestimonialProfile = 'assets/images/profile.jpg';
   static const String assetTestimonialParticipant = 'assets/images/participant2.jpg';
+  static const String assetTestimonialPanhaLeakhena = 'assets/images/testimonials/panhaleakhena.jpg';
+  static const String assetTestimonialMoon = 'assets/images/testimonials/moon.jpg';
+  static const String assetTestimonialRithy = 'assets/images/testimonials/rithy.jpg';
+  static const String assetTestimonialVanna = 'assets/images/testimonials/vanna.jpg';
+  static const String assetTestimonialThida = 'assets/images/testimonials/thida.jpg';
+  static const String assetTestimonialZeiitey = 'assets/images/testimonials/zeiitey.jpg';
   static const String assetAcademy = 'assets/images/apps.jpg';
   /// Consultation / appointments page (Smart Move cards).
   static const String assetConsultation = 'assets/images/consultation.jpg';

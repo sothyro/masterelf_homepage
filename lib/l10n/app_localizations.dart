@@ -325,7 +325,7 @@ abstract class AppLocalizations {
   /// No description provided for @mediaPostsFacebookLink.
   ///
   /// In en, this message translates to:
-  /// **'facebook.com/masterelf'**
+  /// **'facebook.com/masterelf.vip'**
   String get mediaPostsFacebookLink;
 
   /// No description provided for @mediaPostsTelegramTitle.
@@ -727,7 +727,7 @@ abstract class AppLocalizations {
   /// No description provided for @academyQiMenDesc.
   ///
   /// In en, this message translates to:
-  /// **'Gain strategic advantage to maximise your wins.'**
+  /// **'Gain strategic advantage to maximise your wins. Your road to victory!'**
   String get academyQiMenDesc;
 
   /// No description provided for @academyBaZi.
@@ -739,7 +739,7 @@ abstract class AppLocalizations {
   /// No description provided for @academyBaZiDesc.
   ///
   /// In en, this message translates to:
-  /// **'Understand your destiny, and hidden power.'**
+  /// **'Reveal your destiny, and understand your hidden power. Maximise your potentials.'**
   String get academyBaZiDesc;
 
   /// No description provided for @academyFengShui.
@@ -751,7 +751,7 @@ abstract class AppLocalizations {
   /// No description provided for @academyFengShuiDesc.
   ///
   /// In en, this message translates to:
-  /// **'Charter Practitioner of the Qi flow.'**
+  /// **'Chartered Practitioner of the Qi flow. Assign best Feng Shui for your home and office.'**
   String get academyFengShuiDesc;
 
   /// No description provided for @academyPageTitle.

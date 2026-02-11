@@ -121,7 +121,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get mediaPostsFacebookBody => '我们的最新动态、活动与资讯发布在 Facebook 专页，欢迎关注。';
 
   @override
-  String get mediaPostsFacebookLink => 'facebook.com/masterelf';
+  String get mediaPostsFacebookLink => 'facebook.com/masterelf.vip';
 
   @override
   String get mediaPostsTelegramTitle => 'Telegram 群组';
@@ -674,13 +674,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sessionDurationNote => '每次咨询为 2 小时，场次间隔 1 小时。';
 
   @override
-  String get sessionType => '預約類型';
+  String get sessionType => '预约类型';
 
   @override
-  String get sessionTypeOnline => '線上';
+  String get sessionTypeOnline => '线上';
 
   @override
-  String get sessionTypeVisit => '到訪';
+  String get sessionTypeVisit => '到访';
 
   @override
   String get bookAnother => '再预约一次';
@@ -900,37 +900,37 @@ class AppLocalizationsZh extends AppLocalizations {
   String get event3Location => 'Resorts World Singapore';
 
   @override
-  String get loginSectionTitle => '員工/管理員登入';
+  String get loginSectionTitle => '员工/管理员登录';
 
   @override
-  String get loginSectionIntro => '登入以存取預約儀表板並管理預約。';
+  String get loginSectionIntro => '登录以访问预约仪表板并管理预约。';
 
   @override
-  String get loginEmail => '電子郵件';
+  String get loginEmail => '邮箱';
 
   @override
-  String get loginPassword => '密碼';
+  String get loginPassword => '密码';
 
   @override
-  String get loginButton => '登入';
+  String get loginButton => '登录';
 
   @override
   String get logoutButton => '登出';
 
   @override
-  String get goToDashboard => '前往儀表板';
+  String get goToDashboard => '前往仪表板';
 
   @override
-  String get welcomeBack => '歡迎回來';
+  String get welcomeBack => '欢迎回来';
 
   @override
-  String get dashboardTitle => '預約儀表板';
+  String get dashboardTitle => '预约仪表板';
 
   @override
-  String get dashboardSubtitle => '檢視並管理所有預約';
+  String get dashboardSubtitle => '查看并管理所有预约';
 
   @override
-  String get dashboardStatsTotal => '總計';
+  String get dashboardStatsTotal => '总计';
 
   @override
   String get dashboardStatsPending => '待確認';
@@ -942,16 +942,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dashboardStatsCancelled => '已取消';
 
   @override
-  String get filterByStatus => '按狀態篩選';
+  String get filterByStatus => '按状态筛选';
 
   @override
-  String get statusColumn => '狀態';
+  String get statusColumn => '状态';
 
   @override
   String get filterAll => '全部';
 
   @override
-  String get refresh => '重新整理';
+  String get refresh => '刷新';
 
   @override
   String get appointmentName => '姓名';
@@ -966,62 +966,62 @@ class AppLocalizationsZh extends AppLocalizations {
   String get reschedule => '改期';
 
   @override
-  String get noAppointments => '未找到預約。';
+  String get noAppointments => '未找到预约。';
 
   @override
-  String get loadingAppointments => '正在載入預約…';
+  String get loadingAppointments => '正在加载预约…';
 
   @override
-  String get errorLoadingAppointments => '載入預約失敗。';
+  String get errorLoadingAppointments => '加载预约失败。';
 
   @override
-  String get statusUpdated => '狀態已更新。';
+  String get statusUpdated => '状态已更新。';
 
   @override
-  String get errorUpdatingStatus => '更新狀態失敗。';
+  String get errorUpdatingStatus => '更新状态失败。';
 
   @override
-  String get loginError => '電子郵件或密碼錯誤。';
+  String get loginError => '邮箱或密码错误。';
 
   @override
-  String get loginRequired => '請登入以存取儀表板。';
+  String get loginRequired => '请登录以访问仪表板。';
 
   @override
-  String get calendarView => '日曆';
+  String get calendarView => '日历';
 
   @override
   String get listView => '列表';
 
   @override
-  String get createBooking => '建立預約';
+  String get createBooking => '创建预约';
 
   @override
-  String get createBookingFor => '為客戶建立預約';
+  String get createBookingFor => '为客户创建预约';
 
   @override
-  String get selectDateAndTime => '選擇日期與時間';
+  String get selectDateAndTime => '选择日期与时间';
 
   @override
-  String get bookingCreated => '預約建立成功。';
+  String get bookingCreated => '预约创建成功。';
 
   @override
-  String get errorCreatingBooking => '建立預約失敗。';
+  String get errorCreatingBooking => '创建预约失败。';
 
   @override
   String get today => '今天';
 
   @override
-  String get availableSlots => '可用時段';
+  String get availableSlots => '可用时段';
 
   @override
-  String get addBooking => '新增預約';
+  String get addBooking => '添加预约';
 
   @override
-  String get pleaseEnterNameAndPhone => '請輸入姓名和電話。';
+  String get pleaseEnterNameAndPhone => '请输入姓名和电话。';
 
   @override
-  String get note => '備註';
+  String get note => '备注';
 
   @override
-  String get noteHint => '可選的預約備註…';
+  String get noteHint => '可选的预约备注…';
 }

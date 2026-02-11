@@ -113,10 +113,10 @@ class AppDrawer extends StatelessWidget {
                     _SectionLabel(label: l10n.consultations),
                     _DrawerTile(
                       label: l10n.consultations,
-                      path: '/appointments',
+                      path: '/consultations',
                       current: current,
                       icon: LucideIcons.calendarCheck,
-                      onTap: () => _go(context, '/appointments'),
+                      onTap: () => _go(context, '/consultations'),
                     ),
                     const SizedBox(height: 24),
                     _SectionLabel(label: 'Get in touch'),

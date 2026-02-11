@@ -124,7 +124,7 @@ class AppLocalizationsKm extends AppLocalizations {
       'ប្រកាស អាប់ដេតព្រឹត្តិការណ៍ និងព័ត៌មានចុងក្រោយរបស់យើងនៅលើទំព័រ Facebook។ តាមដានយើងដើម្បីអាប់ដេត។';
 
   @override
-  String get mediaPostsFacebookLink => 'facebook.com/masterelf';
+  String get mediaPostsFacebookLink => 'facebook.com/masterelf.vip';
 
   @override
   String get mediaPostsTelegramTitle => 'ក្រុម Telegram';

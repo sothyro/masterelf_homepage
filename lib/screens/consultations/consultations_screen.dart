@@ -990,7 +990,7 @@ class _LoginSectionState extends State<_LoginSection> {
         _loading = false;
         _error = null;
       });
-      context.go('/appointments/dashboard');
+      context.go('/consultations/dashboard');
     } catch (e) {
       if (!mounted) return;
       setState(() {
@@ -1050,7 +1050,7 @@ class _LoginSectionState extends State<_LoginSection> {
                       runSpacing: 8,
                       children: [
                         FilledButton.icon(
-                          onPressed: () => context.go('/appointments/dashboard'),
+                          onPressed: () => context.go('/consultations/dashboard'),
                           icon: const Icon(LucideIcons.layoutDashboard, size: 18),
                           label: Text(l10n.goToDashboard),
                           style: FilledButton.styleFrom(

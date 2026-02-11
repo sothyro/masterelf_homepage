@@ -413,7 +413,10 @@ class _AddSlotChip extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 AppLocalizations.of(context)!.addBooking,
-                style: TextStyle(color: AppColors.accent, fontFamily: 'Exo 2', fontWeight: FontWeight.w500),
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: AppColors.accent,
+                      fontWeight: FontWeight.w500,
+                    ) ?? TextStyle(color: AppColors.accent, fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -586,7 +589,10 @@ Future<void> showCreateBookingDialog(
                   const SizedBox(height: 16),
                   TextField(
                     controller: noteController,
+                    minLines: 3,
                     maxLines: 3,
+                    keyboardType: TextInputType.multiline,
+                    textInputAction: TextInputAction.newline,
                     decoration: InputDecoration(
                       labelText: l10n.note,
                       hintText: l10n.noteHint,

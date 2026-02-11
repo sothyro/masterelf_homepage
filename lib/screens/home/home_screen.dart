@@ -157,15 +157,15 @@ class _SectionLoadingOverlay extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
-            color: AppColors.backgroundDark.withValues(alpha: 0.5),
+          decoration: const BoxDecoration(
+            color: Colors.transparent,
           ),
           child: Center(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 32),
               margin: const EdgeInsets.symmetric(horizontal: 24),
               decoration: BoxDecoration(
-                color: AppColors.surfaceDark,
+                color: AppColors.surfaceDark.withValues(alpha: 0.87),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: AppShadows.dialog,
                 border: Border.all(

@@ -8,8 +8,8 @@ import '../screens/home/home_screen.dart';
 import '../screens/about/about_screen.dart';
 import '../screens/events/events_screen.dart';
 import '../screens/contact/contact_screen.dart';
-import '../screens/appointments/appointments_screen.dart';
-import '../screens/appointments/appointments_dashboard_screen.dart';
+import '../screens/consultations/consultations_screen.dart';
+import '../screens/consultations/consultations_dashboard_screen.dart';
 import '../screens/academy/academy_screen.dart';
 import '../screens/journey/journey_screen.dart';
 import '../screens/method/method_screen.dart';
@@ -28,8 +28,8 @@ const Set<String> _knownPaths = {
   '/apps',
   '/academy',
   '/contact',
-  '/appointments',
-  '/appointments/dashboard',
+  '/consultations',
+  '/consultations/dashboard',
   '/not-found',
 };
 
@@ -43,9 +43,9 @@ GoRouter createAppRouter({Listenable? refreshListenable}) {
     redirect: (context, state) {
       final path = state.uri.path;
       if (path.isEmpty || _knownPaths.contains(path)) {
-        if (path == '/appointments/dashboard') {
+        if (path == '/consultations/dashboard') {
           final auth = context.read<AuthProvider>();
-          if (!auth.isLoggedIn) return '/appointments';
+          if (!auth.isLoggedIn) return '/consultations';
         }
         return null;
       }
@@ -63,8 +63,8 @@ GoRouter createAppRouter({Listenable? refreshListenable}) {
           GoRoute(path: '/apps', builder: (_, __) => const AppsScreen()),
           GoRoute(path: '/academy', builder: (_, __) => const AcademyScreen()),
           GoRoute(path: '/contact', builder: (_, __) => const ContactScreen()),
-          GoRoute(path: '/appointments', builder: (_, __) => const AppointmentsScreen()),
-          GoRoute(path: '/appointments/dashboard', builder: (_, __) => const AppointmentsDashboardScreen()),
+          GoRoute(path: '/consultations', builder: (_, __) => const AppointmentsScreen()),
+          GoRoute(path: '/consultations/dashboard', builder: (_, __) => const AppointmentsDashboardScreen()),
           GoRoute(path: '/not-found', builder: (_, __) => const _NotFoundScreen()),
         ],
       ),

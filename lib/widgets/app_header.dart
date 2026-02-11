@@ -179,7 +179,7 @@ class _DesktopHeader extends StatelessWidget {
         actionValue: _kMediaPostsAction,
         onAction: (context) => showMediaPostsPopup(context),
       ),
-      _NavLink(label: l10n.consultations, path: '/appointments'),
+      _NavLink(label: l10n.consultations, path: '/consultations'),
       if (isTablet) const SizedBox(width: 24) else const Spacer(),
       _LocaleSwitcher(notifier: localeNotifier),
       const SizedBox(width: 20),

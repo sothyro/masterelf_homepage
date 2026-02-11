@@ -19,7 +19,7 @@ void showMediaPostsPopup(BuildContext context) {
 class MediaPostsPopup extends StatelessWidget {
   const MediaPostsPopup({super.key});
 
-  static const String _facebookPageUrl = 'https://www.facebook.com/masterelf';
+  static const String _facebookPageUrl = 'https://www.facebook.com/masterelf.vip';
 
   /// Sample media coverage links – replace with real URLs when available.
   static const List<String> _sampleMediaUrls = [

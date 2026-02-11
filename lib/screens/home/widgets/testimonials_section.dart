@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -13,11 +15,16 @@ class TestimonialItem {
     required this.quote,
     required this.name,
     required this.location,
+    this.imagePath,
   });
 
   final String quote;
   final String name;
   final String location;
+  /// Optional image path. If null, falls back to alternating profile/participant.
+  final String? imagePath;
+
+  bool get isBlank => quote == '—' && name == '—' && location == '—';
 }
 
 class TestimonialsSection extends StatefulWidget {
@@ -28,51 +35,117 @@ class TestimonialsSection extends StatefulWidget {
 }
 
 class _TestimonialsSectionState extends State<TestimonialsSection> {
-  static const _placeholders = [
-    TestimonialItem(
-      quote: 'Master Elf is the best',
-      name: 'Chong Sarachan',
+  static final _placeholders = [
+    const TestimonialItem(
+      quote: 'កូនសិស្ស មានកត្តិយសណាស់ បានចូលរួម កម្មវិធី ម្សិលមិញ 🙏🩵\nសង្ឃឹមថា បានស្គាល់លោកគ្រូ ប្អូន នឹងបាន កែប្រែ វាសនា 🙏',
+      name: 'Panha Leakhena',
       location: 'Phnom Penh',
+      imagePath: AppContent.assetTestimonialPanhaLeakhena,
     ),
-    TestimonialItem(
-      quote: 'Master Elf is the best',
-      name: 'Lana',
-      location: 'Phnom Penh',
+    const TestimonialItem(
+      quote: 'អរគុណ លោកគ្រូ សិស្សនៅខាងពេជនិល ទៅចូលរួមកម្មពីធី លោកគ្រូដែលកាលយប់31 អរគុណ លោកគ្រូ 🙏🏻🙏🏻🙏🏻',
+      name: 'Moon Pichnil',
+      location: 'Preah Sihanouk',
+      imagePath: AppContent.assetTestimonialMoon,
     ),
-    TestimonialItem(
-      quote: 'Master Elf is the best',
-      name: 'kenway',
-      location: 'Phnom Penh',
+    const TestimonialItem(
+      quote: 'សូមគោរពអរគុណលោកគ្រូ ដែលចែកកាដូរពិសេសដល់ទៅពីរមុខក្នុងថ្ងៃជួបជុំ 🙏🙏🙏💙',
+      name: 'Sereyrath Aumrith',
+      location: 'International',
+      imagePath: AppContent.assetTestimonialRithy,
     ),
-    TestimonialItem(
-      quote: 'Master Elf is the best',
-      name: 'Kai Wee',
-      location: 'Singapore',
+    const TestimonialItem(
+      quote: 'អរគុណលោកគ្រូ បើកមុខឲ្យខ្ញុំលក់ដីដាច់! ខ្ញុំលែងលំបាកហើយ',
+      name: 'Sieng Vanna',
+      location: 'Kandal',
+      imagePath: AppContent.assetTestimonialVanna,
     ),
+    const TestimonialItem(
+      quote: 'Caishen🙏🙏🙏❤️',
+      name: 'Phum Thida',
+      location: 'N/A',
+      imagePath: AppContent.assetTestimonialThida,
+    ),
+    const TestimonialItem(
+      quote: '🙏🙏🙏❤️Master Elf',
+      name: 'Zeii Tey',
+      location: 'N/A',
+      imagePath: AppContent.assetTestimonialZeiitey,
+    ),
+    // 9 blank cards for future testimonials
+    ...List.generate(9, (_) => const TestimonialItem(quote: '—', name: '—', location: '—')),
   ];
 
-  final ScrollController _scrollController = ScrollController();
-  static const double _cardWidth = 280;
-  static const double _cardGap = 20;
-  static const double _cardsRowMinWidth = 1000;
+  static const int _cardsPerPage = 5;
+  static const double _cardWidth = 260;
+  static const double _cardGap = 16;
   static const double _cardsHeight = 380;
+  static const Duration _flipStaggerDelay = Duration(milliseconds: 120);
+  static const Duration _flipDuration = Duration(milliseconds: 450);
+  static const Duration _pageDisplayDuration = Duration(seconds: 6);
+  static const Duration _pageTransitionDuration = Duration(milliseconds: 800);
+
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+  int? _pageReadyForFlip;
+  int _flipScheduleId = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      Future<void>.delayed(const Duration(milliseconds: 300), () {
+        if (mounted) setState(() => _pageReadyForFlip = 0);
+      });
+    });
+    _startAutoLoop();
+  }
+
+  void _scheduleFlipAfterTransition(int page) {
+    final id = ++_flipScheduleId;
+    Future<void>.delayed(_pageTransitionDuration, () {
+      if (mounted && id == _flipScheduleId) {
+        setState(() => _pageReadyForFlip = page);
+      }
+    });
+  }
+
+  void _startAutoLoop() {
+    Future<void>.delayed(_pageDisplayDuration, () {
+      if (!mounted) return;
+      final totalPages = (_placeholders.length / _cardsPerPage).ceil();
+      final nextPage = (_currentPage + 1) % totalPages;
+      _flipScheduleId++;
+      _pageController.animateToPage(
+        nextPage,
+        duration: _pageTransitionDuration,
+        curve: Curves.easeInOut,
+      ).then((_) {
+        if (mounted) setState(() => _pageReadyForFlip = nextPage);
+        _startAutoLoop();
+      });
+    });
+  }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
-  void _scrollCarousel(int delta) {
-    if (!_scrollController.hasClients) return;
-    final max = _scrollController.position.maxScrollExtent;
-    final current = _scrollController.offset;
-    final next = (current + delta * (_cardWidth + _cardGap)).clamp(0.0, max);
-    _scrollController.animateTo(
-      next,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
+  void _goToPage(int page) {
+    final totalPages = (_placeholders.length / _cardsPerPage).ceil();
+    final target = ((page % totalPages) + totalPages) % totalPages;
+    if (target == _currentPage) return;
+    _flipScheduleId++;
+    _pageController.animateToPage(
+      target,
+      duration: _pageTransitionDuration,
+      curve: Curves.easeInOut,
+    ).then((_) {
+      if (mounted) setState(() => _pageReadyForFlip = target);
+    });
   }
 
   @override
@@ -132,9 +205,15 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
               const SizedBox(height: 24),
               Row(
                 children: [
-                  _NavButton(icon: LucideIcons.chevronLeft, onPressed: () => _scrollCarousel(-1)),
+                  _NavButton(
+                    icon: LucideIcons.chevronLeft,
+                    onPressed: () => _goToPage(_currentPage - 1),
+                  ),
                   const SizedBox(width: 12),
-                  _NavButton(icon: LucideIcons.chevronRight, onPressed: () => _scrollCarousel(1)),
+                  _NavButton(
+                    icon: LucideIcons.chevronRight,
+                    onPressed: () => _goToPage(_currentPage + 1),
+                  ),
                 ],
               ),
             ],
@@ -172,9 +251,15 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                     const SizedBox(height: 20),
                     Row(
                       children: [
-                        _NavButton(icon: LucideIcons.chevronLeft, onPressed: () => _scrollCarousel(-1)),
+                        _NavButton(
+                          icon: LucideIcons.chevronLeft,
+                          onPressed: () => _goToPage(_currentPage - 1),
+                        ),
                         const SizedBox(width: 12),
-                        _NavButton(icon: LucideIcons.chevronRight, onPressed: () => _scrollCarousel(1)),
+                        _NavButton(
+                          icon: LucideIcons.chevronRight,
+                          onPressed: () => _goToPage(_currentPage + 1),
+                        ),
                       ],
                     ),
                   ],
@@ -208,46 +293,129 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
               const SizedBox(height: 40),
               SizedBox(
                 height: _cardsHeight,
-                child: width >= _cardsRowMinWidth
-                    ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          for (var i = 0; i < _placeholders.length; i++) ...[
-                            if (i > 0) const SizedBox(width: _cardGap),
-                            Expanded(
-                              child: _TestimonialCard(
-                                quote: _placeholders[i].quote,
-                                name: _placeholders[i].name,
-                                location: _placeholders[i].location,
-                                imageIndex: i,
+                child: PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: (p) {
+                    setState(() => _currentPage = p);
+                    _scheduleFlipAfterTransition(p);
+                  },
+                  itemCount: (_placeholders.length / _cardsPerPage).ceil(),
+                  itemBuilder: (context, pageIndex) {
+                    final start = pageIndex * _cardsPerPage;
+                    final end = math.min(start + _cardsPerPage, _placeholders.length);
+                    final isReadyForFlip = _pageReadyForFlip != null &&
+                        pageIndex == _pageReadyForFlip;
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (var i = start; i < end; i++) ...[
+                          if (i > start) const SizedBox(width: _cardGap),
+                          Expanded(
+                            child: SizedBox(
+                              height: _cardsHeight,
+                              child: _FlipTestimonialCard(
+                                shouldAnimate: isReadyForFlip,
+                                flipDelay: Duration(
+                                  milliseconds: _flipStaggerDelay.inMilliseconds * (i - start),
+                                ),
+                                flipDuration: _flipDuration,
+                                child: _TestimonialCard(
+                                  quote: _placeholders[i].quote,
+                                  name: _placeholders[i].name,
+                                  location: _placeholders[i].location,
+                                  imageIndex: i,
+                                  imagePath: _placeholders[i].imagePath,
+                                  isBlank: _placeholders[i].isBlank,
+                                ),
                               ),
                             ),
-                          ],
+                          ),
                         ],
-                      )
-                    : ListView.separated(
-                        controller: _scrollController,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _placeholders.length,
-                        separatorBuilder: (_, __) => const SizedBox(width: _cardGap),
-                        itemBuilder: (context, index) {
-                          final t = _placeholders[index];
-                          return SizedBox(
-                            width: _cardWidth,
-                            child: _TestimonialCard(
-                              quote: t.quote,
-                              name: t.name,
-                              location: t.location,
-                              imageIndex: index,
-                            ),
-                          );
-                        },
-                      ),
+                      ],
+                    );
+                  },
+                ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _FlipTestimonialCard extends StatefulWidget {
+  const _FlipTestimonialCard({
+    required this.child,
+    required this.shouldAnimate,
+    required this.flipDelay,
+    required this.flipDuration,
+  });
+
+  final Widget child;
+  final bool shouldAnimate;
+  final Duration flipDelay;
+  final Duration flipDuration;
+
+  @override
+  State<_FlipTestimonialCard> createState() => _FlipTestimonialCardState();
+}
+
+class _FlipTestimonialCardState extends State<_FlipTestimonialCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  bool _hasStarted = false;
+
+  void _maybeStartFlip() {
+    if (!widget.shouldAnimate || _hasStarted || !mounted) return;
+    _hasStarted = true;
+    Future<void>.delayed(widget.flipDelay, () {
+      if (mounted) _controller.forward();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: widget.flipDuration,
+    );
+    _animation = Tween<double>(begin: math.pi / 2, end: 0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
+    _maybeStartFlip();
+  }
+
+  @override
+  void didUpdateWidget(covariant _FlipTestimonialCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _maybeStartFlip();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        final angle = _animation.value;
+        return Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.001)
+            ..rotateY(angle),
+          child: child,
+        );
+      },
+      child: widget.child,
     );
   }
 }
@@ -285,12 +453,16 @@ class _TestimonialCard extends StatefulWidget {
     required this.name,
     required this.location,
     this.imageIndex = 0,
+    this.imagePath,
+    this.isBlank = false,
   });
 
   final String quote;
   final String name;
   final String location;
   final int imageIndex;
+  final String? imagePath;
+  final bool isBlank;
 
   @override
   State<_TestimonialCard> createState() => _TestimonialCardState();
@@ -324,7 +496,7 @@ class _TestimonialCardState extends State<_TestimonialCard> {
         clipBehavior: Clip.antiAlias,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
           children: [
             SizedBox(
               height: 180,
@@ -333,7 +505,7 @@ class _TestimonialCardState extends State<_TestimonialCard> {
                 fit: StackFit.expand,
                 children: [
                   Image.asset(
-                    widget.imageIndex.isEven ? AppContent.assetTestimonialProfile : AppContent.assetTestimonialParticipant,
+                    widget.imagePath ?? (widget.imageIndex.isEven ? AppContent.assetTestimonialProfile : AppContent.assetTestimonialParticipant),
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => Container(
                       color: AppColors.accent.withValues(alpha: 0.15),
@@ -364,7 +536,9 @@ class _TestimonialCardState extends State<_TestimonialCard> {
                             widget.name.toUpperCase(),
                             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.onPrimary,
+                                  color: AppColors.onPrimary.withValues(
+                                    alpha: widget.isBlank ? 0.5 : 1,
+                                  ),
                                   letterSpacing: 0.5,
                                 ),
                           ),
@@ -372,7 +546,9 @@ class _TestimonialCardState extends State<_TestimonialCard> {
                           Text(
                             widget.location,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: AppColors.onPrimary.withValues(alpha: 0.9),
+                                  color: AppColors.onPrimary.withValues(
+                                    alpha: widget.isBlank ? 0.45 : 0.9,
+                                  ),
                                   fontSize: 12,
                                 ),
                           ),
@@ -383,30 +559,39 @@ class _TestimonialCardState extends State<_TestimonialCard> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(18, 16, 18, 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '"${widget.quote}"',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      height: 1.5,
-                      fontStyle: FontStyle.italic,
-                      color: AppColors.onPrimary.withValues(alpha: 0.92),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(18, 16, 18, 12),
+                  child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        widget.isBlank ? '—' : '"${widget.quote}"',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          height: 1.5,
+                          fontStyle: widget.isBlank ? FontStyle.normal : FontStyle.italic,
+                          color: AppColors.onPrimary.withValues(
+                            alpha: widget.isBlank ? 0.4 : 0.92,
+                          ),
+                        ),
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    '${widget.name} | ${widget.location}',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.onPrimary.withValues(alpha: 0.6),
-                      fontSize: 12,
+                    const SizedBox(height: 12),
+                    Text(
+                      '${widget.name} | ${widget.location}',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.onPrimary.withValues(
+                          alpha: widget.isBlank ? 0.35 : 0.6,
+                        ),
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

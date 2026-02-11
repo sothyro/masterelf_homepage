@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,6 +7,9 @@ import '../../../config/app_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+
+/// Number of logo placeholders in the Featured in section.
+const int _kFeaturedLogoCount = 17;
 
 class StorySection extends StatelessWidget {
   const StorySection({super.key});
@@ -112,7 +116,7 @@ class StorySection extends StatelessWidget {
     );
 
     // Story block: text only (no image)
-    final storyPadding = isMobile ? const EdgeInsets.fromLTRB(16, 40, 16, 32) : const EdgeInsets.fromLTRB(32, 168, 32, 168);
+    final storyPadding = isMobile ? const EdgeInsets.fromLTRB(16, 24, 16, 32) : const EdgeInsets.fromLTRB(32, 168, 32, 168);
 
     final storyBlock = Center(
       child: ConstrainedBox(
@@ -121,9 +125,27 @@ class StorySection extends StatelessWidget {
       ),
     );
 
+    // On mobile: position text lower (towards bottom of section); desktop: keep centered
+    final storyContent = isMobile
+        ? SizedBox(
+            height: 420,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1100),
+                child: storyBlock,
+              ),
+            ),
+          )
+        : Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1100),
+              child: storyBlock,
+            ),
+          );
+
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 24),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
@@ -191,15 +213,11 @@ class StorySection extends StatelessWidget {
             ),
             Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
               Padding(
                 padding: storyPadding,
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1100),
-                    child: storyBlock,
-                  ),
-                ),
+                child: storyContent,
               ),
               Container(
             width: double.infinity,
@@ -213,54 +231,9 @@ class StorySection extends StatelessWidget {
             child: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 1100),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        l10n.featuredIn,
-                        style: GoogleFonts.condiment(
-                          fontSize: 52,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.accent,
-                          height: 1.2,
-                          shadows: [
-                            Shadow(
-                              color: AppColors.accent.withValues(alpha: 0.4),
-                              offset: const Offset(0, 2),
-                              blurRadius: 8,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 32),
-                      ...List.generate(
-                        6,
-                        (i) => Padding(
-                          padding: const EdgeInsets.only(right: 24),
-                          child: Container(
-                            width: 88,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: AppColors.surfaceElevatedDark.withValues(alpha: 0.6),
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: AppColors.borderDark, width: 1),
-                            ),
-                            child: Center(
-                              child: Text(
-                                l10n.logoPlaceholder(i + 1),
-                                style: textTheme.bodySmall?.copyWith(
-                                  color: AppColors.onPrimary.withValues(alpha: 0.5),
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                child: _FeaturedInCarousel(
+                  l10n: l10n,
+                  textTheme: textTheme,
                 ),
               ),
             ),
@@ -268,6 +241,34 @@ class StorySection extends StatelessWidget {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  static Widget _buildLogoChip(
+    AppLocalizations l10n,
+    TextTheme textTheme,
+    int index,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 24),
+      child: Container(
+        width: 88,
+        height: 40,
+        decoration: BoxDecoration(
+          color: AppColors.surfaceElevatedDark.withValues(alpha: 0.6),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: AppColors.borderDark, width: 1),
+        ),
+        child: Center(
+          child: Text(
+            l10n.logoPlaceholder(index),
+            style: textTheme.bodySmall?.copyWith(
+              color: AppColors.onPrimary.withValues(alpha: 0.5),
+              fontSize: 13,
+            ),
+          ),
         ),
       ),
     );
@@ -303,6 +304,122 @@ class StorySection extends StatelessWidget {
       start = nextIndex + (matched?.length ?? 0);
     }
     return result;
+  }
+}
+
+/// Infinite looping carousel for the Featured in logos.
+class _FeaturedInCarousel extends StatefulWidget {
+  const _FeaturedInCarousel({
+    required this.l10n,
+    required this.textTheme,
+  });
+
+  final AppLocalizations l10n;
+  final TextTheme textTheme;
+
+  @override
+  State<_FeaturedInCarousel> createState() => _FeaturedInCarouselState();
+}
+
+class _FeaturedInCarouselState extends State<_FeaturedInCarousel> with SingleTickerProviderStateMixin {
+  late ScrollController _scrollController;
+  Ticker? _ticker;
+  double _singleSetWidth = 0;
+  Duration _lastElapsed = Duration.zero;
+
+  static const double _logoWidth = 88;
+  static const double _logoGap = 24;
+  static const double _headerGap = 32;
+  static const double _scrollSpeed = 56; // pixels per second
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _startScrolling());
+  }
+
+  void _startScrolling() {
+    if (!mounted || !_scrollController.hasClients) return;
+    // singleSetWidth = logos only (17 * (88+24))
+    _singleSetWidth = _kFeaturedLogoCount * (_logoWidth + _logoGap);
+    _ticker = createTicker(_onTick);
+    _ticker!.start();
+  }
+
+  void _onTick(Duration elapsed) {
+    if (!mounted || !_scrollController.hasClients) return;
+    final delta = elapsed - _lastElapsed;
+    _lastElapsed = elapsed;
+    final deltaSeconds = delta.inMicroseconds / 1_000_000.0;
+    var offset = _scrollController.offset;
+    offset += _scrollSpeed * deltaSeconds;
+
+    if (_singleSetWidth > 0 && offset >= _singleSetWidth - 1) {
+      offset = 0;
+    }
+    _scrollController.jumpTo(offset);
+  }
+
+  @override
+  void dispose() {
+    _ticker?.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = widget.l10n;
+    final textTheme = widget.textTheme;
+
+    final header = Text(
+      l10n.featuredIn,
+      style: GoogleFonts.condiment(
+        fontSize: 52,
+        fontWeight: FontWeight.bold,
+        color: AppColors.accent,
+        height: 1.2,
+        shadows: [
+          Shadow(
+            color: AppColors.accent.withValues(alpha: 0.4),
+            offset: const Offset(0, 2),
+            blurRadius: 8,
+          ),
+        ],
+      ),
+    );
+
+    final logosRow = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (var i = 0; i < _kFeaturedLogoCount; i++)
+          StorySection._buildLogoChip(l10n, textTheme, i + 1),
+      ],
+    );
+
+    // Header fixed; only logos scroll in infinite loop
+    return Row(
+      children: [
+        header,
+        const SizedBox(width: _headerGap),
+        Expanded(
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            scrollDirection: Axis.horizontal,
+            physics: const NeverScrollableScrollPhysics(),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                logosRow,
+                const SizedBox(width: _headerGap),
+                logosRow,
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 

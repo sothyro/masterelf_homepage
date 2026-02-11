@@ -26,7 +26,7 @@ class ConsultationsSection extends StatelessWidget {
         question: l10n.consult1Question,
         description: l10n.consult1Desc,
         icon: LucideIcons.user,
-        onGetConsultation: () => context.push('/appointments'),
+        onGetConsultation: () => context.push('/consultations'),
       ),
       _ConsultBlock(
         category: l10n.consult2Category,
@@ -34,7 +34,7 @@ class ConsultationsSection extends StatelessWidget {
         question: l10n.consult2Question,
         description: l10n.consult2Desc,
         icon: LucideIcons.calendar,
-        onGetConsultation: () => context.push('/appointments'),
+        onGetConsultation: () => context.push('/consultations'),
       ),
       _ConsultBlock(
         category: l10n.consult3Category,
@@ -42,7 +42,7 @@ class ConsultationsSection extends StatelessWidget {
         question: l10n.consult3Question,
         description: l10n.consult3Desc,
         icon: LucideIcons.home,
-        onGetConsultation: () => context.push('/appointments'),
+        onGetConsultation: () => context.push('/consultations'),
       ),
       _ConsultBlock(
         category: l10n.consult4Category,
@@ -50,7 +50,7 @@ class ConsultationsSection extends StatelessWidget {
         question: l10n.consult4Question,
         description: l10n.consult4Desc,
         icon: LucideIcons.clock,
-        onGetConsultation: () => context.push('/appointments'),
+        onGetConsultation: () => context.push('/consultations'),
       ),
     ];
 
