@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+
+import '../../l10n/app_localizations.dart';
+
 /// Generic standard legal text for Terms, Disclaimer, and Privacy.
 /// Replace with your own content when you have final copy.
 enum LegalPage { terms, disclaimer, privacy }
@@ -5,18 +9,19 @@ enum LegalPage { terms, disclaimer, privacy }
 class LegalContent {
   LegalContent._();
 
-  static String title(LegalPage page) {
+  static String title(BuildContext context, LegalPage page) {
+    final l10n = AppLocalizations.of(context)!;
     switch (page) {
       case LegalPage.terms:
-        return 'Terms of Service';
+        return l10n.termsOfService;
       case LegalPage.disclaimer:
-        return 'Disclaimer';
+        return l10n.disclaimer;
       case LegalPage.privacy:
-        return 'Privacy Policy';
+        return l10n.privacyPolicy;
     }
   }
 
-  static String body(LegalPage page) {
+  static String body(BuildContext context, LegalPage page) {
     switch (page) {
       case LegalPage.terms:
         return _termsBody;

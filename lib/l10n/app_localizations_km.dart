@@ -888,4 +888,55 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get zodiacPig => 'ជ្រូក';
+
+  @override
+  String get close => 'បិទ';
+
+  @override
+  String get forecastYearBingWu => '២០២៦ ប៊ីង អ៊ូ ឆ្នាំសេះភ្លើង';
+
+  @override
+  String get forecastYearSubtitle => '២០២៦៖ ការចាប់ផ្តើមថ្មី និងការផ្លាស់ប្តូរ';
+
+  @override
+  String logoPlaceholder(int number) {
+    return 'ឡូហ្គោ $number';
+  }
+
+  @override
+  String get sampleArticle1 => 'អត្ថបទគំរូ ១';
+
+  @override
+  String get sampleArticle2 => 'អត្ថបទគំរូ ២';
+
+  @override
+  String get sampleFeature => 'អត្ថបទពិសេសគំរូ';
+
+  @override
+  String get event1Title => 'Master Elf - The Rise of Phoenix 2026';
+
+  @override
+  String get event1Description => 'ការបង្ហាញរបស់ Master។';
+
+  @override
+  String get event1Location => 'ភ្នំពេញ';
+
+  @override
+  String get event2Title => 'ហ្វងស៊ី និងហាស្ត្រូឡូហ្គី ២០២៦';
+
+  @override
+  String get event2Description =>
+      'កម្មវិធីផ្ទាល់របស់ហ្វងស៊ី និងហាស្ត្រូឡូហ្គី ២០២៦ នៅសិង្ហបុរី។';
+
+  @override
+  String get event2Location => 'Resorts World Sentosa, Singapore';
+
+  @override
+  String get event3Title => 'Crimson Horse QiMen';
+
+  @override
+  String get event3Description => 'សិល្បៈសង្គ្រាមក្នុងឆ្នាំសេះភ្លើង';
+
+  @override
+  String get event3Location => 'Resorts World Singapore';
 }

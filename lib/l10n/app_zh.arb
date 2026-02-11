@@ -276,5 +276,28 @@
   "zodiacMonkey": "猴",
   "zodiacRooster": "鸡",
   "zodiacDog": "狗",
-  "zodiacPig": "猪"
+  "zodiacPig": "猪",
+  "close": "关闭",
+  "forecastYearBingWu": "2026 丙午，火馬年",
+  "forecastYearSubtitle": "2026：新開端與蛻變",
+  "logoPlaceholder": "標誌 {number}",
+  "@logoPlaceholder": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "sampleArticle1": "示例文章 1",
+  "sampleArticle2": "示例文章 2",
+  "sampleFeature": "示例專題",
+  "event1Title": "Master Elf - The Rise of Phoenix 2026",
+  "event1Description": "師父開示。",
+  "event1Location": "金邊",
+  "event2Title": "風水與占星 2026",
+  "event2Description": "新加坡版風水與占星 2026 現場活動。",
+  "event2Location": "Resorts World Sentosa, Singapore",
+  "event3Title": "赤馬奇門",
+  "event3Description": "火馬年之兵法藝術",
+  "event3Location": "Resorts World Singapore"
 }

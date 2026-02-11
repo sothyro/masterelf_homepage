@@ -491,10 +491,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get popupTitle1 => 'Master Elf\'s';
 
   @override
-  String get popupTitle2 => '12 ANIMALS FORECAST';
+  String get popupTitle2 => '12 ZODIACS FORECAST';
 
   @override
-  String get popupDescription => 'Get Your Personal 2026 Animal Sign Forecast…';
+  String get popupDescription => 'Year of Fire Horse';
 
   @override
   String get readFullArticles => 'Read Full Articles';
@@ -892,4 +892,56 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zodiacPig => 'Pig';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get forecastYearBingWu => '2026 Bing Wu, Year of Fire Horse';
+
+  @override
+  String get forecastYearSubtitle => '2026: New Beginnings & Transformation';
+
+  @override
+  String logoPlaceholder(int number) {
+    return 'Logo $number';
+  }
+
+  @override
+  String get sampleArticle1 => 'Sample article 1';
+
+  @override
+  String get sampleArticle2 => 'Sample article 2';
+
+  @override
+  String get sampleFeature => 'Sample feature';
+
+  @override
+  String get event1Title => 'Master Elf - The Rise of Phoenix 2026';
+
+  @override
+  String get event1Description => 'The Master Revelation.';
+
+  @override
+  String get event1Location => 'Phnom Penh';
+
+  @override
+  String get event2Title => 'Feng Shui & Astrology 2026';
+
+  @override
+  String get event2Description =>
+      'The Singapore Edition of Feng Shui & Astrology 2026 live event.';
+
+  @override
+  String get event2Location => 'Resorts World Sentosa, Singapore';
+
+  @override
+  String get event3Title => 'Crimson Horse QiMen';
+
+  @override
+  String get event3Description =>
+      'The Art of War In The Year of the Fire Horse';
+
+  @override
+  String get event3Location => 'Resorts World Singapore';
 }

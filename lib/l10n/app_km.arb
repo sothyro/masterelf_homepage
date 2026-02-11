@@ -276,5 +276,28 @@
   "zodiacMonkey": "ស្វ",
   "zodiacRooster": "មាន់",
   "zodiacDog": "ឆ្កែ",
-  "zodiacPig": "ជ្រូក"
+  "zodiacPig": "ជ្រូក",
+  "close": "បិទ",
+  "forecastYearBingWu": "២០២៦ ប៊ីង អ៊ូ ឆ្នាំសេះភ្លើង",
+  "forecastYearSubtitle": "២០២៦៖ ការចាប់ផ្តើមថ្មី និងការផ្លាស់ប្តូរ",
+  "logoPlaceholder": "ឡូហ្គោ {number}",
+  "@logoPlaceholder": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "sampleArticle1": "អត្ថបទគំរូ ១",
+  "sampleArticle2": "អត្ថបទគំរូ ២",
+  "sampleFeature": "អត្ថបទពិសេសគំរូ",
+  "event1Title": "Master Elf - The Rise of Phoenix 2026",
+  "event1Description": "ការបង្ហាញរបស់ Master។",
+  "event1Location": "ភ្នំពេញ",
+  "event2Title": "ហ្វងស៊ី និងហាស្ត្រូឡូហ្គី ២០២៦",
+  "event2Description": "កម្មវិធីផ្ទាល់របស់ហ្វងស៊ី និងហាស្ត្រូឡូហ្គី ២០២៦ នៅសិង្ហបុរី។",
+  "event2Location": "Resorts World Sentosa, Singapore",
+  "event3Title": "Crimson Horse QiMen",
+  "event3Description": "សិល្បៈសង្គ្រាមក្នុងឆ្នាំសេះភ្លើង",
+  "event3Location": "Resorts World Singapore"
 }

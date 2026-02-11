@@ -22,10 +22,10 @@ class MediaPostsPopup extends StatelessWidget {
   static const String _facebookPageUrl = 'https://www.facebook.com/masterelf';
 
   /// Sample media coverage links – replace with real URLs when available.
-  static const List<({String label, String url})> _sampleMediaLinks = [
-    (label: 'Sample article 1', url: 'https://www.masterelf.vip'),
-    (label: 'Sample article 2', url: 'https://www.masterelf.vip'),
-    (label: 'Sample feature', url: 'https://www.masterelf.vip'),
+  static const List<String> _sampleMediaUrls = [
+    'https://www.masterelf.vip',
+    'https://www.masterelf.vip',
+    'https://www.masterelf.vip',
   ];
 
   @override
@@ -66,7 +66,7 @@ class MediaPostsPopup extends StatelessWidget {
                     IconButton(
                       icon: const Icon(LucideIcons.x, size: 22, color: AppColors.onPrimary),
                       onPressed: () => Navigator.of(context).pop(),
-                      tooltip: 'Close',
+                      tooltip: l10n.close,
                     ),
                   ],
                 ),
@@ -111,18 +111,22 @@ class MediaPostsPopup extends StatelessWidget {
                             ),
                       ),
                       const SizedBox(height: 12),
-                      ..._sampleMediaLinks.map(
+                      ...[
+                        (l10n.sampleArticle1, _sampleMediaUrls[0]),
+                        (l10n.sampleArticle2, _sampleMediaUrls[1]),
+                        (l10n.sampleFeature, _sampleMediaUrls[2]),
+                      ].map(
                         (e) => Padding(
                           padding: const EdgeInsets.only(bottom: 8),
                           child: InkWell(
-                            onTap: () => launchUrlExternal(e.url),
+                            onTap: () => launchUrlExternal(e.$2),
                             borderRadius: BorderRadius.circular(4),
                             child: Row(
                               children: [
                                 Icon(LucideIcons.externalLink, size: 16, color: AppColors.accent),
                                 const SizedBox(width: 8),
                                 Text(
-                                  e.label,
+                                  e.$1,
                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                         color: AppColors.accent,
                                         decoration: TextDecoration.underline,
@@ -148,7 +152,7 @@ class MediaPostsPopup extends StatelessWidget {
                       backgroundColor: AppColors.accent,
                       foregroundColor: AppColors.onAccent,
                     ),
-                    child: const Text('Close'),
+                    child: Text(l10n.close),
                   ),
                 ),
               ),

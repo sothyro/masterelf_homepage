@@ -24,8 +24,9 @@ class EventsSection extends StatelessWidget {
     final headlinePrefix = l10n.sectionExperienceHeadingPrefix;
     final headlineHighlight = l10n.sectionExperienceHeadingHighlight;
 
-    final featuredEvent = kAllEvents.isNotEmpty ? kAllEvents.first : null;
-    final otherEvents = kAllEvents.length > 1 ? kAllEvents.sublist(1) : <EventItem>[];
+    final events = getLocalizedEvents(l10n);
+    final featuredEvent = events.isNotEmpty ? events.first : null;
+    final otherEvents = events.length > 1 ? events.sublist(1) : <EventItem>[];
 
     final paddingH = isNarrow ? 16.0 : 24.0;
     return Container(

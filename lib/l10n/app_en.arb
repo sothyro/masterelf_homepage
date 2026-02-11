@@ -153,8 +153,8 @@
   "consult4Desc": "Select your time and date for the best possible outcome.",
   "stickyCtaText": "Free 12 Animal Forecast",
   "popupTitle1": "Master Elf's",
-  "popupTitle2": "12 ANIMALS FORECAST",
-  "popupDescription": "Get Your Personal 2026 Animal Sign Forecast…",
+  "popupTitle2": "12 ZODIACS FORECAST",
+  "popupDescription": "Year of Fire Horse",
   "readFullArticles": "Read Full Articles",
   "popupFormPrompt": "Enter Your Details Below and we'll notify you when your sign premieres.",
   "submit": "Submit",
@@ -276,5 +276,28 @@
   "zodiacMonkey": "Monkey",
   "zodiacRooster": "Rooster",
   "zodiacDog": "Dog",
-  "zodiacPig": "Pig"
+  "zodiacPig": "Pig",
+  "close": "Close",
+  "forecastYearBingWu": "2026 Bing Wu, Year of Fire Horse",
+  "forecastYearSubtitle": "2026: New Beginnings & Transformation",
+  "logoPlaceholder": "Logo {number}",
+  "@logoPlaceholder": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "sampleArticle1": "Sample article 1",
+  "sampleArticle2": "Sample article 2",
+  "sampleFeature": "Sample feature",
+  "event1Title": "Master Elf - The Rise of Phoenix 2026",
+  "event1Description": "The Master Revelation.",
+  "event1Location": "Phnom Penh",
+  "event2Title": "Feng Shui & Astrology 2026",
+  "event2Description": "The Singapore Edition of Feng Shui & Astrology 2026 live event.",
+  "event2Location": "Resorts World Sentosa, Singapore",
+  "event3Title": "Crimson Horse QiMen",
+  "event3Description": "The Art of War In The Year of the Fire Horse",
+  "event3Location": "Resorts World Singapore"
 }

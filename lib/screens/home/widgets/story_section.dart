@@ -34,13 +34,13 @@ class StorySection extends StatelessWidget {
     final headingStyle = GoogleFonts.exo2(
       color: AppColors.onPrimary,
       fontWeight: FontWeight.w700,
-      fontSize: isMobile ? 26 : 34,
+      fontSize: isMobile ? 30 : 40,
       height: 1.25,
     );
     final headingHighlightStyle = GoogleFonts.condiment(
       color: AppColors.accent,
       fontWeight: FontWeight.bold,
-      fontSize: (isMobile ? 32 : 44),
+      fontSize: (isMobile ? 38 : 52),
       height: 1.25,
     );
 
@@ -59,13 +59,13 @@ class StorySection extends StatelessWidget {
 
     // Body: Lora with optional phrase highlights
     final bodyBase = GoogleFonts.exo2(
-      fontSize: isMobile ? 15 : 17,
+      fontSize: isMobile ? 18 : 20,
       height: 1.7,
       color: AppColors.onPrimary.withValues(alpha: 0.92),
       fontWeight: FontWeight.w400,
     );
     final bodyHighlight = GoogleFonts.exo2(
-      fontSize: isMobile ? 15 : 17,
+      fontSize: isMobile ? 18 : 20,
       height: 1.7,
       color: AppColors.accent,
       fontWeight: FontWeight.w600,
@@ -104,93 +104,22 @@ class StorySection extends StatelessWidget {
             foregroundColor: AppColors.onPrimary,
             side: const BorderSide(color: AppColors.accent, width: 1.5),
             padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+            textStyle: GoogleFonts.exo2(fontSize: isMobile ? 17 : 19, fontWeight: FontWeight.w600),
           ),
           child: Text(l10n.sectionStoryCtaButton),
         ),
       ],
     );
 
-    // Story block: text on the left, image on the right; solid section background
-    final storyPadding = isMobile ? const EdgeInsets.fromLTRB(16, 40, 16, 32) : const EdgeInsets.fromLTRB(32, 56, 32, 48);
+    // Story block: text only (no image)
+    final storyPadding = isMobile ? const EdgeInsets.fromLTRB(16, 40, 16, 32) : const EdgeInsets.fromLTRB(32, 168, 32, 168);
 
-    // Portrait image container that blends with the section background
-    const double _portraitAspectRatio = 3 / 4; // vertical portrait
-    final storyImage = Image.asset(
-      AppContent.assetStoryBackground,
-      fit: BoxFit.cover,
-      width: double.infinity,
-      height: double.infinity,
-      errorBuilder: (_, __, ___) => Container(
-        color: AppColors.surfaceElevatedDark,
-        child: const Center(
-          child: Icon(Icons.image_not_supported_outlined, size: 48, color: AppColors.onPrimary),
-        ),
+    final storyBlock = Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 560),
+        child: content,
       ),
     );
-
-    final storyImageContainer = Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: AppColors.borderDark.withValues(alpha: 0.5),
-          width: 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(11),
-        child: storyImage,
-      ),
-    );
-
-    final storyBlock = isMobile
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              content,
-              const SizedBox(height: 32),
-              Align(
-                alignment: Alignment.center,
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 280),
-                  child: AspectRatio(
-                    aspectRatio: _portraitAspectRatio,
-                    child: storyImageContainer,
-                  ),
-                ),
-              ),
-            ],
-          )
-        : Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 5,
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 560),
-                  child: content,
-                ),
-              ),
-              const SizedBox(width: 48),
-              Expanded(
-                flex: 4,
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 320),
-                  child: AspectRatio(
-                    aspectRatio: _portraitAspectRatio,
-                    child: storyImageContainer,
-                  ),
-                ),
-              ),
-            ],
-          );
 
     return Container(
       width: double.infinity,
@@ -198,6 +127,18 @@ class StorySection extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
+          BoxShadow(
+            color: AppColors.accentGlow.withValues(alpha: 0.35),
+            blurRadius: 100,
+            offset: const Offset(-80, 0),
+            spreadRadius: -90,
+          ),
+          BoxShadow(
+            color: AppColors.accentGlow.withValues(alpha: 0.35),
+            blurRadius: 100,
+            offset: const Offset(80, 0),
+            spreadRadius: -90,
+          ),
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.4),
             blurRadius: 24,
@@ -217,9 +158,9 @@ class StorySection extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFF1A1810),   // dark with theme-gold undertone
-            Color(0xFF141208),   // mid dark gold-tinted
-            Color(0xFF0E0C06),   // deep gold-black
+            Color(0xFF1C1C1E),
+            Color(0xFF141416),
+            Color(0xFF0C0C0E),
           ],
           stops: [0.0, 0.5, 1.0],
         ),
@@ -227,17 +168,30 @@ class StorySection extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: Stack(
-        children: [
-          Positioned.fill(
-            child: RepaintBoundary(
-              child: CustomPaint(
-                painter: _ChineseTilePainter(),
+          children: [
+            Positioned.fill(
+              child: RepaintBoundary(
+                child: CustomPaint(
+                  painter: _ChineseTilePainter(),
+                ),
               ),
             ),
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
+            Positioned(
+              right: 0,
+              bottom: 0,
+              width: isMobile ? 380 : 800,
+              height: isMobile ? 440 : 850,
+              child: Opacity(
+                opacity: 0.77,
+                child: Image.asset(
+                  AppContent.assetStoryBackground,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
               Padding(
                 padding: storyPadding,
                 child: Center(
@@ -267,7 +221,7 @@ class StorySection extends StatelessWidget {
                       Text(
                         l10n.featuredIn,
                         style: GoogleFonts.condiment(
-                          fontSize: 44,
+                          fontSize: 52,
                           fontWeight: FontWeight.bold,
                           color: AppColors.accent,
                           height: 1.2,
@@ -295,10 +249,10 @@ class StorySection extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                'Logo ${i + 1}',
+                                l10n.logoPlaceholder(i + 1),
                                 style: textTheme.bodySmall?.copyWith(
                                   color: AppColors.onPrimary.withValues(alpha: 0.5),
-                                  fontSize: 11,
+                                  fontSize: 13,
                                 ),
                               ),
                             ),
@@ -311,10 +265,10 @@ class StorySection extends StatelessWidget {
               ),
             ),
           ),
-            ],
-          ),
-        ],
-      ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -358,8 +312,8 @@ class _ChineseTilePainter extends CustomPainter {
 
   /// Size of one 回纹 (key/fret) pattern unit.
   static const double _unitSize = 36.0;
-  static const double _lineOpacity = 0.06;
-  static const double _accentOpacity = 0.035;
+  static const double _lineOpacity = 0.032;
+  static const double _accentOpacity = 0.018;
 
   @override
   void paint(Canvas canvas, Size size) {

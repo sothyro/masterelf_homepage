@@ -839,4 +839,54 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get zodiacPig => '猪';
+
+  @override
+  String get close => '关闭';
+
+  @override
+  String get forecastYearBingWu => '2026 丙午，火馬年';
+
+  @override
+  String get forecastYearSubtitle => '2026：新開端與蛻變';
+
+  @override
+  String logoPlaceholder(int number) {
+    return '標誌 $number';
+  }
+
+  @override
+  String get sampleArticle1 => '示例文章 1';
+
+  @override
+  String get sampleArticle2 => '示例文章 2';
+
+  @override
+  String get sampleFeature => '示例專題';
+
+  @override
+  String get event1Title => 'Master Elf - The Rise of Phoenix 2026';
+
+  @override
+  String get event1Description => '師父開示。';
+
+  @override
+  String get event1Location => '金邊';
+
+  @override
+  String get event2Title => '風水與占星 2026';
+
+  @override
+  String get event2Description => '新加坡版風水與占星 2026 現場活動。';
+
+  @override
+  String get event2Location => 'Resorts World Sentosa, Singapore';
+
+  @override
+  String get event3Title => '赤馬奇門';
+
+  @override
+  String get event3Description => '火馬年之兵法藝術';
+
+  @override
+  String get event3Location => 'Resorts World Singapore';
 }

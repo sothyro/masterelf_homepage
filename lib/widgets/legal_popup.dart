@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../l10n/app_localizations.dart';
 import '../screens/legal/legal_content.dart';
 import '../theme/app_theme.dart';
 import 'glass_container.dart';
@@ -21,8 +22,9 @@ class LegalPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = LegalContent.title(page);
-    final body = LegalContent.body(page);
+    final l10n = AppLocalizations.of(context)!;
+    final title = LegalContent.title(context, page);
+    final body = LegalContent.body(context, page);
 
     return Dialog(
       backgroundColor: Colors.transparent,
@@ -58,7 +60,7 @@ class LegalPopup extends StatelessWidget {
                     IconButton(
                       icon: const Icon(LucideIcons.x, size: 22, color: AppColors.onPrimary),
                       onPressed: () => Navigator.of(context).pop(),
-                      tooltip: 'Close',
+                      tooltip: l10n.close,
                     ),
                   ],
                 ),
@@ -82,7 +84,7 @@ class LegalPopup extends StatelessWidget {
                   width: double.infinity,
                   child: FilledButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Close'),
+                    child: Text(l10n.close),
                   ),
                 ),
               ),

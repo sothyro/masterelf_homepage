@@ -21,9 +21,11 @@ class _EventsScreenState extends State<EventsScreen> {
   String _searchQuery = '';
 
   List<EventItem> get _filteredEvents {
-    if (_searchQuery.trim().isEmpty) return kAllEvents;
+    final l10n = AppLocalizations.of(context)!;
+    final events = getLocalizedEvents(l10n);
+    if (_searchQuery.trim().isEmpty) return events;
     final q = _searchQuery.trim().toLowerCase();
-    return kAllEvents.where((e) {
+    return events.where((e) {
       return e.title.toLowerCase().contains(q) ||
           e.date.toLowerCase().contains(q) ||
           e.location.toLowerCase().contains(q) ||
@@ -490,7 +492,7 @@ class _EventRegistrationDialogState extends State<_EventRegistrationDialog> {
                     IconButton(
                       icon: const Icon(LucideIcons.x, size: 22, color: AppColors.onPrimary),
                       onPressed: () => Navigator.of(context).pop(),
-                      tooltip: 'Close',
+                      tooltip: l10n.close,
                     ),
                   ],
                 ),
@@ -530,7 +532,7 @@ class _EventRegistrationDialogState extends State<_EventRegistrationDialog> {
                             foregroundColor: AppColors.onAccent,
                             padding: const EdgeInsets.symmetric(vertical: 14),
                           ),
-                          child: const Text('Close'),
+                          child: Text(l10n.close),
                         ),
                       ),
                     ],

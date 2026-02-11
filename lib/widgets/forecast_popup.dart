@@ -957,7 +957,7 @@ class _DetailedZodiacContent extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    '2026 Bing Wu, Year of Fire Horse',
+                    l10n.forecastYearBingWu,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: AppColors.accentLight,
@@ -981,7 +981,7 @@ class _DetailedZodiacContent extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    '2026: New Beginnings & Transformation',
+                    l10n.forecastYearSubtitle,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: const Color(0xFFE57373),
@@ -992,6 +992,29 @@ class _DetailedZodiacContent extends StatelessWidget {
                 ),
               ),
           ],
+        ),
+        const SizedBox(height: 20),
+        Container(
+          height: 24,
+          alignment: Alignment.center,
+          child: Container(
+            height: 1,
+            margin: const EdgeInsets.symmetric(horizontal: 32),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Colors.transparent,
+                  AppColors.accent.withValues(alpha: 0.2),
+                  AppColors.accent.withValues(alpha: 0.6),
+                  AppColors.accent.withValues(alpha: 0.2),
+                  Colors.transparent,
+                ],
+                stops: const [0.0, 0.3, 0.5, 0.7, 1.0],
+              ),
+            ),
+          ),
         ),
         const SizedBox(height: 16),
         // Auspicious & Inauspicious sections

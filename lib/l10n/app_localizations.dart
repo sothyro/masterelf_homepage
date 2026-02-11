@@ -985,13 +985,13 @@ abstract class AppLocalizations {
   /// No description provided for @popupTitle2.
   ///
   /// In en, this message translates to:
-  /// **'12 ANIMALS FORECAST'**
+  /// **'12 ZODIACS FORECAST'**
   String get popupTitle2;
 
   /// No description provided for @popupDescription.
   ///
   /// In en, this message translates to:
-  /// **'Get Your Personal 2026 Animal Sign Forecast…'**
+  /// **'Year of Fire Horse'**
   String get popupDescription;
 
   /// No description provided for @readFullArticles.
@@ -1725,6 +1725,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pig'**
   String get zodiacPig;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @forecastYearBingWu.
+  ///
+  /// In en, this message translates to:
+  /// **'2026 Bing Wu, Year of Fire Horse'**
+  String get forecastYearBingWu;
+
+  /// No description provided for @forecastYearSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'2026: New Beginnings & Transformation'**
+  String get forecastYearSubtitle;
+
+  /// No description provided for @logoPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Logo {number}'**
+  String logoPlaceholder(int number);
+
+  /// No description provided for @sampleArticle1.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample article 1'**
+  String get sampleArticle1;
+
+  /// No description provided for @sampleArticle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample article 2'**
+  String get sampleArticle2;
+
+  /// No description provided for @sampleFeature.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample feature'**
+  String get sampleFeature;
+
+  /// No description provided for @event1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf - The Rise of Phoenix 2026'**
+  String get event1Title;
+
+  /// No description provided for @event1Description.
+  ///
+  /// In en, this message translates to:
+  /// **'The Master Revelation.'**
+  String get event1Description;
+
+  /// No description provided for @event1Location.
+  ///
+  /// In en, this message translates to:
+  /// **'Phnom Penh'**
+  String get event1Location;
+
+  /// No description provided for @event2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Feng Shui & Astrology 2026'**
+  String get event2Title;
+
+  /// No description provided for @event2Description.
+  ///
+  /// In en, this message translates to:
+  /// **'The Singapore Edition of Feng Shui & Astrology 2026 live event.'**
+  String get event2Description;
+
+  /// No description provided for @event2Location.
+  ///
+  /// In en, this message translates to:
+  /// **'Resorts World Sentosa, Singapore'**
+  String get event2Location;
+
+  /// No description provided for @event3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Crimson Horse QiMen'**
+  String get event3Title;
+
+  /// No description provided for @event3Description.
+  ///
+  /// In en, this message translates to:
+  /// **'The Art of War In The Year of the Fire Horse'**
+  String get event3Description;
+
+  /// No description provided for @event3Location.
+  ///
+  /// In en, this message translates to:
+  /// **'Resorts World Singapore'**
+  String get event3Location;
 }
 
 class _AppLocalizationsDelegate
