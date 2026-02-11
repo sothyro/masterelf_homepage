@@ -671,7 +671,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get smsPoweredByPlasGate => '短信确认通过 PlasGate 发送。';
 
   @override
-  String get sessionDurationNote => '每次咨询为 2 小时，场次间隔 30 分钟。';
+  String get sessionDurationNote => '每次咨询为 2 小时，场次间隔 1 小时。';
+
+  @override
+  String get sessionType => '預約類型';
+
+  @override
+  String get sessionTypeOnline => '線上';
+
+  @override
+  String get sessionTypeVisit => '到訪';
 
   @override
   String get bookAnother => '再预约一次';
@@ -889,4 +898,130 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get event3Location => 'Resorts World Singapore';
+
+  @override
+  String get loginSectionTitle => '員工/管理員登入';
+
+  @override
+  String get loginSectionIntro => '登入以存取預約儀表板並管理預約。';
+
+  @override
+  String get loginEmail => '電子郵件';
+
+  @override
+  String get loginPassword => '密碼';
+
+  @override
+  String get loginButton => '登入';
+
+  @override
+  String get logoutButton => '登出';
+
+  @override
+  String get goToDashboard => '前往儀表板';
+
+  @override
+  String get welcomeBack => '歡迎回來';
+
+  @override
+  String get dashboardTitle => '預約儀表板';
+
+  @override
+  String get dashboardSubtitle => '檢視並管理所有預約';
+
+  @override
+  String get dashboardStatsTotal => '總計';
+
+  @override
+  String get dashboardStatsPending => '待確認';
+
+  @override
+  String get dashboardStatsConfirmed => '已確認';
+
+  @override
+  String get dashboardStatsCancelled => '已取消';
+
+  @override
+  String get filterByStatus => '按狀態篩選';
+
+  @override
+  String get statusColumn => '狀態';
+
+  @override
+  String get filterAll => '全部';
+
+  @override
+  String get refresh => '重新整理';
+
+  @override
+  String get appointmentName => '姓名';
+
+  @override
+  String get appointmentPhone => '電話';
+
+  @override
+  String get confirmAppointment => '確認';
+
+  @override
+  String get reschedule => '改期';
+
+  @override
+  String get noAppointments => '未找到預約。';
+
+  @override
+  String get loadingAppointments => '正在載入預約…';
+
+  @override
+  String get errorLoadingAppointments => '載入預約失敗。';
+
+  @override
+  String get statusUpdated => '狀態已更新。';
+
+  @override
+  String get errorUpdatingStatus => '更新狀態失敗。';
+
+  @override
+  String get loginError => '電子郵件或密碼錯誤。';
+
+  @override
+  String get loginRequired => '請登入以存取儀表板。';
+
+  @override
+  String get calendarView => '日曆';
+
+  @override
+  String get listView => '列表';
+
+  @override
+  String get createBooking => '建立預約';
+
+  @override
+  String get createBookingFor => '為客戶建立預約';
+
+  @override
+  String get selectDateAndTime => '選擇日期與時間';
+
+  @override
+  String get bookingCreated => '預約建立成功。';
+
+  @override
+  String get errorCreatingBooking => '建立預約失敗。';
+
+  @override
+  String get today => '今天';
+
+  @override
+  String get availableSlots => '可用時段';
+
+  @override
+  String get addBooking => '新增預約';
+
+  @override
+  String get pleaseEnterNameAndPhone => '請輸入姓名和電話。';
+
+  @override
+  String get note => '備註';
+
+  @override
+  String get noteHint => '可選的預約備註…';
 }

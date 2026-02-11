@@ -711,7 +711,16 @@ class AppLocalizationsKm extends AppLocalizations {
   String get smsPoweredByPlasGate => 'ការបញ្ជាក់ SMS ផ្ញើតាម PlasGate។';
 
   @override
-  String get sessionDurationNote => 'ជាវគ្គ ២ ម៉ោង ចន្លោះ ៣០ នាទី។';
+  String get sessionDurationNote => 'ជាវគ្គ ២ ម៉ោង ចន្លោះ ១ ម៉ោង។';
+
+  @override
+  String get sessionType => 'ប្រភេទសម័យ';
+
+  @override
+  String get sessionTypeOnline => 'អនឡាញ';
+
+  @override
+  String get sessionTypeVisit => 'មកលេចធ្លោ';
 
   @override
   String get bookAnother => 'កក់មួយទៀត';
@@ -939,4 +948,131 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get event3Location => 'Resorts World Singapore';
+
+  @override
+  String get loginSectionTitle => 'ការចូលប្រើប្រាស់បុគ្គលិក / រដ្ឋាភិបាល';
+
+  @override
+  String get loginSectionIntro =>
+      'ចូលដើម្បីចូលប្រើផ្ទាំងគ្រប់គ្រងការណាត់ជួប និងគ្រប់គ្រងការកក់។';
+
+  @override
+  String get loginEmail => 'អ៉ីមែល';
+
+  @override
+  String get loginPassword => 'លេខសម្ងាត់';
+
+  @override
+  String get loginButton => 'ចូល';
+
+  @override
+  String get logoutButton => 'ចាកចេញ';
+
+  @override
+  String get goToDashboard => 'ទៅផ្ទាំងគ្រប់គ្រង';
+
+  @override
+  String get welcomeBack => 'សូមស្វាគមន៍មកវិញ';
+
+  @override
+  String get dashboardTitle => 'ផ្ទាំងគ្រប់គ្រងការណាត់ជួប';
+
+  @override
+  String get dashboardSubtitle => 'មើល និងគ្រប់គ្រងការកក់ទាំងអស់';
+
+  @override
+  String get dashboardStatsTotal => 'សរុប';
+
+  @override
+  String get dashboardStatsPending => 'រង់ចាំ';
+
+  @override
+  String get dashboardStatsConfirmed => 'បានបញ្ជាក់';
+
+  @override
+  String get dashboardStatsCancelled => 'បានបោះបង់';
+
+  @override
+  String get filterByStatus => 'ច្រោះតាមស្ថានភាព';
+
+  @override
+  String get statusColumn => 'ស្ថានភាព';
+
+  @override
+  String get filterAll => 'ទាំងអស់';
+
+  @override
+  String get refresh => 'ធ្វើឱ្យស្រស់';
+
+  @override
+  String get appointmentName => 'ឈ្មោះ';
+
+  @override
+  String get appointmentPhone => 'ទូរស័ព្ទ';
+
+  @override
+  String get confirmAppointment => 'បញ្ជាក់';
+
+  @override
+  String get reschedule => 'កំណត់ពេលវេលាឡើងវិញ';
+
+  @override
+  String get noAppointments => 'រកមិនឃើញការណាត់ជួបទេ។';
+
+  @override
+  String get loadingAppointments => 'កំពុងផ្ទុកការណាត់ជួប…';
+
+  @override
+  String get errorLoadingAppointments => 'ផ្ទុកការណាត់ជួបមិនបាន។';
+
+  @override
+  String get statusUpdated => 'បានធ្វើបច្ចុប្បន្នភាពស្ថានភាព។';
+
+  @override
+  String get errorUpdatingStatus => 'ធ្វើបច្ចុប្បន្នភាពស្ថានភាពមិនបាន។';
+
+  @override
+  String get loginError => 'អ៉ីមែល ឬលេខសម្ងាត់មិនត្រឹមត្រូវ។';
+
+  @override
+  String get loginRequired => 'សូមចូលដើម្បីចូលប្រើផ្ទាំងគ្រប់គ្រង។';
+
+  @override
+  String get calendarView => 'ប្រតិទិន';
+
+  @override
+  String get listView => 'បញ្ជី';
+
+  @override
+  String get createBooking => 'បង្កើតការកក់';
+
+  @override
+  String get createBookingFor => 'បង្កើតការកក់ជូនអតិថិជន';
+
+  @override
+  String get selectDateAndTime => 'ជ្រើសរើសកាលបរិច្ឆេទ និងពេលវេលា';
+
+  @override
+  String get bookingCreated => 'ការកក់បានបង្កើតដោយជោគជ័យ។';
+
+  @override
+  String get errorCreatingBooking => 'បង្កើតការកក់មិនបាន។';
+
+  @override
+  String get today => 'ថ្ងៃនេះ';
+
+  @override
+  String get availableSlots => 'ពេលវេលាដែលប្រើបាន';
+
+  @override
+  String get addBooking => 'បន្ថែមការកក់';
+
+  @override
+  String get pleaseEnterNameAndPhone => 'សូមបញ្ចូលឈ្មោះ និងទូរស័ព្ទ។';
+
+  @override
+  String get note => 'កំណត់សម្គាល់';
+
+  @override
+  String get noteHint => 'កំណត់សម្គាល់ជម្រើសអំពីការកក់នេះ…';
 }

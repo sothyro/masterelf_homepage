@@ -715,7 +715,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sessionDurationNote =>
-      'Each session is 2 hours with a 30-minute break between sessions.';
+      'Each session is 2 hours with a 1-hour break between sessions.';
+
+  @override
+  String get sessionType => 'Session type';
+
+  @override
+  String get sessionTypeOnline => 'Online';
+
+  @override
+  String get sessionTypeVisit => 'Visit';
 
   @override
   String get bookAnother => 'Book another';
@@ -944,4 +953,131 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get event3Location => 'Resorts World Singapore';
+
+  @override
+  String get loginSectionTitle => 'Staff / Admin Login';
+
+  @override
+  String get loginSectionIntro =>
+      'Log in to access the appointment dashboard and manage bookings.';
+
+  @override
+  String get loginEmail => 'Email';
+
+  @override
+  String get loginPassword => 'Password';
+
+  @override
+  String get loginButton => 'Log in';
+
+  @override
+  String get logoutButton => 'Log out';
+
+  @override
+  String get goToDashboard => 'Go to Dashboard';
+
+  @override
+  String get welcomeBack => 'Welcome back';
+
+  @override
+  String get dashboardTitle => 'Appointment Dashboard';
+
+  @override
+  String get dashboardSubtitle => 'View and manage all bookings';
+
+  @override
+  String get dashboardStatsTotal => 'Total';
+
+  @override
+  String get dashboardStatsPending => 'Pending';
+
+  @override
+  String get dashboardStatsConfirmed => 'Confirmed';
+
+  @override
+  String get dashboardStatsCancelled => 'Cancelled';
+
+  @override
+  String get filterByStatus => 'Filter by status';
+
+  @override
+  String get statusColumn => 'Status';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get appointmentName => 'Name';
+
+  @override
+  String get appointmentPhone => 'Phone';
+
+  @override
+  String get confirmAppointment => 'Confirm';
+
+  @override
+  String get reschedule => 'Reschedule';
+
+  @override
+  String get noAppointments => 'No appointments found.';
+
+  @override
+  String get loadingAppointments => 'Loading appointments…';
+
+  @override
+  String get errorLoadingAppointments => 'Failed to load appointments.';
+
+  @override
+  String get statusUpdated => 'Status updated.';
+
+  @override
+  String get errorUpdatingStatus => 'Failed to update status.';
+
+  @override
+  String get loginError => 'Invalid email or password.';
+
+  @override
+  String get loginRequired => 'Please log in to access the dashboard.';
+
+  @override
+  String get calendarView => 'Calendar';
+
+  @override
+  String get listView => 'List';
+
+  @override
+  String get createBooking => 'Create booking';
+
+  @override
+  String get createBookingFor => 'Create booking for client';
+
+  @override
+  String get selectDateAndTime => 'Select date & time';
+
+  @override
+  String get bookingCreated => 'Booking created successfully.';
+
+  @override
+  String get errorCreatingBooking => 'Failed to create booking.';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get availableSlots => 'Available slots';
+
+  @override
+  String get addBooking => 'Add booking';
+
+  @override
+  String get pleaseEnterNameAndPhone => 'Please enter name and phone.';
+
+  @override
+  String get note => 'Note';
+
+  @override
+  String get noteHint => 'Optional notes about this booking…';
 }

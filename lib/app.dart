@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'l10n/app_localizations.dart';
 import 'theme/app_theme.dart';
 import 'providers/locale_provider.dart';
+import 'providers/auth_provider.dart';
 import 'router/app_router.dart';
 
 class MasterElfApp extends StatefulWidget {
@@ -19,12 +20,17 @@ class _MasterElfAppState extends State<MasterElfApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => LocaleNotifier(),
-      child: Consumer<LocaleNotifier>(
-        builder: (context, localeNotifier, _) {
-          // Create router once so navigation state is preserved on locale change.
-          _router ??= createAppRouter(refreshListenable: localeNotifier);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocaleNotifier()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: Consumer2<LocaleNotifier, AuthProvider>(
+        builder: (context, localeNotifier, authProvider, _) {
+          // Create router once; refresh on locale or auth change.
+          _router ??= createAppRouter(
+            refreshListenable: Listenable.merge([localeNotifier, authProvider]),
+          );
           final theme = _themeForLocale(localeNotifier.locale.languageCode);
           return MaterialApp.router(
             title: 'Master Elf Feng Shui',

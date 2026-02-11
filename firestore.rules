@@ -22,7 +22,9 @@ service cloud.firestore {
                    && request.resource.data.breakAfterMinutes <= 120
                    && request.resource.data.bookingReference is string
                    && request.resource.data.bookingReference.size() >= 4
-                   && request.resource.data.bookingReference.size() <= 20;
+                   && request.resource.data.bookingReference.size() <= 20
+                   && (!('sessionType' in request.resource.data) || request.resource.data.sessionType in ['ONLINE', 'VISIT'])
+                   && (!('notes' in request.resource.data) || (request.resource.data.notes is string && request.resource.data.notes.size() <= 2000));
       allow read, update, delete: if false;
     }
   }

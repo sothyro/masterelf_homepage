@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:provider/provider.dart';
 
 import '../../config/app_content.dart';
 import '../../l10n/app_localizations.dart';
-import '../../models/appointment.dart';
+import '../../models/appointment.dart' show AppointmentRecord, defaultSessionDurationMinutes, sessionTypeOnline, sessionTypeVisit;
+import '../../providers/auth_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
 import '../../widgets/breadcrumb.dart';
@@ -46,6 +48,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   final _phoneController = TextEditingController();
   final _nameFocus = FocusNode();
   final _phoneFocus = FocusNode();
+  String _selectedSessionType = sessionTypeVisit;
 
   bool _isSubmitting = false;
   String? _submitError;
@@ -122,6 +125,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       _availableSlots = [];
       _nameController.clear();
       _phoneController.clear();
+      _selectedSessionType = sessionTypeVisit;
       _submitError = null;
       _lastBookingReference = null;
     });
@@ -155,6 +159,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       serviceName: '${opt.category} (${opt.method})',
       date: dateStr,
       time: timeStr,
+      sessionType: _selectedSessionType,
       durationMinutes: defaultSessionDurationMinutes,
     );
 
@@ -298,12 +303,12 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                   _cancellingId = null;
                 });
               } catch (e) {
-                if (!mounted) return;
                 setState(() => _cancellingId = null);
                 messenger?.showSnackBar(SnackBar(content: Text(e.toString())));
               }
             },
           ),
+          _LoginSection(),
           _SmartMoveSection(),
         ],
       ),
@@ -656,6 +661,30 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
             style: const TextStyle(color: AppColors.onPrimary),
             onChanged: (_) => setState(() {}),
           ),
+          const SizedBox(height: 20),
+          Text(
+            l10n.sessionType,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(color: AppColors.onSurfaceVariantDark),
+          ),
+          const SizedBox(height: 8),
+          SegmentedButton<String>(
+            segments: [
+              ButtonSegment(value: sessionTypeVisit, label: Text(l10n.sessionTypeVisit), icon: const Icon(LucideIcons.mapPin, size: 18)),
+              ButtonSegment(value: sessionTypeOnline, label: Text(l10n.sessionTypeOnline), icon: const Icon(LucideIcons.video, size: 18)),
+            ],
+            selected: {_selectedSessionType},
+            onSelectionChanged: (s) => setState(() => _selectedSessionType = s.first),
+            style: ButtonStyle(
+              foregroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected)) return AppColors.onAccent;
+                return AppColors.onPrimary;
+              }),
+              backgroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected)) return AppColors.accent;
+                return AppColors.surfaceElevatedDark;
+              }),
+            ),
+          ),
           const SizedBox(height: 24),
           Row(
             children: [
@@ -709,6 +738,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
           _ConfirmRow(label: l10n.yourName, value: name.isNotEmpty ? name : '—'),
           const SizedBox(height: 12),
           _ConfirmRow(label: l10n.yourPhone, value: phone.isNotEmpty ? phone : '—'),
+          const SizedBox(height: 12),
+          _ConfirmRow(label: l10n.sessionType, value: _selectedSessionType == sessionTypeOnline ? l10n.sessionTypeOnline : l10n.sessionTypeVisit),
           if (_submitError != null) ...[
             const SizedBox(height: 16),
             Container(
@@ -920,6 +951,220 @@ class _ConfirmRow extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Login section for staff/admin, below the search for booking.
+class _LoginSection extends StatefulWidget {
+  @override
+  State<_LoginSection> createState() => _LoginSectionState();
+}
+
+class _LoginSectionState extends State<_LoginSection> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _loading = false;
+  String? _error;
+  bool _obscurePassword = true;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _signIn(AuthProvider auth) async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+    if (email.isEmpty || password.isEmpty) return;
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    try {
+      await auth.signIn(email, password);
+      if (!mounted) return;
+      setState(() {
+        _loading = false;
+        _error = null;
+      });
+      context.go('/appointments/dashboard');
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _loading = false;
+        _error = AppLocalizations.of(context)!.loginError;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final auth = context.watch<AuthProvider>();
+    final width = MediaQuery.sizeOf(context).width;
+    final isNarrow = width < 800;
+
+    return Container(
+      width: double.infinity,
+      color: AppColors.surfaceElevatedDark.withValues(alpha: 0.6),
+      padding: EdgeInsets.symmetric(
+        vertical: 48,
+        horizontal: isNarrow ? 16 : 24,
+      ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 560),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (auth.isLoggedIn) ...[
+                Row(
+                  children: [
+                    Icon(LucideIcons.userCheck, color: AppColors.accent, size: 28),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.welcomeBack,
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  color: AppColors.onPrimary,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          Text(
+                            auth.userEmail ?? '',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: AppColors.onSurfaceVariantDark,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        FilledButton.icon(
+                          onPressed: () => context.go('/appointments/dashboard'),
+                          icon: const Icon(LucideIcons.layoutDashboard, size: 18),
+                          label: Text(l10n.goToDashboard),
+                          style: FilledButton.styleFrom(
+                            backgroundColor: AppColors.accent,
+                            foregroundColor: AppColors.onAccent,
+                          ),
+                        ),
+                        OutlinedButton.icon(
+                          onPressed: auth.signOut,
+                          icon: const Icon(LucideIcons.logOut, size: 18),
+                          label: Text(l10n.logoutButton),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.onPrimary,
+                            side: const BorderSide(color: AppColors.borderLight),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ] else ...[
+                Text(
+                  l10n.loginSectionTitle,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: AppColors.onPrimary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  l10n.loginSectionIntro,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.onSurfaceVariantDark,
+                        height: 1.4,
+                      ),
+                ),
+                const SizedBox(height: 20),
+                TextField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    hintText: l10n.loginEmail,
+                    prefixIcon: const Icon(LucideIcons.mail, size: 20, color: AppColors.accent),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: AppColors.borderDark),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: AppColors.borderLight, width: 2),
+                    ),
+                    filled: true,
+                    fillColor: AppColors.backgroundDark,
+                  ),
+                  style: const TextStyle(color: AppColors.onPrimary),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _passwordController,
+                  obscureText: _obscurePassword,
+                  decoration: InputDecoration(
+                    hintText: l10n.loginPassword,
+                    prefixIcon: const Icon(LucideIcons.lock, size: 20, color: AppColors.accent),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword ? LucideIcons.eye : LucideIcons.eyeOff,
+                        size: 20,
+                        color: AppColors.onSurfaceVariantDark,
+                      ),
+                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                    ),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: AppColors.borderDark),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: AppColors.borderLight, width: 2),
+                    ),
+                    filled: true,
+                    fillColor: AppColors.backgroundDark,
+                  ),
+                  style: const TextStyle(color: AppColors.onPrimary),
+                ),
+                if (_error != null) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    _error!,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.error),
+                  ),
+                ],
+                const SizedBox(height: 20),
+                FilledButton(
+                  onPressed: _loading ? null : () => _signIn(auth),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.accent,
+                    foregroundColor: AppColors.onAccent,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  child: _loading
+                      ? const SizedBox(
+                          width: 22,
+                          height: 22,
+                          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.onAccent),
+                        )
+                      : Text(l10n.loginButton),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

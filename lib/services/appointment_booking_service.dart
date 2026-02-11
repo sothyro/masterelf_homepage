@@ -60,6 +60,8 @@ Future<BookingResult> submitAppointmentBooking({
   required String serviceName,
   required String date,
   required String time,
+  String sessionType = 'VISIT',
+  String? notes,
   int durationMinutes = defaultSessionDurationMinutes,
 }) async {
   final normalizedPhone = normalizePhone(phone);
@@ -73,13 +75,14 @@ Future<BookingResult> submitAppointmentBooking({
       final ref = firestore.collection('appointments').doc();
       final startTimestamp = startTime != null ? Timestamp.fromDate(startTime) : null;
       final endTimestamp = endTime != null ? Timestamp.fromDate(endTime) : null;
-      await ref.set({
+      final data = <String, dynamic>{
         'name': name.trim(),
         'phone': normalizedPhone,
         'serviceId': serviceId,
         'serviceName': serviceName,
         'date': date,
         'time': time,
+        'sessionType': sessionType,
         'startTime': startTimestamp,
         'endTime': endTimestamp,
         'durationMinutes': durationMinutes,
@@ -87,7 +90,11 @@ Future<BookingResult> submitAppointmentBooking({
         'status': 'pending',
         'bookingReference': bookingRef,
         'createdAt': FieldValue.serverTimestamp(),
-      });
+      };
+      if (notes != null && notes.trim().isNotEmpty) {
+        data['notes'] = notes.trim();
+      }
+      await ref.set(data);
       return BookingResult(
         success: true,
         bookingReference: bookingRef,
@@ -171,8 +178,8 @@ Future<List<String>> getAvailableSlots(String date) async {
       // Fallback to default slots on error
     }
   }
-  // Default slots: 2h session, 30min break
-  return ['09:00', '11:30', '14:00'];
+  // Default slots: 2h session, 1h break, 09:00–21:00 (21:00 special: 1h or 2h to 23:00)
+  return ['09:00', '12:00', '15:00', '18:00', '21:00'];
 }
 
 /// Fetches bookings for the given phone number (via callable).
@@ -205,5 +212,44 @@ Future<void> cancelBooking(String appointmentId, String phone) async {
   await FirebaseFunctions.instance.httpsCallable('cancelBooking').call({
     'appointmentId': appointmentId,
     'phone': phone,
+  });
+}
+
+/// Fetches all appointments for admin dashboard (requires authenticated user).
+Future<List<AdminAppointmentRecord>> getAllAppointments({
+  String? statusFilter,
+  int limit = 100,
+}) async {
+  if (!isFirebaseEnabled) return [];
+  try {
+    final result = await FirebaseFunctions.instance
+        .httpsCallable('getAllAppointments')
+        .call({
+      if (statusFilter != null && statusFilter.isNotEmpty) 'status': statusFilter,
+      'limit': limit,
+    });
+    final data = result.data as Map<String, dynamic>?;
+    final list = data?['appointments'] as List<dynamic>?;
+    if (list == null) return [];
+    return list
+        .asMap()
+        .entries
+        .map((e) {
+          final m = e.value as Map<String, dynamic>;
+          final id = m['id'] as String? ?? '${e.key}';
+          return AdminAppointmentRecord.fromMap(id, m);
+        })
+        .toList();
+  } catch (e) {
+    rethrow;
+  }
+}
+
+/// Updates appointment status (admin only, requires authenticated user).
+Future<void> updateAppointmentStatus(String appointmentId, String status) async {
+  if (!isFirebaseEnabled) throw StateError('Firebase not configured');
+  await FirebaseFunctions.instance.httpsCallable('updateAppointmentStatus').call({
+    'appointmentId': appointmentId,
+    'status': status,
   });
 }

@@ -10,9 +10,8 @@ import 'utils/hero_video_preloader.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Initialize Firebase in parallel so the loading screen appears immediately.
-  // Booking/Firestore are used only after user navigates; init will usually be done by then.
-  unawaited(_initFirebase());
+  // Initialize Firebase before app starts so AuthProvider and other Firebase services work.
+  await _initFirebase();
   runApp(const HeroVideoBootstrap());
 }
 

@@ -1393,8 +1393,26 @@ abstract class AppLocalizations {
   /// No description provided for @sessionDurationNote.
   ///
   /// In en, this message translates to:
-  /// **'Each session is 2 hours with a 30-minute break between sessions.'**
+  /// **'Each session is 2 hours with a 1-hour break between sessions.'**
   String get sessionDurationNote;
+
+  /// No description provided for @sessionType.
+  ///
+  /// In en, this message translates to:
+  /// **'Session type'**
+  String get sessionType;
+
+  /// No description provided for @sessionTypeOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get sessionTypeOnline;
+
+  /// No description provided for @sessionTypeVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit'**
+  String get sessionTypeVisit;
 
   /// No description provided for @bookAnother.
   ///
@@ -1821,6 +1839,258 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Resorts World Singapore'**
   String get event3Location;
+
+  /// No description provided for @loginSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff / Admin Login'**
+  String get loginSectionTitle;
+
+  /// No description provided for @loginSectionIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Log in to access the appointment dashboard and manage bookings.'**
+  String get loginSectionIntro;
+
+  /// No description provided for @loginEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get loginEmail;
+
+  /// No description provided for @loginPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get loginPassword;
+
+  /// No description provided for @loginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Log in'**
+  String get loginButton;
+
+  /// No description provided for @logoutButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get logoutButton;
+
+  /// No description provided for @goToDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Dashboard'**
+  String get goToDashboard;
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get welcomeBack;
+
+  /// No description provided for @dashboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment Dashboard'**
+  String get dashboardTitle;
+
+  /// No description provided for @dashboardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View and manage all bookings'**
+  String get dashboardSubtitle;
+
+  /// No description provided for @dashboardStatsTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get dashboardStatsTotal;
+
+  /// No description provided for @dashboardStatsPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get dashboardStatsPending;
+
+  /// No description provided for @dashboardStatsConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get dashboardStatsConfirmed;
+
+  /// No description provided for @dashboardStatsCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get dashboardStatsCancelled;
+
+  /// No description provided for @filterByStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by status'**
+  String get filterByStatus;
+
+  /// No description provided for @statusColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get statusColumn;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
+  /// No description provided for @appointmentName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get appointmentName;
+
+  /// No description provided for @appointmentPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get appointmentPhone;
+
+  /// No description provided for @confirmAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirmAppointment;
+
+  /// No description provided for @reschedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Reschedule'**
+  String get reschedule;
+
+  /// No description provided for @noAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'No appointments found.'**
+  String get noAppointments;
+
+  /// No description provided for @loadingAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading appointments…'**
+  String get loadingAppointments;
+
+  /// No description provided for @errorLoadingAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load appointments.'**
+  String get errorLoadingAppointments;
+
+  /// No description provided for @statusUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Status updated.'**
+  String get statusUpdated;
+
+  /// No description provided for @errorUpdatingStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update status.'**
+  String get errorUpdatingStatus;
+
+  /// No description provided for @loginError.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email or password.'**
+  String get loginError;
+
+  /// No description provided for @loginRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please log in to access the dashboard.'**
+  String get loginRequired;
+
+  /// No description provided for @calendarView.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get calendarView;
+
+  /// No description provided for @listView.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get listView;
+
+  /// No description provided for @createBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Create booking'**
+  String get createBooking;
+
+  /// No description provided for @createBookingFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Create booking for client'**
+  String get createBookingFor;
+
+  /// No description provided for @selectDateAndTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Select date & time'**
+  String get selectDateAndTime;
+
+  /// No description provided for @bookingCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking created successfully.'**
+  String get bookingCreated;
+
+  /// No description provided for @errorCreatingBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create booking.'**
+  String get errorCreatingBooking;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @availableSlots.
+  ///
+  /// In en, this message translates to:
+  /// **'Available slots'**
+  String get availableSlots;
+
+  /// No description provided for @addBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Add booking'**
+  String get addBooking;
+
+  /// No description provided for @pleaseEnterNameAndPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter name and phone.'**
+  String get pleaseEnterNameAndPhone;
+
+  /// No description provided for @note.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get note;
+
+  /// No description provided for @noteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional notes about this booking…'**
+  String get noteHint;
 }
 
 class _AppLocalizationsDelegate

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../theme/app_theme.dart';
 import '../widgets/app_shell.dart';
@@ -8,10 +9,12 @@ import '../screens/about/about_screen.dart';
 import '../screens/events/events_screen.dart';
 import '../screens/contact/contact_screen.dart';
 import '../screens/appointments/appointments_screen.dart';
+import '../screens/appointments/appointments_dashboard_screen.dart';
 import '../screens/academy/academy_screen.dart';
 import '../screens/journey/journey_screen.dart';
 import '../screens/method/method_screen.dart';
 import '../screens/apps/apps_screen.dart';
+import '../providers/auth_provider.dart';
 import '../l10n/app_localizations.dart';
 
 final GlobalKey<NavigatorState> _rootNavKey = GlobalKey<NavigatorState>();
@@ -26,6 +29,7 @@ const Set<String> _knownPaths = {
   '/academy',
   '/contact',
   '/appointments',
+  '/appointments/dashboard',
   '/not-found',
 };
 
@@ -38,7 +42,13 @@ GoRouter createAppRouter({Listenable? refreshListenable}) {
     refreshListenable: refreshListenable,
     redirect: (context, state) {
       final path = state.uri.path;
-      if (path.isEmpty || _knownPaths.contains(path)) return null;
+      if (path.isEmpty || _knownPaths.contains(path)) {
+        if (path == '/appointments/dashboard') {
+          final auth = context.read<AuthProvider>();
+          if (!auth.isLoggedIn) return '/appointments';
+        }
+        return null;
+      }
       return '/not-found';
     },
     routes: [
@@ -54,6 +64,7 @@ GoRouter createAppRouter({Listenable? refreshListenable}) {
           GoRoute(path: '/academy', builder: (_, __) => const AcademyScreen()),
           GoRoute(path: '/contact', builder: (_, __) => const ContactScreen()),
           GoRoute(path: '/appointments', builder: (_, __) => const AppointmentsScreen()),
+          GoRoute(path: '/appointments/dashboard', builder: (_, __) => const AppointmentsDashboardScreen()),
           GoRoute(path: '/not-found', builder: (_, __) => const _NotFoundScreen()),
         ],
       ),
