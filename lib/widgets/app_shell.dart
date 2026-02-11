@@ -116,6 +116,7 @@ class _AppShellState extends State<AppShell> {
             label: 'Main content',
             child: SingleChildScrollView(
               controller: _scrollController,
+              physics: const ClampingScrollPhysics(),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [

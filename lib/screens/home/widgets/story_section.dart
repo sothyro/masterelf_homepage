@@ -110,69 +110,144 @@ class StorySection extends StatelessWidget {
       ],
     );
 
-    // Story block: background image + overlay + left-aligned text; responsive min height on mobile
-    final sectionMinHeight = isMobile ? 420.0 : 720.0;
+    // Story block: text on the left, image on the right; solid section background
     final storyPadding = isMobile ? const EdgeInsets.fromLTRB(16, 40, 16, 32) : const EdgeInsets.fromLTRB(32, 56, 32, 48);
-    final storyBlock = Stack(
-      children: [
-        Positioned.fill(
-          child: Image.asset(
-            AppContent.assetStoryBackground,
-            fit: BoxFit.cover,
-            alignment: const Alignment(0, -1),
-            errorBuilder: (_, __, ___) => Container(
-              color: AppColors.surfaceDark,
-              child: const Center(
-                child: Icon(Icons.image_not_supported_outlined, size: 48, color: AppColors.onPrimary),
-              ),
-            ),
-          ),
+
+    // Portrait image container that blends with the section background
+    const double _portraitAspectRatio = 3 / 4; // vertical portrait
+    final storyImage = Image.asset(
+      AppContent.assetStoryBackground,
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: double.infinity,
+      errorBuilder: (_, __, ___) => Container(
+        color: AppColors.surfaceElevatedDark,
+        child: const Center(
+          child: Icon(Icons.image_not_supported_outlined, size: 48, color: AppColors.onPrimary),
         ),
-        Positioned.fill(
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  AppColors.primary.withValues(alpha: 0.88),
-                  AppColors.primary.withValues(alpha: 0.72),
-                  AppColors.primary.withValues(alpha: 0.5),
-                ],
-              ),
-            ),
-          ),
+      ),
+    );
+
+    final storyImageContainer = Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppColors.borderDark.withValues(alpha: 0.5),
+          width: 1,
         ),
-        Padding(
-          padding: storyPadding,
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 1100),
-              child: Align(
-                alignment: Alignment.centerLeft,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.2),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(11),
+        child: storyImage,
+      ),
+    );
+
+    final storyBlock = isMobile
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              content,
+              const SizedBox(height: 32),
+              Align(
+                alignment: Alignment.center,
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 640),
+                  constraints: const BoxConstraints(maxWidth: 280),
+                  child: AspectRatio(
+                    aspectRatio: _portraitAspectRatio,
+                    child: storyImageContainer,
+                  ),
+                ),
+              ),
+            ],
+          )
+        : Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 5,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 560),
                   child: content,
                 ),
               ),
-            ),
-          ),
-        ),
-      ],
-    );
+              const SizedBox(width: 48),
+              Expanded(
+                flex: 4,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 320),
+                  child: AspectRatio(
+                    aspectRatio: _portraitAspectRatio,
+                    child: storyImageContainer,
+                  ),
+                ),
+              ),
+            ],
+          );
 
     return Container(
       width: double.infinity,
-      color: AppColors.surfaceDark,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: sectionMinHeight,
-            child: storyBlock,
+      margin: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 24),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.4),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
           ),
-          Container(
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.2),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+        border: Border.all(
+          color: AppColors.borderDark.withValues(alpha: 0.8),
+          width: 1,
+        ),
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF1A1810),   // dark with theme-gold undertone
+            Color(0xFF141208),   // mid dark gold-tinted
+            Color(0xFF0E0C06),   // deep gold-black
+          ],
+          stops: [0.0, 0.5, 1.0],
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Stack(
+        children: [
+          Positioned.fill(
+            child: RepaintBoundary(
+              child: CustomPaint(
+                painter: _ChineseTilePainter(),
+              ),
+            ),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: storyPadding,
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1100),
+                    child: storyBlock,
+                  ),
+                ),
+              ),
+              Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(vertical: 24, horizontal: isMobile ? 16 : 32),
             decoration: BoxDecoration(
@@ -236,7 +311,10 @@ class StorySection extends StatelessWidget {
               ),
             ),
           ),
+            ],
+          ),
         ],
+      ),
       ),
     );
   }
@@ -272,4 +350,72 @@ class StorySection extends StatelessWidget {
     }
     return result;
   }
+}
+
+/// Paints a subtle Chinese-style tile/lattice pattern that blends over the gradient.
+class _ChineseTilePainter extends CustomPainter {
+  _ChineseTilePainter();
+
+  /// Size of one 回纹 (key/fret) pattern unit.
+  static const double _unitSize = 36.0;
+  static const double _lineOpacity = 0.06;
+  static const double _accentOpacity = 0.035;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final linePaint = Paint()
+      ..color = AppColors.onPrimary.withValues(alpha: _lineOpacity)
+      ..strokeWidth = 0.9
+      ..style = PaintingStyle.stroke;
+
+    final accentPaint = Paint()
+      ..color = AppColors.accent.withValues(alpha: _accentOpacity)
+      ..strokeWidth = 0.6
+      ..style = PaintingStyle.stroke;
+
+    final u = _unitSize;
+    final g = u * 0.35; // gap / step size for the key pattern
+
+    for (double oy = 0; oy < size.height + u; oy += u) {
+      for (double ox = 0; ox < size.width + u; ox += u) {
+        canvas.save();
+        canvas.translate(ox, oy);
+
+        // 回纹 (huíwén) key/fret pattern: broken square with stepped sides
+        final pts = <Offset>[
+          Offset(0, u),
+          Offset(0, g),
+          Offset(g, g),
+          Offset(g, 0),
+          Offset(u - g, 0),
+          Offset(u - g, g),
+          Offset(u, g),
+          Offset(u, u - g),
+          Offset(u - g, u - g),
+          Offset(u - g, u),
+          Offset(g, u),
+          Offset(g, u - g),
+          Offset(0, u - g),
+          Offset(0, u),
+        ];
+        for (int i = 0; i < pts.length - 1; i++) {
+          canvas.drawLine(pts[i], pts[i + 1], linePaint);
+        }
+
+        // Small inner diamond (菱形) accent in the center of the unit
+        final cx = u / 2;
+        final cy = u / 2;
+        final d = u * 0.18;
+        canvas.drawLine(Offset(cx - d, cy), Offset(cx + d, cy), accentPaint);
+        canvas.drawLine(Offset(cx, cy - d), Offset(cx, cy + d), accentPaint);
+        canvas.drawLine(Offset(cx - d * 0.7, cy - d * 0.7), Offset(cx + d * 0.7, cy + d * 0.7), accentPaint);
+        canvas.drawLine(Offset(cx + d * 0.7, cy - d * 0.7), Offset(cx - d * 0.7, cy + d * 0.7), accentPaint);
+
+        canvas.restore();
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

@@ -186,7 +186,18 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 56, horizontal: 24),
-      color: AppColors.surfaceDark,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFF24201A),
+            Color(0xFF161210),
+            Color(0xFF0A0808),
+          ],
+          stops: [0.0, 0.45, 1.0],
+        ),
+      ),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1100),

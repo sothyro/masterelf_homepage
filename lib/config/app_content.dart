@@ -59,8 +59,8 @@ class AppContent {
   static const String assetEventCard = 'assets/images/event.jpg';
   static const String assetEventMain = 'assets/images/main event.jpg';
   static const String assetAboutHero = 'assets/images/sessions.jpg';
-  /// Story section background (portrait).
-  static const String assetStoryBackground = 'assets/images/masterelf.jpg';
+  /// Story section image (portrait).
+  static const String assetStoryBackground = 'assets/images/profileshorten.jpg';
   static const String assetTestimonialProfile = 'assets/images/profile.jpg';
   static const String assetTestimonialParticipant = 'assets/images/participant2.jpg';
   static const String assetAcademy = 'assets/images/apps.jpg';

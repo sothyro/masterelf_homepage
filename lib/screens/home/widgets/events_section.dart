@@ -38,37 +38,37 @@ class EventsSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Main heading: gold, with "Transformation" in script
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: AppColors.accent,
-                    fontWeight: FontWeight.w600,
-                    fontSize: width < 600 ? 24 : (width < 900 ? 28 : 34),
-                    height: 1.2,
-                  ),
-                  children: [
-                    TextSpan(text: headlinePrefix),
-                    if (headlineHighlight.isNotEmpty)
-                      TextSpan(
-                        text: headlineHighlight,
-                        style: GoogleFonts.condiment(
-                          color: AppColors.accent,
-                          fontWeight: FontWeight.bold,
-                          fontSize: width < 600 ? 28 : (width < 900 ? 34 : 42),
+              RepaintBoundary(
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: AppColors.accent,
+                      fontWeight: FontWeight.w600,
+                      fontSize: width < 600 ? 24 : (width < 900 ? 28 : 34),
+                      height: 1.2,
+                    ),
+                    children: [
+                      TextSpan(text: headlinePrefix),
+                      if (headlineHighlight.isNotEmpty)
+                        TextSpan(
+                          text: headlineHighlight,
+                          style: GoogleFonts.condiment(
+                            color: AppColors.accent,
+                            fontWeight: FontWeight.bold,
+                            fontSize: width < 600 ? 28 : (width < 900 ? 34 : 42),
+                          ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 48),
-              // Two columns: Coming Up Next (left) | All Upcoming Events (right)
               if (isNarrow) ...[
-                _buildComingUpNextBlock(context, l10n, featuredEvent),
+                RepaintBoundary(child: _buildComingUpNextBlock(context, l10n, featuredEvent)),
                 if (otherEvents.isNotEmpty) ...[
                   const SizedBox(height: 32),
-                  _buildAllUpcomingBlock(context, l10n, otherEvents),
+                  RepaintBoundary(child: _buildAllUpcomingBlock(context, l10n, otherEvents)),
                 ],
               ] else
                 Row(
@@ -76,14 +76,18 @@ class EventsSection extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 5,
-                      child: _buildComingUpNextBlock(context, l10n, featuredEvent),
+                      child: RepaintBoundary(
+                        child: _buildComingUpNextBlock(context, l10n, featuredEvent),
+                      ),
                     ),
                     const SizedBox(width: 32),
                     Expanded(
                       flex: 4,
                       child: otherEvents.isEmpty
                           ? const SizedBox.shrink()
-                          : _buildAllUpcomingBlock(context, l10n, otherEvents),
+                          : RepaintBoundary(
+                              child: _buildAllUpcomingBlock(context, l10n, otherEvents),
+                            ),
                     ),
                   ],
                 ),
@@ -125,13 +129,15 @@ class EventsSection extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         if (featured != null)
-          _FeaturedEventCard(
+          RepaintBoundary(
+            child: _FeaturedEventCard(
             title: featured.title,
             date: featured.date,
             location: featured.location,
             description: featured.description,
             limitedSeats: featured.limitedSeats,
             onViewEvent: () => context.push('/events'),
+            ),
           )
         else
           const SizedBox(height: 200),
@@ -172,22 +178,26 @@ class EventsSection extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: events.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 16),
-          itemBuilder: (context, index) {
-            final e = events[index];
-            return _CompactEventCard(
-              title: e.title,
-              date: e.date,
-              location: e.location,
-              description: e.description,
-              limitedSeats: e.limitedSeats,
-              onViewEvent: () => context.push('/events'),
-            );
-          },
+        RepaintBoundary(
+          child: ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: events.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 16),
+            itemBuilder: (context, index) {
+              final e = events[index];
+              return RepaintBoundary(
+                child: _CompactEventCard(
+                  title: e.title,
+                  date: e.date,
+                  location: e.location,
+                  description: e.description,
+                  limitedSeats: e.limitedSeats,
+                  onViewEvent: () => context.push('/events'),
+                ),
+              );
+            },
+          ),
         ),
         const SizedBox(height: 24),
         SizedBox(
@@ -260,13 +270,15 @@ class _FeaturedEventCard extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Image.asset(
-                      AppContent.assetEventCard,
-                      fit: BoxFit.cover,
-                      cacheWidth: 800,
-                      cacheHeight: 450,
-                      errorBuilder: (_, __, ___) => Container(
-                        color: AppColors.primary.withValues(alpha: 0.2),
+                    RepaintBoundary(
+                      child: Image.asset(
+                        AppContent.assetEventCard,
+                        fit: BoxFit.cover,
+                        cacheWidth: 800,
+                        cacheHeight: 450,
+                        errorBuilder: (_, __, ___) => Container(
+                          color: AppColors.primary.withValues(alpha: 0.2),
+                        ),
                       ),
                     ),
                     if (limitedSeats)
@@ -443,13 +455,15 @@ class _CompactEventCard extends StatelessWidget {
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
-                            Image.asset(
-                              AppContent.assetEventCard,
-                              fit: BoxFit.cover,
-                              cacheWidth: 640,
-                              cacheHeight: 360,
-                              errorBuilder: (_, __, ___) => Container(
-                                color: AppColors.primary.withValues(alpha: 0.2),
+                            RepaintBoundary(
+                              child: Image.asset(
+                                AppContent.assetEventCard,
+                                fit: BoxFit.cover,
+                                cacheWidth: 640,
+                                cacheHeight: 360,
+                                errorBuilder: (_, __, ___) => Container(
+                                  color: AppColors.primary.withValues(alpha: 0.2),
+                                ),
                               ),
                             ),
                             if (limitedSeats)
@@ -582,18 +596,20 @@ class _CompactEventCard extends StatelessWidget {
                 ),
                 child: SizedBox(
                   height: 120,
-                  child: AspectRatio(
+                    child: AspectRatio(
                     aspectRatio: 16 / 9,
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
-                        Image.asset(
-                          AppContent.assetEventCard,
-                          fit: BoxFit.cover,
-                          cacheWidth: 640,
-                          cacheHeight: 360,
-                          errorBuilder: (_, __, ___) => Container(
-                            color: AppColors.primary.withValues(alpha: 0.2),
+                        RepaintBoundary(
+                          child: Image.asset(
+                            AppContent.assetEventCard,
+                            fit: BoxFit.cover,
+                            cacheWidth: 640,
+                            cacheHeight: 360,
+                            errorBuilder: (_, __, ___) => Container(
+                              color: AppColors.primary.withValues(alpha: 0.2),
+                            ),
                           ),
                         ),
                       if (limitedSeats)

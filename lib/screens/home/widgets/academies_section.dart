@@ -29,18 +29,19 @@ class AcademiesSection extends StatelessWidget {
       width: double.infinity,
       constraints: BoxConstraints(minHeight: minSectionHeight),
       padding: EdgeInsets.symmetric(vertical: paddingV, horizontal: paddingH),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(AppContent.assetHeroBackground),
-          fit: BoxFit.cover,
-          opacity: 0.5,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFF24201A),           // warm dark (top)
+            Color(0xFF161210),           // mid
+            Color(0xFF0A0808),           // deep dark (bottom)
+          ],
+          stops: [0.0, 0.45, 1.0],
         ),
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.overlayDark.withValues(alpha: 0.7),
-        ),
-        child: Center(
+      child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 1100),
             child: Column(
@@ -140,7 +141,6 @@ class AcademiesSection extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 
