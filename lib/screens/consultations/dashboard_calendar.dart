@@ -23,6 +23,17 @@ class _ConsultationOption {
 /// Default time slots (2h session, 1h break): 09:00, 12:00, 15:00, 18:00, 21:00 (special: 1h or 2h to 23:00)
 const List<String> _timeSlots = ['09:00', '12:00', '15:00', '18:00', '21:00'];
 
+List<String> _slotsForDay(List<AdminAppointmentRecord> appointments, DateTime day) {
+  final dateStr = '${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}';
+  final customTimes = appointments
+      .where((a) => a.date == dateStr && a.status != 'cancelled' && !_timeSlots.contains(a.time))
+      .map((a) => a.time)
+      .toSet()
+      .toList();
+  final all = [..._timeSlots, ...customTimes]..sort();
+  return all;
+}
+
 bool _appointmentMatchesSlot(AdminAppointmentRecord a, DateTime day, String slot) {
   if (a.status == 'cancelled') return false;
   final dateStr = '${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}';
@@ -178,7 +189,7 @@ class DashboardCalendar extends StatelessWidget {
               border: Border.all(color: AppColors.borderDark),
             ),
             child: Column(
-              children: _timeSlots.map((slot) {
+              children: _slotsForDay(appointments, selectedDay).map((slot) {
                 final slotAppointments = _appointmentsForSlot(appointments, selectedDay, slot);
                 return _TimeSlotRow(
                   slot: slot,
@@ -564,9 +575,11 @@ Future<void> showCreateBookingDialog(
                     style: TextStyle(color: AppColors.onSurfaceVariantDark, fontSize: 12),
                   ),
                   const SizedBox(height: 8),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Expanded(
+                      SizedBox(
+                        height: 48,
                         child: OutlinedButton.icon(
                           onPressed: () async {
                             final date = await showDatePicker(
@@ -596,16 +609,102 @@ Future<void> showCreateBookingDialog(
                           ),
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: DropdownButtonFormField<String>(
-                          value: selectedTime,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                          ),
-                          dropdownColor: AppColors.surfaceElevatedDark,
-                          items: _timeSlots.map((t) => DropdownMenuItem(value: t, child: Text(t, style: const TextStyle(color: AppColors.onPrimary)))).toList(),
-                          onChanged: (v) => setState(() => selectedTime = v ?? _timeSlots.first),
+                      const SizedBox(height: 12),
+                      SizedBox(
+                        height: 48,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: DropdownButtonFormField<String>(
+                                value: selectedTime,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                ),
+                                dropdownColor: AppColors.surfaceElevatedDark,
+                                isExpanded: true,
+                                items: [
+                                  ..._timeSlots.map((t) => DropdownMenuItem(value: t, child: Text(t, style: const TextStyle(color: AppColors.onPrimary)))),
+                                  if (!_timeSlots.contains(selectedTime) && selectedTime.isNotEmpty)
+                                    DropdownMenuItem(value: selectedTime, child: Text(selectedTime, style: const TextStyle(color: AppColors.onPrimary))),
+                                  DropdownMenuItem(
+                                    value: '__custom__',
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(LucideIcons.clock, size: 16, color: AppColors.accent),
+                                        const SizedBox(width: 8),
+                                        Text(l10n.customTime, style: const TextStyle(color: AppColors.accent)),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                                onChanged: (v) async {
+                                  if (v == '__custom__') {
+                                    final initial = selectedTime.isNotEmpty
+                                        ? (int.tryParse(selectedTime.split(':')[0]) ?? 9) * 60 + (int.tryParse(selectedTime.split(':').length > 1 ? selectedTime.split(':')[1] : '0') ?? 0)
+                                        : 9 * 60;
+                                    final t = await showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay(hour: initial ~/ 60, minute: initial % 60),
+                                      builder: (ctx, child) => Theme(
+                                        data: Theme.of(context).copyWith(
+                                          colorScheme: ColorScheme.dark(
+                                            primary: AppColors.accent,
+                                            onPrimary: AppColors.onAccent,
+                                            surface: AppColors.surfaceElevatedDark,
+                                            onSurface: AppColors.onPrimary,
+                                          ),
+                                        ),
+                                        child: child!,
+                                      ),
+                                    );
+                                    if (t != null) {
+                                      setState(() => selectedTime = '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}');
+                                    }
+                                  } else if (v != null) {
+                                    setState(() => selectedTime = v);
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            SizedBox(
+                              width: 48,
+                              height: 48,
+                              child: IconButton(
+                                onPressed: () async {
+                                  final initial = selectedTime.isNotEmpty
+                                      ? (int.tryParse(selectedTime.split(':')[0]) ?? 9) * 60 + (int.tryParse(selectedTime.split(':').length > 1 ? selectedTime.split(':')[1] : '0') ?? 0)
+                                      : 9 * 60;
+                                  final t = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay(hour: initial ~/ 60, minute: initial % 60),
+                                    builder: (ctx, child) => Theme(
+                                      data: Theme.of(context).copyWith(
+                                        colorScheme: ColorScheme.dark(
+                                          primary: AppColors.accent,
+                                          onPrimary: AppColors.onAccent,
+                                          surface: AppColors.surfaceElevatedDark,
+                                          onSurface: AppColors.onPrimary,
+                                        ),
+                                      ),
+                                      child: child!,
+                                    ),
+                                  );
+                                  if (t != null) {
+                                    setState(() => selectedTime = '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}');
+                                  }
+                                },
+                                icon: Icon(LucideIcons.clock, color: AppColors.accent, size: 20),
+                                tooltip: l10n.customTime,
+                                style: IconButton.styleFrom(
+                                  backgroundColor: AppColors.borderDark.withValues(alpha: 0.3),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

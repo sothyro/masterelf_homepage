@@ -731,6 +731,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get markAsCompleted => '标记完成';
 
   @override
+  String get customTime => '自定义时间…';
+
+  @override
+  String get editTime => '编辑时间';
+
+  @override
   String get next => '下一步';
 
   @override

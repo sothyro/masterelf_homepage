@@ -778,6 +778,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get markAsCompleted => 'Mark completed';
 
   @override
+  String get customTime => 'Custom time…';
+
+  @override
+  String get editTime => 'Edit time';
+
+  @override
   String get next => 'Next';
 
   @override

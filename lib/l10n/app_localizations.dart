@@ -1510,6 +1510,18 @@ abstract class AppLocalizations {
   /// **'Mark completed'**
   String get markAsCompleted;
 
+  /// No description provided for @customTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom time…'**
+  String get customTime;
+
+  /// No description provided for @editTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit time'**
+  String get editTime;
+
   /// No description provided for @next.
   ///
   /// In en, this message translates to:

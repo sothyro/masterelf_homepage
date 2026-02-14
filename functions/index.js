@@ -338,6 +338,53 @@ export const getAllAppointments = onCall(async (request) => {
 });
 
 /**
+ * Parse date (YYYY-MM-DD) and time (HH:mm) to Date in Cambodia timezone.
+ */
+function parseDateTime(dateStr, timeStr) {
+  if (!dateStr || !timeStr || typeof dateStr !== "string" || typeof timeStr !== "string") {
+    return null;
+  }
+  const [h, m] = timeStr.split(":").map((x) => parseInt(x, 10) || 0);
+  const CAMBODIA_OFFSET_MS = 7 * 60 * 60 * 1000;
+  const localDate = new Date(dateStr + "T00:00:00.000Z");
+  const slotStartUtc = new Date(
+    localDate.getTime() + (h * 60 + m) * 60 * 1000 - CAMBODIA_OFFSET_MS
+  );
+  return isNaN(slotStartUtc.getTime()) ? null : slotStartUtc;
+}
+
+/**
+ * Callable: update appointment date and time (admin only).
+ */
+export const updateAppointment = onCall(async (request) => {
+  if (!request.auth) {
+    throw new HttpsError("unauthenticated", "You must be logged in to update appointments.");
+  }
+  const { appointmentId, date, time } = request.data || {};
+  if (!appointmentId || !date || !time) {
+    throw new HttpsError("invalid-argument", "appointmentId, date, and time are required");
+  }
+  const ref = db.collection(APPOINTMENTS).doc(appointmentId);
+  const doc = await ref.get();
+  if (!doc.exists) {
+    throw new HttpsError("not-found", "Appointment not found");
+  }
+  const startDate = parseDateTime(date, time);
+  if (!startDate) {
+    throw new HttpsError("invalid-argument", "Invalid date or time format (use YYYY-MM-DD and HH:mm)");
+  }
+  const duration = doc.data().durationMinutes ?? SESSION_DURATION_MINUTES;
+  const endDate = new Date(startDate.getTime() + duration * 60 * 1000);
+  await ref.update({
+    date,
+    time,
+    startTime: Timestamp.fromDate(startDate),
+    endTime: Timestamp.fromDate(endDate),
+  });
+  return { ok: true };
+});
+
+/**
  * Callable: update appointment status (admin only).
  */
 export const updateAppointmentStatus = onCall(async (request) => {

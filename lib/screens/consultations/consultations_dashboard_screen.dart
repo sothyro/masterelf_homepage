@@ -10,7 +10,7 @@ import '../../providers/auth_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
 import '../../widgets/breadcrumb.dart';
-import '../../services/appointment_booking_service.dart';
+import '../../services/appointment_booking_service.dart' show getAllAppointments, updateAppointment, updateAppointmentStatus;
 import 'dashboard_calendar.dart';
 
 class AppointmentsDashboardScreen extends StatefulWidget {
@@ -331,6 +331,15 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
           ],
         ),
         actions: [
+          if (a.status != 'cancelled' && a.status != 'completed')
+            TextButton.icon(
+              onPressed: () {
+                Navigator.pop(ctx);
+                _showEditAppointmentTime(context, l10n, a);
+              },
+              icon: const Icon(LucideIcons.clock, size: 18),
+              label: Text(l10n.editTime, style: const TextStyle(color: AppColors.accent)),
+            ),
           TextButton(
             onPressed: () => Navigator.pop(ctx),
             child: Text(l10n.close, style: const TextStyle(color: AppColors.accent)),
@@ -340,85 +349,255 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
     );
   }
 
+  Future<void> _showEditAppointmentTime(BuildContext context, AppLocalizations l10n, AdminAppointmentRecord a) async {
+    DateTime selectedDate = _parseDate(a.date) ?? DateTime.now();
+    String selectedTime = a.time;
+    const predefinedSlots = ['09:00', '12:00', '15:00', '18:00', '21:00'];
+    bool updating = false;
+    String? error;
+
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) => AlertDialog(
+          backgroundColor: AppColors.surfaceElevatedDark,
+          title: Text(l10n.editTime, style: const TextStyle(color: AppColors.accent)),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text('${l10n.bookingReference}: ${a.bookingReference}', style: const TextStyle(color: AppColors.onSurfaceVariantDark, fontSize: 12)),
+              const SizedBox(height: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                    height: 48,
+                    child: OutlinedButton.icon(
+                      onPressed: () async {
+                        final date = await showDatePicker(
+                          context: ctx,
+                          initialDate: selectedDate,
+                          firstDate: DateTime.now().subtract(const Duration(days: 365)),
+                          lastDate: DateTime.now().add(const Duration(days: 365)),
+                          builder: (_, child) => Theme(
+                            data: Theme.of(context).copyWith(
+                              colorScheme: ColorScheme.dark(
+                                primary: AppColors.accent,
+                                onPrimary: AppColors.onAccent,
+                                surface: AppColors.surfaceElevatedDark,
+                                onSurface: AppColors.onPrimary,
+                              ),
+                            ),
+                            child: child!,
+                          ),
+                        );
+                        if (date != null) setState(() => selectedDate = date);
+                      },
+                      icon: const Icon(LucideIcons.calendar, size: 18),
+                      label: Text('${selectedDate.day}/${selectedDate.month}/${selectedDate.year}'),
+                      style: OutlinedButton.styleFrom(foregroundColor: AppColors.onPrimary, side: const BorderSide(color: AppColors.borderLight)),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 48,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            value: selectedTime,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            ),
+                            dropdownColor: AppColors.surfaceElevatedDark,
+                            isExpanded: true,
+                            items: [
+                              ...predefinedSlots.map((t) => DropdownMenuItem(value: t, child: Text(t, style: const TextStyle(color: AppColors.onPrimary)))),
+                              if (!predefinedSlots.contains(selectedTime) && selectedTime.isNotEmpty)
+                                DropdownMenuItem(value: selectedTime, child: Text(selectedTime, style: const TextStyle(color: AppColors.onPrimary))),
+                            ],
+                            onChanged: (v) => setState(() => selectedTime = v ?? selectedTime),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        SizedBox(
+                          width: 48,
+                          height: 48,
+                          child: IconButton(
+                            onPressed: () async {
+                              final parts = selectedTime.split(':');
+                              final initial = (int.tryParse(parts.isNotEmpty ? parts[0] : '9') ?? 9) * 60 + (int.tryParse(parts.length > 1 ? parts[1] : '0') ?? 0);
+                              final t = await showTimePicker(
+                                context: ctx,
+                                initialTime: TimeOfDay(hour: initial ~/ 60, minute: initial % 60),
+                                builder: (_, child) => Theme(
+                                  data: Theme.of(context).copyWith(
+                                    colorScheme: ColorScheme.dark(
+                                      primary: AppColors.accent,
+                                      onPrimary: AppColors.onAccent,
+                                      surface: AppColors.surfaceElevatedDark,
+                                      onSurface: AppColors.onPrimary,
+                                    ),
+                                  ),
+                                  child: child!,
+                                ),
+                              );
+                              if (t != null) setState(() => selectedTime = '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}');
+                            },
+                            icon: Icon(LucideIcons.clock, color: AppColors.accent, size: 20),
+                            tooltip: l10n.customTime,
+                            style: IconButton.styleFrom(
+                              backgroundColor: AppColors.borderDark.withValues(alpha: 0.3),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              if (error != null) ...[
+                const SizedBox(height: 12),
+                Text(error!, style: const TextStyle(color: AppColors.error, fontSize: 12)),
+              ],
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(l10n.close, style: const TextStyle(color: AppColors.accent)),
+            ),
+            FilledButton(
+              onPressed: updating
+                  ? null
+                  : () async {
+                      setState(() { updating = true; error = null; });
+                      try {
+                        final dateStr = '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}';
+                        await updateAppointment(a.id, dateStr, selectedTime);
+                        if (!ctx.mounted) return;
+                        Navigator.pop(ctx, true);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(l10n.statusUpdated), backgroundColor: AppColors.accent),
+                        );
+                        await _loadAppointments();
+                      } catch (e) {
+                        if (!ctx.mounted) return;
+                        setState(() {
+                          updating = false;
+                          error = e is FirebaseFunctionsException ? e.message : e.toString();
+                        });
+                      }
+                    },
+              style: FilledButton.styleFrom(backgroundColor: AppColors.accent, foregroundColor: AppColors.onAccent),
+              child: updating ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.onAccent)) : Text(l10n.reschedule),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if (result == true && mounted) {
+      setState(() {});
+    }
+  }
+
+  DateTime? _parseDate(String dateStr) {
+    final parts = dateStr.split('-');
+    if (parts.length != 3) return null;
+    final y = int.tryParse(parts[0]);
+    final m = int.tryParse(parts[1]);
+    final d = int.tryParse(parts[2]);
+    if (y == null || m == null || d == null) return null;
+    return DateTime(y, m, d);
+  }
+
   Widget _buildViewToggleAndFilters(BuildContext context, AppLocalizations l10n) {
-    return Row(
-      children: [
-        SegmentedButton<bool>(
-          segments: [
-            ButtonSegment(value: true, label: Text(l10n.calendarView), icon: const Icon(LucideIcons.calendar, size: 18)),
-            ButtonSegment(value: false, label: Text(l10n.listView), icon: const Icon(LucideIcons.list, size: 18)),
-          ],
-          selected: {_calendarView},
-          onSelectionChanged: (s) => setState(() => _calendarView = s.first),
-          style: ButtonStyle(
-            foregroundColor: WidgetStateProperty.resolveWith((states) {
-              if (states.contains(WidgetState.selected)) return AppColors.onAccent;
-              return AppColors.onPrimary;
-            }),
-            backgroundColor: WidgetStateProperty.resolveWith((states) {
-              if (states.contains(WidgetState.selected)) return AppColors.accent;
-              return AppColors.surfaceElevatedDark;
-            }),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SegmentedButton<bool>(
+            segments: [
+              ButtonSegment(value: true, label: Text(l10n.calendarView), icon: const Icon(LucideIcons.calendar, size: 18)),
+              ButtonSegment(value: false, label: Text(l10n.listView), icon: const Icon(LucideIcons.list, size: 18)),
+            ],
+            selected: {_calendarView},
+            onSelectionChanged: (s) => setState(() => _calendarView = s.first),
+            style: ButtonStyle(
+              foregroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected)) return AppColors.onAccent;
+                return AppColors.onPrimary;
+              }),
+              backgroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected)) return AppColors.accent;
+                return AppColors.surfaceElevatedDark;
+              }),
+            ),
           ),
-        ),
-        const SizedBox(width: 24),
-        SegmentedButton<String?>(
-          segments: [
-            ButtonSegment(value: null, label: Text(l10n.filterAll)),
-            ButtonSegment(value: 'pending', label: Text(l10n.statusPending)),
-            ButtonSegment(value: 'confirmed', label: Text(l10n.statusConfirmed)),
-            ButtonSegment(value: 'completed', label: Text(l10n.statusCompleted)),
-            ButtonSegment(value: 'cancelled', label: Text(l10n.statusCancelled)),
-          ],
-          selected: {_statusFilter},
-          onSelectionChanged: (s) {
-            setState(() {
-              _statusFilter = s.isEmpty ? null : s.first;
-              _loadAppointments();
-            });
-          },
-          style: ButtonStyle(
-            foregroundColor: WidgetStateProperty.resolveWith((states) {
-              if (states.contains(WidgetState.selected)) return AppColors.onAccent;
-              return AppColors.onPrimary;
-            }),
-            backgroundColor: WidgetStateProperty.resolveWith((states) {
-              if (states.contains(WidgetState.selected)) return AppColors.accent;
-              return AppColors.surfaceElevatedDark;
-            }),
+          const SizedBox(width: 24),
+          SegmentedButton<String?>(
+            segments: [
+              ButtonSegment(value: null, label: Text(l10n.filterAll)),
+              ButtonSegment(value: 'pending', label: Text(l10n.statusPending)),
+              ButtonSegment(value: 'confirmed', label: Text(l10n.statusConfirmed)),
+              ButtonSegment(value: 'completed', label: Text(l10n.statusCompleted)),
+              ButtonSegment(value: 'cancelled', label: Text(l10n.statusCancelled)),
+            ],
+            selected: {_statusFilter},
+            onSelectionChanged: (s) {
+              setState(() {
+                _statusFilter = s.isEmpty ? null : s.first;
+                _loadAppointments();
+              });
+            },
+            style: ButtonStyle(
+              foregroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected)) return AppColors.onAccent;
+                return AppColors.onPrimary;
+              }),
+              backgroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected)) return AppColors.accent;
+                return AppColors.surfaceElevatedDark;
+              }),
+            ),
           ),
-        ),
-        const Spacer(),
-        TextButton.icon(
-          onPressed: () async {
-            await showCreateBookingDialog(
-              context,
-              initialDate: _calendarView ? _calendarSelectedDay : DateTime.now(),
-              initialTime: '09:00',
-              onCreated: _loadAppointments,
-            );
-          },
-          icon: const Icon(LucideIcons.plus, size: 18),
-          label: Text(l10n.createBooking),
-          style: TextButton.styleFrom(foregroundColor: AppColors.accent),
-        ),
-        const SizedBox(width: 8),
-        FilledButton.icon(
-          onPressed: _loading ? null : _loadAppointments,
-          icon: _loading
-              ? const SizedBox(
-                  width: 18,
-                  height: 18,
-                  child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.onAccent),
-                )
-              : const Icon(LucideIcons.refreshCw, size: 18),
-          label: Text(l10n.refresh),
-          style: FilledButton.styleFrom(
-            backgroundColor: AppColors.accent,
-            foregroundColor: AppColors.onAccent,
+          const SizedBox(width: 24),
+          TextButton.icon(
+            onPressed: () async {
+              await showCreateBookingDialog(
+                context,
+                initialDate: _calendarView ? _calendarSelectedDay : DateTime.now(),
+                initialTime: '09:00',
+                onCreated: _loadAppointments,
+              );
+            },
+            icon: const Icon(LucideIcons.plus, size: 18),
+            label: Text(l10n.createBooking),
+            style: TextButton.styleFrom(foregroundColor: AppColors.accent),
           ),
-        ),
-      ],
+          const SizedBox(width: 8),
+          FilledButton.icon(
+            onPressed: _loading ? null : _loadAppointments,
+            icon: _loading
+                ? const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.onAccent),
+                  )
+                : const Icon(LucideIcons.refreshCw, size: 18),
+            label: Text(l10n.refresh),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.accent,
+              foregroundColor: AppColors.onAccent,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

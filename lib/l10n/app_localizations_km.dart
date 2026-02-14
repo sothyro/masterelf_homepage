@@ -771,6 +771,12 @@ class AppLocalizationsKm extends AppLocalizations {
   String get markAsCompleted => 'សម្គាល់ថាបញ្ចប់';
 
   @override
+  String get customTime => 'ពេលវេលាផ្ទាល់ខ្លួន…';
+
+  @override
+  String get editTime => 'កែសម្រួលពេលវេលា';
+
+  @override
   String get next => 'បន្ទាប់';
 
   @override

@@ -253,3 +253,13 @@ Future<void> updateAppointmentStatus(String appointmentId, String status) async 
     'status': status,
   });
 }
+
+/// Updates appointment date and time (admin only, requires authenticated user).
+Future<void> updateAppointment(String appointmentId, String date, String time) async {
+  if (!isFirebaseEnabled) throw StateError('Firebase not configured');
+  await FirebaseFunctions.instance.httpsCallable('updateAppointment').call({
+    'appointmentId': appointmentId,
+    'date': date,
+    'time': time,
+  });
+}

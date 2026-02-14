@@ -241,6 +241,8 @@
   "statusCancelled": "Cancelled",
   "statusCompleted": "Completed",
   "markAsCompleted": "Mark completed",
+  "customTime": "Custom time…",
+  "editTime": "Edit time",
   "next": "Next",
   "smartMoveHeading": "Every Move Can Be A Smart Move",
   "smartMoveIntro": "Behind every breakthrough is a moment of clarity. When you see the full picture, opportunities arise, decisions become easier, and progress flows naturally. That's what we help you with: seeing clearly turns your next step into the right one. A consultation with our team gives you more than insight. It gives you structure to move forward with confidence.",

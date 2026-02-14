@@ -241,6 +241,8 @@
   "statusCancelled": "已取消",
   "statusCompleted": "已完成",
   "markAsCompleted": "标记完成",
+  "customTime": "自定义时间…",
+  "editTime": "编辑时间",
   "next": "下一步",
   "smartMoveHeading": "每一步都可以是明智的一步",
   "smartMoveIntro": "每一次突破背后都有清晰的时刻。当你看清全局，机会自然出现，决策更轻松，进展更顺畅。我们正是帮助你做到这一点：看清前路，让下一步成为正确的一步。与我们的团队咨询，你得到的不仅是洞见，更是自信前行的结构。",
