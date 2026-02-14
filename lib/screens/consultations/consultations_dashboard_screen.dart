@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -75,9 +76,12 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
       await _loadAppointments();
     } catch (e) {
       if (!mounted) return;
+      final msg = e is FirebaseFunctionsException
+          ? (e.message ?? AppLocalizations.of(context)!.errorUpdatingStatus)
+          : AppLocalizations.of(context)!.errorUpdatingStatus;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context)!.errorUpdatingStatus),
+          content: Text(msg),
           backgroundColor: AppColors.error,
         ),
       );
@@ -101,6 +105,7 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
     final pending = _appointments.where((a) => a.status == 'pending').length;
     final confirmed = _appointments.where((a) => a.status == 'confirmed').length;
     final cancelled = _appointments.where((a) => a.status == 'cancelled').length;
+    final completed = _appointments.where((a) => a.status == 'completed').length;
 
     return Container(
       width: double.infinity,
@@ -174,7 +179,7 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
                     ],
                   ),
                   const SizedBox(height: 32),
-                  _buildStatsCards(context, l10n, total, pending, confirmed, cancelled),
+                  _buildStatsCards(context, l10n, total, pending, confirmed, cancelled, completed),
                   const SizedBox(height: 32),
                   _buildViewToggleAndFilters(context, l10n),
                   const SizedBox(height: 24),
@@ -207,6 +212,7 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
                         loading: _loading,
                         updatingId: _updatingId,
                         onUpdateStatus: _updateStatus,
+                        onComplete: (id) => _updateStatus(id, 'completed'),
                       )
                     else
                       _buildAppointmentsTable(context, l10n, isNarrow),
@@ -263,16 +269,18 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
     int pending,
     int confirmed,
     int cancelled,
+    int completed,
   ) {
     final cards = [
       (l10n.dashboardStatsTotal, total, LucideIcons.calendarCheck, AppColors.accent),
       (l10n.dashboardStatsPending, pending, LucideIcons.clock, AppColors.accent.withValues(alpha: 0.8)),
       (l10n.dashboardStatsConfirmed, confirmed, LucideIcons.checkCircle, const Color(0xFF2E7D32)),
       (l10n.dashboardStatsCancelled, cancelled, LucideIcons.xCircle, AppColors.error),
+      (l10n.dashboardStatsCompleted, completed, LucideIcons.checkCircle2, const Color(0xFF1B5E20)),
     ];
     return LayoutBuilder(
       builder: (context, constraints) {
-        final crossCount = constraints.maxWidth < 600 ? 2 : 4;
+        final crossCount = constraints.maxWidth < 600 ? 2 : 5;
         return GridView.count(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -314,9 +322,9 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
             ],
             const SizedBox(height: 8),
             Text(
-              a.status == 'confirmed' ? l10n.statusConfirmed : a.status == 'cancelled' ? l10n.statusCancelled : l10n.statusPending,
+              a.status == 'confirmed' ? l10n.statusConfirmed : a.status == 'cancelled' ? l10n.statusCancelled : a.status == 'completed' ? l10n.statusCompleted : l10n.statusPending,
               style: TextStyle(
-                color: a.status == 'cancelled' ? AppColors.error : AppColors.accent,
+                color: a.status == 'cancelled' ? AppColors.error : a.status == 'completed' ? const Color(0xFF1B5E20) : AppColors.accent,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -354,18 +362,12 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
           ),
         ),
         const SizedBox(width: 24),
-        Text(
-          l10n.filterByStatus,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: AppColors.onSurfaceVariantDark,
-              ),
-        ),
-        const SizedBox(width: 12),
         SegmentedButton<String?>(
           segments: [
             ButtonSegment(value: null, label: Text(l10n.filterAll)),
             ButtonSegment(value: 'pending', label: Text(l10n.statusPending)),
             ButtonSegment(value: 'confirmed', label: Text(l10n.statusConfirmed)),
+            ButtonSegment(value: 'completed', label: Text(l10n.statusCompleted)),
             ButtonSegment(value: 'cancelled', label: Text(l10n.statusCancelled)),
           ],
           selected: {_statusFilter},
@@ -497,6 +499,7 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
           l10n: l10n,
           isUpdating: _updatingId == a.id,
           onConfirm: () => _updateStatus(a.id, 'confirmed'),
+          onComplete: () => _updateStatus(a.id, 'completed'),
           onCancel: () => _updateStatus(a.id, 'cancelled'),
         )).toList(),
       );
@@ -537,7 +540,9 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
         ? l10n.statusConfirmed
         : a.status == 'cancelled'
             ? l10n.statusCancelled
-            : l10n.statusPending;
+            : a.status == 'completed'
+                ? l10n.statusCompleted
+                : l10n.statusPending;
     final isUpdating = _updatingId == a.id;
 
     return DataRow(
@@ -553,13 +558,15 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
             decoration: BoxDecoration(
               color: a.status == 'cancelled'
                   ? AppColors.error.withValues(alpha: 0.2)
-                  : AppColors.accent.withValues(alpha: 0.2),
+                  : a.status == 'completed'
+                      ? const Color(0xFF1B5E20).withValues(alpha: 0.2)
+                      : AppColors.accent.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
               statusLabel,
               style: TextStyle(
-                color: a.status == 'cancelled' ? AppColors.error : AppColors.accent,
+                color: a.status == 'cancelled' ? AppColors.error : a.status == 'completed' ? const Color(0xFF1B5E20) : AppColors.accent,
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
               ),
@@ -567,7 +574,7 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
           ),
         ),
         DataCell(
-          a.status == 'cancelled'
+          a.status == 'cancelled' || a.status == 'completed'
               ? const SizedBox.shrink()
               : Row(
                   mainAxisSize: MainAxisSize.min,
@@ -579,6 +586,10 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
                             ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accent))
                             : Text(l10n.confirmAppointment, style: const TextStyle(color: AppColors.accent)),
                       ),
+                    TextButton(
+                      onPressed: isUpdating ? null : () => _updateStatus(a.id, 'completed'),
+                      child: Text(l10n.markAsCompleted, style: const TextStyle(color: Color(0xFF1B5E20))),
+                    ),
                     TextButton(
                       onPressed: isUpdating ? null : () => _updateStatus(a.id, 'cancelled'),
                       child: Text(l10n.cancelBookingButton, style: const TextStyle(color: AppColors.error)),
@@ -650,6 +661,7 @@ class _DashboardAppointmentCard extends StatelessWidget {
     required this.l10n,
     required this.isUpdating,
     required this.onConfirm,
+    required this.onComplete,
     required this.onCancel,
   });
 
@@ -657,6 +669,7 @@ class _DashboardAppointmentCard extends StatelessWidget {
   final AppLocalizations l10n;
   final bool isUpdating;
   final VoidCallback onConfirm;
+  final VoidCallback onComplete;
   final VoidCallback onCancel;
 
   @override
@@ -665,7 +678,9 @@ class _DashboardAppointmentCard extends StatelessWidget {
         ? l10n.statusConfirmed
         : record.status == 'cancelled'
             ? l10n.statusCancelled
-            : l10n.statusPending;
+            : record.status == 'completed'
+                ? l10n.statusCompleted
+                : l10n.statusPending;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -691,13 +706,15 @@ class _DashboardAppointmentCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: record.status == 'cancelled'
                         ? AppColors.error.withValues(alpha: 0.2)
-                        : AppColors.accent.withValues(alpha: 0.2),
+                        : record.status == 'completed'
+                            ? const Color(0xFF1B5E20).withValues(alpha: 0.2)
+                            : AppColors.accent.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     statusLabel,
                     style: TextStyle(
-                      color: record.status == 'cancelled' ? AppColors.error : AppColors.accent,
+                      color: record.status == 'cancelled' ? AppColors.error : record.status == 'completed' ? const Color(0xFF1B5E20) : AppColors.accent,
                       fontSize: 12,
                     ),
                   ),
@@ -709,7 +726,7 @@ class _DashboardAppointmentCard extends StatelessWidget {
             Text(record.phone, style: TextStyle(color: AppColors.onSurfaceVariantDark, fontSize: 14)),
             Text(record.serviceName, style: const TextStyle(color: AppColors.onPrimary, fontWeight: FontWeight.w500)),
             Text('${record.date} · ${record.time}', style: TextStyle(color: AppColors.onSurfaceVariantDark, fontSize: 14)),
-            if (record.status != 'cancelled') ...[
+            if (record.status != 'cancelled' && record.status != 'completed') ...[
               const SizedBox(height: 12),
               Row(
                 children: [
@@ -720,6 +737,10 @@ class _DashboardAppointmentCard extends StatelessWidget {
                           ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accent))
                           : Text(l10n.confirmAppointment, style: const TextStyle(color: AppColors.accent)),
                     ),
+                  TextButton(
+                    onPressed: isUpdating ? null : onComplete,
+                    child: Text(l10n.markAsCompleted, style: const TextStyle(color: Color(0xFF1B5E20))),
+                  ),
                   TextButton(
                     onPressed: isUpdating ? null : onCancel,
                     child: Text(l10n.cancelBookingButton, style: const TextStyle(color: AppColors.error)),

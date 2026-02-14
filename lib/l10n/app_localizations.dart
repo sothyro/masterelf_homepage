@@ -1498,6 +1498,18 @@ abstract class AppLocalizations {
   /// **'Cancelled'**
   String get statusCancelled;
 
+  /// No description provided for @statusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get statusCompleted;
+
+  /// No description provided for @markAsCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark completed'**
+  String get markAsCompleted;
+
   /// No description provided for @next.
   ///
   /// In en, this message translates to:
@@ -1923,6 +1935,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancelled'**
   String get dashboardStatsCancelled;
+
+  /// No description provided for @dashboardStatsCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get dashboardStatsCompleted;
 
   /// No description provided for @filterByStatus.
   ///

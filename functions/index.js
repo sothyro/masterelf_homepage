@@ -326,7 +326,7 @@ export const getAllAppointments = onCall(async (request) => {
       const bVal = b.startTime ? new Date(b.startTime).getTime() : 0;
       return bVal - aVal;
     });
-    if (statusFilter && ["pending", "confirmed", "cancelled"].includes(statusFilter)) {
+    if (statusFilter && ["pending", "confirmed", "cancelled", "completed"].includes(statusFilter)) {
       list = list.filter((a) => a.status === statusFilter);
     }
     return { appointments: list.slice(0, limit) };
@@ -348,8 +348,8 @@ export const updateAppointmentStatus = onCall(async (request) => {
   if (!appointmentId || !status) {
     throw new HttpsError("invalid-argument", "appointmentId and status are required");
   }
-  if (!["pending", "confirmed", "cancelled"].includes(status)) {
-    throw new HttpsError("invalid-argument", "status must be pending, confirmed, or cancelled");
+  if (!["pending", "confirmed", "cancelled", "completed"].includes(status)) {
+    throw new HttpsError("invalid-argument", "status must be pending, confirmed, cancelled, or completed");
   }
   const ref = db.collection(APPOINTMENTS).doc(appointmentId);
   const doc = await ref.get();

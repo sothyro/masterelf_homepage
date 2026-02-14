@@ -1310,6 +1310,8 @@ class _DashboardBookingCard extends StatelessWidget {
         return l10n.statusConfirmed;
       case 'cancelled':
         return l10n.statusCancelled;
+      case 'completed':
+        return l10n.statusCompleted;
       default:
         return l10n.statusPending;
     }
@@ -1342,13 +1344,15 @@ class _DashboardBookingCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: record.status == 'cancelled'
                         ? AppColors.error.withValues(alpha: 0.2)
-                        : AppColors.accent.withValues(alpha: 0.2),
+                        : record.status == 'completed'
+                            ? const Color(0xFF1B5E20).withValues(alpha: 0.2)
+                            : AppColors.accent.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     _statusLabel(record.status),
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: record.status == 'cancelled' ? AppColors.error : AppColors.accent,
+                          color: record.status == 'cancelled' ? AppColors.error : record.status == 'completed' ? const Color(0xFF1B5E20) : AppColors.accent,
                         ),
                   ),
                 ),
@@ -1363,7 +1367,7 @@ class _DashboardBookingCard extends StatelessWidget {
               '${l10n.bookingReference}: ${record.bookingReference}',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.onSurfaceVariantDark),
             ),
-            if (record.status != 'cancelled') ...[
+            if (record.status != 'cancelled' && record.status != 'completed') ...[
               const SizedBox(height: 12),
               TextButton(
                 onPressed: isCancelling ? null : onCancel,

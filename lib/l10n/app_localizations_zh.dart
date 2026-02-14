@@ -725,6 +725,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get statusCancelled => '已取消';
 
   @override
+  String get statusCompleted => '已完成';
+
+  @override
+  String get markAsCompleted => '标记完成';
+
+  @override
   String get next => '下一步';
 
   @override
@@ -940,6 +946,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get dashboardStatsCancelled => '已取消';
+
+  @override
+  String get dashboardStatsCompleted => '已完成';
 
   @override
   String get filterByStatus => '按状态筛选';

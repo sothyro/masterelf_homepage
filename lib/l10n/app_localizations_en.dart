@@ -772,6 +772,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusCancelled => 'Cancelled';
 
   @override
+  String get statusCompleted => 'Completed';
+
+  @override
+  String get markAsCompleted => 'Mark completed';
+
+  @override
   String get next => 'Next';
 
   @override
@@ -998,6 +1004,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dashboardStatsCancelled => 'Cancelled';
+
+  @override
+  String get dashboardStatsCompleted => 'Completed';
 
   @override
   String get filterByStatus => 'Filter by status';

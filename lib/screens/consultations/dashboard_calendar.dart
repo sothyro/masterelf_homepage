@@ -51,6 +51,7 @@ class DashboardCalendar extends StatelessWidget {
     required this.loading,
     required this.updatingId,
     required this.onUpdateStatus,
+    this.onComplete,
   });
 
   final List<AdminAppointmentRecord> appointments;
@@ -63,6 +64,7 @@ class DashboardCalendar extends StatelessWidget {
   final bool loading;
   final String? updatingId;
   final void Function(String id, String status) onUpdateStatus;
+  final void Function(String id)? onComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,7 @@ class DashboardCalendar extends StatelessWidget {
             border: Border.all(color: AppColors.borderDark),
           ),
           child: TableCalendar(
-            firstDay: DateTime.now(),
+            firstDay: DateTime.now().subtract(const Duration(days: 365)),
             lastDay: DateTime.now().add(const Duration(days: 365)),
             focusedDay: focusedDay,
             selectedDayPredicate: (day) => _isSameDay(selectedDay, day),
@@ -186,6 +188,7 @@ class DashboardCalendar extends StatelessWidget {
                   onSlotTap: () => onCreateBooking(selectedDay, slot),
                   onAppointmentTap: onAppointmentTap,
                   onUpdateStatus: onUpdateStatus,
+                  onComplete: onComplete,
                 );
               }).toList(),
             ),
@@ -208,6 +211,7 @@ class _TimeSlotRow extends StatelessWidget {
     required this.onSlotTap,
     required this.onAppointmentTap,
     required this.onUpdateStatus,
+    this.onComplete,
   });
 
   final String slot;
@@ -217,6 +221,7 @@ class _TimeSlotRow extends StatelessWidget {
   final VoidCallback onSlotTap;
   final ValueChanged<AdminAppointmentRecord> onAppointmentTap;
   final void Function(String id, String status) onUpdateStatus;
+  final void Function(String id)? onComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -254,6 +259,7 @@ class _TimeSlotRow extends StatelessWidget {
                         isUpdating: updatingId == a.id,
                         onTap: () => onAppointmentTap(a),
                         onConfirm: () => onUpdateStatus(a.id, 'confirmed'),
+                        onComplete: onComplete != null ? () => onComplete!(a.id) : null,
                         onCancel: () => onUpdateStatus(a.id, 'cancelled'),
                       )),
                       _AddSlotChip(onTap: onSlotTap),
@@ -274,6 +280,7 @@ class _CalendarAppointmentChip extends StatelessWidget {
     required this.isUpdating,
     required this.onTap,
     required this.onConfirm,
+    this.onComplete,
     required this.onCancel,
   });
 
@@ -282,6 +289,7 @@ class _CalendarAppointmentChip extends StatelessWidget {
   final bool isUpdating;
   final VoidCallback onTap;
   final VoidCallback onConfirm;
+  final VoidCallback? onComplete;
   final VoidCallback onCancel;
 
   @override
@@ -290,9 +298,13 @@ class _CalendarAppointmentChip extends StatelessWidget {
         ? l10n.statusConfirmed
         : record.status == 'cancelled'
             ? l10n.statusCancelled
-            : l10n.statusPending;
+            : record.status == 'completed'
+                ? l10n.statusCompleted
+                : l10n.statusPending;
     final isCancelled = record.status == 'cancelled';
+    final isCompleted = record.status == 'completed';
 
+    final completedColor = const Color(0xFF1B5E20);
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -303,10 +315,12 @@ class _CalendarAppointmentChip extends StatelessWidget {
           decoration: BoxDecoration(
             color: isCancelled
                 ? AppColors.error.withValues(alpha: 0.15)
-                : AppColors.accent.withValues(alpha: 0.2),
+                : isCompleted
+                    ? completedColor.withValues(alpha: 0.2)
+                    : AppColors.accent.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
-              color: isCancelled ? AppColors.error.withValues(alpha: 0.5) : AppColors.accent.withValues(alpha: 0.5),
+              color: isCancelled ? AppColors.error.withValues(alpha: 0.5) : isCompleted ? completedColor.withValues(alpha: 0.5) : AppColors.accent.withValues(alpha: 0.5),
             ),
           ),
           child: Column(
@@ -327,7 +341,7 @@ class _CalendarAppointmentChip extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
-                      color: isCancelled ? AppColors.error.withValues(alpha: 0.3) : AppColors.accent.withValues(alpha: 0.5),
+                      color: isCancelled ? AppColors.error.withValues(alpha: 0.3) : isCompleted ? completedColor.withValues(alpha: 0.5) : AppColors.accent.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
@@ -335,7 +349,7 @@ class _CalendarAppointmentChip extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
-                        color: isCancelled ? AppColors.error : AppColors.onAccent,
+                        color: isCancelled ? AppColors.error : isCompleted ? completedColor : AppColors.onAccent,
                       ),
                     ),
                   ),
@@ -350,7 +364,7 @@ class _CalendarAppointmentChip extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              if (!isCancelled) ...[
+              if (!isCancelled && !isCompleted) ...[
                 const SizedBox(height: 6),
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -366,6 +380,16 @@ class _CalendarAppointmentChip extends StatelessWidget {
                         child: isUpdating
                             ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accent))
                             : Text(l10n.confirmAppointment, style: const TextStyle(color: AppColors.accent, fontSize: 12)),
+                      ),
+                    if (onComplete != null)
+                      TextButton(
+                        onPressed: isUpdating ? null : onComplete,
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        child: Text(l10n.markAsCompleted, style: const TextStyle(color: Color(0xFF1B5E20), fontSize: 12)),
                       ),
                     TextButton(
                       onPressed: isUpdating ? null : onCancel,
@@ -548,7 +572,7 @@ Future<void> showCreateBookingDialog(
                             final date = await showDatePicker(
                               context: context,
                               initialDate: selectedDate,
-                              firstDate: DateTime.now(),
+                              firstDate: DateTime.now().subtract(const Duration(days: 365)),
                               lastDate: DateTime.now().add(const Duration(days: 365)),
                               builder: (ctx, child) => Theme(
                                 data: Theme.of(context).copyWith(

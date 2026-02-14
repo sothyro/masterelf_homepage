@@ -765,6 +765,12 @@ class AppLocalizationsKm extends AppLocalizations {
   String get statusCancelled => 'បានបោះបង់';
 
   @override
+  String get statusCompleted => 'បានបញ្ចប់';
+
+  @override
+  String get markAsCompleted => 'សម្គាល់ថាបញ្ចប់';
+
+  @override
   String get next => 'បន្ទាប់';
 
   @override
@@ -991,6 +997,9 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get dashboardStatsCancelled => 'បានបោះបង់';
+
+  @override
+  String get dashboardStatsCompleted => 'បានបញ្ចប់';
 
   @override
   String get filterByStatus => 'ច្រោះតាមស្ថានភាព';
