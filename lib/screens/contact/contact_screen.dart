@@ -232,13 +232,14 @@ class _ContactScreenState extends State<ContactScreen> {
   }
 
   Widget _buildFormCard(AppLocalizations l10n) {
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
     return GlassContainer(
       blurSigma: 8,
       color: AppColors.surfaceElevatedDark.withValues(alpha: 0.95),
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(isMobile ? 12 : 16),
       border: Border.all(color: AppColors.borderDark, width: 1),
       boxShadow: AppShadows.card,
-      padding: const EdgeInsets.all(28),
+      padding: EdgeInsets.all(isMobile ? 20 : 28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -408,14 +409,26 @@ class _ContactResultDialog extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final title = success ? l10n.contactSuccessTitle : l10n.contactErrorTitle;
     final message = success ? l10n.contactSuccess : l10n.contactError;
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
+
+    final horizontalPadding = isMobile ? 16.0 : 24.0;
+    final verticalPadding = isMobile ? 24.0 : 48.0;
+    final innerPadding = isMobile ? 20.0 : 32.0;
+    final iconSize = isMobile ? 56.0 : 72.0;
+    final iconIconSize = isMobile ? 32.0 : 40.0;
+    final titleStyle = Theme.of(context).textTheme.headlineSmall?.copyWith(
+      color: AppColors.onPrimary,
+      fontWeight: FontWeight.w700,
+      fontSize: isMobile ? 20 : null,
+    );
 
     return Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+      insetPadding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: verticalPadding),
       child: GlassContainer(
         blurSigma: 10,
         color: AppColors.surfaceElevatedDark.withValues(alpha: 0.96),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(isMobile ? 16 : 20),
         border: Border.all(
           color: success
               ? AppColors.accent.withValues(alpha: 0.5)
@@ -423,16 +436,15 @@ class _ContactResultDialog extends StatelessWidget {
           width: 1,
         ),
         boxShadow: AppShadows.dialog,
-        padding: const EdgeInsets.fromLTRB(32, 32, 32, 28),
+        padding: EdgeInsets.fromLTRB(innerPadding, innerPadding, innerPadding, innerPadding - 4),
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 420),
+          constraints: BoxConstraints(maxWidth: 420),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Icon
               Container(
-                width: 72,
-                height: 72,
+                width: iconSize,
+                height: iconSize,
                 decoration: BoxDecoration(
                   color: success
                       ? AppColors.accent.withValues(alpha: 0.2)
@@ -441,35 +453,31 @@ class _ContactResultDialog extends StatelessWidget {
                 ),
                 child: Icon(
                   success ? LucideIcons.checkCircle : LucideIcons.alertCircle,
-                  size: 40,
+                  size: iconIconSize,
                   color: success ? AppColors.accent : AppColors.error,
                 ),
               ),
-              const SizedBox(height: 24),
-              // Title
+              SizedBox(height: isMobile ? 16 : 24),
               Text(
                 title,
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: AppColors.onPrimary,
-                      fontWeight: FontWeight.w700,
-                    ),
+                style: titleStyle,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 12),
-              // Message
+              SizedBox(height: isMobile ? 8 : 12),
               Text(
                 message,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: AppColors.onSurfaceVariantDark,
                       height: 1.5,
+                      fontSize: isMobile ? 15 : null,
                     ),
                 textAlign: TextAlign.center,
               ),
               if (!success && errorMessage != null && errorMessage!.isNotEmpty) ...[
-                const SizedBox(height: 12),
+                SizedBox(height: isMobile ? 8 : 12),
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(12),
+                  padding: EdgeInsets.all(isMobile ? 10 : 12),
                   decoration: BoxDecoration(
                     color: AppColors.backgroundDark,
                     borderRadius: BorderRadius.circular(8),
@@ -479,14 +487,13 @@ class _ContactResultDialog extends StatelessWidget {
                     errorMessage!,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: AppColors.onSurfaceVariantDark,
-                          fontSize: 12,
+                          fontSize: 11,
                         ),
                     textAlign: TextAlign.center,
                   ),
                 ),
               ],
-              const SizedBox(height: 28),
-              // Button
+              SizedBox(height: isMobile ? 20 : 28),
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
@@ -494,7 +501,7 @@ class _ContactResultDialog extends StatelessWidget {
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.accent,
                     foregroundColor: AppColors.onAccent,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    padding: EdgeInsets.symmetric(vertical: isMobile ? 12 : 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

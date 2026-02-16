@@ -252,13 +252,17 @@ class StorySection extends StatelessWidget {
   static Widget _buildLogoChip(
     AppLocalizations l10n,
     TextTheme textTheme,
-    int index,
-  ) {
+    int index, {
+    double width = 88,
+    double height = 40,
+    double rightPadding = 24,
+    double fontSize = 13,
+  }) {
     return Padding(
-      padding: const EdgeInsets.only(right: 24),
+      padding: EdgeInsets.only(right: rightPadding),
       child: Container(
-        width: 88,
-        height: 40,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
           color: AppColors.surfaceElevatedDark.withValues(alpha: 0.6),
           borderRadius: BorderRadius.circular(8),
@@ -269,7 +273,7 @@ class StorySection extends StatelessWidget {
             l10n.logoPlaceholder(index),
             style: textTheme.bodySmall?.copyWith(
               color: AppColors.onPrimary.withValues(alpha: 0.5),
-              fontSize: 13,
+              fontSize: fontSize,
             ),
           ),
         ),
@@ -352,11 +356,18 @@ class _FeaturedInCarouselState extends State<_FeaturedInCarousel> {
   Widget build(BuildContext context) {
     final l10n = widget.l10n;
     final textTheme = widget.textTheme;
+    final width = MediaQuery.sizeOf(context).width;
+    final isMobile = width < Breakpoints.mobile;
+
+    final logoWidth = isMobile ? 58.0 : 88.0;
+    final logoHeight = isMobile ? 32.0 : 40.0;
+    final logoGap = isMobile ? 10.0 : 24.0;
+    final logoFontSize = isMobile ? 11.0 : 13.0;
 
     final header = Text(
       l10n.featuredIn,
       style: GoogleFonts.condiment(
-        fontSize: 52,
+        fontSize: isMobile ? 28 : 52,
         fontWeight: FontWeight.bold,
         color: AppColors.accent,
         height: 1.2,
@@ -376,26 +387,46 @@ class _FeaturedInCarouselState extends State<_FeaturedInCarousel> {
       key: ValueKey<int>(_currentPage),
       children: [
         for (var i = 0; i < _kLogosPerLine; i++)
-          StorySection._buildLogoChip(l10n, textTheme, startIndex + i + 1),
+          StorySection._buildLogoChip(
+            l10n,
+            textTheme,
+            startIndex + i + 1,
+            width: logoWidth,
+            height: logoHeight,
+            rightPadding: i < _kLogosPerLine - 1 ? logoGap : 0,
+            fontSize: logoFontSize,
+          ),
       ],
     );
+
+    final content = AnimatedSwitcher(
+      duration: _slideDuration,
+      switchInCurve: Curves.easeInOut,
+      switchOutCurve: Curves.easeInOut,
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return FadeTransition(opacity: animation, child: child);
+      },
+      child: logosRow,
+    );
+
+    if (isMobile) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          header,
+          SizedBox(height: _headerGap * 0.75),
+          Center(child: content),
+        ],
+      );
+    }
 
     return Row(
       children: [
         header,
         const SizedBox(width: _headerGap),
         Expanded(
-          child: Center(
-            child: AnimatedSwitcher(
-              duration: _slideDuration,
-              switchInCurve: Curves.easeInOut,
-              switchOutCurve: Curves.easeInOut,
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return FadeTransition(opacity: animation, child: child);
-              },
-              child: logosRow,
-            ),
-          ),
+          child: Center(child: content),
         ),
       ],
     );

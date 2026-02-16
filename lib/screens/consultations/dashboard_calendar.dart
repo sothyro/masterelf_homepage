@@ -5,6 +5,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/appointment.dart' show AdminAppointmentRecord, defaultSessionDurationMinutes, sessionTypeOnline, sessionTypeVisit;
 import '../../theme/app_theme.dart';
+import '../../utils/breakpoints.dart';
 import '../../services/appointment_booking_service.dart' show submitAppointmentBooking;
 
 /// Consultation option for booking.
@@ -496,15 +497,24 @@ Future<void> showCreateBookingDialog(
         final service = services[selectedServiceIndex];
         final serviceName = '${service.category} (${service.method})';
 
+        final isNarrow = MediaQuery.sizeOf(context).width < Breakpoints.mobile;
+        final maxContentHeight = MediaQuery.sizeOf(context).height * 0.75;
+
         return AlertDialog(
           backgroundColor: AppColors.surfaceElevatedDark,
+          insetPadding: isNarrow
+              ? const EdgeInsets.symmetric(horizontal: 16, vertical: 24)
+              : const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
           title: Text(
             l10n.createBookingFor,
             style: const TextStyle(color: AppColors.onPrimary),
           ),
           content: SingleChildScrollView(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 420),
+              constraints: BoxConstraints(
+                maxWidth: 420,
+                maxHeight: maxContentHeight,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
