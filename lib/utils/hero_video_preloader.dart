@@ -7,35 +7,71 @@ import '../config/app_content.dart';
 import '../theme/app_theme.dart';
 
 /// Preloads the hero video at app startup so the hero section can use it when mounted.
-/// [preload] returns a Future that completes when the video is ready (or fails).
+/// [preload] returns a Future that completes when the video is initialized and ready to play.
+/// [onProgress] receives 0.0→1.0 based on real loading: 0 until init starts, then buffered/duration.
 class HeroVideoPreloader {
   HeroVideoPreloader._();
 
   static VideoPlayerController? _preloaded;
   static Completer<void>? _readyCompleter;
 
-  /// Start loading the hero video. Returns a Future that completes when ready.
+  /// Start loading the hero video. Reports progress via [onProgress] (0.0 to 1.0).
+  /// Progress reflects buffered amount / duration once initialized; completes when ready to play.
   /// Safe to call once; subsequent calls return the same future.
-  static Future<void> preload() {
-    if (_preloaded != null) return Future.value();
+  static Future<void> preload([void Function(double progress)? onProgress]) {
+    if (_preloaded != null) {
+      onProgress?.call(1.0);
+      return Future.value();
+    }
     if (_readyCompleter != null) return _readyCompleter!.future;
     _readyCompleter = Completer<void>();
+    onProgress?.call(0.0);
+
     final controller = VideoPlayerController.asset(
       AppContent.assetHeroVideo,
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
+
+    void reportProgress(VideoPlayerValue value) {
+      final durationMs = value.duration?.inMilliseconds ?? 0;
+      if (durationMs <= 0) {
+        onProgress?.call(value.isInitialized ? 1.0 : 0.0);
+        return;
+      }
+      final bufferedEnd = value.buffered.isEmpty
+          ? 0
+          : value.buffered
+              .map((r) => r.end.inMilliseconds)
+              .reduce((a, b) => a > b ? a : b);
+      final fraction = (bufferedEnd / durationMs).clamp(0.0, 1.0);
+      onProgress?.call(fraction);
+    }
+
+    void listener() {
+      if (_preloaded != null) return;
+      reportProgress(controller.value);
+    }
+
+    controller.addListener(listener);
+
     controller.initialize().then((_) {
       if (_preloaded != null) {
+        controller.removeListener(listener);
         controller.dispose();
         _readyCompleter?.complete();
         return;
       }
+      controller.removeListener(listener);
+      reportProgress(controller.value);
       controller.setLooping(true);
       controller.setVolume(0);
       _preloaded = controller;
+      onProgress?.call(1.0);
       _readyCompleter?.complete();
     }).catchError((_) {
+      controller.removeListener(listener);
       controller.dispose();
+      onProgress?.call(1.0);
       _readyCompleter?.complete();
     });
     return _readyCompleter!.future;

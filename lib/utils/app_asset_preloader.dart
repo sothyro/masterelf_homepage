@@ -7,11 +7,13 @@ import '../config/app_content.dart';
 import 'hero_video_preloader.dart';
 
 // ---------------------------------------------------------------------------
-// ROOT CAUSE OF SLOW FIRST LOAD (critical inspection):
-// - App blocked on preloadAll() until 100%: hero video (~10 MB), 28 images,
-//   and 5 font families with long waits. FIX: Show app after critical path
-//   only (logo + hero image). Fonts, video, and rest images load in background.
+// Critical path: logo + hero image + hero video. Page is revealed only when
+// all are ready so the video is fully buffered and plays smoothly. Progress
+// bar reflects real loading: ~20% images, ~80% video (by weight).
 // ---------------------------------------------------------------------------
+
+/// Weight of critical images in the 0–100% progress (video gets the rest).
+const double _criticalImagesWeight = 0.2;
 
 /// Critical for first paint: logo (header) and hero background (fallback/static).
 List<String> get _criticalImageAssets => [
@@ -53,35 +55,57 @@ List<String> get _restImageAssets => [
   AppContent.assetPeriod9_2,
 ];
 
-/// Preloads only what's needed for first paint; reports progress 0.0 → 1.0.
-/// Call [preloadAll] at startup. When it reaches 1.0, the app is shown. Video,
-/// rest images, and other-locale fonts continue loading in background.
+/// Preloads critical path (logo + hero image + hero video); reports progress 0.0 → 1.0.
+/// Page is revealed only when progress reaches 1.0 so the video is buffered and ready.
+/// Rest images and other-locale fonts load in background after reveal.
 class AppAssetPreloader {
   AppAssetPreloader._();
 
-  /// Critical path only: logo + hero image. Reaches 1.0 as soon as those are
-  /// loaded so the app can show. Fonts, video, and rest images load in background
-  /// (brief FOUT possible until main fonts finish).
+  /// Critical path: logo + hero image + hero video. Progress is accurate:
+  /// images contribute [_criticalImagesWeight], video contributes the rest (buffered %).
+  /// Reaches 1.0 only when all are ready so the page can show with smooth video.
   static Future<void> preloadAll(void Function(double progress) onProgress) async {
     onProgress(0.0);
 
-    // 1) Critical images only (logo + hero background) — then show app
-    await _loadImageList(_criticalImageAssets, (completed, total) {
-      final fraction = total > 0 ? completed / total : 1.0;
-      onProgress(fraction);
-    });
+    double imageProgress = 0.0;
+    double videoProgress = 0.0;
+
+    void reportCombined() {
+      final combined = (imageProgress * _criticalImagesWeight) +
+          (videoProgress * (1.0 - _criticalImagesWeight));
+      onProgress(combined.clamp(0.0, 1.0));
+    }
+
+    // Load critical images and hero video in parallel; both must complete before reveal.
+    await Future.wait([
+      _loadImageList(_criticalImageAssets, (completed, total) {
+        imageProgress = total > 0 ? completed / total : 1.0;
+        reportCombined();
+      }).then((_) {
+        imageProgress = 1.0;
+        reportCombined();
+      }),
+      HeroVideoPreloader.preload((v) {
+        videoProgress = v;
+        reportCombined();
+      }).then((_) {
+        videoProgress = 1.0;
+        reportCombined();
+      }).catchError((_) {
+        videoProgress = 1.0;
+        reportCombined();
+      }),
+    ]);
+
     onProgress(1.0);
 
-    // 2) Background: main fonts first (minimize FOUT), then video, rest images, other-locale fonts
+    // Background: fonts and rest images (no blocking)
     unawaited(_backgroundPreload());
   }
 
   static Future<void> _backgroundPreload() async {
     _triggerOtherLocaleFontsInBackground();
     await _loadMainFonts();
-    try {
-      await HeroVideoPreloader.preload();
-    } catch (_) {}
     await _loadImageList(_restImageAssets, (_, __) {});
     await GoogleFonts.pendingFonts().timeout(
       const Duration(seconds: 30),
