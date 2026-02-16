@@ -430,3 +430,215 @@ export const cancelBooking = onCall(async (request) => {
   await ref.update({ status: "cancelled" });
   return { ok: true };
 });
+
+// ---------------------------------------------------------------------------
+// Contact form submissions
+// ---------------------------------------------------------------------------
+const CONTACT_SUBMISSIONS = "contact_submissions";
+
+// Optional: notify team by email when a contact form is submitted (Resend).
+const resendApiKey = defineSecret("RESEND_API_KEY");
+const contactNotifyEmail = defineSecret("CONTACT_NOTIFY_EMAIL");
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_NAME = 200;
+const MAX_EMAIL = 200;
+const MAX_PHONE = 50;
+const MAX_MESSAGE = 5000;
+
+/**
+ * Callable: submit contact form. Writes to Firestore contact_submissions.
+ * No auth required. Validates name, email, message, subjectIndex (0-5).
+ */
+export const submitContactForm = onCall(async (request) => {
+  const data = request.data || {};
+  const name = typeof data.name === "string" ? data.name.trim() : "";
+  const email = typeof data.email === "string" ? data.email.trim() : "";
+  const phone = typeof data.phone === "string" ? data.phone.trim() : "";
+  const message = typeof data.message === "string" ? data.message.trim() : "";
+  const subjectIndex = typeof data.subjectIndex === "number" ? data.subjectIndex : 0;
+  const subjectLabel = typeof data.subjectLabel === "string" ? data.subjectLabel.trim() : "";
+
+  if (!name || name.length > MAX_NAME) {
+    throw new HttpsError("invalid-argument", "Name is required and must be at most " + MAX_NAME + " characters.");
+  }
+  if (!email || email.length > MAX_EMAIL) {
+    throw new HttpsError("invalid-argument", "Email is required and must be at most " + MAX_EMAIL + " characters.");
+  }
+  if (!EMAIL_REGEX.test(email)) {
+    throw new HttpsError("invalid-argument", "Invalid email format.");
+  }
+  if (!message || message.length > MAX_MESSAGE) {
+    throw new HttpsError("invalid-argument", "Message is required and must be at most " + MAX_MESSAGE + " characters.");
+  }
+  const safeSubjectIndex = Math.max(0, Math.min(5, Math.floor(subjectIndex)));
+
+  const doc = {
+    name,
+    email,
+    phone: phone || null,
+    subjectIndex: safeSubjectIndex,
+    subjectLabel: subjectLabel || "",
+    message,
+    status: "new",
+    createdAt: Timestamp.now(),
+  };
+
+  const ref = await db.collection(CONTACT_SUBMISSIONS).add(doc);
+  console.log("submitContactForm: created", ref.id);
+  return { success: true, id: ref.id };
+});
+
+/**
+ * Firestore trigger: when a contact form is submitted, optionally email the team.
+ * Set secrets RESEND_API_KEY and CONTACT_NOTIFY_EMAIL to enable. Otherwise only logs.
+ */
+// Brand colors for email (match app theme)
+const EMAIL_ACCENT = "#C9A227";
+const EMAIL_DARK = "#1A1A1A";
+const EMAIL_BG = "#F5F5F5";
+const EMAIL_TEXT = "#333333";
+const EMAIL_MUTED = "#666666";
+
+function buildContactNotificationHtml(submission) {
+  const name = escapeHtml(submission.name);
+  const email = escapeHtml(submission.email);
+  const phone = submission.phone ? escapeHtml(submission.phone) : null;
+  const subject = submission.subjectLabel ? escapeHtml(submission.subjectLabel) : null;
+  const message = escapeHtml(submission.message).replace(/\n/g, "<br>");
+
+  const row = (label, value) =>
+    value != null && value !== ""
+      ? `
+    <tr>
+      <td style="padding:10px 16px 10px 0;vertical-align:top;width:100px;font-weight:600;color:${EMAIL_MUTED};font-size:13px;font-family:sans-serif;">${label}</td>
+      <td style="padding:10px 0;vertical-align:top;font-size:14px;color:${EMAIL_TEXT};font-family:sans-serif;">${value}</td>
+    </tr>`
+      : "";
+
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>New contact submission</title>
+</head>
+<body style="margin:0;padding:0;background-color:${EMAIL_BG};font-family:sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:${EMAIL_BG};">
+    <tr>
+      <td style="padding:32px 24px;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.08);overflow:hidden;">
+          <!-- Header -->
+          <tr>
+            <td style="background:linear-gradient(135deg, ${EMAIL_DARK} 0%, #2a2a2a 100%);padding:24px 28px;text-align:left;">
+              <span style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:${EMAIL_ACCENT};font-weight:600;">Master Elf Feng Shui</span>
+              <h1 style="margin:8px 0 0;font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.02em;">New contact form submission</h1>
+              <p style="margin:6px 0 0;font-size:13px;color:rgba(255,255,255,0.75);">Someone reached out via your website.</p>
+            </td>
+          </tr>
+          <!-- Subject badge (if present) -->
+          ${subject ? `
+          <tr>
+            <td style="padding:16px 28px 0;">
+              <span style="display:inline-block;padding:6px 12px;background:${EMAIL_ACCENT};color:#1a1a1a;font-size:12px;font-weight:600;border-radius:6px;">${subject}</span>
+            </td>
+          </tr>` : ""}
+          <!-- Details table -->
+          <tr>
+            <td style="padding:24px 28px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                ${row("Name", name)}
+                ${row("Email", email)}
+                ${row("Phone", phone)}
+                ${row("Subject", subject)}
+              </table>
+              <!-- Message block -->
+              <div style="margin-top:20px;padding:20px;background:${EMAIL_BG};border-radius:8px;border-left:4px solid ${EMAIL_ACCENT};">
+                <p style="margin:0 0 8px;font-size:12px;font-weight:600;color:${EMAIL_MUTED};text-transform:uppercase;letter-spacing:0.05em;">Message</p>
+                <p style="margin:0;font-size:15px;line-height:1.6;color:${EMAIL_TEXT};white-space:pre-wrap;">${message}</p>
+              </div>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="padding:16px 28px 24px;border-top:1px solid #eee;">
+              <p style="margin:0;font-size:12px;color:${EMAIL_MUTED};">
+                View and manage in
+                <a href="https://console.firebase.google.com/project/_/firestore/data/~2Fcontact_submissions" style="color:${EMAIL_ACCENT};font-weight:600;text-decoration:none;">Firebase Console → Firestore → contact_submissions</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+}
+
+async function sendContactNotificationEmail(toEmail, apiKey, submission) {
+  if (!apiKey || !toEmail) {
+    console.log("onContactSubmissionCreated: RESEND_API_KEY or CONTACT_NOTIFY_EMAIL not set; skipping email.");
+    return;
+  }
+  const subject = submission.subjectLabel
+    ? `[Master Elf] ${submission.subjectLabel} – ${submission.name}`
+    : `[Master Elf] Contact from ${submission.name}`;
+  const html = buildContactNotificationHtml(submission);
+
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + apiKey,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: "Master Elf Contact <onboarding@resend.dev>",
+      to: [toEmail],
+      subject,
+      html,
+    }),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    console.error("onContactSubmissionCreated: Resend error", res.status, text);
+    return;
+  }
+  console.log("onContactSubmissionCreated: notification email sent to", toEmail);
+}
+
+function escapeHtml(s) {
+  if (typeof s !== "string") return "";
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+export const onContactSubmissionCreated = onDocumentCreated(
+  {
+    document: `${CONTACT_SUBMISSIONS}/{docId}`,
+    secrets: [resendApiKey, contactNotifyEmail],
+  },
+  async (event) => {
+    const snap = event.data;
+    if (!snap) return;
+    const data = snap.data();
+    const apiKey = resendApiKey.value();
+    const toEmail = contactNotifyEmail.value();
+    try {
+      await sendContactNotificationEmail(toEmail, apiKey, {
+        name: data.name || "",
+        email: data.email || "",
+        phone: data.phone || "",
+        subjectLabel: data.subjectLabel || "",
+        message: data.message || "",
+      });
+    } catch (err) {
+      console.error("onContactSubmissionCreated:", err);
+    }
+  }
+);

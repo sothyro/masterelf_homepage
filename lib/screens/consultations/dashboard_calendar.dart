@@ -480,10 +480,12 @@ Future<void> showCreateBookingDialog(
   String? error;
 
   List<_ConsultationOption> getServices() => [
-    _ConsultationOption(id: 'destiny', category: l10n.consult1Category, method: l10n.consult1Method),
-    _ConsultationOption(id: 'event', category: l10n.consult2Category, method: l10n.consult2Method),
-    _ConsultationOption(id: 'space', category: l10n.consult3Category, method: l10n.consult3Method),
-    _ConsultationOption(id: 'timing', category: l10n.consult4Category, method: l10n.consult4Method),
+    _ConsultationOption(id: 'bazi', category: l10n.consult1Category, method: l10n.consult1Method),
+    _ConsultationOption(id: 'fengshui', category: l10n.consult2Category, method: l10n.consult2Method),
+    _ConsultationOption(id: 'dateselection', category: l10n.consult3Category, method: l10n.consult3Method),
+    _ConsultationOption(id: 'qimeniching', category: l10n.consult4Category, method: l10n.consult4Method),
+    _ConsultationOption(id: 'maosan', category: l10n.consult5Category, method: l10n.consult5Method),
+    _ConsultationOption(id: 'publications', category: l10n.consult6Category, method: l10n.consult6Method),
   ];
 
   await showDialog(

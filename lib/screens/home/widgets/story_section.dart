@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,8 +9,10 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
 
-/// Number of logo placeholders in the Featured in section.
-const int _kFeaturedLogoCount = 17;
+/// Number of logo placeholders in the Featured in section (15 = 3 pages × 5 logos).
+const int _kFeaturedLogoCount = 15;
+const int _kLogosPerLine = 5;
+const int _kFeaturedLogoPages = 3; // 15 / 5
 
 class StorySection extends StatelessWidget {
   const StorySection({super.key});
@@ -307,7 +310,7 @@ class StorySection extends StatelessWidget {
   }
 }
 
-/// Infinite looping carousel for the Featured in logos.
+/// Fade-in / fade-out logo strip: 5 logos per row, 3 rows (15 logos), looping.
 class _FeaturedInCarousel extends StatefulWidget {
   const _FeaturedInCarousel({
     required this.l10n,
@@ -321,50 +324,27 @@ class _FeaturedInCarousel extends StatefulWidget {
   State<_FeaturedInCarousel> createState() => _FeaturedInCarouselState();
 }
 
-class _FeaturedInCarouselState extends State<_FeaturedInCarousel> with SingleTickerProviderStateMixin {
-  late ScrollController _scrollController;
-  Ticker? _ticker;
-  double _singleSetWidth = 0;
-  Duration _lastElapsed = Duration.zero;
-
-  static const double _logoWidth = 88;
-  static const double _logoGap = 24;
+class _FeaturedInCarouselState extends State<_FeaturedInCarousel> {
+  int _currentPage = 0;
+  Timer? _timer;
   static const double _headerGap = 32;
-  static const double _scrollSpeed = 56; // pixels per second
+  static const Duration _slideDuration = Duration(milliseconds: 1200);
+  static const Duration _displayDuration = Duration(seconds: 5);
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _startScrolling());
-  }
-
-  void _startScrolling() {
-    if (!mounted || !_scrollController.hasClients) return;
-    // singleSetWidth = logos only (17 * (88+24))
-    _singleSetWidth = _kFeaturedLogoCount * (_logoWidth + _logoGap);
-    _ticker = createTicker(_onTick);
-    _ticker!.start();
-  }
-
-  void _onTick(Duration elapsed) {
-    if (!mounted || !_scrollController.hasClients) return;
-    final delta = elapsed - _lastElapsed;
-    _lastElapsed = elapsed;
-    final deltaSeconds = delta.inMicroseconds / 1_000_000.0;
-    var offset = _scrollController.offset;
-    offset += _scrollSpeed * deltaSeconds;
-
-    if (_singleSetWidth > 0 && offset >= _singleSetWidth - 1) {
-      offset = 0;
-    }
-    _scrollController.jumpTo(offset);
+    _timer = Timer.periodic(_displayDuration, (_) {
+      if (!mounted) return;
+      setState(() {
+        _currentPage = (_currentPage + 1) % _kFeaturedLogoPages;
+      });
+    });
   }
 
   @override
   void dispose() {
-    _ticker?.dispose();
-    _scrollController.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -390,31 +370,30 @@ class _FeaturedInCarouselState extends State<_FeaturedInCarousel> with SingleTic
       ),
     );
 
+    final startIndex = _currentPage * _kLogosPerLine;
     final logosRow = Row(
       mainAxisSize: MainAxisSize.min,
+      key: ValueKey<int>(_currentPage),
       children: [
-        for (var i = 0; i < _kFeaturedLogoCount; i++)
-          StorySection._buildLogoChip(l10n, textTheme, i + 1),
+        for (var i = 0; i < _kLogosPerLine; i++)
+          StorySection._buildLogoChip(l10n, textTheme, startIndex + i + 1),
       ],
     );
 
-    // Header fixed; only logos scroll in infinite loop
     return Row(
       children: [
         header,
         const SizedBox(width: _headerGap),
         Expanded(
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            scrollDirection: Axis.horizontal,
-            physics: const NeverScrollableScrollPhysics(),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                logosRow,
-                const SizedBox(width: _headerGap),
-                logosRow,
-              ],
+          child: Center(
+            child: AnimatedSwitcher(
+              duration: _slideDuration,
+              switchInCurve: Curves.easeInOut,
+              switchOutCurve: Curves.easeInOut,
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+              child: logosRow,
             ),
           ),
         ),

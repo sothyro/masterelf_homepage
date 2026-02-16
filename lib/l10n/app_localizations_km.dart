@@ -433,7 +433,7 @@ class AppLocalizationsKm extends AppLocalizations {
       'វគ្គសិក្សា និងកាលវិភាគបន្ថែមនឹងប្រកាសនៅទីនេះ។ ទាក់ទងយើងសម្រាប់ការចូលប្រើមុន ឬសម័យក្រុមផ្ទាល់។';
 
   @override
-  String get consult1Category => 'បង្ហាញវាសនា';
+  String get consult1Category => 'ការអាន BaZi';
 
   @override
   String get consult1Method => 'BaZi';
@@ -445,42 +445,69 @@ class AppLocalizationsKm extends AppLocalizations {
   String get consult1Desc => 'បង្ហាញអំណាចពិតរបស់អ្នកនៅខាងក្នុង។';
 
   @override
-  String get consult2Category => 'ការជ្រើសរើសកាលបរិច្ឆេទព្រឹត្តិការណ៍ពិសេស';
+  String get consult2Category => 'សេវាកម្ម Feng Shui';
 
   @override
-  String get consult2Method => 'QiMen DunJia';
+  String get consult2Method => 'Feng Shui';
 
   @override
-  String get consult2Question => 'រៀបចំជំហានដ៏ឆ្លាតរបស់អ្នក...';
+  String get consult2Question => 'រៀបចំកន្លែងអ្នក កំណត់ជីវិតអ្នក...';
 
   @override
-  String get consult2Desc => 'ឈ្នះសត្រូវ និងបង្កើនប្រយោជន៍របស់អ្នក។';
+  String get consult2Desc => 'យល់ពីរបៀបប្រើប្រាស់ថាមពលវិជ្ជមាននៃបរិស្ថានអ្នក។';
 
   @override
-  String get consult3Category => 'ការធ្វើអន្តរកម្មទីធ្លា';
+  String get consult3Category => 'ការជ្រើសរើសកាលបរិច្ឆេទ';
 
   @override
-  String get consult3Method => 'Feng Shui';
+  String get consult3Method => 'Date Selection';
 
   @override
-  String get consult3Question => 'រៀបចំកន្លែងអ្នក កំណត់ជីវិតអ្នក...';
-
-  @override
-  String get consult3Desc => 'យល់ពីរបៀបប្រើប្រាស់ថាមពលវិជ្ជមាននៃបរិស្ថានអ្នក។';
-
-  @override
-  String get consult4Category => 'ពេលវេលារុក្ខជាតិ';
-
-  @override
-  String get consult4Method => 'Date Selection';
-
-  @override
-  String get consult4Question =>
+  String get consult3Question =>
       'ពេលណាជាពេលវេលាល្អបំផុតដើម្បីជ្រើសរើសអ្វីៗដោយឆ្លាត?';
 
   @override
-  String get consult4Desc =>
+  String get consult3Desc =>
       'ជ្រើសរើសពេលវេលា និងកាលបរិច្ឆេទរបស់អ្នកដើម្បីលទ្ធផលល្អបំផុត។';
+
+  @override
+  String get consult4Category => 'QiMen និង I Ching';
+
+  @override
+  String get consult4Method => 'QiMen & I Ching';
+
+  @override
+  String get consult4Question => 'រៀបចំជំហានដ៏ឆ្លាតរបស់អ្នក...';
+
+  @override
+  String get consult4Desc => 'ឈ្នះសត្រូវ និងបង្កើនប្រយោជន៍របស់អ្នក។';
+
+  @override
+  String get consult5Category => 'ពិធីការ Mao San';
+
+  @override
+  String get consult5Method => 'Mao Shan';
+
+  @override
+  String get consult5Question =>
+      'បែបបទតាវនៃពិធីការ និងការអនុវត្តសម្រាប់ការផ្លាស់ប្តូរ។';
+
+  @override
+  String get consult5Desc =>
+      'វិធីសាស្រ្ត និងពិធីការ Mao Shan ក្នុងរូបវិទ្យាចិន។';
+
+  @override
+  String get consult6Category => 'ការបោះពុម្ភ Master Elf';
+
+  @override
+  String get consult6Method => 'Publications';
+
+  @override
+  String get consult6Question => 'សៀវភៅ និងធនធានពី Master Elf។';
+
+  @override
+  String get consult6Desc =>
+      'ស្វែងយល់ពីស្នាដៃរបស់យើងអំពី Feng Shui និងរូបវិទ្យាចិន។';
 
   @override
   String get stickyCtaText => 'ទស្សន៍ទាយសត្វ ១២ ឥតគិតថ្លៃ';
@@ -849,6 +876,23 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get contactFormMessage => 'សារ';
+
+  @override
+  String get contactSending => 'កំពុងផ្ញើ…';
+
+  @override
+  String get contactSuccessTitle => 'អរគុណ!';
+
+  @override
+  String get contactSuccess =>
+      'សាររបស់អ្នកត្រូវបានផ្ញើដោយជោគជ័យ។ ក្រុមយើងនឹងតបទៅអ្នកឆាប់ៗ។';
+
+  @override
+  String get contactErrorTitle => 'យើងមិនអាចផ្ញើសាររបស់អ្នកបានទេ';
+
+  @override
+  String get contactError =>
+      'មានបញ្ហាកើតឡើង។ សូមព្យាយាមម្តងទៀត ឬអ៉ីមែលយើងដោយផ្ទាល់។';
 
   @override
   String get contactSubjectDestiny => 'វាសនា / ការអានផ្ទាល់ខ្លួន (Bazi)';

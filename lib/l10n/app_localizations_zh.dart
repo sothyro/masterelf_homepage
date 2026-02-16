@@ -400,7 +400,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get academyMoreCoursesNote => '更多课程与排期将在此公布。如需抢先报名或定制团体课程，请联系我们。';
 
   @override
-  String get consult1Category => '命运揭示';
+  String get consult1Category => '八字解读';
 
   @override
   String get consult1Method => '八字';
@@ -412,40 +412,64 @@ class AppLocalizationsZh extends AppLocalizations {
   String get consult1Desc => '揭示你内在的真正力量。';
 
   @override
-  String get consult2Category => '重大事项择日';
+  String get consult2Category => '风水服务';
 
   @override
-  String get consult2Method => '奇门遁甲';
+  String get consult2Method => '风水';
 
   @override
-  String get consult2Question => '谋划你的明智一步...';
+  String get consult2Question => '布置你的空间，定义你的人生...';
 
   @override
-  String get consult2Desc => '克敌制胜，最大化你的利益。';
+  String get consult2Desc => '了解如何善用环境的正面能量。';
 
   @override
-  String get consult3Category => '空间调和';
+  String get consult3Category => '择日';
 
   @override
-  String get consult3Method => '风水';
+  String get consult3Method => '择日';
 
   @override
-  String get consult3Question => '布置你的空间，定义你的人生...';
+  String get consult3Question => '何时才是明智选择的最佳时机？';
 
   @override
-  String get consult3Desc => '了解如何善用环境的正面能量。';
+  String get consult3Desc => '选择时间与日期，争取最佳结果。';
 
   @override
-  String get consult4Category => '吉时择日';
+  String get consult4Category => '奇门与易经';
 
   @override
-  String get consult4Method => '择日';
+  String get consult4Method => '奇门遁甲与易经';
 
   @override
-  String get consult4Question => '何时才是明智选择的最佳时机？';
+  String get consult4Question => '谋划你的明智一步...';
 
   @override
-  String get consult4Desc => '选择时间与日期，争取最佳结果。';
+  String get consult4Desc => '克敌制胜，最大化你的利益。';
+
+  @override
+  String get consult5Category => '茅山法事';
+
+  @override
+  String get consult5Method => '茅山';
+
+  @override
+  String get consult5Question => '道教仪轨与实修传统，助力转化。';
+
+  @override
+  String get consult5Desc => '茅山法脉在中国玄学中的方法与仪轨。';
+
+  @override
+  String get consult6Category => 'Master Elf 出版物';
+
+  @override
+  String get consult6Method => '出版物';
+
+  @override
+  String get consult6Question => 'Master Elf 的书籍与资源。';
+
+  @override
+  String get consult6Desc => '探索我们在风水与中国玄学方面的出版作品。';
 
   @override
   String get stickyCtaText => '免费十二生肖运势';
@@ -803,6 +827,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get contactFormMessage => '留言';
+
+  @override
+  String get contactSending => '发送中…';
+
+  @override
+  String get contactSuccessTitle => '感谢您！';
+
+  @override
+  String get contactSuccess => '您的留言已成功发送，我们会尽快回复您。';
+
+  @override
+  String get contactErrorTitle => '无法发送您的留言';
+
+  @override
+  String get contactError => '出了点问题，请重试或直接致信我们。';
 
   @override
   String get contactSubjectDestiny => '命运 / 个人解读（八字）';

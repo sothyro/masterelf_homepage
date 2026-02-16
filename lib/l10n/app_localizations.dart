@@ -877,7 +877,7 @@ abstract class AppLocalizations {
   /// No description provided for @consult1Category.
   ///
   /// In en, this message translates to:
-  /// **'Destiny Reveal'**
+  /// **'Bazi Reading'**
   String get consult1Category;
 
   /// No description provided for @consult1Method.
@@ -901,74 +901,122 @@ abstract class AppLocalizations {
   /// No description provided for @consult2Category.
   ///
   /// In en, this message translates to:
-  /// **'Special Event Date Selection'**
+  /// **'Feng Shui Services'**
   String get consult2Category;
 
   /// No description provided for @consult2Method.
   ///
   /// In en, this message translates to:
-  /// **'QiMen DunJia'**
+  /// **'Feng Shui'**
   String get consult2Method;
 
   /// No description provided for @consult2Question.
   ///
   /// In en, this message translates to:
-  /// **'Strategise your wise move...'**
+  /// **'Arrange your place, define your life...'**
   String get consult2Question;
 
   /// No description provided for @consult2Desc.
   ///
   /// In en, this message translates to:
-  /// **'Defeat your enemy and maximise your benefits.'**
+  /// **'Understand how to harness the positive energy of your environment.'**
   String get consult2Desc;
 
   /// No description provided for @consult3Category.
   ///
   /// In en, this message translates to:
-  /// **'Mediation of Space'**
+  /// **'Date Selection'**
   String get consult3Category;
 
   /// No description provided for @consult3Method.
   ///
   /// In en, this message translates to:
-  /// **'Feng Shui'**
+  /// **'Date Selection'**
   String get consult3Method;
 
   /// No description provided for @consult3Question.
   ///
   /// In en, this message translates to:
-  /// **'Arrange your place, define your life...'**
+  /// **'When is the best time to choose things wisely?'**
   String get consult3Question;
 
   /// No description provided for @consult3Desc.
   ///
   /// In en, this message translates to:
-  /// **'Understand how to harness the positive energy of your environment.'**
+  /// **'Select your time and date for the best possible outcome.'**
   String get consult3Desc;
 
   /// No description provided for @consult4Category.
   ///
   /// In en, this message translates to:
-  /// **'Auspicious Timing'**
+  /// **'Qimen and Iching'**
   String get consult4Category;
 
   /// No description provided for @consult4Method.
   ///
   /// In en, this message translates to:
-  /// **'Date Selection'**
+  /// **'QiMen & I Ching'**
   String get consult4Method;
 
   /// No description provided for @consult4Question.
   ///
   /// In en, this message translates to:
-  /// **'When is the best time to choose things wisely?'**
+  /// **'Strategise your wise move...'**
   String get consult4Question;
 
   /// No description provided for @consult4Desc.
   ///
   /// In en, this message translates to:
-  /// **'Select your time and date for the best possible outcome.'**
+  /// **'Defeat your enemy and maximise your benefits.'**
   String get consult4Desc;
+
+  /// No description provided for @consult5Category.
+  ///
+  /// In en, this message translates to:
+  /// **'Mao San Rituals'**
+  String get consult5Category;
+
+  /// No description provided for @consult5Method.
+  ///
+  /// In en, this message translates to:
+  /// **'Mao Shan'**
+  String get consult5Method;
+
+  /// No description provided for @consult5Question.
+  ///
+  /// In en, this message translates to:
+  /// **'Taoist tradition of ritual and practice for transformation.'**
+  String get consult5Question;
+
+  /// No description provided for @consult5Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Mao Shan methods and rituals within Chinese metaphysics.'**
+  String get consult5Desc;
+
+  /// No description provided for @consult6Category.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf Publications'**
+  String get consult6Category;
+
+  /// No description provided for @consult6Method.
+  ///
+  /// In en, this message translates to:
+  /// **'Publications'**
+  String get consult6Method;
+
+  /// No description provided for @consult6Question.
+  ///
+  /// In en, this message translates to:
+  /// **'Books and resources from Master Elf.'**
+  String get consult6Question;
+
+  /// No description provided for @consult6Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore our published works on Feng Shui and Chinese metaphysics.'**
+  String get consult6Desc;
 
   /// No description provided for @stickyCtaText.
   ///
@@ -1653,6 +1701,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Message'**
   String get contactFormMessage;
+
+  /// No description provided for @contactSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending…'**
+  String get contactSending;
+
+  /// No description provided for @contactSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you!'**
+  String get contactSuccessTitle;
+
+  /// No description provided for @contactSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Your message has been sent successfully. Our team will get back to you soon.'**
+  String get contactSuccess;
+
+  /// No description provided for @contactErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t send your message'**
+  String get contactErrorTitle;
+
+  /// No description provided for @contactError.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again or email us directly.'**
+  String get contactError;
 
   /// No description provided for @contactSubjectDestiny.
   ///

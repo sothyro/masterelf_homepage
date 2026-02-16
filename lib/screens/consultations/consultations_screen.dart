@@ -63,10 +63,12 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
   List<_ConsultationOption> _getServices(AppLocalizations l10n) {
     return [
-      _ConsultationOption(id: 'destiny', category: l10n.consult1Category, method: l10n.consult1Method, icon: LucideIcons.user),
-      _ConsultationOption(id: 'event', category: l10n.consult2Category, method: l10n.consult2Method, icon: LucideIcons.calendar),
-      _ConsultationOption(id: 'space', category: l10n.consult3Category, method: l10n.consult3Method, icon: LucideIcons.home),
-      _ConsultationOption(id: 'timing', category: l10n.consult4Category, method: l10n.consult4Method, icon: LucideIcons.clock),
+      _ConsultationOption(id: 'bazi', category: l10n.consult1Category, method: l10n.consult1Method, icon: LucideIcons.user),
+      _ConsultationOption(id: 'fengshui', category: l10n.consult2Category, method: l10n.consult2Method, icon: LucideIcons.home),
+      _ConsultationOption(id: 'dateselection', category: l10n.consult3Category, method: l10n.consult3Method, icon: LucideIcons.calendar),
+      _ConsultationOption(id: 'qimeniching', category: l10n.consult4Category, method: l10n.consult4Method, icon: LucideIcons.clock),
+      _ConsultationOption(id: 'maosan', category: l10n.consult5Category, method: l10n.consult5Method, icon: LucideIcons.sparkles),
+      _ConsultationOption(id: 'publications', category: l10n.consult6Category, method: l10n.consult6Method, icon: LucideIcons.bookOpen),
     ];
   }
 

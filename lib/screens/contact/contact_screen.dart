@@ -3,6 +3,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../config/app_content.dart';
 import '../../l10n/app_localizations.dart';
+import '../../services/contact_form_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
 import '../../utils/launcher_utils.dart';
@@ -22,6 +23,9 @@ class _ContactScreenState extends State<ContactScreen> {
   final _phoneController = TextEditingController();
   final _messageController = TextEditingController();
   int _selectedSubjectIndex = 0;
+  bool _submitting = false;
+  String? _submitError;
+  bool _submitSuccess = false;
 
   @override
   void dispose() {
@@ -32,30 +36,77 @@ class _ContactScreenState extends State<ContactScreen> {
     super.dispose();
   }
 
+  /// Subject options match Consultations services (Bazi Reading, Feng Shui Services, etc.).
+  static const int _subjectOptionCount = 6;
+
   String _getSubjectLabel(AppLocalizations l10n, int index) {
     switch (index) {
       case 0:
-        return l10n.contactSubjectDestiny;
+        return l10n.consult1Category;
       case 1:
-        return l10n.contactSubjectBusiness;
+        return l10n.consult2Category;
       case 2:
-        return l10n.contactSubjectFengShui;
+        return l10n.consult3Category;
       case 3:
-        return l10n.contactSubjectDateSelection;
+        return l10n.consult4Category;
       case 4:
-        return l10n.contactSubjectUnsure;
+        return l10n.consult5Category;
+      case 5:
+        return l10n.consult6Category;
       default:
-        return l10n.contactSubjectDestiny;
+        return l10n.consult1Category;
     }
   }
 
-  void _onSubmit() {
-    // Placeholder: could send to API or mailto
+  Future<void> _onSubmit() async {
     final name = _nameController.text.trim();
     final email = _emailController.text.trim();
     final message = _messageController.text.trim();
     if (name.isEmpty || email.isEmpty || message.isEmpty) return;
-    launchEmail();
+    if (_submitting) return;
+
+    setState(() {
+      _submitting = true;
+      _submitError = null;
+      _submitSuccess = false;
+    });
+
+    final l10n = AppLocalizations.of(context)!;
+    final subjectLabel = _getSubjectLabel(l10n, _selectedSubjectIndex);
+
+    final result = await submitContactForm(
+      name: name,
+      email: email,
+      message: message,
+      phone: _phoneController.text.trim().isEmpty ? null : _phoneController.text.trim(),
+      subjectIndex: _selectedSubjectIndex,
+      subjectLabel: subjectLabel,
+    );
+
+    if (!mounted) return;
+    setState(() {
+      _submitting = false;
+      if (result.success) {
+        _nameController.clear();
+        _emailController.clear();
+        _phoneController.clear();
+        _messageController.clear();
+        _selectedSubjectIndex = 0;
+      }
+    });
+    if (!mounted) return;
+    _showResultDialog(success: result.success, errorMessage: result.errorMessage);
+  }
+
+  void _showResultDialog({required bool success, String? errorMessage}) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) => _ContactResultDialog(
+        success: success,
+        errorMessage: errorMessage,
+      ),
+    );
   }
 
   @override
@@ -227,7 +278,7 @@ class _ContactScreenState extends State<ContactScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: List.generate(5, (i) {
+              children: List.generate(_subjectOptionCount, (i) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: InkWell(
@@ -276,13 +327,29 @@ class _ContactScreenState extends State<ContactScreen> {
           SizedBox(
             width: double.infinity,
             child: FilledButton(
-              onPressed: _canSubmit() ? _onSubmit : null,
+              onPressed: (_canSubmit() && !_submitting) ? _onSubmit : null,
               style: FilledButton.styleFrom(
                 backgroundColor: AppColors.accent,
                 foregroundColor: AppColors.onAccent,
                 padding: const EdgeInsets.symmetric(vertical: 14),
               ),
-              child: Text(l10n.submit),
+              child: _submitting
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: const AlwaysStoppedAnimation<Color>(AppColors.onAccent),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Text(l10n.contactSending),
+                      ],
+                    )
+                  : Text(l10n.submit),
             ),
           ),
         ],
@@ -322,6 +389,123 @@ class _ContactScreenState extends State<ContactScreen> {
       filled: true,
       fillColor: AppColors.backgroundDark,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    );
+  }
+}
+
+/// Themed dialog for contact form result (success or error).
+class _ContactResultDialog extends StatelessWidget {
+  const _ContactResultDialog({
+    required this.success,
+    this.errorMessage,
+  });
+
+  final bool success;
+  final String? errorMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final title = success ? l10n.contactSuccessTitle : l10n.contactErrorTitle;
+    final message = success ? l10n.contactSuccess : l10n.contactError;
+
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+      child: GlassContainer(
+        blurSigma: 10,
+        color: AppColors.surfaceElevatedDark.withValues(alpha: 0.96),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: success
+              ? AppColors.accent.withValues(alpha: 0.5)
+              : AppColors.error.withValues(alpha: 0.4),
+          width: 1,
+        ),
+        boxShadow: AppShadows.dialog,
+        padding: const EdgeInsets.fromLTRB(32, 32, 32, 28),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 420),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Icon
+              Container(
+                width: 72,
+                height: 72,
+                decoration: BoxDecoration(
+                  color: success
+                      ? AppColors.accent.withValues(alpha: 0.2)
+                      : AppColors.error.withValues(alpha: 0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  success ? LucideIcons.checkCircle : LucideIcons.alertCircle,
+                  size: 40,
+                  color: success ? AppColors.accent : AppColors.error,
+                ),
+              ),
+              const SizedBox(height: 24),
+              // Title
+              Text(
+                title,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      color: AppColors.onPrimary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              // Message
+              Text(
+                message,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: AppColors.onSurfaceVariantDark,
+                      height: 1.5,
+                    ),
+                textAlign: TextAlign.center,
+              ),
+              if (!success && errorMessage != null && errorMessage!.isNotEmpty) ...[
+                const SizedBox(height: 12),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundDark,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.borderDark),
+                  ),
+                  child: Text(
+                    errorMessage!,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: AppColors.onSurfaceVariantDark,
+                          fontSize: 12,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+              const SizedBox(height: 28),
+              // Button
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.accent,
+                    foregroundColor: AppColors.onAccent,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Text(l10n.close),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -52,6 +52,22 @@ class ConsultationsSection extends StatelessWidget {
         icon: LucideIcons.clock,
         onGetConsultation: () => context.push('/consultations'),
       ),
+      _ConsultBlock(
+        category: l10n.consult5Category,
+        method: l10n.consult5Method,
+        question: l10n.consult5Question,
+        description: l10n.consult5Desc,
+        icon: LucideIcons.sparkles,
+        onGetConsultation: () => context.push('/consultations'),
+      ),
+      _ConsultBlock(
+        category: l10n.consult6Category,
+        method: l10n.consult6Method,
+        question: l10n.consult6Question,
+        description: l10n.consult6Desc,
+        icon: LucideIcons.bookOpen,
+        onGetConsultation: () => context.push('/consultations'),
+      ),
     ];
 
     // Stack must have a non-positioned child so it gets finite size inside
@@ -126,6 +142,15 @@ class ConsultationsSection extends StatelessWidget {
                             Expanded(child: blocks[2]),
                             const SizedBox(width: _cardGap),
                             Expanded(child: blocks[3]),
+                          ],
+                        ),
+                        const SizedBox(height: _cardGap),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: blocks[4]),
+                            const SizedBox(width: _cardGap),
+                            Expanded(child: blocks[5]),
                           ],
                         ),
                       ],
