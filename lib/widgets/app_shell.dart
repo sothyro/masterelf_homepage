@@ -83,7 +83,8 @@ class _AppShellState extends State<AppShell> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = Breakpoints.isMobile(width);
-    final fabBottomPadding = isMobile ? 24.0 : 60.0;
+    final bottomSafe = MediaQuery.paddingOf(context).bottom;
+    final fabBottomPadding = (isMobile ? 24.0 : 60.0) + bottomSafe;
 
     return Scaffold(
       key: _scaffoldKey,

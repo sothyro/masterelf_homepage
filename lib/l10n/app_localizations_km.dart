@@ -9,7 +9,7 @@ class AppLocalizationsKm extends AppLocalizations {
   AppLocalizationsKm([String locale = 'km']) : super(locale);
 
   @override
-  String get appTitle => 'ហុងស៊ុយ ម៉ាស្ទ័រអេល ហុងឆាយហេង';
+  String get appTitle => 'Master Elf Feng Shui';
 
   @override
   String get skipToContent => 'រំលងទៅមាតិកា';
@@ -18,10 +18,10 @@ class AppLocalizationsKm extends AppLocalizations {
   String get home => 'ទំព័រដើម';
 
   @override
-  String get about => 'អំពីម៉ាស្ទ័រ';
+  String get about => 'អំពី';
 
   @override
-  String get learning => 'បណ្តុះបណ្តាល';
+  String get learning => 'ការរៀន';
 
   @override
   String get charteredPractitioner => 'អ្នកអនុវត្តវិជ្ជាជីវៈផ្លូវការ';
@@ -30,22 +30,32 @@ class AppLocalizationsKm extends AppLocalizations {
   String get resources => 'ធនធាន';
 
   @override
-  String get appsAndStore => 'កម្មវិធី និងហាងម៉ាស្ទ័រ';
+  String get appsAndStore => 'កម្មវិធី និងហាង';
 
   @override
-  String get masterElfSystem => 'ប្រព័ន្ធកម្មវិធីរបស់ម៉ាស្ទ័រអេល';
+  String get masterElfSystem => 'ប្រព័ន្ធ Master Elf';
 
   @override
-  String get period9MobileApp => 'កម្មវិធីយុគ9';
+  String get period9MobileApp => 'កម្មវិធីចល័តរយៈកាល ៩';
 
   @override
-  String get talismanStore => 'ស្តេចយ័ន្ទទេវតា';
+  String get talismanStore => 'ហាងវត្ថុមនោគម';
 
   @override
   String get appsPageTitle => 'កម្មវិធី និងហាង';
 
   @override
-  String get masterElfSystemSpotlightTitle => 'ប្រព័ន្ធកម្មវិធីរបស់ម៉ាស្ទ័រអេល';
+  String get appsPageSubline => 'ឧបករណ៍បាចី និងរូបវិទ្យាចិនពេញលេញរបស់អ្នក។';
+
+  @override
+  String get appsPageDescription =>
+      'ចូលប្រើប្រព័ន្ធ Master Elf ពេញលេញ—ក្រាហ្វបាចី កម្មវិធីចល័តរយៈកាល ៩ និងហាងវត្ថុមនោគម—ទាំងអស់ក្នុងកន្លែងតែមួយ។';
+
+  @override
+  String get appsPageDescriptionHighlight => 'ប្រព័ន្ធ Master Elf';
+
+  @override
+  String get masterElfSystemSpotlightTitle => 'ប្រព័ន្ធ Master Elf';
 
   @override
   String get masterElfSystemSpotlightDesc =>
@@ -614,6 +624,23 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get journeyPageHeadline => 'ការខិតខំរបស់ខ្ញុំ';
+
+  @override
+  String get journeyHeroSubline =>
+      'ពីការហៅទៅភាពច្បាស់—ហ្វងស៊ី និងរូបវិទ្យាចិនក្នុងការអនុវត្ត។';
+
+  @override
+  String get journeySectionTheStory => 'រឿងរ៉ាវ';
+
+  @override
+  String get journeyHeroSpotlightTitle => 'ផ្លូវ';
+
+  @override
+  String get journeyHeroSpotlightDesc =>
+      'ពីការហៅទៅប្រព័ន្ធដែលនាំមកភាពច្បាស់ និងលទ្ធផល។ ស្វែងរករឿងរ៉ាវខាងក្រោម។';
+
+  @override
+  String get journeyHeroSpotlightCta => 'អានរឿងរ៉ាវ';
 
   @override
   String get journeyStory1 =>

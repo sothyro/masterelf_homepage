@@ -83,7 +83,9 @@ class _PageHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    final height = width < 600 ? 320.0 : (width < 900 ? 420.0 : 520.0);
+    final height = Breakpoints.isSmall(width)
+        ? 320.0
+        : (Breakpoints.isDesktop(width) ? 520.0 : 420.0);
 
     return SizedBox(
       width: double.infinity,

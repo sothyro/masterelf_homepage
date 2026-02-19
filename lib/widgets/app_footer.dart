@@ -62,6 +62,12 @@ class AppFooter extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () => showLegalPopup(context, LegalPage.terms),
+                style: isNarrow
+                    ? TextButton.styleFrom(
+                        minimumSize: const Size(kMinTouchTargetSize, kMinTouchTargetSize),
+                        tapTargetSize: MaterialTapTargetSize.padded,
+                      )
+                    : null,
                 child: Text(
                   l10n.termsOfService,
                   style: TextStyle(color: AppColors.onPrimary.withValues(alpha: 0.8), fontSize: 14),
@@ -69,6 +75,12 @@ class AppFooter extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () => showLegalPopup(context, LegalPage.disclaimer),
+                style: isNarrow
+                    ? TextButton.styleFrom(
+                        minimumSize: const Size(kMinTouchTargetSize, kMinTouchTargetSize),
+                        tapTargetSize: MaterialTapTargetSize.padded,
+                      )
+                    : null,
                 child: Text(
                   l10n.disclaimer,
                   style: TextStyle(color: AppColors.onPrimary.withValues(alpha: 0.8), fontSize: 14),
@@ -76,6 +88,12 @@ class AppFooter extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () => showLegalPopup(context, LegalPage.privacy),
+                style: isNarrow
+                    ? TextButton.styleFrom(
+                        minimumSize: const Size(kMinTouchTargetSize, kMinTouchTargetSize),
+                        tapTargetSize: MaterialTapTargetSize.padded,
+                      )
+                    : null,
                 child: Text(
                   l10n.privacyPolicy,
                   style: TextStyle(color: AppColors.onPrimary.withValues(alpha: 0.8), fontSize: 14),
@@ -341,7 +359,9 @@ class _LinkColumn extends StatelessWidget {
               onTap: () => context.go(e.path),
               borderRadius: BorderRadius.circular(4),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2),
+                padding: EdgeInsets.symmetric(
+                  vertical: compact ? 14 : 2,
+                ),
                 child: Text(
                   e.label,
                   style: TextStyle(color: AppColors.onPrimary.withValues(alpha: 0.75), fontSize: compact ? 11 : 14),

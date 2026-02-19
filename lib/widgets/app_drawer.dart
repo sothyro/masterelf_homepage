@@ -7,6 +7,7 @@ import '../config/app_content.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
 import '../providers/locale_provider.dart';
+import '../utils/breakpoints.dart';
 import 'glass_container.dart';
 import 'media_posts_popup.dart';
 
@@ -249,7 +250,8 @@ class _DrawerTile extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(12),
-          child: Container(
+            child: Container(
+            constraints: const BoxConstraints(minHeight: kMinTouchTargetSize),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),

@@ -56,9 +56,15 @@ class AppContent {
   static const String assetHeroBackground = 'assets/images/main.jpg';
   static const String assetBackgroundDirection = 'assets/images/backgrounddirection.jpg';
   static const String assetHeroVideo = 'assets/videos/videobackground720.mp4';
+  /// Apps page: Master Elf System section video.
+  static const String assetAppPageVideo = 'assets/videos/appads.mp4';
   static const String assetEventCard = 'assets/images/event.jpg';
   static const String assetEventMain = 'assets/images/main event.jpg';
   static const String assetAboutHero = 'assets/images/sessions.jpg';
+  /// Contact page hero background.
+  static const String assetContactHero = 'assets/images/herobackground.jpg';
+  /// Journey page hero background.
+  static const String assetJourneyHero = 'assets/images/endeavour.jpg';
   /// Story section image (portrait).
   static const String assetStoryBackground = 'assets/images/story.PNG';
   static const String assetTestimonialProfile = 'assets/images/profile.jpg';
@@ -69,6 +75,18 @@ class AppContent {
   static const String assetTestimonialVanna = 'assets/images/testimonials/vanna.jpg';
   static const String assetTestimonialThida = 'assets/images/testimonials/thida.jpg';
   static const String assetTestimonialZeiitey = 'assets/images/testimonials/zeiitey.jpg';
+  static const String assetTestimonial7 = 'assets/images/testimonials/7.jpg';
+  static const String assetTestimonial8 = 'assets/images/testimonials/8.jpg';
+  static const String assetTestimonial9 = 'assets/images/testimonials/9.jpg';
+  static const String assetTestimonial10 = 'assets/images/testimonials/10.jpg';
+  static const String assetTestimonial11 = 'assets/images/testimonials/11.jpg';
+  static const String assetTestimonial12 = 'assets/images/testimonials/12.jpg';
+  static const String assetTestimonial13 = 'assets/images/testimonials/13.jpg';
+  static const String assetTestimonial14 = 'assets/images/testimonials/14.jpg';
+  static const String assetTestimonial15 = 'assets/images/testimonials/15.jpg';
+  static const String assetTestimonial16 = 'assets/images/testimonials/16.jpg';
+  static const String assetTestimonial17 = 'assets/images/testimonials/17.jpg';
+  static const String assetTestimonial18 = 'assets/images/testimonials/18.jpg';
   static const String assetAcademy = 'assets/images/apps.jpg';
   /// Consultation / appointments page (Smart Move cards).
   static const String assetConsultation = 'assets/images/consultation.jpg';

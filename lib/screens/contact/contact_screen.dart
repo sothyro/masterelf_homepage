@@ -121,26 +121,81 @@ class _ContactScreenState extends State<ContactScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Clear space for the overlaid app header
-          const SizedBox(height: 120),
-          // Hero: "Contact Us" with background image
-          _ContactHero(title: l10n.contactUs),
-          // Main: two columns
-          Padding(
-            padding: EdgeInsets.only(
-              top: 48,
-              bottom: 64,
-              left: isNarrow ? 20 : 40,
-              right: isNarrow ? 20 : 40,
-            ),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1100),
-                child: isNarrow
-                    ? _buildSingleColumn(l10n)
-                    : _buildTwoColumns(l10n),
+          // Hero: same structure as Consultations page — full-bleed image + gradient, content on top
+          Stack(
+            children: [
+              Positioned.fill(
+                child: Image.asset(
+                  AppContent.assetContactHero,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => const SizedBox.expand(),
+                ),
               ),
-            ),
+              Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        AppColors.backgroundDark.withValues(alpha: 0.72),
+                        AppColors.backgroundDark.withValues(alpha: 0.88),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 120,
+                  bottom: (isNarrow ? 32 : 48) + MediaQuery.paddingOf(context).bottom,
+                  left: isNarrow ? 16 : 24,
+                  right: isNarrow ? 16 : 24,
+                ),
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1100),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          l10n.contactUs,
+                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                color: AppColors.onPrimary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 12),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: isNarrow ? 20 : 48,
+                          ),
+                          child: Center(
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 560),
+                              child: Text(
+                                l10n.contactIntro,
+                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: AppColors.onSurfaceVariantDark,
+                                      height: 1.5,
+                                    ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 48),
+                        isNarrow
+                            ? _buildSingleColumn(l10n)
+                            : _buildTwoColumns(l10n),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -235,7 +290,7 @@ class _ContactScreenState extends State<ContactScreen> {
     final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
     return GlassContainer(
       blurSigma: 8,
-      color: AppColors.surfaceElevatedDark.withValues(alpha: 0.95),
+      color: AppColors.surfaceElevatedDark.withValues(alpha: 0.78),
       borderRadius: BorderRadius.circular(isMobile ? 12 : 16),
       border: Border.all(color: AppColors.borderDark, width: 1),
       boxShadow: AppShadows.card,
@@ -388,7 +443,7 @@ class _ContactScreenState extends State<ContactScreen> {
         borderSide: const BorderSide(color: AppColors.borderLight, width: 2),
       ),
       filled: true,
-      fillColor: AppColors.backgroundDark,
+      fillColor: AppColors.backgroundDark.withValues(alpha: 0.5),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     );
   }
@@ -512,65 +567,6 @@ class _ContactResultDialog extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-/// Hero section: full-width background image with overlay and "Contact Us" title.
-class _ContactHero extends StatelessWidget {
-  const _ContactHero({required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
-    final height = width < 600 ? 220.0 : (width < 900 ? 280.0 : 340.0);
-
-    return SizedBox(
-      width: double.infinity,
-      height: height,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          // Background image
-          Image.asset(
-            AppContent.assetAboutHero,
-            fit: BoxFit.cover,
-          ),
-          // Dark gradient overlay for text readability
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  AppColors.backgroundDark.withValues(alpha: 0.75),
-                  AppColors.backgroundDark.withValues(alpha: 0.4),
-                  AppColors.backgroundDark.withValues(alpha: 0.2),
-                ],
-              ),
-            ),
-          ),
-          // Title
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: width < 600 ? 20 : 40,
-                vertical: 24,
-              ),
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: AppColors.onPrimary,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

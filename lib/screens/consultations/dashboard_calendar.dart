@@ -82,7 +82,7 @@ class DashboardCalendar extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = width < 900;
+    final isNarrow = Breakpoints.isNarrow(width);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

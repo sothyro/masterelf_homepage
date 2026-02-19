@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
+import '../../../utils/breakpoints.dart';
 
 class CtaSection extends StatefulWidget {
   const CtaSection({super.key});
@@ -78,7 +79,7 @@ class _CtaSectionState extends State<CtaSection> with SingleTickerProviderStateM
     final l10n = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
     final width = MediaQuery.sizeOf(context).width;
-    final isMobile = width < 768;
+    final isMobile = Breakpoints.isMobile(width);
     final paddingV = isMobile ? 40.0 : 56.0;
     final paddingH = isMobile ? 16.0 : 24.0;
 

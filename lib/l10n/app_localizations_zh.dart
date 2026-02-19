@@ -45,6 +45,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appsPageTitle => '应用与商店';
 
   @override
+  String get appsPageSubline => '您的八字与中华玄学一站式工具。';
+
+  @override
+  String get appsPageDescription =>
+      '使用完整的 Master Elf 系统—八字排盘、九运手机应用与符咒商店—尽在一处。';
+
+  @override
+  String get appsPageDescriptionHighlight => 'Master Elf 系统';
+
+  @override
   String get masterElfSystemSpotlightTitle => 'Master Elf 系统';
 
   @override
@@ -573,6 +583,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get journeyPageHeadline => '我的奋进';
+
+  @override
+  String get journeyHeroSubline => '从使命到清明——风水与中华玄学实践。';
+
+  @override
+  String get journeySectionTheStory => '历程';
+
+  @override
+  String get journeyHeroSpotlightTitle => '道路';
+
+  @override
+  String get journeyHeroSpotlightDesc => '从使命到带来清明与成果的体系。在下方了解历程。';
+
+  @override
+  String get journeyHeroSpotlightCta => '阅读历程';
 
   @override
   String get journeyStory1 =>

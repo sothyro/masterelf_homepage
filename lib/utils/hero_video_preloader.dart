@@ -88,7 +88,7 @@ class HeroVideoPreloader {
 /// Status messages shown while loading so users see activity even when progress is slow.
 const List<String> _loadingMessages = [
   'Loading your experience…',
-  'Preparing content…',
+  'Optimising view…',
   'Almost there…',
   'Just a moment…',
 ];
@@ -199,8 +199,9 @@ class _LoadingContent extends StatelessWidget {
     final pulseScale = 1.0 + (0.04 * (0.5 - (pulseValue - 0.5).abs()));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
+      theme: AppTheme.dark().copyWith(
         scaffoldBackgroundColor: AppColors.backgroundDark,
+        textTheme: textThemeForLocale('en'),
       ),
       home: Scaffold(
         backgroundColor: AppColors.backgroundDark,

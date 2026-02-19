@@ -4,6 +4,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../l10n/app_localizations.dart';
 import '../screens/legal/legal_content.dart';
 import '../theme/app_theme.dart';
+import '../utils/breakpoints.dart';
 import 'glass_container.dart';
 
 /// Shows a modal dialog with the given legal page content (scrollable text).
@@ -25,10 +26,18 @@ class LegalPopup extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final title = LegalContent.title(context, page);
     final body = LegalContent.body(context, page);
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
+    final padding = MediaQuery.paddingOf(context);
+    final insetPadding = EdgeInsets.fromLTRB(
+      isMobile ? 12 : 24,
+      24 + padding.top,
+      isMobile ? 12 : 24,
+      24 + padding.bottom,
+    );
 
     return Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+      insetPadding: insetPadding,
       child: GlassContainer(
         blurSigma: 10,
         color: AppColors.overlayDark.withValues(alpha: 0.92),

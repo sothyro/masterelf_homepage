@@ -225,11 +225,11 @@ class _ContactUsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = width < 500;
-    final isMedium = width < 800 && !isNarrow;
-    final horizontalPadding = isNarrow ? 16.0 : (isMedium ? 20.0 : 24.0);
-    final verticalPadding = isNarrow ? 8.0 : (isMedium ? 10.0 : 12.0);
-    final fontSize = isNarrow ? 12.0 : (isMedium ? 14.0 : 15.0);
+    final isMobile = Breakpoints.isMobile(width);
+    final isNarrow = Breakpoints.isNarrow(width);
+    final horizontalPadding = isMobile ? 16.0 : (isNarrow ? 20.0 : 24.0);
+    final verticalPadding = isMobile ? 8.0 : (isNarrow ? 10.0 : 12.0);
+    final fontSize = isMobile ? 12.0 : (isNarrow ? 14.0 : 15.0);
 
     return Container(
       decoration: BoxDecoration(
@@ -269,15 +269,19 @@ class _NavLink extends StatelessWidget {
   Widget build(BuildContext context) {
     final current = GoRouterState.of(context).uri.path;
     final isActive = current == path;
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: TextButton(
         onPressed: () => context.go(path),
         style: TextButton.styleFrom(
           foregroundColor: _MenuColors.linkText,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          minimumSize: Size.zero,
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          padding: EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: isMobile ? 14 : 6,
+          ),
+          minimumSize: isMobile ? const Size(kMinTouchTargetSize, kMinTouchTargetSize) : Size.zero,
+          tapTargetSize: isMobile ? MaterialTapTargetSize.padded : MaterialTapTargetSize.shrinkWrap,
         ).copyWith(
           overlayColor: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.hovered)) {
@@ -389,6 +393,7 @@ class _NavDropdown extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Builder(
         builder: (context) {
+          final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
           return InkWell(
             onTap: () {
               final box = context.findRenderObject() as RenderBox?;
@@ -396,7 +401,10 @@ class _NavDropdown extends StatelessWidget {
             },
             borderRadius: BorderRadius.circular(8),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              padding: EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: isMobile ? 14 : 6,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -544,6 +552,7 @@ class _LocaleSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final code = notifier.locale.languageCode;
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
     return Builder(
       builder: (context) => InkWell(
         onTap: () {
@@ -552,7 +561,10 @@ class _LocaleSwitcher extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(8),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+          padding: EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: isMobile ? 14 : 6,
+          ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

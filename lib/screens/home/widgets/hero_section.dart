@@ -86,9 +86,9 @@ class _HeroSectionState extends State<HeroSection> {
     // Responsive height: 16:9 of width so video fits; lower min on small screens so hero isn’t oversized
     final isMobile = Breakpoints.isMobile(width);
     // On mobile: taller min height so hero text sits below the overlay menu and video has more presence
-    final minHeight = width < 600
+    final minHeight = Breakpoints.isSmall(width)
         ? 480.0
-        : (width < 900 ? 500.0 : 1000.0);
+        : (Breakpoints.isDesktop(width) ? 1000.0 : 500.0);
     final height = width > 0 ? (width * 9 / 16).clamp(minHeight, 1600.0) : 1000.0;
     final horizontalPadding = isMobile ? 16.0 : 32.0;
     final verticalPadding = isMobile ? 32.0 : 48.0;

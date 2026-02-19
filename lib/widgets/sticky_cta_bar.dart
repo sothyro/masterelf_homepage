@@ -3,6 +3,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
+import '../utils/breakpoints.dart';
 import 'forecast_popup.dart';
 import 'glass_container.dart';
 
@@ -64,7 +65,10 @@ class _StickyCtaBarState extends State<StickyCtaBar> {
                   onPressed: () => setState(() => _dismissed = true),
                   tooltip: 'Dismiss',
                   padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                  constraints: const BoxConstraints(
+                    minWidth: kMinTouchTargetSize,
+                    minHeight: kMinTouchTargetSize,
+                  ),
                   style: IconButton.styleFrom(
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),

@@ -45,6 +45,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appsPageTitle => 'Apps & Store';
 
   @override
+  String get appsPageSubline =>
+      'Your complete BaZi and Chinese metaphysics toolkit.';
+
+  @override
+  String get appsPageDescription =>
+      'Access the full Master Elf system—BaZi charts, Period 9 mobile app, and the Talisman Store—all in one place.';
+
+  @override
+  String get appsPageDescriptionHighlight => 'Master Elf system';
+
+  @override
   String get masterElfSystemSpotlightTitle => 'Master Elf System';
 
   @override
@@ -619,6 +630,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get journeyPageHeadline => 'My Endeavour';
+
+  @override
+  String get journeyHeroSubline =>
+      'From a calling to clarity—Feng Shui and Chinese Metaphysics in practice.';
+
+  @override
+  String get journeySectionTheStory => 'The Story';
+
+  @override
+  String get journeyHeroSpotlightTitle => 'The Path';
+
+  @override
+  String get journeyHeroSpotlightDesc =>
+      'From a calling to a system that brings clarity and results. Discover the story below.';
+
+  @override
+  String get journeyHeroSpotlightCta => 'Read the story';
 
   @override
   String get journeyStory1 =>

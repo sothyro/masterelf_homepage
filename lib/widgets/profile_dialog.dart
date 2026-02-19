@@ -3,6 +3,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 import '../config/app_content.dart';
 import '../theme/app_theme.dart';
+import '../utils/breakpoints.dart';
 
 /// Shows a dialog with the profile image (assets/images/profile.jpg),
 /// fitted to preserve aspect ratio.
@@ -19,15 +20,26 @@ class ProfileDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
+    final padding = MediaQuery.paddingOf(context);
+    final insetPadding = EdgeInsets.fromLTRB(
+      isMobile ? 12 : 24,
+      24 + padding.top,
+      isMobile ? 12 : 24,
+      24 + padding.bottom,
+    );
+    final maxHeight = MediaQuery.sizeOf(context).height * (isMobile ? 0.85 : 0.85);
+    final imageHeight = MediaQuery.sizeOf(context).height * (isMobile ? 0.5 : 0.6);
+
     return Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+      insetPadding: insetPadding,
       child: Material(
         color: Colors.transparent,
         child: Container(
           constraints: BoxConstraints(
             maxWidth: 560,
-            maxHeight: MediaQuery.of(context).size.height * 0.85,
+            maxHeight: maxHeight,
           ),
           decoration: BoxDecoration(
             color: AppColors.surfaceDark,
@@ -55,7 +67,7 @@ class ProfileDialog extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
                 child: SizedBox(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.6,
+                  height: imageHeight,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: FittedBox(

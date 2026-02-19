@@ -172,6 +172,24 @@ abstract class AppLocalizations {
   /// **'Apps & Store'**
   String get appsPageTitle;
 
+  /// No description provided for @appsPageSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Your complete BaZi and Chinese metaphysics toolkit.'**
+  String get appsPageSubline;
+
+  /// No description provided for @appsPageDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Access the full Master Elf system—BaZi charts, Period 9 mobile app, and the Talisman Store—all in one place.'**
+  String get appsPageDescription;
+
+  /// No description provided for @appsPageDescriptionHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf system'**
+  String get appsPageDescriptionHighlight;
+
   /// No description provided for @masterElfSystemSpotlightTitle.
   ///
   /// In en, this message translates to:
@@ -1221,6 +1239,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My Endeavour'**
   String get journeyPageHeadline;
+
+  /// No description provided for @journeyHeroSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'From a calling to clarity—Feng Shui and Chinese Metaphysics in practice.'**
+  String get journeyHeroSubline;
+
+  /// No description provided for @journeySectionTheStory.
+  ///
+  /// In en, this message translates to:
+  /// **'The Story'**
+  String get journeySectionTheStory;
+
+  /// No description provided for @journeyHeroSpotlightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The Path'**
+  String get journeyHeroSpotlightTitle;
+
+  /// No description provided for @journeyHeroSpotlightDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'From a calling to a system that brings clarity and results. Discover the story below.'**
+  String get journeyHeroSpotlightDesc;
+
+  /// No description provided for @journeyHeroSpotlightCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Read the story'**
+  String get journeyHeroSpotlightCta;
 
   /// No description provided for @journeyStory1.
   ///

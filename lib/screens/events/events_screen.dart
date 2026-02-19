@@ -54,8 +54,10 @@ class _EventsScreenState extends State<EventsScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 80),
-          const _EventsHero(),
+          _EventsHero(
+            searchQuery: _searchQuery,
+            onSearchChanged: (v) => setState(() => _searchQuery = v),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: isNarrow ? 20 : 32,
@@ -67,46 +69,6 @@ class _EventsScreenState extends State<EventsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      l10n.eventsCalendarTitle,
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: AppColors.onPrimary,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      l10n.eventsSubline,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: AppColors.onSurfaceVariantDark,
-                            height: 1.5,
-                          ),
-                    ),
-                    const SizedBox(height: 20),
-                    _buildDescriptionWithHighlight(context, l10n.eventsDescription, l10n.eventsDescriptionHighlight),
-                    const SizedBox(height: 32),
-                    TextField(
-                      onChanged: (v) => setState(() => _searchQuery = v),
-                      decoration: InputDecoration(
-                        hintText: l10n.searchEvent,
-                        hintStyle: TextStyle(color: AppColors.onSurfaceVariantDark.withValues(alpha: 0.8)),
-                        prefixIcon: Icon(LucideIcons.search, size: 22, color: AppColors.onSurfaceVariantDark),
-                        filled: true,
-                        fillColor: AppColors.surfaceElevatedDark,
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: AppColors.borderDark),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: AppColors.borderLight, width: 2),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                      ),
-                      style: const TextStyle(color: AppColors.onPrimary),
-                    ),
-                    const SizedBox(height: 32),
                     Text(
                       l10n.comingUpNext,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -137,7 +99,7 @@ class _EventsScreenState extends State<EventsScreen> {
                     else
                       LayoutBuilder(
                         builder: (context, constraints) {
-                          final crossCount = constraints.maxWidth > 800 ? 2 : 1;
+                          final crossCount = Breakpoints.isNarrow(constraints.maxWidth) ? 1 : 2;
                           final list = filtered;
                           if (crossCount == 1) {
                             return Column(
@@ -180,7 +142,12 @@ class _EventsScreenState extends State<EventsScreen> {
     );
   }
 
-  static Widget _buildDescriptionWithHighlight(BuildContext context, String description, String highlightPhrase) {
+  static Widget _buildDescriptionWithHighlight(
+    BuildContext context,
+    String description,
+    String highlightPhrase, {
+    TextAlign textAlign = TextAlign.left,
+  }) {
     final bodyStyle = Theme.of(context).textTheme.bodyLarge?.copyWith(
       color: AppColors.onSurfaceVariantDark,
       height: 1.5,
@@ -191,7 +158,7 @@ class _EventsScreenState extends State<EventsScreen> {
       fontSize: (bodyStyle.fontSize ?? 16) * 1.45,
     );
     final span = _textSpanWithHighlight(description, highlightPhrase, bodyStyle, highlightStyle);
-    return RichText(text: span);
+    return RichText(text: span, textAlign: textAlign);
   }
 
   static InlineSpan _textSpanWithHighlight(String text, String highlight, TextStyle base, TextStyle highlightStyle) {
@@ -209,33 +176,139 @@ class _EventsScreenState extends State<EventsScreen> {
   }
 }
 
-class _EventsHero extends StatelessWidget {
-  const _EventsHero();
+class _EventsHero extends StatefulWidget {
+  const _EventsHero({
+    required this.searchQuery,
+    required this.onSearchChanged,
+  });
+
+  final String searchQuery;
+  final ValueChanged<String> onSearchChanged;
+
+  @override
+  State<_EventsHero> createState() => _EventsHeroState();
+}
+
+class _EventsHeroState extends State<_EventsHero> {
+  late TextEditingController _searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController(text: widget.searchQuery);
+  }
+
+  @override
+  void didUpdateWidget(_EventsHero oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.searchQuery != widget.searchQuery && _searchController.text != widget.searchQuery) {
+      _searchController.text = widget.searchQuery;
+    }
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
-    final height = width < 600 ? 280.0 : (width < 900 ? 360.0 : 440.0);
+    final isNarrow = Breakpoints.isMobile(width);
 
     return SizedBox(
+      height: isNarrow ? 640 : 600,
       width: double.infinity,
-      height: height,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            AppContent.assetEventMain,
-            fit: BoxFit.cover,
+          Positioned.fill(
+            child: Image.asset(
+              AppContent.assetContactHero,
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => const SizedBox.expand(),
+            ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  AppColors.backgroundDark.withValues(alpha: 0.5),
-                  AppColors.backgroundDark.withValues(alpha: 0.2),
-                  AppColors.backgroundDark.withValues(alpha: 0.08),
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    AppColors.backgroundDark.withValues(alpha: 0.72),
+                    AppColors.backgroundDark.withValues(alpha: 0.88),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: const Alignment(0, 0.12),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: isNarrow ? 16 : 24,
+                vertical: isNarrow ? 48 : 56,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    l10n.eventsCalendarTitle,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          color: AppColors.onPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: isNarrow ? 12 : 16),
+                  Text(
+                    l10n.eventsSubline,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: AppColors.onSurfaceVariantDark,
+                          height: 1.5,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: isNarrow ? 20 : 24),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 640),
+                    child: _EventsScreenState._buildDescriptionWithHighlight(
+                      context,
+                      l10n.eventsDescription,
+                      l10n.eventsDescriptionHighlight,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(height: isNarrow ? 24 : 32),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1000),
+                    child: TextField(
+                      controller: _searchController,
+                      onChanged: widget.onSearchChanged,
+                      decoration: InputDecoration(
+                        hintText: l10n.searchEvent,
+                        hintStyle: TextStyle(color: AppColors.onSurfaceVariantDark.withValues(alpha: 0.8)),
+                        prefixIcon: Icon(LucideIcons.search, size: 22, color: AppColors.onSurfaceVariantDark),
+                        filled: true,
+                        fillColor: AppColors.surfaceElevatedDark.withValues(alpha: 0.85),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: AppColors.borderDark.withValues(alpha: 0.8)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: AppColors.borderLight, width: 2),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      ),
+                      style: const TextStyle(color: AppColors.onPrimary),
+                    ),
+                  ),
                 ],
               ),
             ),

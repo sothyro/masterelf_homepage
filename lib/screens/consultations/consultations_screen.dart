@@ -9,7 +9,6 @@ import '../../models/appointment.dart' show AppointmentRecord, defaultSessionDur
 import '../../providers/auth_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
-import '../../widgets/breadcrumb.dart';
 import '../../services/appointment_booking_service.dart';
 import '../../widgets/glass_container.dart';
 
@@ -213,7 +212,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
               Padding(
                 padding: EdgeInsets.only(
                   top: 120,
-                  bottom: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 32 : 48,
+                  bottom: (Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 32 : 48) +
+                      MediaQuery.paddingOf(context).bottom,
                   left: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 16 : 24,
                   right: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 16 : 24,
                 ),
@@ -224,11 +224,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Breadcrumb(items: [
-                          (label: l10n.home, route: '/'),
-                          (label: l10n.consultations, route: null),
-                        ]),
-                        const SizedBox(height: 24),
                         Text(
                           l10n.bookConsultation,
                           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -1007,7 +1002,7 @@ class _LoginSectionState extends State<_LoginSection> {
     final l10n = AppLocalizations.of(context)!;
     final auth = context.watch<AuthProvider>();
     final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = width < 800;
+    final isNarrow = Breakpoints.isNarrow(width);
 
     return Container(
       width: double.infinity,
@@ -1195,7 +1190,7 @@ class _BookingDashboardSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = width < 800;
+    final isNarrow = Breakpoints.isNarrow(width);
 
     return Container(
       width: double.infinity,
@@ -1395,7 +1390,7 @@ class _SmartMoveSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = width < 800;
+    final isNarrow = Breakpoints.isNarrow(width);
 
     return Container(
       width: double.infinity,
