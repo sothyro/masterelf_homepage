@@ -2247,6 +2247,300 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Optional notes about this booking…'**
   String get noteHint;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @errorNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Network connection failed. Please check your internet connection.'**
+  String get errorNetwork;
+
+  /// No description provided for @errorNetworkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Error'**
+  String get errorNetworkTitle;
+
+  /// No description provided for @errorTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Request timed out. Please check your connection and try again.'**
+  String get errorTimeout;
+
+  /// No description provided for @errorServerUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Service temporarily unavailable. Please try again.'**
+  String get errorServerUnavailable;
+
+  /// No description provided for @errorServerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error occurred. Please try again later.'**
+  String get errorServerError;
+
+  /// No description provided for @errorDatabaseError.
+  ///
+  /// In en, this message translates to:
+  /// **'Database error occurred. Please try again.'**
+  String get errorDatabaseError;
+
+  /// No description provided for @errorAuthFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication failed. Please try again.'**
+  String get errorAuthFailed;
+
+  /// No description provided for @errorAuthTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication Error'**
+  String get errorAuthTitle;
+
+  /// No description provided for @errorUserNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No account found with this email.'**
+  String get errorUserNotFound;
+
+  /// No description provided for @errorWrongPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect password. Please try again.'**
+  String get errorWrongPassword;
+
+  /// No description provided for @errorEmailInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already registered.'**
+  String get errorEmailInUse;
+
+  /// No description provided for @errorInvalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email address.'**
+  String get errorInvalidEmail;
+
+  /// No description provided for @errorTooManyRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Please wait a moment and try again.'**
+  String get errorTooManyRequests;
+
+  /// No description provided for @errorPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'You do not have permission to perform this action.'**
+  String get errorPermissionDenied;
+
+  /// No description provided for @errorPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission Denied'**
+  String get errorPermissionTitle;
+
+  /// No description provided for @errorNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'The requested resource was not found.'**
+  String get errorNotFound;
+
+  /// No description provided for @errorNotFoundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Found'**
+  String get errorNotFoundTitle;
+
+  /// No description provided for @errorInvalidInput.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid input. Please check your information.'**
+  String get errorInvalidInput;
+
+  /// No description provided for @errorValidationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Validation Error'**
+  String get errorValidationTitle;
+
+  /// No description provided for @errorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred. Please try again.'**
+  String get errorUnknown;
+
+  /// No description provided for @errorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get errorTitle;
+
+  /// No description provided for @errorRateLimitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Too Many Requests'**
+  String get errorRateLimitTitle;
+
+  /// No description provided for @validationEmailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get validationEmailRequired;
+
+  /// No description provided for @validationEmailInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get validationEmailInvalid;
+
+  /// No description provided for @validationPhoneRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get validationPhoneRequired;
+
+  /// No description provided for @validationPhoneTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is too short'**
+  String get validationPhoneTooShort;
+
+  /// No description provided for @validationPhoneTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is too long'**
+  String get validationPhoneTooLong;
+
+  /// No description provided for @validationPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number'**
+  String get validationPhoneInvalid;
+
+  /// No description provided for @validationNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get validationNameRequired;
+
+  /// No description provided for @validationNameTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 2 characters'**
+  String get validationNameTooShort;
+
+  /// No description provided for @validationNameTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is too long'**
+  String get validationNameTooLong;
+
+  /// No description provided for @validationMessageRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Message is required'**
+  String get validationMessageRequired;
+
+  /// No description provided for @validationMessageTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Message must be at least 10 characters'**
+  String get validationMessageTooShort;
+
+  /// No description provided for @validationMessageTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Message is too long (maximum 2000 characters)'**
+  String get validationMessageTooLong;
+
+  /// No description provided for @validationRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'{field} is required'**
+  String validationRequired(String field);
+
+  /// No description provided for @validationDateRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Date is required'**
+  String get validationDateRequired;
+
+  /// No description provided for @validationDateNotPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a date in the future'**
+  String get validationDateNotPast;
+
+  /// No description provided for @validationTimeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Time slot is required'**
+  String get validationTimeRequired;
+
+  /// No description provided for @validationTimeInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a valid time slot'**
+  String get validationTimeInvalid;
+
+  /// No description provided for @validationFormErrors.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fix the errors below'**
+  String get validationFormErrors;
+
+  /// No description provided for @validationPasswordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get validationPasswordRequired;
+
+  /// No description provided for @validationPasswordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get validationPasswordTooShort;
+
+  /// No description provided for @validationPasswordTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too long (maximum 128 characters)'**
+  String get validationPasswordTooLong;
+
+  /// No description provided for @validationPasswordNoUpperCase.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one uppercase letter'**
+  String get validationPasswordNoUpperCase;
+
+  /// No description provided for @validationPasswordNoLowerCase.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one lowercase letter'**
+  String get validationPasswordNoLowerCase;
+
+  /// No description provided for @validationPasswordNoNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one number'**
+  String get validationPasswordNoNumber;
+
+  /// No description provided for @validationUrlRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'URL is required'**
+  String get validationUrlRequired;
+
+  /// No description provided for @validationUrlInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid URL (must start with http:// or https://)'**
+  String get validationUrlInvalid;
 }
 
 class _AppLocalizationsDelegate

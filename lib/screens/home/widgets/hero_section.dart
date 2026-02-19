@@ -58,8 +58,8 @@ class _HeroSectionState extends State<HeroSection> {
       // Flutter web doesn't support VideoPlayerController.asset()
       // Use network URL for web, asset path for other platforms
       final VideoPlayerController controller = kIsWeb
-          ? VideoPlayerController.network(
-              '/${AppContent.assetHeroVideo}',
+          ? VideoPlayerController.networkUrl(
+              Uri.parse('/${AppContent.assetHeroVideo}'),
               videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
             )
           : VideoPlayerController.asset(

@@ -1,17 +1,22 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'error_service.dart';
+
 /// Result of submitting the contact form.
 class ContactFormResult {
   const ContactFormResult({
     required this.success,
     this.submissionId,
-    this.errorMessage,
+    this.error,
   });
 
   final bool success;
   final String? submissionId;
-  final String? errorMessage;
+  final AppError? error;
+
+  /// Legacy support: returns error message if error exists.
+  String? get errorMessage => error?.userMessage;
 }
 
 bool get _isFirebaseEnabled {
@@ -33,9 +38,13 @@ Future<ContactFormResult> submitContactForm({
   String? subjectLabel,
 }) async {
   if (!_isFirebaseEnabled) {
-    return const ContactFormResult(
+    return ContactFormResult(
       success: false,
-      errorMessage: 'Contact form is not available. Please email us directly.',
+      error: AppError(
+        category: ErrorCategory.server,
+        userMessage: 'Contact form is not available. Please email us directly.',
+        retryable: false,
+      ),
     );
   }
 
@@ -54,21 +63,24 @@ Future<ContactFormResult> submitContactForm({
     final data = result.data as Map<dynamic, dynamic>?;
     final success = data?['success'] == true;
     final id = data?['id'] as String?;
-    return ContactFormResult(
-      success: success,
-      submissionId: id,
-      errorMessage: success ? null : 'Request failed.',
-    );
-  } on FirebaseFunctionsException catch (e) {
-    final message = e.message ?? e.code;
+    if (success) {
+      return ContactFormResult(
+        success: true,
+        submissionId: id,
+      );
+    }
     return ContactFormResult(
       success: false,
-      errorMessage: message,
+      error: AppError(
+        category: ErrorCategory.server,
+        userMessage: 'Request failed. Please try again.',
+        retryable: true,
+      ),
     );
   } catch (e) {
     return ContactFormResult(
       success: false,
-      errorMessage: e.toString(),
+      error: AppError.fromException(e),
     );
   }
 }

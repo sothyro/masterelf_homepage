@@ -1103,4 +1103,168 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get noteHint => '可选的预约备注…';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get errorNetwork =>
+      'Network connection failed. Please check your internet connection.';
+
+  @override
+  String get errorNetworkTitle => 'Connection Error';
+
+  @override
+  String get errorTimeout =>
+      'Request timed out. Please check your connection and try again.';
+
+  @override
+  String get errorServerUnavailable =>
+      'Service temporarily unavailable. Please try again.';
+
+  @override
+  String get errorServerError =>
+      'Server error occurred. Please try again later.';
+
+  @override
+  String get errorDatabaseError => 'Database error occurred. Please try again.';
+
+  @override
+  String get errorAuthFailed => 'Authentication failed. Please try again.';
+
+  @override
+  String get errorAuthTitle => 'Authentication Error';
+
+  @override
+  String get errorUserNotFound => 'No account found with this email.';
+
+  @override
+  String get errorWrongPassword => 'Incorrect password. Please try again.';
+
+  @override
+  String get errorEmailInUse => 'This email is already registered.';
+
+  @override
+  String get errorInvalidEmail => 'Invalid email address.';
+
+  @override
+  String get errorTooManyRequests =>
+      'Too many attempts. Please wait a moment and try again.';
+
+  @override
+  String get errorPermissionDenied =>
+      'You do not have permission to perform this action.';
+
+  @override
+  String get errorPermissionTitle => 'Permission Denied';
+
+  @override
+  String get errorNotFound => 'The requested resource was not found.';
+
+  @override
+  String get errorNotFoundTitle => 'Not Found';
+
+  @override
+  String get errorInvalidInput =>
+      'Invalid input. Please check your information.';
+
+  @override
+  String get errorValidationTitle => 'Validation Error';
+
+  @override
+  String get errorUnknown => 'An unexpected error occurred. Please try again.';
+
+  @override
+  String get errorTitle => 'Error';
+
+  @override
+  String get errorRateLimitTitle => 'Too Many Requests';
+
+  @override
+  String get validationEmailRequired => 'Email is required';
+
+  @override
+  String get validationEmailInvalid => 'Please enter a valid email address';
+
+  @override
+  String get validationPhoneRequired => 'Phone number is required';
+
+  @override
+  String get validationPhoneTooShort => 'Phone number is too short';
+
+  @override
+  String get validationPhoneTooLong => 'Phone number is too long';
+
+  @override
+  String get validationPhoneInvalid => 'Please enter a valid phone number';
+
+  @override
+  String get validationNameRequired => 'Name is required';
+
+  @override
+  String get validationNameTooShort => 'Name must be at least 2 characters';
+
+  @override
+  String get validationNameTooLong => 'Name is too long';
+
+  @override
+  String get validationMessageRequired => 'Message is required';
+
+  @override
+  String get validationMessageTooShort =>
+      'Message must be at least 10 characters';
+
+  @override
+  String get validationMessageTooLong =>
+      'Message is too long (maximum 2000 characters)';
+
+  @override
+  String validationRequired(String field) {
+    return '$field is required';
+  }
+
+  @override
+  String get validationDateRequired => 'Date is required';
+
+  @override
+  String get validationDateNotPast => 'Please select a date in the future';
+
+  @override
+  String get validationTimeRequired => 'Time slot is required';
+
+  @override
+  String get validationTimeInvalid => 'Please select a valid time slot';
+
+  @override
+  String get validationFormErrors => 'Please fix the errors below';
+
+  @override
+  String get validationPasswordRequired => 'Password is required';
+
+  @override
+  String get validationPasswordTooShort =>
+      'Password must be at least 8 characters';
+
+  @override
+  String get validationPasswordTooLong =>
+      'Password is too long (maximum 128 characters)';
+
+  @override
+  String get validationPasswordNoUpperCase =>
+      'Password must contain at least one uppercase letter';
+
+  @override
+  String get validationPasswordNoLowerCase =>
+      'Password must contain at least one lowercase letter';
+
+  @override
+  String get validationPasswordNoNumber =>
+      'Password must contain at least one number';
+
+  @override
+  String get validationUrlRequired => 'URL is required';
+
+  @override
+  String get validationUrlInvalid =>
+      'Please enter a valid URL (must start with http:// or https://)';
 }

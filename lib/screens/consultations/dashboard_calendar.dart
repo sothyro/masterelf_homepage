@@ -546,7 +546,7 @@ Future<void> showCreateBookingDialog(
                   ),
                   const SizedBox(height: 8),
                     DropdownButtonFormField<int>(
-                    value: selectedServiceIndex,
+                    initialValue: selectedServiceIndex,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                     ),
@@ -628,7 +628,7 @@ Future<void> showCreateBookingDialog(
                           children: [
                             Expanded(
                               child: DropdownButtonFormField<String>(
-                                value: selectedTime,
+                                initialValue: selectedTime,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                                   contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

@@ -25,14 +25,16 @@ class MethodScreen extends StatelessWidget {
       (title: l10n.methodMaoShanTitle, body: l10n.methodMaoShanBody, icon: LucideIcons.mountain),
     ];
 
+    final isDesktop = Breakpoints.isDesktop(width);
+
     return Container(
       width: double.infinity,
       color: AppColors.backgroundDark,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(height: 80),
-          const _PageHero(),
+          if (!isDesktop) const SizedBox(height: 80),
+          _PageHero(isDesktop: isDesktop),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: isNarrow ? 16 : 32,
@@ -79,14 +81,50 @@ class MethodScreen extends StatelessWidget {
 }
 
 class _PageHero extends StatelessWidget {
-  const _PageHero();
+  const _PageHero({required this.isDesktop});
+
+  final bool isDesktop;
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
+    // Desktop: match Journey hero (720px, endeavour.jpg, vertical gradient)
+    if (isDesktop) {
+      return SizedBox(
+        height: 720,
+        width: double.infinity,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                AppContent.assetJourneyHero,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const SizedBox.expand(),
+              ),
+            ),
+            Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.backgroundDark.withValues(alpha: 0.72),
+                      AppColors.backgroundDark.withValues(alpha: 0.88),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    // Mobile/tablet: keep original design
     final height = Breakpoints.isSmall(width)
         ? 320.0
-        : (Breakpoints.isDesktop(width) ? 520.0 : 420.0);
+        : 420.0;
 
     return SizedBox(
       width: double.infinity,

@@ -10,6 +10,9 @@ import '../../providers/auth_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
 import '../../services/appointment_booking_service.dart';
+import '../../services/error_service.dart' show AppError, executeWithRetry;
+import '../../utils/validators.dart';
+import '../../widgets/error_display.dart' show ErrorDisplay, ErrorSnackbar;
 import '../../widgets/glass_container.dart';
 
 /// Consultation type for booking.
@@ -50,7 +53,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   String _selectedSessionType = sessionTypeVisit;
 
   bool _isSubmitting = false;
-  String? _submitError;
+  AppError? _submitError;
   String? _lastBookingReference;
 
   // Dashboard: view your bookings
@@ -133,13 +136,37 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   }
 
   Future<void> _submitBooking() async {
+    final l10n = AppLocalizations.of(context)!;
     final name = _nameController.text.trim();
     final phone = _phoneController.text.trim();
-    if (name.isEmpty || phone.isEmpty) return;
-    final l10n = AppLocalizations.of(context)!;
+
+    // Validate inputs
+    final nameValidation = Validators.name(name, l10n: l10n);
+    if (!nameValidation.isValid) {
+      setState(() {
+        _submitError = AppError.validation(message: nameValidation.errorMessage!);
+      });
+      return;
+    }
+
+    final phoneValidation = Validators.phone(phone, l10n: l10n);
+    if (!phoneValidation.isValid) {
+      setState(() {
+        _submitError = AppError.validation(message: phoneValidation.errorMessage!);
+      });
+      return;
+    }
+
     final services = _getServices(l10n);
     final opt = _selectedServiceIndex != null ? services[_selectedServiceIndex!] : null;
-    if (opt == null) return;
+    if (opt == null) {
+      setState(() {
+        _submitError = AppError.validation(
+          message: 'Please select a service',
+        );
+      });
+      return;
+    }
 
     setState(() {
       _isSubmitting = true;
@@ -153,27 +180,39 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
         ? '${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}'
         : '';
 
-    final result = await submitAppointmentBooking(
-      name: name,
-      phone: phone,
-      serviceId: opt.id,
-      serviceName: '${opt.category} (${opt.method})',
-      date: dateStr,
-      time: timeStr,
-      sessionType: _selectedSessionType,
-      durationMinutes: defaultSessionDurationMinutes,
-    );
+    try {
+      final result = await executeWithRetry(
+        operation: () => submitAppointmentBooking(
+          name: name,
+          phone: phone,
+          serviceId: opt.id,
+          serviceName: '${opt.category} (${opt.method})',
+          date: dateStr,
+          time: timeStr,
+          sessionType: _selectedSessionType,
+          durationMinutes: defaultSessionDurationMinutes,
+        ),
+        maxRetries: 3,
+        l10n: l10n,
+      );
 
-    if (!mounted) return;
-    setState(() {
-      _isSubmitting = false;
-      if (result.success) {
-        _lastBookingReference = result.bookingReference;
-        _step = _maxStep;
-      } else {
-        _submitError = result.errorMessage;
-      }
-    });
+      if (!mounted) return;
+      setState(() {
+        _isSubmitting = false;
+        if (result.success) {
+          _lastBookingReference = result.bookingReference;
+          _step = _maxStep;
+        } else {
+          _submitError = result.error;
+        }
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _isSubmitting = false;
+        _submitError = e is AppError ? e : AppError.fromException(e, l10n: l10n);
+      });
+    }
   }
 
   @override
@@ -271,16 +310,22 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                 _dashboardBookings = [];
               });
               try {
-                final list = await getMyBookings(phone);
+                final list = await executeWithRetry(
+                  operation: () => getMyBookings(phone),
+                  maxRetries: 2,
+                  l10n: l10n,
+                );
                 if (!mounted) return;
                 setState(() {
                   _dashboardBookings = list;
                   _dashboardLoading = false;
+                  _dashboardError = null;
                 });
               } catch (e) {
                 if (!mounted) return;
+                final error = e is AppError ? e : AppError.fromException(e, l10n: l10n);
                 setState(() {
-                  _dashboardError = e.toString();
+                  _dashboardError = error.userMessage;
                   _dashboardLoading = false;
                 });
               }
@@ -288,6 +333,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
             onCancel: (id) async {
               final phone = _dashboardPhoneController.text.trim();
               if (phone.isEmpty) return;
+              if (!mounted) return;
               final messenger = ScaffoldMessenger.maybeOf(context);
               setState(() => _cancellingId = id);
               try {
@@ -300,8 +346,21 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                   _cancellingId = null;
                 });
               } catch (e) {
+                if (!mounted) return;
                 setState(() => _cancellingId = null);
-                messenger?.showSnackBar(SnackBar(content: Text(e.toString())));
+                final error = e is AppError ? e : AppError.fromException(e, l10n: l10n);
+                if (messenger != null && mounted) {
+                  messenger.showSnackBar(
+                    SnackBar(
+                      content: ErrorSnackbar(error: error),
+                      backgroundColor: AppColors.error,
+                      behavior: SnackBarBehavior.floating,
+                      duration: error.retryable
+                          ? const Duration(seconds: 5)
+                          : const Duration(seconds: 4),
+                    ),
+                  );
+                }
               }
             },
           ),
@@ -674,7 +733,11 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
               fillColor: AppColors.backgroundDark,
             ),
             style: const TextStyle(color: AppColors.onPrimary),
-            onChanged: (_) => setState(() {}),
+            onChanged: (_) {
+              setState(() {
+                _submitError = null;
+              });
+            },
           ),
           const SizedBox(height: 20),
           Text(
@@ -800,16 +863,10 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
           _ConfirmRow(label: l10n.sessionType, value: _selectedSessionType == sessionTypeOnline ? l10n.sessionTypeOnline : l10n.sessionTypeVisit),
           if (_submitError != null) ...[
             const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: AppColors.error.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                _submitError!,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.error),
-              ),
+            ErrorDisplay(
+              error: _submitError!,
+              compact: true,
+              onRetry: _submitError!.retryable ? _submitBooking : null,
             ),
           ],
           const SizedBox(height: 24),

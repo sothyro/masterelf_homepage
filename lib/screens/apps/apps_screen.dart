@@ -38,6 +38,9 @@ class _AppsScreenState extends State<AppsScreen> {
   void _scrollToSectionIfNeeded() {
     final fragment = GoRouterState.of(context).uri.fragment;
     if (fragment.isEmpty) return;
+    final width = MediaQuery.sizeOf(context).width;
+    // On mobile, skip scroll-to-section so the hero stays visible; desktop keeps section navigation.
+    if (Breakpoints.isMobile(width)) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final key = switch (fragment) {
@@ -321,8 +324,8 @@ class _FeaturedMasterElfSectionState extends State<_FeaturedMasterElfSection> {
       // Flutter web doesn't support VideoPlayerController.asset()
       // Use network URL for web, asset path for other platforms
       final VideoPlayerController controller = kIsWeb
-          ? VideoPlayerController.network(
-              '/${AppContent.assetAppPageVideo}',
+          ? VideoPlayerController.networkUrl(
+              Uri.parse('/${AppContent.assetAppPageVideo}'),
               videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
             )
           : VideoPlayerController.asset(
@@ -939,36 +942,6 @@ class _Period9Screenshot extends StatelessWidget {
             child: Icon(LucideIcons.smartphone, size: 40, color: AppColors.onSurfaceVariantDark.withValues(alpha: 0.5)),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _StoreButton extends StatelessWidget {
-  const _StoreButton({
-    required this.label,
-    required this.icon,
-    required this.url,
-  });
-
-  final String label;
-  final IconData icon;
-  final String? url;
-
-  @override
-  Widget build(BuildContext context) {
-    final enabled = url != null && url!.isNotEmpty;
-
-    return OutlinedButton.icon(
-      onPressed: enabled
-          ? () => launchUrlExternal(url!)
-          : null,
-      icon: Icon(icon, size: 22, color: enabled ? AppColors.accent : AppColors.onSurfaceVariantDark),
-      label: Text(label),
-      style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.onPrimary,
-        side: BorderSide(color: enabled ? AppColors.accent : AppColors.borderDark),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       ),
     );
   }

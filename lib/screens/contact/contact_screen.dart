@@ -4,9 +4,12 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../../config/app_content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../services/contact_form_service.dart';
+import '../../services/error_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
 import '../../utils/launcher_utils.dart';
+import '../../utils/validators.dart';
+import '../../widgets/error_display.dart';
 import '../../widgets/glass_container.dart';
 
 /// Contact page: hero banner + two-column layout (contact info left, form right).
@@ -24,8 +27,8 @@ class _ContactScreenState extends State<ContactScreen> {
   final _messageController = TextEditingController();
   int _selectedSubjectIndex = 0;
   bool _submitting = false;
-  String? _submitError;
-  bool _submitSuccess = false;
+  AppError? _submitError;
+  final Map<String, String?> _fieldErrors = {};
 
   @override
   void dispose() {
@@ -59,52 +62,92 @@ class _ContactScreenState extends State<ContactScreen> {
   }
 
   Future<void> _onSubmit() async {
+    final l10n = AppLocalizations.of(context)!;
     final name = _nameController.text.trim();
     final email = _emailController.text.trim();
     final message = _messageController.text.trim();
-    if (name.isEmpty || email.isEmpty || message.isEmpty) return;
+    final phone = _phoneController.text.trim();
+
     if (_submitting) return;
+
+    // Validate all fields
+    final nameValidation = Validators.name(name, l10n: l10n);
+    final emailValidation = Validators.email(email, l10n: l10n);
+    final messageValidation = Validators.message(message, l10n: l10n);
+    final phoneValidation = phone.isEmpty
+        ? ValidationResult.valid
+        : Validators.phone(phone, l10n: l10n);
+
+    setState(() {
+      _fieldErrors.clear();
+      if (!nameValidation.isValid) _fieldErrors['name'] = nameValidation.errorMessage;
+      if (!emailValidation.isValid) _fieldErrors['email'] = emailValidation.errorMessage;
+      if (!messageValidation.isValid) _fieldErrors['message'] = messageValidation.errorMessage;
+      if (!phoneValidation.isValid) _fieldErrors['phone'] = phoneValidation.errorMessage;
+    });
+
+    if (_fieldErrors.isNotEmpty) {
+      _submitError = AppError.validation(
+        message: l10n.validationFormErrors,
+      );
+      return;
+    }
 
     setState(() {
       _submitting = true;
       _submitError = null;
-      _submitSuccess = false;
     });
 
-    final l10n = AppLocalizations.of(context)!;
     final subjectLabel = _getSubjectLabel(l10n, _selectedSubjectIndex);
 
-    final result = await submitContactForm(
-      name: name,
-      email: email,
-      message: message,
-      phone: _phoneController.text.trim().isEmpty ? null : _phoneController.text.trim(),
-      subjectIndex: _selectedSubjectIndex,
-      subjectLabel: subjectLabel,
-    );
+    try {
+      final result = await executeWithRetry(
+        operation: () => submitContactForm(
+          name: name,
+          email: email,
+          message: message,
+          phone: phone.isEmpty ? null : phone,
+          subjectIndex: _selectedSubjectIndex,
+          subjectLabel: subjectLabel,
+        ),
+        maxRetries: 2,
+        l10n: l10n,
+      );
 
-    if (!mounted) return;
-    setState(() {
-      _submitting = false;
-      if (result.success) {
-        _nameController.clear();
-        _emailController.clear();
-        _phoneController.clear();
-        _messageController.clear();
-        _selectedSubjectIndex = 0;
-      }
-    });
-    if (!mounted) return;
-    _showResultDialog(success: result.success, errorMessage: result.errorMessage);
+      if (!mounted) return;
+      setState(() {
+        _submitting = false;
+        if (result.success) {
+          _nameController.clear();
+          _emailController.clear();
+          _phoneController.clear();
+          _messageController.clear();
+          _selectedSubjectIndex = 0;
+          _fieldErrors.clear();
+        } else {
+          _submitError = result.error;
+        }
+      });
+      if (!mounted) return;
+      _showResultDialog(success: result.success, error: result.error);
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _submitting = false;
+        _submitError = e is AppError ? e : AppError.fromException(e, l10n: l10n);
+      });
+      if (!mounted) return;
+      _showResultDialog(success: false, error: _submitError);
+    }
   }
 
-  void _showResultDialog({required bool success, String? errorMessage}) {
+  void _showResultDialog({required bool success, AppError? error}) {
     showDialog<void>(
       context: context,
       barrierDismissible: true,
       builder: (context) => _ContactResultDialog(
         success: success,
-        errorMessage: errorMessage,
+        error: error,
       ),
     );
   }
@@ -234,22 +277,6 @@ class _ContactScreenState extends State<ContactScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          l10n.contactLetsConnect,
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: AppColors.onPrimary,
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          l10n.contactIntro,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: AppColors.onSurfaceVariantDark,
-                height: 1.6,
-              ),
-        ),
-        const SizedBox(height: 48),
         _OfficeBlock(
           title: AppContent.office1Label,
           company: AppContent.office1Company,
@@ -302,9 +329,16 @@ class _ContactScreenState extends State<ContactScreen> {
           const SizedBox(height: 8),
           TextField(
             controller: _nameController,
-            decoration: _inputDecoration(l10n.yourName),
+            decoration: _inputDecoration(l10n.yourName).copyWith(
+              errorText: _fieldErrors['name'],
+            ),
             style: const TextStyle(color: AppColors.onPrimary),
-            onChanged: (_) => setState(() {}),
+            onChanged: (_) {
+              setState(() {
+                _fieldErrors.remove('name');
+                _submitError = null;
+              });
+            },
           ),
           const SizedBox(height: 20),
           _formLabel(l10n.contactFormEmail, required: true),
@@ -312,9 +346,16 @@ class _ContactScreenState extends State<ContactScreen> {
           TextField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
-            decoration: _inputDecoration(l10n.contactFormEmail),
+            decoration: _inputDecoration(l10n.contactFormEmail).copyWith(
+              errorText: _fieldErrors['email'],
+            ),
             style: const TextStyle(color: AppColors.onPrimary),
-            onChanged: (_) => setState(() {}),
+            onChanged: (_) {
+              setState(() {
+                _fieldErrors.remove('email');
+                _submitError = null;
+              });
+            },
           ),
           const SizedBox(height: 20),
           _formLabel(l10n.contactFormPhone, required: false),
@@ -322,8 +363,16 @@ class _ContactScreenState extends State<ContactScreen> {
           TextField(
             controller: _phoneController,
             keyboardType: TextInputType.phone,
-            decoration: _inputDecoration(l10n.contactFormPhone),
+            decoration: _inputDecoration(l10n.contactFormPhone).copyWith(
+              errorText: _fieldErrors['phone'],
+            ),
             style: const TextStyle(color: AppColors.onPrimary),
+            onChanged: (_) {
+              setState(() {
+                _fieldErrors.remove('phone');
+                _submitError = null;
+              });
+            },
           ),
           const SizedBox(height: 24),
           _formLabel(l10n.contactFormSubject, required: false),
@@ -375,15 +424,29 @@ class _ContactScreenState extends State<ContactScreen> {
             decoration: _inputDecoration(l10n.contactFormMessage).copyWith(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               alignLabelWithHint: true,
+              errorText: _fieldErrors['message'],
             ),
             style: const TextStyle(color: AppColors.onPrimary),
-            onChanged: (_) => setState(() {}),
+            onChanged: (_) {
+              setState(() {
+                _fieldErrors.remove('message');
+                _submitError = null;
+              });
+            },
           ),
+          if (_submitError != null) ...[
+            const SizedBox(height: 16),
+            ErrorDisplay(
+              error: _submitError!,
+              compact: true,
+              onRetry: _submitError!.retryable ? _onSubmit : null,
+            ),
+          ],
           const SizedBox(height: 28),
           SizedBox(
             width: double.infinity,
             child: FilledButton(
-              onPressed: (_canSubmit() && !_submitting) ? _onSubmit : null,
+              onPressed: (_canSubmit() && !_submitting && _fieldErrors.isEmpty) ? _onSubmit : null,
               style: FilledButton.styleFrom(
                 backgroundColor: AppColors.accent,
                 foregroundColor: AppColors.onAccent,
@@ -453,17 +516,19 @@ class _ContactScreenState extends State<ContactScreen> {
 class _ContactResultDialog extends StatelessWidget {
   const _ContactResultDialog({
     required this.success,
-    this.errorMessage,
+    this.error,
   });
 
   final bool success;
-  final String? errorMessage;
+  final AppError? error;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final title = success ? l10n.contactSuccessTitle : l10n.contactErrorTitle;
-    final message = success ? l10n.contactSuccess : l10n.contactError;
+    final message = success
+        ? l10n.contactSuccess
+        : (error?.userMessage ?? l10n.contactError);
     final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
 
     final horizontalPadding = isMobile ? 16.0 : 24.0;
@@ -528,24 +593,17 @@ class _ContactResultDialog extends StatelessWidget {
                     ),
                 textAlign: TextAlign.center,
               ),
-              if (!success && errorMessage != null && errorMessage!.isNotEmpty) ...[
+              if (!success && error != null) ...[
                 SizedBox(height: isMobile ? 8 : 12),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(isMobile ? 10 : 12),
-                  decoration: BoxDecoration(
-                    color: AppColors.backgroundDark,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColors.borderDark),
-                  ),
-                  child: Text(
-                    errorMessage!,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.onSurfaceVariantDark,
-                          fontSize: 11,
-                        ),
-                    textAlign: TextAlign.center,
-                  ),
+                ErrorDisplay(
+                  error: error!,
+                  compact: true,
+                  onRetry: error!.retryable
+                      ? () {
+                          Navigator.of(context).pop();
+                          // Retry will be handled by parent widget
+                        }
+                      : null,
                 ),
               ],
               SizedBox(height: isMobile ? 20 : 28),

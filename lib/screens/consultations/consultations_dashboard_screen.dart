@@ -406,7 +406,7 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
                       children: [
                         Expanded(
                           child: DropdownButtonFormField<String>(
-                            value: selectedTime,
+                            initialValue: selectedTime,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                               contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

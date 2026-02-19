@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'l10n/app_localizations.dart';
+import 'services/connectivity_service.dart';
 import 'theme/app_theme.dart';
 import 'providers/locale_provider.dart';
 import 'providers/auth_provider.dart';
@@ -17,6 +18,12 @@ class MasterElfApp extends StatefulWidget {
 
 class _MasterElfAppState extends State<MasterElfApp> {
   GoRouter? _router;
+
+  @override
+  void dispose() {
+    ConnectivityService.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

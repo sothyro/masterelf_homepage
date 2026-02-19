@@ -10,7 +10,6 @@ import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
 
 /// Number of logo placeholders in the Featured in section (15 = 3 pages × 5 logos).
-const int _kFeaturedLogoCount = 15;
 const int _kLogosPerLine = 5;
 const int _kFeaturedLogoPages = 3; // 15 / 5
 

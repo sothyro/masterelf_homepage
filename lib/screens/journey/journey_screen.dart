@@ -73,13 +73,21 @@ class _JourneyHero extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Positioned.fill(
-            child: Image.asset(
+          if (isNarrow)
+            // Mobile: match Our Method hero structure (Image as direct Stack child) for same background position
+            Image.asset(
               AppContent.assetJourneyHero,
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => const SizedBox.expand(),
+            )
+          else
+            Positioned.fill(
+              child: Image.asset(
+                AppContent.assetJourneyHero,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const SizedBox.expand(),
+              ),
             ),
-          ),
           Positioned.fill(
             child: DecoratedBox(
               decoration: BoxDecoration(

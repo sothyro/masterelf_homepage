@@ -8,21 +8,25 @@ import 'package:http/http.dart' as http;
 
 import '../config/app_content.dart';
 import '../models/appointment.dart';
+import 'error_service.dart';
 
 /// Result of submitting an appointment booking.
 /// When using Firestore, SMS is sent via PlasGate from a Cloud Function.
 class BookingResult {
   const BookingResult({
     required this.success,
-    this.errorMessage,
+    this.error,
     this.bookingReference,
     this.appointmentId,
   });
 
   final bool success;
-  final String? errorMessage;
+  final AppError? error;
   final String? bookingReference;
   final String? appointmentId;
+
+  /// Legacy support: returns error message if error exists.
+  String? get errorMessage => error?.userMessage;
 }
 
 /// Whether Firebase is available (initialized and usable).
@@ -101,7 +105,10 @@ Future<BookingResult> submitAppointmentBooking({
         appointmentId: ref.id,
       );
     } catch (e) {
-      return BookingResult(success: false, errorMessage: e.toString());
+      return BookingResult(
+        success: false,
+        error: AppError.fromException(e),
+      );
     }
   }
 
@@ -134,12 +141,16 @@ Future<BookingResult> submitAppointmentBooking({
     }
     return BookingResult(
       success: false,
-      errorMessage: 'Booking failed (${response.statusCode})',
+      error: AppError(
+        category: ErrorCategory.server,
+        userMessage: 'Booking failed. Please try again.',
+        technicalMessage: 'HTTP ${response.statusCode}',
+      ),
     );
   } catch (e) {
     return BookingResult(
       success: false,
-      errorMessage: e.toString(),
+      error: AppError.fromException(e),
     );
   }
 }

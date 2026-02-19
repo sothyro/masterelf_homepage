@@ -31,8 +31,8 @@ class HeroVideoPreloader {
     // Flutter web doesn't support VideoPlayerController.asset()
     // Use network URL for web, asset path for other platforms
     final VideoPlayerController controller = kIsWeb
-        ? VideoPlayerController.network(
-            '/${AppContent.assetHeroVideo}',
+        ? VideoPlayerController.networkUrl(
+            Uri.parse('/${AppContent.assetHeroVideo}'),
             videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
           )
         : VideoPlayerController.asset(
@@ -41,7 +41,7 @@ class HeroVideoPreloader {
           );
 
     void reportProgress(VideoPlayerValue value) {
-      final durationMs = value.duration?.inMilliseconds ?? 0;
+      final durationMs = value.duration.inMilliseconds;
       if (durationMs <= 0) {
         onProgress?.call(value.isInitialized ? 1.0 : 0.0);
         return;

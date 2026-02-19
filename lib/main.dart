@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 
 import 'app.dart';
 import 'firebase_options.dart';
+import 'services/connectivity_service.dart';
+import 'services/error_logging_service.dart';
+import 'services/sentry_service.dart';
 import 'utils/app_asset_preloader.dart';
 import 'utils/hero_video_preloader.dart';
 
@@ -12,6 +15,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Initialize Firebase before app starts so AuthProvider and other Firebase services work.
   await _initFirebase();
+  // Initialize services
+  await ErrorLoggingService.initialize();
+  ConnectivityService.initialize();
+  // Initialize Sentry for error tracking
+  await SentryService.initialize(
+    dsn: 'https://8d318591ce4505a474c7a5ec8f4a4c07@o4510913579843584.ingest.us.sentry.io/4510913582137344',
+  );
   runApp(const HeroVideoBootstrap());
 }
 
