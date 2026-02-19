@@ -9,7 +9,7 @@ class AppLocalizationsKm extends AppLocalizations {
   AppLocalizationsKm([String locale = 'km']) : super(locale);
 
   @override
-  String get appTitle => 'Master Elf Feng Shui';
+  String get appTitle => 'ហុងស៊ុយ ម៉ាស្ទ័រអេល ហុងឆាយហេង';
 
   @override
   String get skipToContent => 'រំលងទៅមាតិកា';
@@ -18,10 +18,10 @@ class AppLocalizationsKm extends AppLocalizations {
   String get home => 'ទំព័រដើម';
 
   @override
-  String get about => 'អំពី';
+  String get about => 'អំពីម៉ាស្ទ័រ';
 
   @override
-  String get learning => 'ការរៀន';
+  String get learning => 'បណ្តុះបណ្តាល';
 
   @override
   String get charteredPractitioner => 'អ្នកអនុវត្តវិជ្ជាជីវៈផ្លូវការ';
@@ -30,22 +30,22 @@ class AppLocalizationsKm extends AppLocalizations {
   String get resources => 'ធនធាន';
 
   @override
-  String get appsAndStore => 'កម្មវិធី និងហាង';
+  String get appsAndStore => 'កម្មវិធី និងហាងម៉ាស្ទ័រ';
 
   @override
-  String get masterElfSystem => 'ប្រព័ន្ធ Master Elf';
+  String get masterElfSystem => 'ប្រព័ន្ធកម្មវិធីរបស់ម៉ាស្ទ័រអេល';
 
   @override
-  String get period9MobileApp => 'កម្មវិធីចល័តរយៈកាល ៩';
+  String get period9MobileApp => 'កម្មវិធីយុគ9';
 
   @override
-  String get talismanStore => 'ហាងវត្ថុមនោគម';
+  String get talismanStore => 'ស្តេចយ័ន្ទទេវតា';
 
   @override
   String get appsPageTitle => 'កម្មវិធី និងហាង';
 
   @override
-  String get masterElfSystemSpotlightTitle => 'ប្រព័ន្ធ Master Elf';
+  String get masterElfSystemSpotlightTitle => 'ប្រព័ន្ធកម្មវិធីរបស់ម៉ាស្ទ័រអេល';
 
   @override
   String get masterElfSystemSpotlightDesc =>
