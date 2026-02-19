@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -27,10 +28,17 @@ class HeroVideoPreloader {
     _readyCompleter = Completer<void>();
     onProgress?.call(0.0);
 
-    final controller = VideoPlayerController.asset(
-      AppContent.assetHeroVideo,
-      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-    );
+    // Flutter web doesn't support VideoPlayerController.asset()
+    // Use network URL for web, asset path for other platforms
+    final VideoPlayerController controller = kIsWeb
+        ? VideoPlayerController.network(
+            '/${AppContent.assetHeroVideo}',
+            videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+          )
+        : VideoPlayerController.asset(
+            AppContent.assetHeroVideo,
+            videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+          );
 
     void reportProgress(VideoPlayerValue value) {
       final durationMs = value.duration?.inMilliseconds ?? 0;

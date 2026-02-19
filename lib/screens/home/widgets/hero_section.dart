@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -54,16 +55,30 @@ class _HeroSectionState extends State<HeroSection> {
   Future<void> _initVideo() async {
     if (!mounted) return;
     try {
-      final controller = VideoPlayerController.asset(
-        AppContent.assetHeroVideo,
-        videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-      );
+      // Flutter web doesn't support VideoPlayerController.asset()
+      // Use network URL for web, asset path for other platforms
+      final VideoPlayerController controller = kIsWeb
+          ? VideoPlayerController.network(
+              '/${AppContent.assetHeroVideo}',
+              videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+            )
+          : VideoPlayerController.asset(
+              AppContent.assetHeroVideo,
+              videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+            );
+
       await controller.initialize();
-      if (!mounted) return;
+      if (!mounted) {
+        controller.dispose();
+        return;
+      }
       controller.setLooping(true);
       controller.setVolume(0);
       await controller.play();
-      if (!mounted) return;
+      if (!mounted) {
+        controller.dispose();
+        return;
+      }
       setState(() {
         _videoController = controller;
         _videoReady = true;

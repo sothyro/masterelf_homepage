@@ -27,8 +27,8 @@ class AcademyScreen extends StatelessWidget {
           const _AcademyHero(),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: isNarrow ? 20 : 32,
-              vertical: 40,
+              horizontal: isNarrow ? 16 : 32,
+              vertical: isNarrow ? 32 : 40,
             ),
             child: Center(
               child: ConstrainedBox(

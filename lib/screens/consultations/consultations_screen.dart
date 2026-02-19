@@ -211,7 +211,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: 120,
+                  top: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 100 : 120,
                   bottom: (Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 32 : 48) +
                       MediaQuery.paddingOf(context).bottom,
                   left: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 16 : 24,
@@ -314,8 +314,60 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
   Widget _buildStepper(AppLocalizations l10n) {
     final steps = [l10n.stepChooseService, l10n.stepDateAndTime, l10n.stepYourDetails, l10n.stepConfirm];
-    return Row(
-      children: List.generate(steps.length * 2 - 1, (i) {
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
+    return isMobile
+        ? Column(
+            children: steps.asMap().entries.map((entry) {
+              final index = entry.key;
+              final step = entry.value;
+              final active = _step == index;
+              final done = _step > index;
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 32,
+                      height: 32,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: done ? AppColors.accent : (active ? AppColors.accent : AppColors.surfaceElevatedDark),
+                        border: Border.all(
+                          color: active || done ? AppColors.accent : AppColors.borderDark,
+                          width: 1.5,
+                        ),
+                      ),
+                      child: done
+                          ? const Icon(Icons.check, size: 18, color: AppColors.onAccent)
+                          : Text(
+                              '${index + 1}',
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                height: 1.0,
+                                color: active ? AppColors.onAccent : AppColors.onSurfaceVariantDark,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        step,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: active ? AppColors.accent : AppColors.onSurfaceVariantDark,
+                              fontWeight: active ? FontWeight.w600 : FontWeight.normal,
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          )
+        : Row(
+            children: List.generate(steps.length * 2 - 1, (i) {
         if (i.isOdd) {
           return Expanded(
             child: Container(
@@ -376,13 +428,14 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
   Widget _buildStepService(AppLocalizations l10n) {
     final services = _getServices(l10n);
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
     return GlassContainer(
       blurSigma: 8,
       color: AppColors.surfaceElevatedDark.withValues(alpha: 0.95),
       borderRadius: BorderRadius.circular(16),
       border: Border.all(color: AppColors.borderDark, width: 1),
       boxShadow: AppShadows.card,
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(isMobile ? 20 : 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -463,7 +516,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       borderRadius: BorderRadius.circular(16),
       border: Border.all(color: AppColors.borderDark, width: 1),
       boxShadow: AppShadows.card,
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 20 : 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -594,7 +647,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       borderRadius: BorderRadius.circular(16),
       border: Border.all(color: AppColors.borderDark, width: 1),
       boxShadow: AppShadows.card,
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 20 : 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -664,10 +717,18 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
             style: Theme.of(context).textTheme.titleSmall?.copyWith(color: AppColors.onSurfaceVariantDark),
           ),
           const SizedBox(height: 8),
-          SegmentedButton<String>(
+            SegmentedButton<String>(
             segments: [
-              ButtonSegment(value: sessionTypeVisit, label: Text(l10n.sessionTypeVisit), icon: const Icon(LucideIcons.mapPin, size: 18)),
-              ButtonSegment(value: sessionTypeOnline, label: Text(l10n.sessionTypeOnline), icon: const Icon(LucideIcons.video, size: 18)),
+              ButtonSegment(
+                value: sessionTypeVisit,
+                label: Text(l10n.sessionTypeVisit, style: TextStyle(fontSize: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 13 : null)),
+                icon: const Icon(LucideIcons.mapPin, size: 18),
+              ),
+              ButtonSegment(
+                value: sessionTypeOnline,
+                label: Text(l10n.sessionTypeOnline, style: TextStyle(fontSize: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 13 : null)),
+                icon: const Icon(LucideIcons.video, size: 18),
+              ),
             ],
             selected: {_selectedSessionType},
             onSelectionChanged: (s) => setState(() => _selectedSessionType = s.first),
@@ -719,7 +780,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       borderRadius: BorderRadius.circular(16),
       border: Border.all(color: AppColors.borderDark, width: 1),
       boxShadow: AppShadows.card,
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 20 : 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -794,11 +855,15 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       borderRadius: BorderRadius.circular(16),
       border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.5), width: 1),
       boxShadow: AppShadows.card,
-      padding: const EdgeInsets.all(32),
+      padding: EdgeInsets.all(Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 24 : 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(Icons.check_circle, size: 64, color: AppColors.accent),
+          Icon(
+            Icons.check_circle,
+            size: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 56 : 64,
+            color: AppColors.accent,
+          ),
           const SizedBox(height: 24),
           Text(
             l10n.bookingSuccessTitle,

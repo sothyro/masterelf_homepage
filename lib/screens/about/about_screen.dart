@@ -39,7 +39,7 @@ class AboutScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               child: Image.asset(
                 AppContent.assetAboutHero,
-                height: 200,
+                height: isMobile ? 160 : 200,
                 width: double.infinity,
                 fit: BoxFit.cover,
                 errorBuilder: (_, __, ___) => const SizedBox.shrink(),
@@ -51,6 +51,7 @@ class AboutScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     color: AppColors.onPrimary,
                     fontWeight: FontWeight.w600,
+                    fontSize: isMobile ? 22 : null,
                   ),
             ),
             const SizedBox(height: 32),

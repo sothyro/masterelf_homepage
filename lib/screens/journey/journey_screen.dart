@@ -28,8 +28,8 @@ class JourneyScreen extends StatelessWidget {
           _JourneyHero(isNarrow: isNarrow),
           Padding(
             padding: EdgeInsets.only(
-              top: isNarrow ? 40 : 56,
-              bottom: isNarrow ? 48 : 64,
+              top: isNarrow ? 32 : 56,
+              bottom: isNarrow ? 40 : 64,
               left: isNarrow ? 16 : 24,
               right: isNarrow ? 16 : 24,
             ),
@@ -117,7 +117,7 @@ class _SectionTheStory extends StatelessWidget {
         Text(
           l10n.journeySectionTheStory,
           style: GoogleFonts.condiment(
-            fontSize: 32,
+            fontSize: isNarrow ? 26 : 32,
             fontWeight: FontWeight.bold,
             color: AppColors.accent,
             height: 1.2,
@@ -348,7 +348,7 @@ class _SectionPhoenix extends StatelessWidget {
                 child: Text(
                   l10n.journeyPhoenixTitle,
                   style: GoogleFonts.condiment(
-                    fontSize: 28,
+                    fontSize: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 24 : 28,
                     fontWeight: FontWeight.bold,
                     color: AppColors.accent,
                     height: 1.3,

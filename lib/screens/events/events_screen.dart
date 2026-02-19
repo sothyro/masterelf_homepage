@@ -60,8 +60,8 @@ class _EventsScreenState extends State<EventsScreen> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: isNarrow ? 20 : 32,
-              vertical: 40,
+              horizontal: isNarrow ? 16 : 32,
+              vertical: isNarrow ? 32 : 40,
             ),
             child: Center(
               child: ConstrainedBox(
@@ -534,9 +534,13 @@ class _EventRegistrationDialogState extends State<_EventRegistrationDialog> {
         _emailController.text.trim().isNotEmpty &&
         !_submitted;
 
+    final isMobile = Breakpoints.isMobile(MediaQuery.of(context).size.width);
     return Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+      insetPadding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 16 : 24,
+        vertical: isMobile ? 24 : 48,
+      ),
       child: GlassContainer(
         blurSigma: 10,
         color: AppColors.overlayDark.withValues(alpha: 0.92),

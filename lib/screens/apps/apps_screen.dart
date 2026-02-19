@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -316,22 +317,43 @@ class _FeaturedMasterElfSectionState extends State<_FeaturedMasterElfSection> {
   }
 
   Future<void> _initVideo() async {
-    final controller = VideoPlayerController.asset(
-      AppContent.assetAppPageVideo,
-      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-    );
-    await controller.initialize();
-    if (!mounted) {
-      controller.dispose();
-      return;
+    try {
+      // Flutter web doesn't support VideoPlayerController.asset()
+      // Use network URL for web, asset path for other platforms
+      final VideoPlayerController controller = kIsWeb
+          ? VideoPlayerController.network(
+              '/${AppContent.assetAppPageVideo}',
+              videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+            )
+          : VideoPlayerController.asset(
+              AppContent.assetAppPageVideo,
+              videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+            );
+
+      await controller.initialize();
+      if (!mounted) {
+        controller.dispose();
+        return;
+      }
+      controller.setLooping(true);
+      controller.setVolume(_muted ? 0 : 1);
+      await controller.play();
+      if (!mounted) {
+        controller.dispose();
+        return;
+      }
+      setState(() {
+        _videoController = controller;
+        _videoReady = true;
+      });
+    } catch (e) {
+      // Silently handle errors - fallback to image will be shown
+      if (mounted) {
+        setState(() {
+          _videoReady = false;
+        });
+      }
     }
-    controller.setLooping(true);
-    controller.setVolume(_muted ? 0 : 1);
-    controller.play();
-    setState(() {
-      _videoController = controller;
-      _videoReady = true;
-    });
   }
 
   void _toggleMute() {

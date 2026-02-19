@@ -147,7 +147,7 @@ class _ContactScreenState extends State<ContactScreen> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: 120,
+                  top: isNarrow ? 100 : 120,
                   bottom: (isNarrow ? 32 : 48) + MediaQuery.paddingOf(context).bottom,
                   left: isNarrow ? 16 : 24,
                   right: isNarrow ? 16 : 24,

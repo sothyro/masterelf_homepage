@@ -35,8 +35,8 @@ class MethodScreen extends StatelessWidget {
           const _PageHero(),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: isNarrow ? 20 : 32,
-              vertical: 48,
+              horizontal: isNarrow ? 16 : 32,
+              vertical: isNarrow ? 32 : 48,
             ),
             child: Center(
               child: ConstrainedBox(
@@ -49,6 +49,7 @@ class MethodScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                             color: AppColors.onPrimary,
                             fontWeight: FontWeight.w600,
+                            fontSize: isNarrow ? 22 : null,
                           ),
                     ),
                     const SizedBox(height: 20),
