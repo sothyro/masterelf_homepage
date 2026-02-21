@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -321,17 +320,10 @@ class _FeaturedMasterElfSectionState extends State<_FeaturedMasterElfSection> {
 
   Future<void> _initVideo() async {
     try {
-      // Flutter web doesn't support VideoPlayerController.asset()
-      // Use network URL for web, asset path for other platforms
-      final VideoPlayerController controller = kIsWeb
-          ? VideoPlayerController.networkUrl(
-              Uri.parse('/${AppContent.assetAppPageVideo}'),
-              videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-            )
-          : VideoPlayerController.asset(
-              AppContent.assetAppPageVideo,
-              videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-            );
+      final VideoPlayerController controller = VideoPlayerController.asset(
+        AppContent.assetAppPageVideo,
+        videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+      );
 
       await controller.initialize();
       if (!mounted) {

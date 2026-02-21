@@ -48,6 +48,7 @@ flutter analyze
   - `services/` – e.g. appointment booking API  
 - `assets/` – images, icons, video  
 - `web/` – `index.html`, PWA manifest, favicon  
+  - `web/videos/` – hero video for web (e.g. `videobackground720.mp4`); copy from `assets/videos/` if missing so the release build serves it as a static file.  
 
 ## Configuration
 

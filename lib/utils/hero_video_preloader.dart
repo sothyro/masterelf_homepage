@@ -1,97 +1,6 @@
-import 'dart:async';
-
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 
-import '../config/app_content.dart';
 import '../theme/app_theme.dart';
-
-/// Preloads the hero video at app startup so the hero section can use it when mounted.
-/// [preload] returns a Future that completes when the video is initialized and ready to play.
-/// [onProgress] receives 0.0→1.0 based on real loading: 0 until init starts, then buffered/duration.
-class HeroVideoPreloader {
-  HeroVideoPreloader._();
-
-  static VideoPlayerController? _preloaded;
-  static Completer<void>? _readyCompleter;
-
-  /// Start loading the hero video. Reports progress via [onProgress] (0.0 to 1.0).
-  /// Progress reflects buffered amount / duration once initialized; completes when ready to play.
-  /// Safe to call once; subsequent calls return the same future.
-  static Future<void> preload([void Function(double progress)? onProgress]) {
-    if (_preloaded != null) {
-      onProgress?.call(1.0);
-      return Future.value();
-    }
-    if (_readyCompleter != null) return _readyCompleter!.future;
-    _readyCompleter = Completer<void>();
-    onProgress?.call(0.0);
-
-    // Flutter web doesn't support VideoPlayerController.asset()
-    // Use network URL for web, asset path for other platforms
-    final VideoPlayerController controller = kIsWeb
-        ? VideoPlayerController.networkUrl(
-            Uri.parse('/${AppContent.assetHeroVideo}'),
-            videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-          )
-        : VideoPlayerController.asset(
-            AppContent.assetHeroVideo,
-            videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-          );
-
-    void reportProgress(VideoPlayerValue value) {
-      final durationMs = value.duration.inMilliseconds;
-      if (durationMs <= 0) {
-        onProgress?.call(value.isInitialized ? 1.0 : 0.0);
-        return;
-      }
-      final bufferedEnd = value.buffered.isEmpty
-          ? 0
-          : value.buffered
-              .map((r) => r.end.inMilliseconds)
-              .reduce((a, b) => a > b ? a : b);
-      final fraction = (bufferedEnd / durationMs).clamp(0.0, 1.0);
-      onProgress?.call(fraction);
-    }
-
-    void listener() {
-      if (_preloaded != null) return;
-      reportProgress(controller.value);
-    }
-
-    controller.addListener(listener);
-
-    controller.initialize().then((_) {
-      if (_preloaded != null) {
-        controller.removeListener(listener);
-        controller.dispose();
-        _readyCompleter?.complete();
-        return;
-      }
-      controller.removeListener(listener);
-      reportProgress(controller.value);
-      controller.setLooping(true);
-      controller.setVolume(0);
-      _preloaded = controller;
-      onProgress?.call(1.0);
-      _readyCompleter?.complete();
-    }).catchError((_) {
-      controller.removeListener(listener);
-      controller.dispose();
-      onProgress?.call(1.0);
-      _readyCompleter?.complete();
-    });
-    return _readyCompleter!.future;
-  }
-
-  /// Returns the preloaded controller if ready and clears the stored reference.
-  static VideoPlayerController? takePreloaded() {
-    final c = _preloaded;
-    _preloaded = null;
-    return c;
-  }
-}
 
 /// Status messages shown while loading so users see activity even when progress is slow.
 const List<String> _loadingMessages = [
@@ -101,13 +10,11 @@ const List<String> _loadingMessages = [
   'Just a moment…',
 ];
 
-/// Full-screen loading view that matches the hero gradient so the transition is seamless.
-/// [progress] should go from 0.0 to 1.0. The bar animates smoothly and status messages
-/// rotate so the screen feels interactive even when progress is slow (e.g. during font load).
+/// Full-screen loading view shown until critical assets (logo, hero image) are ready.
+/// Hero video loads in the hero section after the app is visible.
 class HeroLoadingScreen extends StatefulWidget {
   const HeroLoadingScreen({super.key, this.progress = 0.0});
 
-  /// Loading progress from 0.0 to 1.0. When 1.0, the bar is full and the app will switch to content.
   final double progress;
 
   @override
@@ -190,7 +97,6 @@ class _HeroLoadingScreenState extends State<HeroLoadingScreen>
   }
 }
 
-/// Inner content: displays animated progress, pulse, and rotating message.
 class _LoadingContent extends StatelessWidget {
   const _LoadingContent({
     required this.displayProgress,

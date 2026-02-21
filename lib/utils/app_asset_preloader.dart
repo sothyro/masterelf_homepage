@@ -4,16 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../config/app_content.dart';
-import 'hero_video_preloader.dart';
 
 // ---------------------------------------------------------------------------
-// Critical path: logo + hero image + hero video. Page is revealed only when
-// all are ready so the video is fully buffered and plays smoothly. Progress
-// bar reflects real loading: ~20% images, ~80% video (by weight).
+// Critical path: logo + hero image only. Video loads in the hero section
+// after the app is visible (standard practice; avoids web asset URL issues).
 // ---------------------------------------------------------------------------
-
-/// Weight of critical images in the 0–100% progress (video gets the rest).
-const double _criticalImagesWeight = 0.2;
 
 /// Critical for first paint: logo (header) and hero background (fallback/static).
 List<String> get _criticalImageAssets => [
@@ -73,42 +68,13 @@ List<String> get _restImageAssets => [
 class AppAssetPreloader {
   AppAssetPreloader._();
 
-  /// Critical path: logo + hero image + hero video. Progress is accurate:
-  /// images contribute [_criticalImagesWeight], video contributes the rest (buffered %).
-  /// Reaches 1.0 only when all are ready so the page can show with smooth video.
+  /// Critical path: logo + hero image. Hero video loads in the hero section.
   static Future<void> preloadAll(void Function(double progress) onProgress) async {
     onProgress(0.0);
 
-    double imageProgress = 0.0;
-    double videoProgress = 0.0;
-
-    void reportCombined() {
-      final combined = (imageProgress * _criticalImagesWeight) +
-          (videoProgress * (1.0 - _criticalImagesWeight));
-      onProgress(combined.clamp(0.0, 1.0));
-    }
-
-    // Load critical images and hero video in parallel; both must complete before reveal.
-    await Future.wait([
-      _loadImageList(_criticalImageAssets, (completed, total) {
-        imageProgress = total > 0 ? completed / total : 1.0;
-        reportCombined();
-      }).then((_) {
-        imageProgress = 1.0;
-        reportCombined();
-      }),
-      HeroVideoPreloader.preload((v) {
-        videoProgress = v;
-        reportCombined();
-      }).then((_) {
-        videoProgress = 1.0;
-        reportCombined();
-      }).catchError((_) {
-        videoProgress = 1.0;
-        reportCombined();
-      }),
-    ]);
-
+    await _loadImageList(_criticalImageAssets, (completed, total) {
+      onProgress(total > 0 ? completed / total : 1.0);
+    });
     onProgress(1.0);
 
     // Background: fonts and rest images (no blocking)
