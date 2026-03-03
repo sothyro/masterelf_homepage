@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -31,16 +32,31 @@ const Set<String> _knownPaths = {
   '/not-found',
 };
 
+/// Initial location for the router. On web, use the current browser URL path
+/// (and query/fragment) so direct links (e.g. /consultations, /apps#books) open
+/// the correct page instead of resetting to / after load.
+String get _initialLocation {
+  if (!kIsWeb) return '/';
+  final base = Uri.base;
+  if (base.path.isEmpty || base.path == '/') return '/';
+  final buf = StringBuffer(base.path);
+  if (base.query.isNotEmpty) buf.write('?${base.query}');
+  if (base.fragment.isNotEmpty) buf.write('#${base.fragment}');
+  return buf.toString();
+}
+
 /// Creates the app router once. Pass [refreshListenable] (e.g. LocaleNotifier)
 /// so route/redirect logic can react to changes without recreating the router.
 GoRouter createAppRouter({Listenable? refreshListenable}) {
   return GoRouter(
     navigatorKey: _rootNavKey,
-    initialLocation: '/',
+    initialLocation: _initialLocation,
     refreshListenable: refreshListenable,
     redirect: (context, state) {
-      final path = state.uri.path;
-      if (path.isEmpty || _knownPaths.contains(path)) {
+      // Normalize: trim trailing slash so /consultations/ matches /consultations
+      final raw = state.uri.path.replaceAll(RegExp(r'/+$'), '');
+      final path = raw.isEmpty ? '/' : raw;
+      if (path == '/' || _knownPaths.contains(path)) {
         if (path == '/consultations/dashboard') {
           final auth = context.read<AuthProvider>();
           if (!auth.isLoggedIn) return '/consultations';
