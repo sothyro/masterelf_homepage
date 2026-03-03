@@ -1,0 +1,15 @@
+# SPA routing: serve index.html for all paths so Flutter (GoRouter) can handle deep links.
+# Required when using path-based URLs (usePathUrlStrategy) on Apache (e.g. Namecheap shared hosting).
+# Place this file in the same directory as index.html (e.g. build/web or your site root).
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # If the request is for an existing file or directory, serve it
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  # Otherwise send everything to index.html (Flutter app)
+  RewriteRule ^ index.html [QSA,L]
+</IfModule>
