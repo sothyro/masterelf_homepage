@@ -10,7 +10,9 @@ import 'providers/auth_provider.dart';
 import 'router/app_router.dart';
 
 class MasterElfApp extends StatefulWidget {
-  const MasterElfApp({super.key});
+  const MasterElfApp({super.key, required this.initialLocation});
+
+  final String initialLocation;
 
   @override
   State<MasterElfApp> createState() => _MasterElfAppState();
@@ -37,6 +39,7 @@ class _MasterElfAppState extends State<MasterElfApp> {
           // Create router once; refresh on locale or auth change.
           _router ??= createAppRouter(
             refreshListenable: Listenable.merge([localeNotifier, authProvider]),
+            initialLocation: widget.initialLocation,
           );
           final theme = _themeForLocale(localeNotifier.locale.languageCode);
           return MaterialApp.router(

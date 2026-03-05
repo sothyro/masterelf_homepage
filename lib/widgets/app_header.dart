@@ -44,7 +44,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
         color: Colors.transparent,
         child: isMobile
-            ? _MobileHeader(l10n: l10n, onOpenDrawer: onOpenDrawer)
+            ? _MobileHeader(l10n: l10n, localeNotifier: localeNotifier, onOpenDrawer: onOpenDrawer)
             : _DesktopHeader(l10n: l10n, localeNotifier: localeNotifier),
       ),
     );
@@ -55,9 +55,10 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
 const double _kLogoLeftInsetDesktop = 28.0;
 
 class _MobileHeader extends StatelessWidget {
-  const _MobileHeader({required this.l10n, this.onOpenDrawer});
+  const _MobileHeader({required this.l10n, required this.localeNotifier, this.onOpenDrawer});
 
   final AppLocalizations l10n;
+  final LocaleNotifier localeNotifier;
   final VoidCallback? onOpenDrawer;
 
   /// Match desktop: bar 72, stack 240, logo 154×184.
@@ -123,6 +124,11 @@ class _MobileHeader extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+          Positioned(
+            right: 28,
+            top: barHeight + 8,
+            child: _LanguageFlagsRow(notifier: localeNotifier),
           ),
           Positioned(
             left: _kLogoLeftInsetDesktop,
@@ -218,8 +224,6 @@ class _DesktopHeader extends StatelessWidget {
       ),
       _NavLink(label: l10n.consultations, path: '/consultations'),
       if (isTablet) const SizedBox(width: 24) else const Spacer(),
-      _LocaleSwitcher(notifier: localeNotifier),
-      const SizedBox(width: 20),
       _ContactUsButton(l10n: l10n),
     ];
     final row = Row(
@@ -259,6 +263,11 @@ class _DesktopHeader extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 10),
                 child: content,
               ),
+            ),
+            Positioned(
+              right: 28,
+              top: barHeight + 8,
+              child: _LanguageFlagsRow(notifier: localeNotifier),
             ),
             Positioned(
               left: _kLogoLeftInsetDesktop,
@@ -650,6 +659,53 @@ class _LocaleSwitcher extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _LanguageFlagsRow extends StatelessWidget {
+  const _LanguageFlagsRow({required this.notifier});
+
+  final LocaleNotifier notifier;
+
+  static const _locales = [
+    ('en', '🇺🇸'),
+    ('km', '🇰🇭'),
+    ('zh', '🇨🇳'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final code = notifier.locale.languageCode;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: _locales.map((e) {
+        final isSelected = code == e.$1;
+        return Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: InkWell(
+            onTap: () => notifier.setLocaleFromCode(e.$1),
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: isSelected ? AppColors.accent.withValues(alpha: 0.22) : Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+                border: isSelected
+                    ? Border.all(color: AppColors.accent.withValues(alpha: 0.9), width: 1)
+                    : Border.all(color: Colors.white.withValues(alpha: 0.3), width: 0.5),
+              ),
+              child: Text(
+                e.$2,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: _MenuColors.linkText,
+                ),
+              ),
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 }

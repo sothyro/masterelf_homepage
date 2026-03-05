@@ -19,6 +19,8 @@ import '../l10n/app_localizations.dart';
 
 final GlobalKey<NavigatorState> _rootNavKey = GlobalKey<NavigatorState>();
 
+const String _basePathPrefix = '';
+
 const Set<String> _knownPaths = {
   '/',
   '/about',
@@ -32,32 +34,52 @@ const Set<String> _knownPaths = {
   '/not-found',
 };
 
-/// Initial location for the router. On web, use the current browser URL path
-/// (and query/fragment) so direct links (e.g. /consultations, /apps#books) open
-/// the correct page instead of resetting to / after load.
-String get _initialLocation {
-  if (!kIsWeb) return '/';
-  final base = Uri.base;
-  if (base.path.isEmpty || base.path == '/') return '/';
-  final buf = StringBuffer(base.path);
-  if (base.query.isNotEmpty) buf.write('?${base.query}');
-  if (base.fragment.isNotEmpty) buf.write('#${base.fragment}');
-  return buf.toString();
+String normalizePath(String path) {
+  if (path.isEmpty || path == '/') return '/';
+  while (path.endsWith('/') && path.length > 1) {
+    path = path.substring(0, path.length - 1);
+  }
+  return path;
+}
+
+String getInitialRouterLocation() {
+  if (kIsWeb) {
+    final uri = Uri.base;
+    var path = uri.path;
+    if (_basePathPrefix.isNotEmpty && path.startsWith(_basePathPrefix)) {
+      path = path.substring(_basePathPrefix.length);
+    }
+    final normalizedPath = normalizePath(path);
+    final query = uri.hasQuery ? '?${uri.query}' : '';
+    final fragment = uri.fragment.isNotEmpty ? '#${uri.fragment}' : '';
+    return normalizedPath + query + fragment;
+  }
+  return '/';
 }
 
 /// Creates the app router once. Pass [refreshListenable] (e.g. LocaleNotifier)
 /// so route/redirect logic can react to changes without recreating the router.
-GoRouter createAppRouter({Listenable? refreshListenable}) {
+GoRouter createAppRouter({
+  Listenable? refreshListenable,
+  String? initialLocation,
+}) {
   return GoRouter(
     navigatorKey: _rootNavKey,
-    initialLocation: _initialLocation,
+    initialLocation: initialLocation ?? getInitialRouterLocation(),
     refreshListenable: refreshListenable,
     redirect: (context, state) {
-      // Normalize: trim trailing slash so /consultations/ matches /consultations
-      final raw = state.uri.path.replaceAll(RegExp(r'/+$'), '');
-      final path = raw.isEmpty ? '/' : raw;
-      if (path == '/' || _knownPaths.contains(path)) {
-        if (path == '/consultations/dashboard') {
+      final uri = state.uri;
+      final rawPath = uri.path;
+      final normalized = normalizePath(rawPath);
+
+      if (rawPath != normalized) {
+        final query = uri.hasQuery ? '?${uri.query}' : '';
+        final fragment = uri.fragment.isNotEmpty ? '#${uri.fragment}' : '';
+        return normalized + query + fragment;
+      }
+
+      if (normalized == '/' || _knownPaths.contains(normalized)) {
+        if (normalized == '/consultations/dashboard') {
           final auth = context.read<AuthProvider>();
           if (!auth.isLoggedIn) return '/consultations';
         }

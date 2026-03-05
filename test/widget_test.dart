@@ -6,7 +6,7 @@ import 'package:masterelf_homepage/app.dart';
 
 void main() {
   testWidgets('App smoke test', (WidgetTester tester) async {
-    await tester.pumpWidget(const MasterElfApp());
+    await tester.pumpWidget(const MasterElfApp(initialLocation: '/'));
     await tester.pumpAndSettle();
 
     // Home appears in header and drawer; default locale is en so text is "Home"
@@ -14,7 +14,7 @@ void main() {
   });
 
   testWidgets('404 shows not-found page inside shell', (WidgetTester tester) async {
-    await tester.pumpWidget(const MasterElfApp());
+    await tester.pumpWidget(const MasterElfApp(initialLocation: '/'));
     await tester.pumpAndSettle();
 
     final context = tester.element(find.byType(Scaffold).first);

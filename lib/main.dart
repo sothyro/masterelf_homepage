@@ -6,6 +6,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'app.dart';
 import 'firebase_options.dart';
+import 'router/app_router.dart';
 import 'services/connectivity_service.dart';
 import 'services/error_logging_service.dart';
 import 'services/sentry_service.dart';
@@ -16,6 +17,7 @@ void main() async {
   // Use path-based URLs (e.g. /consultations) so direct links open the correct page.
   usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
+  final initialLocation = getInitialRouterLocation();
   // Initialize Firebase before app starts so AuthProvider and other Firebase services work.
   await _initFirebase();
   // Initialize services
@@ -26,7 +28,7 @@ void main() async {
   await SentryService.initialize(
     dsn: 'https://8d318591ce4505a474c7a5ec8f4a4c07@o4510913579843584.ingest.us.sentry.io/4510913582137344',
   );
-  runApp(const HeroVideoBootstrap());
+  runApp(HeroVideoBootstrap(initialLocation: initialLocation));
 }
 
 /// Initialize Firebase only when options are configured (not placeholder).
@@ -44,7 +46,9 @@ Future<void> _initFirebase() async {
 
 /// Shows a loading screen with 0–100% progress until assets (video, images, fonts) are ready, then the full app.
 class HeroVideoBootstrap extends StatefulWidget {
-  const HeroVideoBootstrap({super.key});
+  const HeroVideoBootstrap({super.key, required this.initialLocation});
+
+  final String initialLocation;
 
   @override
   State<HeroVideoBootstrap> createState() => _HeroVideoBootstrapState();
@@ -84,6 +88,6 @@ class _HeroVideoBootstrapState extends State<HeroVideoBootstrap> {
     if (!_transitioning) {
       return HeroLoadingScreen(progress: _progress);
     }
-    return const MasterElfApp();
+    return MasterElfApp(initialLocation: widget.initialLocation);
   }
 }
