@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import '../l10n/app_localizations.dart';
 import 'connectivity_service.dart';
 import 'error_logging_service.dart';
-import 'sentry_service.dart';
 
 /// Categories of errors for better handling and user messaging.
 enum ErrorCategory {
@@ -56,7 +55,6 @@ class AppError {
       );
       if (logError) {
         ErrorLoggingService.logNetworkError('socket_http', appError);
-        SentryService.reportError(appError);
       }
       return appError;
     }
@@ -72,7 +70,6 @@ class AppError {
       );
       if (logError) {
         ErrorLoggingService.logNetworkError('http_client', appError);
-        SentryService.reportError(appError);
       }
       return appError;
     }
@@ -89,7 +86,6 @@ class AppError {
       );
       if (logError) {
         ErrorLoggingService.logNetworkError('timeout', appError);
-        SentryService.reportError(appError);
       }
       return appError;
     }
@@ -154,7 +150,6 @@ class AppError {
       }
       if (logError) {
         ErrorLoggingService.logError(appError, additionalData: {'auth_code': error.code});
-        SentryService.reportError(appError);
       }
       return appError;
     }
@@ -211,7 +206,6 @@ class AppError {
       }
       if (logError) {
         ErrorLoggingService.logError(appError, additionalData: {'function_code': error.code});
-        SentryService.reportError(appError);
       }
       return appError;
     }
@@ -238,7 +232,6 @@ class AppError {
       }
       if (logError) {
         ErrorLoggingService.logError(appError, additionalData: {'firestore_code': error.code});
-        SentryService.reportError(appError);
       }
       return appError;
     }
@@ -255,7 +248,6 @@ class AppError {
       );
       if (logError) {
         ErrorLoggingService.logNetworkError('generic_network', appError);
-        SentryService.reportError(appError);
       }
       return appError;
     }
@@ -270,7 +262,6 @@ class AppError {
       );
       if (logError) {
         ErrorLoggingService.logError(appError);
-        SentryService.reportError(appError);
       }
       return appError;
     }
@@ -285,7 +276,6 @@ class AppError {
     );
     if (logError) {
       ErrorLoggingService.logError(appError);
-      SentryService.reportError(appError);
     }
     return appError;
   }
@@ -344,7 +334,7 @@ Future<T> executeWithRetry<T>({
         retryable: true,
       );
       ErrorLoggingService.logNetworkError('offline_check', offlineError);
-      // Don't report offline errors to Sentry (expected behavior)
+      // Offline errors are expected when connectivity is lost
       throw offlineError;
     }
   }
@@ -378,7 +368,7 @@ Future<T> executeWithRetry<T>({
             retryable: true,
           );
           ErrorLoggingService.logNetworkError('offline_retry', offlineError);
-          // Don't report offline errors to Sentry (expected behavior)
+          // Offline errors are expected when connectivity is lost
           throw offlineError;
         }
       }

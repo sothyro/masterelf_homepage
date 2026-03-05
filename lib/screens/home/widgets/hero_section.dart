@@ -200,11 +200,11 @@ class _HeroSectionState extends State<HeroSection> {
                   fit: BoxFit.cover,
                 ),
               ),
-            // 3) Video when ready
+            // 3) Video when ready — use cover to fill the section on wide screens (same as hero image)
             if (_videoReady && _controller != null && _controller!.value.isInitialized)
               Positioned.fill(
                 child: FittedBox(
-                  fit: BoxFit.contain,
+                  fit: BoxFit.cover,
                   child: SizedBox(
                     width: _controller!.value.size.width,
                     height: _controller!.value.size.height,

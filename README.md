@@ -24,6 +24,28 @@ flutter build web
 
 Output is in `build/web/`. Serve with any static host or use `dart run webdev serve` for local preview.
 
+### Release build (deploy to web)
+
+**Important:** If you see old content after deploying (e.g. changes appear in `flutter run` but not in the built/deployed site), Flutter's incremental build cache is likely serving stale output. This can affect projects that share the same Android Studio / Flutter SDK.
+
+**Always use a clean build before release:**
+
+```powershell
+# Windows (PowerShell) – recommended
+.\scripts\build_web_release.ps1 -Deploy
+
+# Or manually:
+flutter clean
+flutter pub get
+flutter build web
+firebase deploy --only hosting
+```
+
+```bash
+# macOS / Linux
+./scripts/build_web_release.sh --deploy
+```
+
 ### Tests
 
 ```bash
