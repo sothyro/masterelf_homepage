@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'app_bootstrap.dart';
 import 'l10n/app_localizations.dart';
 import 'services/connectivity_service.dart';
 import 'theme/app_theme.dart';
 import 'providers/locale_provider.dart';
 import 'providers/auth_provider.dart';
-import 'router/app_router.dart';
 
 class MasterElfApp extends StatefulWidget {
-  const MasterElfApp({super.key, required this.initialLocation});
-
-  final String initialLocation;
+  const MasterElfApp({super.key});
 
   @override
   State<MasterElfApp> createState() => _MasterElfAppState();
 }
 
 class _MasterElfAppState extends State<MasterElfApp> {
-  GoRouter? _router;
-
   @override
   void dispose() {
     ConnectivityService.dispose();
@@ -31,16 +26,11 @@ class _MasterElfAppState extends State<MasterElfApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => LocaleNotifier()),
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider.value(value: localeNotifier),
+        ChangeNotifierProvider.value(value: authProvider),
       ],
-      child: Consumer2<LocaleNotifier, AuthProvider>(
-        builder: (context, localeNotifier, authProvider, _) {
-          // Create router once; refresh on locale or auth change.
-          _router ??= createAppRouter(
-            refreshListenable: Listenable.merge([localeNotifier, authProvider]),
-            initialLocation: widget.initialLocation,
-          );
+      child: Consumer<LocaleNotifier>(
+        builder: (context, localeNotifier, _) {
           final theme = _themeForLocale(localeNotifier.locale.languageCode);
           return MaterialApp.router(
             title: lookupAppLocalizations(localeNotifier.locale).appTitle,
@@ -51,7 +41,7 @@ class _MasterElfAppState extends State<MasterElfApp> {
             locale: localeNotifier.locale,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
-            routerConfig: _router!,
+            routerConfig: appRouter,
           );
         },
       ),

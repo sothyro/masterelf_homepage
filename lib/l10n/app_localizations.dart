@@ -2374,6 +2374,12 @@ abstract class AppLocalizations {
   /// **'Go to Dashboard'**
   String get goToDashboard;
 
+  /// No description provided for @siteInspection.
+  ///
+  /// In en, this message translates to:
+  /// **'Site inspection'**
+  String get siteInspection;
+
   /// No description provided for @welcomeBack.
   ///
   /// In en, this message translates to:
@@ -3051,6 +3057,1686 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Outcomes.'**
   String get sectionTestimonialsPart4;
+
+  /// No description provided for @inspectionFormTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'FENG SHUI GEOMANCY SITE INSPECTION FORM'**
+  String get inspectionFormTitle;
+
+  /// No description provided for @inspectionFormSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Commercial Housing Complex Assessment'**
+  String get inspectionFormSubtitle;
+
+  /// No description provided for @inspectionStepOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String inspectionStepOf(int current, int total);
+
+  /// No description provided for @inspectionSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Inspection'**
+  String get inspectionSave;
+
+  /// No description provided for @inspectionSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving…'**
+  String get inspectionSaving;
+
+  /// No description provided for @inspectionNewInspection.
+  ///
+  /// In en, this message translates to:
+  /// **'New Inspection'**
+  String get inspectionNewInspection;
+
+  /// No description provided for @inspectionDownloadPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Download PDF'**
+  String get inspectionDownloadPdf;
+
+  /// No description provided for @inspectionSavedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspection Saved'**
+  String get inspectionSavedTitle;
+
+  /// No description provided for @inspectionSavedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Feng Shui site inspection has been saved successfully.'**
+  String get inspectionSavedMessage;
+
+  /// No description provided for @inspectionPdfDownloadStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF download started.'**
+  String get inspectionPdfDownloadStarted;
+
+  /// No description provided for @inspectionPdfExportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF export failed'**
+  String get inspectionPdfExportFailed;
+
+  /// No description provided for @inspectionSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save inspection'**
+  String get inspectionSaveFailed;
+
+  /// No description provided for @inspectionSection0.
+  ///
+  /// In en, this message translates to:
+  /// **'Header & Inspection Info'**
+  String get inspectionSection0;
+
+  /// No description provided for @inspectionSection1.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 1: Basic Project Information'**
+  String get inspectionSection1;
+
+  /// No description provided for @inspectionSection2.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 2: Site Measurements'**
+  String get inspectionSection2;
+
+  /// No description provided for @inspectionSection3.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 3: External Landform (Four Celestial Animals)'**
+  String get inspectionSection3;
+
+  /// No description provided for @inspectionSection4.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 4: Macro Landform and Environment'**
+  String get inspectionSection4;
+
+  /// No description provided for @inspectionSection5.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 5: Road and Traffic Analysis'**
+  String get inspectionSection5;
+
+  /// No description provided for @inspectionSection6.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 6: Water Features'**
+  String get inspectionSection6;
+
+  /// No description provided for @inspectionSection7.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 7: Sha Qi - Negative Influences'**
+  String get inspectionSection7;
+
+  /// No description provided for @inspectionSection8.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 8: Comprehensive Compass Readings'**
+  String get inspectionSection8;
+
+  /// No description provided for @inspectionSection9.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 9: Xuan Kong Flying Star'**
+  String get inspectionSection9;
+
+  /// No description provided for @inspectionSection10.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 10: Eight Mansions Analysis'**
+  String get inspectionSection10;
+
+  /// No description provided for @inspectionSection11.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 11: Client and Occupant Bazi'**
+  String get inspectionSection11;
+
+  /// No description provided for @inspectionSection12.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 12: Qi Men Dun Jia Date Selection'**
+  String get inspectionSection12;
+
+  /// No description provided for @inspectionSection13.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 13: Internal Layout Inspection'**
+  String get inspectionSection13;
+
+  /// No description provided for @inspectionSection14.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 14: Safety, Practical and Legal'**
+  String get inspectionSection14;
+
+  /// No description provided for @inspectionSection15.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 15: Documentation and Evidence'**
+  String get inspectionSection15;
+
+  /// No description provided for @inspectionSection16.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 16: Preliminary Assessment Summary'**
+  String get inspectionSection16;
+
+  /// No description provided for @inspectionSection17.
+  ///
+  /// In en, this message translates to:
+  /// **'Section 17: Follow-up Actions'**
+  String get inspectionSection17;
+
+  /// No description provided for @inspectionInspectorName.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspector Name'**
+  String get inspectionInspectorName;
+
+  /// No description provided for @inspectionDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Inspection'**
+  String get inspectionDate;
+
+  /// No description provided for @inspectionTimeOfArrival.
+  ///
+  /// In en, this message translates to:
+  /// **'Time of Arrival'**
+  String get inspectionTimeOfArrival;
+
+  /// No description provided for @inspectionWeatherConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Weather Conditions'**
+  String get inspectionWeatherConditions;
+
+  /// No description provided for @inspectionProjectName.
+  ///
+  /// In en, this message translates to:
+  /// **'Project Name'**
+  String get inspectionProjectName;
+
+  /// No description provided for @inspectionAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get inspectionAddress;
+
+  /// No description provided for @inspectionDistrictSangkat.
+  ///
+  /// In en, this message translates to:
+  /// **'District/Sangkat'**
+  String get inspectionDistrictSangkat;
+
+  /// No description provided for @inspectionGoogleMapsLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Maps Link'**
+  String get inspectionGoogleMapsLink;
+
+  /// No description provided for @inspectionProjectType.
+  ///
+  /// In en, this message translates to:
+  /// **'Project Type'**
+  String get inspectionProjectType;
+
+  /// No description provided for @inspectionProjectTypeShophouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Shophouse'**
+  String get inspectionProjectTypeShophouse;
+
+  /// No description provided for @inspectionProjectTypeCommercial.
+  ///
+  /// In en, this message translates to:
+  /// **'Commercial Building'**
+  String get inspectionProjectTypeCommercial;
+
+  /// No description provided for @inspectionProjectTypeMixedUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Mixed-Use Development'**
+  String get inspectionProjectTypeMixedUse;
+
+  /// No description provided for @inspectionProjectTypeOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get inspectionProjectTypeOther;
+
+  /// No description provided for @inspectionOtherSpecify.
+  ///
+  /// In en, this message translates to:
+  /// **'Other (if selected)'**
+  String get inspectionOtherSpecify;
+
+  /// No description provided for @inspectionHintSpecify.
+  ///
+  /// In en, this message translates to:
+  /// **'Specify'**
+  String get inspectionHintSpecify;
+
+  /// No description provided for @inspectionConstructionStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Construction Status'**
+  String get inspectionConstructionStatus;
+
+  /// No description provided for @inspectionConstructionUnder.
+  ///
+  /// In en, this message translates to:
+  /// **'Under Construction'**
+  String get inspectionConstructionUnder;
+
+  /// No description provided for @inspectionConstructionCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get inspectionConstructionCompleted;
+
+  /// No description provided for @inspectionConstructionPartially.
+  ///
+  /// In en, this message translates to:
+  /// **'Partially Occupied'**
+  String get inspectionConstructionPartially;
+
+  /// No description provided for @inspectionConstructionFully.
+  ///
+  /// In en, this message translates to:
+  /// **'Fully Occupied'**
+  String get inspectionConstructionFully;
+
+  /// No description provided for @inspectionEstimatedCompletionYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated Completion Year'**
+  String get inspectionEstimatedCompletionYear;
+
+  /// No description provided for @inspectionNumberOfFloors.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of Floors'**
+  String get inspectionNumberOfFloors;
+
+  /// No description provided for @inspectionNumberOfUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of Units'**
+  String get inspectionNumberOfUnits;
+
+  /// No description provided for @inspectionRenovationDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous renovation date(s)'**
+  String get inspectionRenovationDates;
+
+  /// No description provided for @inspectionStructuralChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Structural changes made'**
+  String get inspectionStructuralChanges;
+
+  /// No description provided for @inspectionYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get inspectionYes;
+
+  /// No description provided for @inspectionNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get inspectionNo;
+
+  /// No description provided for @inspectionRenovationDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Renovation details'**
+  String get inspectionRenovationDetails;
+
+  /// No description provided for @inspectionConstructionPhase.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Construction Phase'**
+  String get inspectionConstructionPhase;
+
+  /// No description provided for @inspectionPhaseAllBlocks.
+  ///
+  /// In en, this message translates to:
+  /// **'All blocks completed simultaneously'**
+  String get inspectionPhaseAllBlocks;
+
+  /// No description provided for @inspectionPhasePhased.
+  ///
+  /// In en, this message translates to:
+  /// **'Phased completion (different blocks/different years)'**
+  String get inspectionPhasePhased;
+
+  /// No description provided for @inspectionPhaseDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Phase details'**
+  String get inspectionPhaseDetails;
+
+  /// No description provided for @inspectionDimensions.
+  ///
+  /// In en, this message translates to:
+  /// **'2.1 Dimensions'**
+  String get inspectionDimensions;
+
+  /// No description provided for @inspectionFrontageWidth.
+  ///
+  /// In en, this message translates to:
+  /// **'Frontage Width (m)'**
+  String get inspectionFrontageWidth;
+
+  /// No description provided for @inspectionDepthLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth/Length (m)'**
+  String get inspectionDepthLength;
+
+  /// No description provided for @inspectionTotalSiteArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Site Area (m²)'**
+  String get inspectionTotalSiteArea;
+
+  /// No description provided for @inspectionUnitWidth.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit Width (m)'**
+  String get inspectionUnitWidth;
+
+  /// No description provided for @inspectionUnitDepth.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit Depth (m)'**
+  String get inspectionUnitDepth;
+
+  /// No description provided for @inspectionUnitArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit Area (m²)'**
+  String get inspectionUnitArea;
+
+  /// No description provided for @inspectionFloorToCeilingHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Floor-to-ceiling Height (m)'**
+  String get inspectionFloorToCeilingHeight;
+
+  /// No description provided for @inspectionOrientationCompass.
+  ///
+  /// In en, this message translates to:
+  /// **'2.2 Orientation and Compass Readings'**
+  String get inspectionOrientationCompass;
+
+  /// No description provided for @inspectionEquipmentUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment Used'**
+  String get inspectionEquipmentUsed;
+
+  /// No description provided for @inspectionEquipmentLuoPan.
+  ///
+  /// In en, this message translates to:
+  /// **'Traditional Luo Pan Compass'**
+  String get inspectionEquipmentLuoPan;
+
+  /// No description provided for @inspectionEquipmentDigital.
+  ///
+  /// In en, this message translates to:
+  /// **'Digital Compass'**
+  String get inspectionEquipmentDigital;
+
+  /// No description provided for @inspectionEquipmentSmartphone.
+  ///
+  /// In en, this message translates to:
+  /// **'Smartphone Compass App'**
+  String get inspectionEquipmentSmartphone;
+
+  /// No description provided for @inspectionEquipmentOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get inspectionEquipmentOther;
+
+  /// No description provided for @inspectionOtherEquipment.
+  ///
+  /// In en, this message translates to:
+  /// **'Other equipment'**
+  String get inspectionOtherEquipment;
+
+  /// No description provided for @inspectionFacingReading1.
+  ///
+  /// In en, this message translates to:
+  /// **'Facing Direction - Reading 1 (degrees)'**
+  String get inspectionFacingReading1;
+
+  /// No description provided for @inspectionFacingReading2.
+  ///
+  /// In en, this message translates to:
+  /// **'Facing Direction - Reading 2 (degrees)'**
+  String get inspectionFacingReading2;
+
+  /// No description provided for @inspectionFacingReading3.
+  ///
+  /// In en, this message translates to:
+  /// **'Facing Direction - Reading 3 (degrees)'**
+  String get inspectionFacingReading3;
+
+  /// No description provided for @inspectionAverageFacing.
+  ///
+  /// In en, this message translates to:
+  /// **'Average Facing (degrees)'**
+  String get inspectionAverageFacing;
+
+  /// No description provided for @inspectionConverted24Mountains.
+  ///
+  /// In en, this message translates to:
+  /// **'Converted to 24 Mountains'**
+  String get inspectionConverted24Mountains;
+
+  /// No description provided for @inspectionFacingCardinal.
+  ///
+  /// In en, this message translates to:
+  /// **'Facing Direction (Cardinal)'**
+  String get inspectionFacingCardinal;
+
+  /// No description provided for @inspectionSittingDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Sitting Direction (opposite)'**
+  String get inspectionSittingDirection;
+
+  /// No description provided for @inspectionMagneticInterferenceNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes on Magnetic Interference'**
+  String get inspectionMagneticInterferenceNotes;
+
+  /// No description provided for @inspectionTortoiseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Black Tortoise (玄武) - BACK Support'**
+  String get inspectionTortoiseTitle;
+
+  /// No description provided for @inspectionDragonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Green Dragon (青龍) - LEFT Side'**
+  String get inspectionDragonTitle;
+
+  /// No description provided for @inspectionTigerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'White Tiger (白虎) - RIGHT Side'**
+  String get inspectionTigerTitle;
+
+  /// No description provided for @inspectionPhoenixTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Red Phoenix (朱雀) - FRONT Bright Hall'**
+  String get inspectionPhoenixTitle;
+
+  /// No description provided for @inspectionDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get inspectionDescription;
+
+  /// No description provided for @inspectionAssessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Assessment'**
+  String get inspectionAssessment;
+
+  /// No description provided for @inspectionNotesSketch.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes/Sketch'**
+  String get inspectionNotesSketch;
+
+  /// No description provided for @inspectionTortoiseDesc1.
+  ///
+  /// In en, this message translates to:
+  /// **'Higher ground/hill'**
+  String get inspectionTortoiseDesc1;
+
+  /// No description provided for @inspectionTortoiseDesc2.
+  ///
+  /// In en, this message translates to:
+  /// **'Taller buildings'**
+  String get inspectionTortoiseDesc2;
+
+  /// No description provided for @inspectionTortoiseDesc3.
+  ///
+  /// In en, this message translates to:
+  /// **'Solid structures'**
+  String get inspectionTortoiseDesc3;
+
+  /// No description provided for @inspectionTortoiseDesc4.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty land/void'**
+  String get inspectionTortoiseDesc4;
+
+  /// No description provided for @inspectionTortoiseDesc5.
+  ///
+  /// In en, this message translates to:
+  /// **'Lower ground'**
+  String get inspectionTortoiseDesc5;
+
+  /// No description provided for @inspectionTortoiseDesc6.
+  ///
+  /// In en, this message translates to:
+  /// **'Water body'**
+  String get inspectionTortoiseDesc6;
+
+  /// No description provided for @inspectionTortoiseDesc7.
+  ///
+  /// In en, this message translates to:
+  /// **'Road'**
+  String get inspectionTortoiseDesc7;
+
+  /// No description provided for @inspectionTortoiseAssess1.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong support (favorable)'**
+  String get inspectionTortoiseAssess1;
+
+  /// No description provided for @inspectionTortoiseAssess2.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate support'**
+  String get inspectionTortoiseAssess2;
+
+  /// No description provided for @inspectionTortoiseAssess3.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak support (unfavorable)'**
+  String get inspectionTortoiseAssess3;
+
+  /// No description provided for @inspectionDragonDesc1.
+  ///
+  /// In en, this message translates to:
+  /// **'Higher than Tiger side'**
+  String get inspectionDragonDesc1;
+
+  /// No description provided for @inspectionDragonDesc2.
+  ///
+  /// In en, this message translates to:
+  /// **'Active (traffic, buildings)'**
+  String get inspectionDragonDesc2;
+
+  /// No description provided for @inspectionDragonDesc3.
+  ///
+  /// In en, this message translates to:
+  /// **'Gentle slope'**
+  String get inspectionDragonDesc3;
+
+  /// No description provided for @inspectionDragonDesc4.
+  ///
+  /// In en, this message translates to:
+  /// **'Water feature'**
+  String get inspectionDragonDesc4;
+
+  /// No description provided for @inspectionDragonDesc5.
+  ///
+  /// In en, this message translates to:
+  /// **'Lower than Tiger side'**
+  String get inspectionDragonDesc5;
+
+  /// No description provided for @inspectionDragonDesc6.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharp structures/corners'**
+  String get inspectionDragonDesc6;
+
+  /// No description provided for @inspectionDragonDesc7.
+  ///
+  /// In en, this message translates to:
+  /// **'Aggressive forms'**
+  String get inspectionDragonDesc7;
+
+  /// No description provided for @inspectionDragonAssess1.
+  ///
+  /// In en, this message translates to:
+  /// **'Dominant and favorable'**
+  String get inspectionDragonAssess1;
+
+  /// No description provided for @inspectionDragonAssess2.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced'**
+  String get inspectionDragonAssess2;
+
+  /// No description provided for @inspectionDragonAssess3.
+  ///
+  /// In en, this message translates to:
+  /// **'Too weak'**
+  String get inspectionDragonAssess3;
+
+  /// No description provided for @inspectionDragonAssess4.
+  ///
+  /// In en, this message translates to:
+  /// **'Too aggressive'**
+  String get inspectionDragonAssess4;
+
+  /// No description provided for @inspectionTigerDesc1.
+  ///
+  /// In en, this message translates to:
+  /// **'Lower than Dragon side'**
+  String get inspectionTigerDesc1;
+
+  /// No description provided for @inspectionTigerDesc2.
+  ///
+  /// In en, this message translates to:
+  /// **'Calm/passive features'**
+  String get inspectionTigerDesc2;
+
+  /// No description provided for @inspectionTigerDesc3.
+  ///
+  /// In en, this message translates to:
+  /// **'Gentle structures'**
+  String get inspectionTigerDesc3;
+
+  /// No description provided for @inspectionTigerDesc4.
+  ///
+  /// In en, this message translates to:
+  /// **'Higher than Dragon side'**
+  String get inspectionTigerDesc4;
+
+  /// No description provided for @inspectionTigerDesc5.
+  ///
+  /// In en, this message translates to:
+  /// **'Aggressive structures (towers, poles)'**
+  String get inspectionTigerDesc5;
+
+  /// No description provided for @inspectionTigerDesc6.
+  ///
+  /// In en, this message translates to:
+  /// **'Very busy road'**
+  String get inspectionTigerDesc6;
+
+  /// No description provided for @inspectionTigerAssess1.
+  ///
+  /// In en, this message translates to:
+  /// **'Appropriately subdued (favorable)'**
+  String get inspectionTigerAssess1;
+
+  /// No description provided for @inspectionTigerAssess2.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced'**
+  String get inspectionTigerAssess2;
+
+  /// No description provided for @inspectionTigerAssess3.
+  ///
+  /// In en, this message translates to:
+  /// **'Too dominant (unfavorable)'**
+  String get inspectionTigerAssess3;
+
+  /// No description provided for @inspectionTigerAssess4.
+  ///
+  /// In en, this message translates to:
+  /// **'Too aggressive (inauspicious)'**
+  String get inspectionTigerAssess4;
+
+  /// No description provided for @inspectionPhoenixDesc1.
+  ///
+  /// In en, this message translates to:
+  /// **'Open space/plaza'**
+  String get inspectionPhoenixDesc1;
+
+  /// No description provided for @inspectionPhoenixDesc2.
+  ///
+  /// In en, this message translates to:
+  /// **'Broad road'**
+  String get inspectionPhoenixDesc2;
+
+  /// No description provided for @inspectionPhoenixDesc3.
+  ///
+  /// In en, this message translates to:
+  /// **'Water feature (pond, canal)'**
+  String get inspectionPhoenixDesc3;
+
+  /// No description provided for @inspectionPhoenixDesc4.
+  ///
+  /// In en, this message translates to:
+  /// **'Park/garden'**
+  String get inspectionPhoenixDesc4;
+
+  /// No description provided for @inspectionPhoenixDesc5.
+  ///
+  /// In en, this message translates to:
+  /// **'Oppressive tall building directly in front'**
+  String get inspectionPhoenixDesc5;
+
+  /// No description provided for @inspectionPhoenixDesc6.
+  ///
+  /// In en, this message translates to:
+  /// **'Narrow/cramped space'**
+  String get inspectionPhoenixDesc6;
+
+  /// No description provided for @inspectionPhoenixAssess1.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent bright hall (spacious, gathering Qi)'**
+  String get inspectionPhoenixAssess1;
+
+  /// No description provided for @inspectionPhoenixAssess2.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate bright hall'**
+  String get inspectionPhoenixAssess2;
+
+  /// No description provided for @inspectionPhoenixAssess3.
+  ///
+  /// In en, this message translates to:
+  /// **'Poor bright hall (blocked, oppressive)'**
+  String get inspectionPhoenixAssess3;
+
+  /// No description provided for @inspectionWiderAreaContext.
+  ///
+  /// In en, this message translates to:
+  /// **'4.1 Wider Area Context'**
+  String get inspectionWiderAreaContext;
+
+  /// No description provided for @inspectionDistanceToCityCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance to City Center (km)'**
+  String get inspectionDistanceToCityCenter;
+
+  /// No description provided for @inspectionMajorHighways.
+  ///
+  /// In en, this message translates to:
+  /// **'Major highways'**
+  String get inspectionMajorHighways;
+
+  /// No description provided for @inspectionRiversWaterBodies.
+  ///
+  /// In en, this message translates to:
+  /// **'Rivers/major water bodies'**
+  String get inspectionRiversWaterBodies;
+
+  /// No description provided for @inspectionMountainsTerrain.
+  ///
+  /// In en, this message translates to:
+  /// **'Mountains/elevated terrain'**
+  String get inspectionMountainsTerrain;
+
+  /// No description provided for @inspectionDirectionOfMountains.
+  ///
+  /// In en, this message translates to:
+  /// **'Direction of mountains'**
+  String get inspectionDirectionOfMountains;
+
+  /// No description provided for @inspectionSurroundingDevelopment.
+  ///
+  /// In en, this message translates to:
+  /// **'Surrounding Development'**
+  String get inspectionSurroundingDevelopment;
+
+  /// No description provided for @inspectionMicroEnvironment.
+  ///
+  /// In en, this message translates to:
+  /// **'4.2 Micro Environment Quality'**
+  String get inspectionMicroEnvironment;
+
+  /// No description provided for @inspectionPowerLinesDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Power lines/transmission towers - Direction'**
+  String get inspectionPowerLinesDirection;
+
+  /// No description provided for @inspectionBridgesDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Bridges/flyovers - Direction'**
+  String get inspectionBridgesDirection;
+
+  /// No description provided for @inspectionLargeTreesLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Large trees (height > 3 floors) - Location'**
+  String get inspectionLargeTreesLocation;
+
+  /// No description provided for @inspectionReligiousBuildingsDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Religious buildings - Direction'**
+  String get inspectionReligiousBuildingsDirection;
+
+  /// No description provided for @inspectionHospitalDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Hospital/clinic - Direction'**
+  String get inspectionHospitalDirection;
+
+  /// No description provided for @inspectionSchoolDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'School - Direction'**
+  String get inspectionSchoolDirection;
+
+  /// No description provided for @inspectionMarketDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Market - Direction'**
+  String get inspectionMarketDirection;
+
+  /// No description provided for @inspectionFactoryDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Factory/industrial - Direction'**
+  String get inspectionFactoryDirection;
+
+  /// No description provided for @inspectionTrafficNoise.
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic noise'**
+  String get inspectionTrafficNoise;
+
+  /// No description provided for @inspectionNoiseSources.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise Sources'**
+  String get inspectionNoiseSources;
+
+  /// No description provided for @inspectionAirQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Quality and Pollution'**
+  String get inspectionAirQuality;
+
+  /// No description provided for @inspectionFoulOdorsFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Foul odors from'**
+  String get inspectionFoulOdorsFrom;
+
+  /// No description provided for @inspectionHeavy.
+  ///
+  /// In en, this message translates to:
+  /// **'Heavy'**
+  String get inspectionHeavy;
+
+  /// No description provided for @inspectionModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get inspectionModerate;
+
+  /// No description provided for @inspectionLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get inspectionLight;
+
+  /// No description provided for @inspectionMainRoadName.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Road Name'**
+  String get inspectionMainRoadName;
+
+  /// No description provided for @inspectionRoadWidth.
+  ///
+  /// In en, this message translates to:
+  /// **'Road Width (estimated)'**
+  String get inspectionRoadWidth;
+
+  /// No description provided for @inspectionRoadPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Road Position'**
+  String get inspectionRoadPosition;
+
+  /// No description provided for @inspectionTrafficFlowDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic Flow Direction'**
+  String get inspectionTrafficFlowDirection;
+
+  /// No description provided for @inspectionTrafficVolume.
+  ///
+  /// In en, this message translates to:
+  /// **'Traffic Volume'**
+  String get inspectionTrafficVolume;
+
+  /// No description provided for @inspectionNearbyJunctions.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Junctions'**
+  String get inspectionNearbyJunctions;
+
+  /// No description provided for @inspectionJunctionDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance from building (m) - if T-junction'**
+  String get inspectionJunctionDistance;
+
+  /// No description provided for @inspectionDeflectionBuffer.
+  ///
+  /// In en, this message translates to:
+  /// **'Any deflection/buffer (trees, walls)'**
+  String get inspectionDeflectionBuffer;
+
+  /// No description provided for @inspectionRoadAssessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Assessment'**
+  String get inspectionRoadAssessment;
+
+  /// No description provided for @inspectionRoadNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get inspectionRoadNotes;
+
+  /// No description provided for @inspectionServiceRoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Service road'**
+  String get inspectionServiceRoad;
+
+  /// No description provided for @inspectionServiceRoadLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Service road location'**
+  String get inspectionServiceRoadLocation;
+
+  /// No description provided for @inspectionBackAlley.
+  ///
+  /// In en, this message translates to:
+  /// **'Back alley'**
+  String get inspectionBackAlley;
+
+  /// No description provided for @inspectionBackAlleyWidth.
+  ///
+  /// In en, this message translates to:
+  /// **'Back alley width'**
+  String get inspectionBackAlleyWidth;
+
+  /// No description provided for @inspectionCarParkEntrance.
+  ///
+  /// In en, this message translates to:
+  /// **'Car park entrance'**
+  String get inspectionCarParkEntrance;
+
+  /// No description provided for @inspectionLoadingBay.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading bay'**
+  String get inspectionLoadingBay;
+
+  /// No description provided for @inspectionLoadingBayLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading bay location'**
+  String get inspectionLoadingBayLocation;
+
+  /// No description provided for @inspectionFront.
+  ///
+  /// In en, this message translates to:
+  /// **'Front'**
+  String get inspectionFront;
+
+  /// No description provided for @inspectionSide.
+  ///
+  /// In en, this message translates to:
+  /// **'Side'**
+  String get inspectionSide;
+
+  /// No description provided for @inspectionBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get inspectionBack;
+
+  /// No description provided for @inspectionWaterBodiesPresent.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Bodies Present'**
+  String get inspectionWaterBodiesPresent;
+
+  /// No description provided for @inspectionWaterLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Location (relative to building)'**
+  String get inspectionWaterLocation;
+
+  /// No description provided for @inspectionWaterFlowDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Flow Direction'**
+  String get inspectionWaterFlowDirection;
+
+  /// No description provided for @inspectionWaterQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Water Quality'**
+  String get inspectionWaterQuality;
+
+  /// No description provided for @inspectionWaterAssessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Assessment'**
+  String get inspectionWaterAssessment;
+
+  /// No description provided for @inspectionWaterNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get inspectionWaterNotes;
+
+  /// No description provided for @inspectionShaQiChecklist.
+  ///
+  /// In en, this message translates to:
+  /// **'External Sha Qi Checklist'**
+  String get inspectionShaQiChecklist;
+
+  /// No description provided for @inspectionShaQiSeverity.
+  ///
+  /// In en, this message translates to:
+  /// **'Severity Assessment'**
+  String get inspectionShaQiSeverity;
+
+  /// No description provided for @inspectionShaQiDetailedNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed Notes'**
+  String get inspectionShaQiDetailedNotes;
+
+  /// No description provided for @inspectionLeftCornerReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Façade - Left corner (degrees)'**
+  String get inspectionLeftCornerReading;
+
+  /// No description provided for @inspectionCenterReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Façade - Center (degrees)'**
+  String get inspectionCenterReading;
+
+  /// No description provided for @inspectionRightCornerReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Façade - Right corner (degrees)'**
+  String get inspectionRightCornerReading;
+
+  /// No description provided for @inspectionMainFacadeAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Façade - Average (degrees)'**
+  String get inspectionMainFacadeAverage;
+
+  /// No description provided for @inspectionMainDoorReading1.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Entrance Door - Reading 1'**
+  String get inspectionMainDoorReading1;
+
+  /// No description provided for @inspectionMainDoorReading2.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Entrance Door - Reading 2'**
+  String get inspectionMainDoorReading2;
+
+  /// No description provided for @inspectionMainDoorAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Entrance Door - Average'**
+  String get inspectionMainDoorAverage;
+
+  /// No description provided for @inspectionMainDoor24Mountains.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Entrance Door - 24 Mountains'**
+  String get inspectionMainDoor24Mountains;
+
+  /// No description provided for @inspectionBackEntranceReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Service/Back Entrance Reading'**
+  String get inspectionBackEntranceReading;
+
+  /// No description provided for @inspectionBackEntrance24Mountains.
+  ///
+  /// In en, this message translates to:
+  /// **'Service/Back Entrance - 24 Mountains'**
+  String get inspectionBackEntrance24Mountains;
+
+  /// No description provided for @inspectionCarParkEntranceReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Car Park Entrance Reading'**
+  String get inspectionCarParkEntranceReading;
+
+  /// No description provided for @inspectionCarPark24Mountains.
+  ///
+  /// In en, this message translates to:
+  /// **'Car Park Entrance - 24 Mountains'**
+  String get inspectionCarPark24Mountains;
+
+  /// No description provided for @inspectionMetalDoorFrames.
+  ///
+  /// In en, this message translates to:
+  /// **'Metal door frames'**
+  String get inspectionMetalDoorFrames;
+
+  /// No description provided for @inspectionElectricalPanelsNearby.
+  ///
+  /// In en, this message translates to:
+  /// **'Electrical panels nearby'**
+  String get inspectionElectricalPanelsNearby;
+
+  /// No description provided for @inspectionSteelReinforcement.
+  ///
+  /// In en, this message translates to:
+  /// **'Steel reinforcement'**
+  String get inspectionSteelReinforcement;
+
+  /// No description provided for @inspectionAdjustmentsMade.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjustments made'**
+  String get inspectionAdjustmentsMade;
+
+  /// No description provided for @inspectionGroundFloorFunction.
+  ///
+  /// In en, this message translates to:
+  /// **'Ground Floor - Function'**
+  String get inspectionGroundFloorFunction;
+
+  /// No description provided for @inspectionGroundFloorHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Ground Floor - Ceiling height (m)'**
+  String get inspectionGroundFloorHeight;
+
+  /// No description provided for @inspectionGroundFloorFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Ground Floor - Main features'**
+  String get inspectionGroundFloorFeatures;
+
+  /// No description provided for @inspectionStaircaseLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Staircase location (sector)'**
+  String get inspectionStaircaseLocation;
+
+  /// No description provided for @inspectionLiftLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Lift location (sector)'**
+  String get inspectionLiftLocation;
+
+  /// No description provided for @inspectionFireEscapeLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Fire escape location'**
+  String get inspectionFireEscapeLocation;
+
+  /// No description provided for @inspectionFavorable.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorable'**
+  String get inspectionFavorable;
+
+  /// No description provided for @inspectionUnfavorable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfavorable'**
+  String get inspectionUnfavorable;
+
+  /// No description provided for @inspectionNeutral.
+  ///
+  /// In en, this message translates to:
+  /// **'Neutral'**
+  String get inspectionNeutral;
+
+  /// No description provided for @inspectionNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get inspectionNotes;
+
+  /// No description provided for @inspectionDirN.
+  ///
+  /// In en, this message translates to:
+  /// **'N'**
+  String get inspectionDirN;
+
+  /// No description provided for @inspectionDirS.
+  ///
+  /// In en, this message translates to:
+  /// **'S'**
+  String get inspectionDirS;
+
+  /// No description provided for @inspectionDirE.
+  ///
+  /// In en, this message translates to:
+  /// **'E'**
+  String get inspectionDirE;
+
+  /// No description provided for @inspectionDirW.
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get inspectionDirW;
+
+  /// No description provided for @inspectionDirNE.
+  ///
+  /// In en, this message translates to:
+  /// **'NE'**
+  String get inspectionDirNE;
+
+  /// No description provided for @inspectionDirNW.
+  ///
+  /// In en, this message translates to:
+  /// **'NW'**
+  String get inspectionDirNW;
+
+  /// No description provided for @inspectionDirSE.
+  ///
+  /// In en, this message translates to:
+  /// **'SE'**
+  String get inspectionDirSE;
+
+  /// No description provided for @inspectionDirSW.
+  ///
+  /// In en, this message translates to:
+  /// **'SW'**
+  String get inspectionDirSW;
+
+  /// No description provided for @inspectionSurroundEstablished.
+  ///
+  /// In en, this message translates to:
+  /// **'Established commercial district'**
+  String get inspectionSurroundEstablished;
+
+  /// No description provided for @inspectionSurroundDeveloping.
+  ///
+  /// In en, this message translates to:
+  /// **'Developing area'**
+  String get inspectionSurroundDeveloping;
+
+  /// No description provided for @inspectionSurroundMixed.
+  ///
+  /// In en, this message translates to:
+  /// **'Mixed residential-commercial'**
+  String get inspectionSurroundMixed;
+
+  /// No description provided for @inspectionSurroundIndustrial.
+  ///
+  /// In en, this message translates to:
+  /// **'Industrial zone'**
+  String get inspectionSurroundIndustrial;
+
+  /// No description provided for @inspectionSurroundSuburban.
+  ///
+  /// In en, this message translates to:
+  /// **'Suburban/rural'**
+  String get inspectionSurroundSuburban;
+
+  /// No description provided for @inspectionNoiseConstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Construction noise nearby'**
+  String get inspectionNoiseConstruction;
+
+  /// No description provided for @inspectionNoiseNightclub.
+  ///
+  /// In en, this message translates to:
+  /// **'Nightclub/entertainment venues'**
+  String get inspectionNoiseNightclub;
+
+  /// No description provided for @inspectionNoiseMarket.
+  ///
+  /// In en, this message translates to:
+  /// **'Market/commercial activity'**
+  String get inspectionNoiseMarket;
+
+  /// No description provided for @inspectionNoiseAirport.
+  ///
+  /// In en, this message translates to:
+  /// **'Airport/railway'**
+  String get inspectionNoiseAirport;
+
+  /// No description provided for @inspectionAirClean.
+  ///
+  /// In en, this message translates to:
+  /// **'Clean air, green surroundings'**
+  String get inspectionAirClean;
+
+  /// No description provided for @inspectionAirModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate (urban environment)'**
+  String get inspectionAirModerate;
+
+  /// No description provided for @inspectionAirIndustrial.
+  ///
+  /// In en, this message translates to:
+  /// **'Industrial pollution present'**
+  String get inspectionAirIndustrial;
+
+  /// No description provided for @inspectionAirDust.
+  ///
+  /// In en, this message translates to:
+  /// **'Dust from construction'**
+  String get inspectionAirDust;
+
+  /// No description provided for @inspectionAirFoul.
+  ///
+  /// In en, this message translates to:
+  /// **'Foul odors'**
+  String get inspectionAirFoul;
+
+  /// No description provided for @inspectionRoadParallel.
+  ///
+  /// In en, this message translates to:
+  /// **'Runs parallel to front façade'**
+  String get inspectionRoadParallel;
+
+  /// No description provided for @inspectionRoadCurvesToward.
+  ///
+  /// In en, this message translates to:
+  /// **'Curves toward building (embracing)'**
+  String get inspectionRoadCurvesToward;
+
+  /// No description provided for @inspectionRoadCurvesAway.
+  ///
+  /// In en, this message translates to:
+  /// **'Curves away from building'**
+  String get inspectionRoadCurvesAway;
+
+  /// No description provided for @inspectionRoadStraight.
+  ///
+  /// In en, this message translates to:
+  /// **'Straight alignment'**
+  String get inspectionRoadStraight;
+
+  /// No description provided for @inspectionFlowDragonToTiger.
+  ///
+  /// In en, this message translates to:
+  /// **'Left to right (Dragon to Tiger)'**
+  String get inspectionFlowDragonToTiger;
+
+  /// No description provided for @inspectionFlowTigerToDragon.
+  ///
+  /// In en, this message translates to:
+  /// **'Right to left (Tiger to Dragon)'**
+  String get inspectionFlowTigerToDragon;
+
+  /// No description provided for @inspectionFlowBoth.
+  ///
+  /// In en, this message translates to:
+  /// **'Both directions (two-way)'**
+  String get inspectionFlowBoth;
+
+  /// No description provided for @inspectionJunctionT.
+  ///
+  /// In en, this message translates to:
+  /// **'T-junction (road points at building)'**
+  String get inspectionJunctionT;
+
+  /// No description provided for @inspectionJunctionY.
+  ///
+  /// In en, this message translates to:
+  /// **'Y-junction'**
+  String get inspectionJunctionY;
+
+  /// No description provided for @inspectionJunctionCross.
+  ///
+  /// In en, this message translates to:
+  /// **'Cross junction'**
+  String get inspectionJunctionCross;
+
+  /// No description provided for @inspectionJunctionRoundabout.
+  ///
+  /// In en, this message translates to:
+  /// **'Roundabout'**
+  String get inspectionJunctionRoundabout;
+
+  /// No description provided for @inspectionJunctionNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No direct junction'**
+  String get inspectionJunctionNone;
+
+  /// No description provided for @inspectionRoadConfigFavorable.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorable road configuration'**
+  String get inspectionRoadConfigFavorable;
+
+  /// No description provided for @inspectionRoadConfigShaQi.
+  ///
+  /// In en, this message translates to:
+  /// **'Sha Qi from junction (needs remedy)'**
+  String get inspectionRoadConfigShaQi;
+
+  /// No description provided for @inspectionWaterRiver.
+  ///
+  /// In en, this message translates to:
+  /// **'River'**
+  String get inspectionWaterRiver;
+
+  /// No description provided for @inspectionWaterCanal.
+  ///
+  /// In en, this message translates to:
+  /// **'Canal'**
+  String get inspectionWaterCanal;
+
+  /// No description provided for @inspectionWaterPond.
+  ///
+  /// In en, this message translates to:
+  /// **'Pond'**
+  String get inspectionWaterPond;
+
+  /// No description provided for @inspectionWaterLake.
+  ///
+  /// In en, this message translates to:
+  /// **'Lake'**
+  String get inspectionWaterLake;
+
+  /// No description provided for @inspectionWaterDitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Drainage ditch'**
+  String get inspectionWaterDitch;
+
+  /// No description provided for @inspectionWaterPool.
+  ///
+  /// In en, this message translates to:
+  /// **'Swimming pool'**
+  String get inspectionWaterPool;
+
+  /// No description provided for @inspectionWaterFountain.
+  ///
+  /// In en, this message translates to:
+  /// **'Fountain'**
+  String get inspectionWaterFountain;
+
+  /// No description provided for @inspectionWaterNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None visible'**
+  String get inspectionWaterNone;
+
+  /// No description provided for @inspectionWaterLeftDragon.
+  ///
+  /// In en, this message translates to:
+  /// **'Left (Dragon side)'**
+  String get inspectionWaterLeftDragon;
+
+  /// No description provided for @inspectionWaterRightTiger.
+  ///
+  /// In en, this message translates to:
+  /// **'Right (Tiger side)'**
+  String get inspectionWaterRightTiger;
+
+  /// No description provided for @inspectionFlowToward.
+  ///
+  /// In en, this message translates to:
+  /// **'Toward the building (gathering wealth)'**
+  String get inspectionFlowToward;
+
+  /// No description provided for @inspectionFlowAway.
+  ///
+  /// In en, this message translates to:
+  /// **'Away from building (draining wealth)'**
+  String get inspectionFlowAway;
+
+  /// No description provided for @inspectionFlowEmbracing.
+  ///
+  /// In en, this message translates to:
+  /// **'Embracing/curving around'**
+  String get inspectionFlowEmbracing;
+
+  /// No description provided for @inspectionFlowStagnant.
+  ///
+  /// In en, this message translates to:
+  /// **'Stagnant (no visible flow)'**
+  String get inspectionFlowStagnant;
+
+  /// No description provided for @inspectionQualityClean.
+  ///
+  /// In en, this message translates to:
+  /// **'Clean and clear'**
+  String get inspectionQualityClean;
+
+  /// No description provided for @inspectionQualityModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate (some sediment)'**
+  String get inspectionQualityModerate;
+
+  /// No description provided for @inspectionQualityPolluted.
+  ///
+  /// In en, this message translates to:
+  /// **'Polluted/murky'**
+  String get inspectionQualityPolluted;
+
+  /// No description provided for @inspectionQualityFoul.
+  ///
+  /// In en, this message translates to:
+  /// **'Foul smell'**
+  String get inspectionQualityFoul;
+
+  /// No description provided for @inspectionWaterConfigFavorable.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorable water configuration'**
+  String get inspectionWaterConfigFavorable;
+
+  /// No description provided for @inspectionWaterConfigUnfavorable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfavorable (sha qi or draining)'**
+  String get inspectionWaterConfigUnfavorable;
+
+  /// No description provided for @inspectionShaLamppost.
+  ///
+  /// In en, this message translates to:
+  /// **'Lamppost/pole directly in front of main door'**
+  String get inspectionShaLamppost;
+
+  /// No description provided for @inspectionShaSharpCorners.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharp building corners pointing at site'**
+  String get inspectionShaSharpCorners;
+
+  /// No description provided for @inspectionShaTransmission.
+  ///
+  /// In en, this message translates to:
+  /// **'Transmission towers or high-voltage lines nearby'**
+  String get inspectionShaTransmission;
+
+  /// No description provided for @inspectionShaBridge.
+  ///
+  /// In en, this message translates to:
+  /// **'Bridge or flyover cutting across view'**
+  String get inspectionShaBridge;
+
+  /// No description provided for @inspectionShaDeadEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'Dead-end road (knife-cutting qi)'**
+  String get inspectionShaDeadEnd;
+
+  /// No description provided for @inspectionShaChurch.
+  ///
+  /// In en, this message translates to:
+  /// **'Church, temple, hospital, cemetery directly opposite'**
+  String get inspectionShaChurch;
+
+  /// No description provided for @inspectionShaTree.
+  ///
+  /// In en, this message translates to:
+  /// **'Large tree blocking main entrance'**
+  String get inspectionShaTree;
+
+  /// No description provided for @inspectionShaTriangular.
+  ///
+  /// In en, this message translates to:
+  /// **'Triangular or irregular plot shape'**
+  String get inspectionShaTriangular;
+
+  /// No description provided for @inspectionShaHighway.
+  ///
+  /// In en, this message translates to:
+  /// **'Elevated highway or MRT creating noise/pressure'**
+  String get inspectionShaHighway;
+
+  /// No description provided for @inspectionShaConstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Construction site with ongoing work nearby'**
+  String get inspectionShaConstruction;
+
+  /// No description provided for @inspectionShaSeverityNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No significant sha qi'**
+  String get inspectionShaSeverityNone;
+
+  /// No description provided for @inspectionShaSeverityMinor.
+  ///
+  /// In en, this message translates to:
+  /// **'Minor sha qi (can be remedied)'**
+  String get inspectionShaSeverityMinor;
+
+  /// No description provided for @inspectionShaSeverityModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate sha qi (needs cures)'**
+  String get inspectionShaSeverityModerate;
+
+  /// No description provided for @inspectionShaSeveritySevere.
+  ///
+  /// In en, this message translates to:
+  /// **'Severe sha qi (major remedial work required)'**
+  String get inspectionShaSeveritySevere;
 }
 
 class _AppLocalizationsDelegate

@@ -9,7 +9,6 @@ import '../../models/appointment.dart';
 import '../../providers/auth_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
-import '../../widgets/breadcrumb.dart';
 import '../../services/appointment_booking_service.dart' show getAllAppointments, updateAppointment, updateAppointmentStatus;
 import 'dashboard_calendar.dart';
 
@@ -113,7 +112,7 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
       child: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(
-            top: 120,
+            top: 168,
             bottom: 48,
             left: isNarrow ? 16 : 24,
             right: isNarrow ? 16 : 24,
@@ -124,12 +123,6 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Breadcrumb(items: [
-                    (label: l10n.home, route: '/'),
-                    (label: l10n.consultations, route: '/consultations'),
-                    (label: l10n.dashboardTitle, route: null),
-                  ]),
-                  const SizedBox(height: 24),
                   Row(
                     children: [
                       Expanded(

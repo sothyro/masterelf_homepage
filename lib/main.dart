@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'app.dart';
+import 'app_bootstrap.dart';
 import 'firebase_options.dart';
 import 'router/app_router.dart';
 import 'services/connectivity_service.dart';
@@ -22,7 +23,10 @@ void main() async {
   // Initialize services
   await ErrorLoggingService.initialize();
   ConnectivityService.initialize();
-  runApp(HeroVideoBootstrap(initialLocation: initialLocation));
+  // Create providers and router at top level so URL routing works on mobile
+  // (paste/refresh preserves the correct page instead of redirecting to home).
+  initializeAppBootstrap(initialLocation);
+  runApp(const HeroVideoBootstrap());
 }
 
 /// Initialize Firebase only when options are configured (not placeholder).
@@ -40,9 +44,8 @@ Future<void> _initFirebase() async {
 
 /// Shows a loading screen with 0–100% progress until assets (video, images, fonts) are ready, then the full app.
 class HeroVideoBootstrap extends StatefulWidget {
-  const HeroVideoBootstrap({super.key, required this.initialLocation});
+  const HeroVideoBootstrap({super.key});
 
-  final String initialLocation;
 
   @override
   State<HeroVideoBootstrap> createState() => _HeroVideoBootstrapState();
@@ -82,6 +85,6 @@ class _HeroVideoBootstrapState extends State<HeroVideoBootstrap> {
     if (!_transitioning) {
       return HeroLoadingScreen(progress: _progress);
     }
-    return MasterElfApp(initialLocation: widget.initialLocation);
+    return const MasterElfApp();
   }
 }

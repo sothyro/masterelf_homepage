@@ -1253,6 +1253,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get goToDashboard => 'Go to Dashboard';
 
   @override
+  String get siteInspection => 'Site inspection';
+
+  @override
   String get welcomeBack => 'Welcome back';
 
   @override
@@ -1607,4 +1610,875 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sectionTestimonialsPart4 => 'Outcomes.';
+
+  @override
+  String get inspectionFormTitle => 'FENG SHUI GEOMANCY SITE INSPECTION FORM';
+
+  @override
+  String get inspectionFormSubtitle => 'Commercial Housing Complex Assessment';
+
+  @override
+  String inspectionStepOf(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get inspectionSave => 'Save Inspection';
+
+  @override
+  String get inspectionSaving => 'Saving…';
+
+  @override
+  String get inspectionNewInspection => 'New Inspection';
+
+  @override
+  String get inspectionDownloadPdf => 'Download PDF';
+
+  @override
+  String get inspectionSavedTitle => 'Inspection Saved';
+
+  @override
+  String get inspectionSavedMessage =>
+      'Your Feng Shui site inspection has been saved successfully.';
+
+  @override
+  String get inspectionPdfDownloadStarted => 'PDF download started.';
+
+  @override
+  String get inspectionPdfExportFailed => 'PDF export failed';
+
+  @override
+  String get inspectionSaveFailed => 'Failed to save inspection';
+
+  @override
+  String get inspectionSection0 => 'Header & Inspection Info';
+
+  @override
+  String get inspectionSection1 => 'Section 1: Basic Project Information';
+
+  @override
+  String get inspectionSection2 => 'Section 2: Site Measurements';
+
+  @override
+  String get inspectionSection3 =>
+      'Section 3: External Landform (Four Celestial Animals)';
+
+  @override
+  String get inspectionSection4 => 'Section 4: Macro Landform and Environment';
+
+  @override
+  String get inspectionSection5 => 'Section 5: Road and Traffic Analysis';
+
+  @override
+  String get inspectionSection6 => 'Section 6: Water Features';
+
+  @override
+  String get inspectionSection7 => 'Section 7: Sha Qi - Negative Influences';
+
+  @override
+  String get inspectionSection8 => 'Section 8: Comprehensive Compass Readings';
+
+  @override
+  String get inspectionSection9 => 'Section 9: Xuan Kong Flying Star';
+
+  @override
+  String get inspectionSection10 => 'Section 10: Eight Mansions Analysis';
+
+  @override
+  String get inspectionSection11 => 'Section 11: Client and Occupant Bazi';
+
+  @override
+  String get inspectionSection12 => 'Section 12: Qi Men Dun Jia Date Selection';
+
+  @override
+  String get inspectionSection13 => 'Section 13: Internal Layout Inspection';
+
+  @override
+  String get inspectionSection14 => 'Section 14: Safety, Practical and Legal';
+
+  @override
+  String get inspectionSection15 => 'Section 15: Documentation and Evidence';
+
+  @override
+  String get inspectionSection16 =>
+      'Section 16: Preliminary Assessment Summary';
+
+  @override
+  String get inspectionSection17 => 'Section 17: Follow-up Actions';
+
+  @override
+  String get inspectionInspectorName => 'Inspector Name';
+
+  @override
+  String get inspectionDate => 'Date of Inspection';
+
+  @override
+  String get inspectionTimeOfArrival => 'Time of Arrival';
+
+  @override
+  String get inspectionWeatherConditions => 'Weather Conditions';
+
+  @override
+  String get inspectionProjectName => 'Project Name';
+
+  @override
+  String get inspectionAddress => 'Address';
+
+  @override
+  String get inspectionDistrictSangkat => 'District/Sangkat';
+
+  @override
+  String get inspectionGoogleMapsLink => 'Google Maps Link';
+
+  @override
+  String get inspectionProjectType => 'Project Type';
+
+  @override
+  String get inspectionProjectTypeShophouse => 'Shophouse';
+
+  @override
+  String get inspectionProjectTypeCommercial => 'Commercial Building';
+
+  @override
+  String get inspectionProjectTypeMixedUse => 'Mixed-Use Development';
+
+  @override
+  String get inspectionProjectTypeOther => 'Other';
+
+  @override
+  String get inspectionOtherSpecify => 'Other (if selected)';
+
+  @override
+  String get inspectionHintSpecify => 'Specify';
+
+  @override
+  String get inspectionConstructionStatus => 'Construction Status';
+
+  @override
+  String get inspectionConstructionUnder => 'Under Construction';
+
+  @override
+  String get inspectionConstructionCompleted => 'Completed';
+
+  @override
+  String get inspectionConstructionPartially => 'Partially Occupied';
+
+  @override
+  String get inspectionConstructionFully => 'Fully Occupied';
+
+  @override
+  String get inspectionEstimatedCompletionYear => 'Estimated Completion Year';
+
+  @override
+  String get inspectionNumberOfFloors => 'Number of Floors';
+
+  @override
+  String get inspectionNumberOfUnits => 'Number of Units';
+
+  @override
+  String get inspectionRenovationDates => 'Previous renovation date(s)';
+
+  @override
+  String get inspectionStructuralChanges => 'Structural changes made';
+
+  @override
+  String get inspectionYes => 'Yes';
+
+  @override
+  String get inspectionNo => 'No';
+
+  @override
+  String get inspectionRenovationDetails => 'Renovation details';
+
+  @override
+  String get inspectionConstructionPhase => 'Current Construction Phase';
+
+  @override
+  String get inspectionPhaseAllBlocks => 'All blocks completed simultaneously';
+
+  @override
+  String get inspectionPhasePhased =>
+      'Phased completion (different blocks/different years)';
+
+  @override
+  String get inspectionPhaseDetails => 'Phase details';
+
+  @override
+  String get inspectionDimensions => '2.1 Dimensions';
+
+  @override
+  String get inspectionFrontageWidth => 'Frontage Width (m)';
+
+  @override
+  String get inspectionDepthLength => 'Depth/Length (m)';
+
+  @override
+  String get inspectionTotalSiteArea => 'Total Site Area (m²)';
+
+  @override
+  String get inspectionUnitWidth => 'Unit Width (m)';
+
+  @override
+  String get inspectionUnitDepth => 'Unit Depth (m)';
+
+  @override
+  String get inspectionUnitArea => 'Unit Area (m²)';
+
+  @override
+  String get inspectionFloorToCeilingHeight => 'Floor-to-ceiling Height (m)';
+
+  @override
+  String get inspectionOrientationCompass =>
+      '2.2 Orientation and Compass Readings';
+
+  @override
+  String get inspectionEquipmentUsed => 'Equipment Used';
+
+  @override
+  String get inspectionEquipmentLuoPan => 'Traditional Luo Pan Compass';
+
+  @override
+  String get inspectionEquipmentDigital => 'Digital Compass';
+
+  @override
+  String get inspectionEquipmentSmartphone => 'Smartphone Compass App';
+
+  @override
+  String get inspectionEquipmentOther => 'Other';
+
+  @override
+  String get inspectionOtherEquipment => 'Other equipment';
+
+  @override
+  String get inspectionFacingReading1 =>
+      'Facing Direction - Reading 1 (degrees)';
+
+  @override
+  String get inspectionFacingReading2 =>
+      'Facing Direction - Reading 2 (degrees)';
+
+  @override
+  String get inspectionFacingReading3 =>
+      'Facing Direction - Reading 3 (degrees)';
+
+  @override
+  String get inspectionAverageFacing => 'Average Facing (degrees)';
+
+  @override
+  String get inspectionConverted24Mountains => 'Converted to 24 Mountains';
+
+  @override
+  String get inspectionFacingCardinal => 'Facing Direction (Cardinal)';
+
+  @override
+  String get inspectionSittingDirection => 'Sitting Direction (opposite)';
+
+  @override
+  String get inspectionMagneticInterferenceNotes =>
+      'Notes on Magnetic Interference';
+
+  @override
+  String get inspectionTortoiseTitle => 'Black Tortoise (玄武) - BACK Support';
+
+  @override
+  String get inspectionDragonTitle => 'Green Dragon (青龍) - LEFT Side';
+
+  @override
+  String get inspectionTigerTitle => 'White Tiger (白虎) - RIGHT Side';
+
+  @override
+  String get inspectionPhoenixTitle => 'Red Phoenix (朱雀) - FRONT Bright Hall';
+
+  @override
+  String get inspectionDescription => 'Description';
+
+  @override
+  String get inspectionAssessment => 'Assessment';
+
+  @override
+  String get inspectionNotesSketch => 'Notes/Sketch';
+
+  @override
+  String get inspectionTortoiseDesc1 => 'Higher ground/hill';
+
+  @override
+  String get inspectionTortoiseDesc2 => 'Taller buildings';
+
+  @override
+  String get inspectionTortoiseDesc3 => 'Solid structures';
+
+  @override
+  String get inspectionTortoiseDesc4 => 'Empty land/void';
+
+  @override
+  String get inspectionTortoiseDesc5 => 'Lower ground';
+
+  @override
+  String get inspectionTortoiseDesc6 => 'Water body';
+
+  @override
+  String get inspectionTortoiseDesc7 => 'Road';
+
+  @override
+  String get inspectionTortoiseAssess1 => 'Strong support (favorable)';
+
+  @override
+  String get inspectionTortoiseAssess2 => 'Moderate support';
+
+  @override
+  String get inspectionTortoiseAssess3 => 'Weak support (unfavorable)';
+
+  @override
+  String get inspectionDragonDesc1 => 'Higher than Tiger side';
+
+  @override
+  String get inspectionDragonDesc2 => 'Active (traffic, buildings)';
+
+  @override
+  String get inspectionDragonDesc3 => 'Gentle slope';
+
+  @override
+  String get inspectionDragonDesc4 => 'Water feature';
+
+  @override
+  String get inspectionDragonDesc5 => 'Lower than Tiger side';
+
+  @override
+  String get inspectionDragonDesc6 => 'Sharp structures/corners';
+
+  @override
+  String get inspectionDragonDesc7 => 'Aggressive forms';
+
+  @override
+  String get inspectionDragonAssess1 => 'Dominant and favorable';
+
+  @override
+  String get inspectionDragonAssess2 => 'Balanced';
+
+  @override
+  String get inspectionDragonAssess3 => 'Too weak';
+
+  @override
+  String get inspectionDragonAssess4 => 'Too aggressive';
+
+  @override
+  String get inspectionTigerDesc1 => 'Lower than Dragon side';
+
+  @override
+  String get inspectionTigerDesc2 => 'Calm/passive features';
+
+  @override
+  String get inspectionTigerDesc3 => 'Gentle structures';
+
+  @override
+  String get inspectionTigerDesc4 => 'Higher than Dragon side';
+
+  @override
+  String get inspectionTigerDesc5 => 'Aggressive structures (towers, poles)';
+
+  @override
+  String get inspectionTigerDesc6 => 'Very busy road';
+
+  @override
+  String get inspectionTigerAssess1 => 'Appropriately subdued (favorable)';
+
+  @override
+  String get inspectionTigerAssess2 => 'Balanced';
+
+  @override
+  String get inspectionTigerAssess3 => 'Too dominant (unfavorable)';
+
+  @override
+  String get inspectionTigerAssess4 => 'Too aggressive (inauspicious)';
+
+  @override
+  String get inspectionPhoenixDesc1 => 'Open space/plaza';
+
+  @override
+  String get inspectionPhoenixDesc2 => 'Broad road';
+
+  @override
+  String get inspectionPhoenixDesc3 => 'Water feature (pond, canal)';
+
+  @override
+  String get inspectionPhoenixDesc4 => 'Park/garden';
+
+  @override
+  String get inspectionPhoenixDesc5 =>
+      'Oppressive tall building directly in front';
+
+  @override
+  String get inspectionPhoenixDesc6 => 'Narrow/cramped space';
+
+  @override
+  String get inspectionPhoenixAssess1 =>
+      'Excellent bright hall (spacious, gathering Qi)';
+
+  @override
+  String get inspectionPhoenixAssess2 => 'Moderate bright hall';
+
+  @override
+  String get inspectionPhoenixAssess3 =>
+      'Poor bright hall (blocked, oppressive)';
+
+  @override
+  String get inspectionWiderAreaContext => '4.1 Wider Area Context';
+
+  @override
+  String get inspectionDistanceToCityCenter => 'Distance to City Center (km)';
+
+  @override
+  String get inspectionMajorHighways => 'Major highways';
+
+  @override
+  String get inspectionRiversWaterBodies => 'Rivers/major water bodies';
+
+  @override
+  String get inspectionMountainsTerrain => 'Mountains/elevated terrain';
+
+  @override
+  String get inspectionDirectionOfMountains => 'Direction of mountains';
+
+  @override
+  String get inspectionSurroundingDevelopment => 'Surrounding Development';
+
+  @override
+  String get inspectionMicroEnvironment => '4.2 Micro Environment Quality';
+
+  @override
+  String get inspectionPowerLinesDirection =>
+      'Power lines/transmission towers - Direction';
+
+  @override
+  String get inspectionBridgesDirection => 'Bridges/flyovers - Direction';
+
+  @override
+  String get inspectionLargeTreesLocation =>
+      'Large trees (height > 3 floors) - Location';
+
+  @override
+  String get inspectionReligiousBuildingsDirection =>
+      'Religious buildings - Direction';
+
+  @override
+  String get inspectionHospitalDirection => 'Hospital/clinic - Direction';
+
+  @override
+  String get inspectionSchoolDirection => 'School - Direction';
+
+  @override
+  String get inspectionMarketDirection => 'Market - Direction';
+
+  @override
+  String get inspectionFactoryDirection => 'Factory/industrial - Direction';
+
+  @override
+  String get inspectionTrafficNoise => 'Traffic noise';
+
+  @override
+  String get inspectionNoiseSources => 'Noise Sources';
+
+  @override
+  String get inspectionAirQuality => 'Air Quality and Pollution';
+
+  @override
+  String get inspectionFoulOdorsFrom => 'Foul odors from';
+
+  @override
+  String get inspectionHeavy => 'Heavy';
+
+  @override
+  String get inspectionModerate => 'Moderate';
+
+  @override
+  String get inspectionLight => 'Light';
+
+  @override
+  String get inspectionMainRoadName => 'Main Road Name';
+
+  @override
+  String get inspectionRoadWidth => 'Road Width (estimated)';
+
+  @override
+  String get inspectionRoadPosition => 'Road Position';
+
+  @override
+  String get inspectionTrafficFlowDirection => 'Traffic Flow Direction';
+
+  @override
+  String get inspectionTrafficVolume => 'Traffic Volume';
+
+  @override
+  String get inspectionNearbyJunctions => 'Nearby Junctions';
+
+  @override
+  String get inspectionJunctionDistance =>
+      'Distance from building (m) - if T-junction';
+
+  @override
+  String get inspectionDeflectionBuffer =>
+      'Any deflection/buffer (trees, walls)';
+
+  @override
+  String get inspectionRoadAssessment => 'Assessment';
+
+  @override
+  String get inspectionRoadNotes => 'Notes';
+
+  @override
+  String get inspectionServiceRoad => 'Service road';
+
+  @override
+  String get inspectionServiceRoadLocation => 'Service road location';
+
+  @override
+  String get inspectionBackAlley => 'Back alley';
+
+  @override
+  String get inspectionBackAlleyWidth => 'Back alley width';
+
+  @override
+  String get inspectionCarParkEntrance => 'Car park entrance';
+
+  @override
+  String get inspectionLoadingBay => 'Loading bay';
+
+  @override
+  String get inspectionLoadingBayLocation => 'Loading bay location';
+
+  @override
+  String get inspectionFront => 'Front';
+
+  @override
+  String get inspectionSide => 'Side';
+
+  @override
+  String get inspectionBack => 'Back';
+
+  @override
+  String get inspectionWaterBodiesPresent => 'Water Bodies Present';
+
+  @override
+  String get inspectionWaterLocation => 'Water Location (relative to building)';
+
+  @override
+  String get inspectionWaterFlowDirection => 'Water Flow Direction';
+
+  @override
+  String get inspectionWaterQuality => 'Water Quality';
+
+  @override
+  String get inspectionWaterAssessment => 'Assessment';
+
+  @override
+  String get inspectionWaterNotes => 'Notes';
+
+  @override
+  String get inspectionShaQiChecklist => 'External Sha Qi Checklist';
+
+  @override
+  String get inspectionShaQiSeverity => 'Severity Assessment';
+
+  @override
+  String get inspectionShaQiDetailedNotes => 'Detailed Notes';
+
+  @override
+  String get inspectionLeftCornerReading =>
+      'Main Façade - Left corner (degrees)';
+
+  @override
+  String get inspectionCenterReading => 'Main Façade - Center (degrees)';
+
+  @override
+  String get inspectionRightCornerReading =>
+      'Main Façade - Right corner (degrees)';
+
+  @override
+  String get inspectionMainFacadeAverage => 'Main Façade - Average (degrees)';
+
+  @override
+  String get inspectionMainDoorReading1 => 'Main Entrance Door - Reading 1';
+
+  @override
+  String get inspectionMainDoorReading2 => 'Main Entrance Door - Reading 2';
+
+  @override
+  String get inspectionMainDoorAverage => 'Main Entrance Door - Average';
+
+  @override
+  String get inspectionMainDoor24Mountains =>
+      'Main Entrance Door - 24 Mountains';
+
+  @override
+  String get inspectionBackEntranceReading => 'Service/Back Entrance Reading';
+
+  @override
+  String get inspectionBackEntrance24Mountains =>
+      'Service/Back Entrance - 24 Mountains';
+
+  @override
+  String get inspectionCarParkEntranceReading => 'Car Park Entrance Reading';
+
+  @override
+  String get inspectionCarPark24Mountains => 'Car Park Entrance - 24 Mountains';
+
+  @override
+  String get inspectionMetalDoorFrames => 'Metal door frames';
+
+  @override
+  String get inspectionElectricalPanelsNearby => 'Electrical panels nearby';
+
+  @override
+  String get inspectionSteelReinforcement => 'Steel reinforcement';
+
+  @override
+  String get inspectionAdjustmentsMade => 'Adjustments made';
+
+  @override
+  String get inspectionGroundFloorFunction => 'Ground Floor - Function';
+
+  @override
+  String get inspectionGroundFloorHeight => 'Ground Floor - Ceiling height (m)';
+
+  @override
+  String get inspectionGroundFloorFeatures => 'Ground Floor - Main features';
+
+  @override
+  String get inspectionStaircaseLocation => 'Staircase location (sector)';
+
+  @override
+  String get inspectionLiftLocation => 'Lift location (sector)';
+
+  @override
+  String get inspectionFireEscapeLocation => 'Fire escape location';
+
+  @override
+  String get inspectionFavorable => 'Favorable';
+
+  @override
+  String get inspectionUnfavorable => 'Unfavorable';
+
+  @override
+  String get inspectionNeutral => 'Neutral';
+
+  @override
+  String get inspectionNotes => 'Notes';
+
+  @override
+  String get inspectionDirN => 'N';
+
+  @override
+  String get inspectionDirS => 'S';
+
+  @override
+  String get inspectionDirE => 'E';
+
+  @override
+  String get inspectionDirW => 'W';
+
+  @override
+  String get inspectionDirNE => 'NE';
+
+  @override
+  String get inspectionDirNW => 'NW';
+
+  @override
+  String get inspectionDirSE => 'SE';
+
+  @override
+  String get inspectionDirSW => 'SW';
+
+  @override
+  String get inspectionSurroundEstablished => 'Established commercial district';
+
+  @override
+  String get inspectionSurroundDeveloping => 'Developing area';
+
+  @override
+  String get inspectionSurroundMixed => 'Mixed residential-commercial';
+
+  @override
+  String get inspectionSurroundIndustrial => 'Industrial zone';
+
+  @override
+  String get inspectionSurroundSuburban => 'Suburban/rural';
+
+  @override
+  String get inspectionNoiseConstruction => 'Construction noise nearby';
+
+  @override
+  String get inspectionNoiseNightclub => 'Nightclub/entertainment venues';
+
+  @override
+  String get inspectionNoiseMarket => 'Market/commercial activity';
+
+  @override
+  String get inspectionNoiseAirport => 'Airport/railway';
+
+  @override
+  String get inspectionAirClean => 'Clean air, green surroundings';
+
+  @override
+  String get inspectionAirModerate => 'Moderate (urban environment)';
+
+  @override
+  String get inspectionAirIndustrial => 'Industrial pollution present';
+
+  @override
+  String get inspectionAirDust => 'Dust from construction';
+
+  @override
+  String get inspectionAirFoul => 'Foul odors';
+
+  @override
+  String get inspectionRoadParallel => 'Runs parallel to front façade';
+
+  @override
+  String get inspectionRoadCurvesToward => 'Curves toward building (embracing)';
+
+  @override
+  String get inspectionRoadCurvesAway => 'Curves away from building';
+
+  @override
+  String get inspectionRoadStraight => 'Straight alignment';
+
+  @override
+  String get inspectionFlowDragonToTiger => 'Left to right (Dragon to Tiger)';
+
+  @override
+  String get inspectionFlowTigerToDragon => 'Right to left (Tiger to Dragon)';
+
+  @override
+  String get inspectionFlowBoth => 'Both directions (two-way)';
+
+  @override
+  String get inspectionJunctionT => 'T-junction (road points at building)';
+
+  @override
+  String get inspectionJunctionY => 'Y-junction';
+
+  @override
+  String get inspectionJunctionCross => 'Cross junction';
+
+  @override
+  String get inspectionJunctionRoundabout => 'Roundabout';
+
+  @override
+  String get inspectionJunctionNone => 'No direct junction';
+
+  @override
+  String get inspectionRoadConfigFavorable => 'Favorable road configuration';
+
+  @override
+  String get inspectionRoadConfigShaQi => 'Sha Qi from junction (needs remedy)';
+
+  @override
+  String get inspectionWaterRiver => 'River';
+
+  @override
+  String get inspectionWaterCanal => 'Canal';
+
+  @override
+  String get inspectionWaterPond => 'Pond';
+
+  @override
+  String get inspectionWaterLake => 'Lake';
+
+  @override
+  String get inspectionWaterDitch => 'Drainage ditch';
+
+  @override
+  String get inspectionWaterPool => 'Swimming pool';
+
+  @override
+  String get inspectionWaterFountain => 'Fountain';
+
+  @override
+  String get inspectionWaterNone => 'None visible';
+
+  @override
+  String get inspectionWaterLeftDragon => 'Left (Dragon side)';
+
+  @override
+  String get inspectionWaterRightTiger => 'Right (Tiger side)';
+
+  @override
+  String get inspectionFlowToward => 'Toward the building (gathering wealth)';
+
+  @override
+  String get inspectionFlowAway => 'Away from building (draining wealth)';
+
+  @override
+  String get inspectionFlowEmbracing => 'Embracing/curving around';
+
+  @override
+  String get inspectionFlowStagnant => 'Stagnant (no visible flow)';
+
+  @override
+  String get inspectionQualityClean => 'Clean and clear';
+
+  @override
+  String get inspectionQualityModerate => 'Moderate (some sediment)';
+
+  @override
+  String get inspectionQualityPolluted => 'Polluted/murky';
+
+  @override
+  String get inspectionQualityFoul => 'Foul smell';
+
+  @override
+  String get inspectionWaterConfigFavorable => 'Favorable water configuration';
+
+  @override
+  String get inspectionWaterConfigUnfavorable =>
+      'Unfavorable (sha qi or draining)';
+
+  @override
+  String get inspectionShaLamppost =>
+      'Lamppost/pole directly in front of main door';
+
+  @override
+  String get inspectionShaSharpCorners =>
+      'Sharp building corners pointing at site';
+
+  @override
+  String get inspectionShaTransmission =>
+      'Transmission towers or high-voltage lines nearby';
+
+  @override
+  String get inspectionShaBridge => 'Bridge or flyover cutting across view';
+
+  @override
+  String get inspectionShaDeadEnd => 'Dead-end road (knife-cutting qi)';
+
+  @override
+  String get inspectionShaChurch =>
+      'Church, temple, hospital, cemetery directly opposite';
+
+  @override
+  String get inspectionShaTree => 'Large tree blocking main entrance';
+
+  @override
+  String get inspectionShaTriangular => 'Triangular or irregular plot shape';
+
+  @override
+  String get inspectionShaHighway =>
+      'Elevated highway or MRT creating noise/pressure';
+
+  @override
+  String get inspectionShaConstruction =>
+      'Construction site with ongoing work nearby';
+
+  @override
+  String get inspectionShaSeverityNone => 'No significant sha qi';
+
+  @override
+  String get inspectionShaSeverityMinor => 'Minor sha qi (can be remedied)';
+
+  @override
+  String get inspectionShaSeverityModerate => 'Moderate sha qi (needs cures)';
+
+  @override
+  String get inspectionShaSeveritySevere =>
+      'Severe sha qi (major remedial work required)';
 }

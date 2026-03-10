@@ -200,15 +200,19 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
+    final isKm = locale.languageCode == 'km';
     return Padding(
       padding: const EdgeInsets.only(left: 4, bottom: 6),
       child: Text(
-        label.toUpperCase(),
-        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: Colors.white54,
-              letterSpacing: 1.2,
-              fontWeight: FontWeight.w600,
-            ),
+        isKm ? label : label.toUpperCase(),
+        style: menuLabelStyle(
+          context,
+          fontSize: 11,
+          color: Colors.white54,
+          fontWeight: FontWeight.w600,
+          letterSpacing: isKm ? 0 : 1.2,
+        ),
       ),
     );
   }
@@ -265,10 +269,11 @@ class _DrawerTile extends StatelessWidget {
                 Expanded(
                   child: Text(
                     label,
-                    style: TextStyle(
-                      fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-                      color: isActive ? AppColors.accent : Colors.white,
+                    style: menuItemLabelStyle(
+                      context,
                       fontSize: 15,
+                      color: isActive ? AppColors.accent : Colors.white,
+                      fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
                     ),
                   ),
                 ),
@@ -321,10 +326,11 @@ class _ContactCta extends StatelessWidget {
               Expanded(
                 child: Text(
                   label,
-                  style: const TextStyle(
+                  style: menuItemLabelStyle(
+                    context,
+                    fontSize: 15,
                     color: AppColors.onAccent,
                     fontWeight: FontWeight.w600,
-                    fontSize: 15,
                   ),
                 ),
               ),

@@ -1246,6 +1246,9 @@ class AppLocalizationsKm extends AppLocalizations {
   String get goToDashboard => 'ទៅផ្ទាំងគ្រប់គ្រង';
 
   @override
+  String get siteInspection => 'ការពិនិត្យវាល';
+
+  @override
   String get welcomeBack => 'សូមស្វាគមន៍មកវិញ';
 
   @override
@@ -1599,4 +1602,851 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get sectionTestimonialsPart4 => 'លទ្ធផល។';
+
+  @override
+  String get inspectionFormTitle => 'ទម្រង់ពិនិត្យវាលហុងស៊ុយ';
+
+  @override
+  String get inspectionFormSubtitle => 'ការវាយតម្លៃអគារលំនៅដ្ឋានពាណិជ្ជកម្ម';
+
+  @override
+  String inspectionStepOf(int current, int total) {
+    return 'ជំហាន $current ក្នុងចំណោម $total';
+  }
+
+  @override
+  String get inspectionSave => 'រក្សាទុកការពិនិត្យ';
+
+  @override
+  String get inspectionSaving => 'កំពុងរក្សាទុក…';
+
+  @override
+  String get inspectionNewInspection => 'ពិនិត្យថ្មី';
+
+  @override
+  String get inspectionDownloadPdf => 'ទាញយក PDF';
+
+  @override
+  String get inspectionSavedTitle => 'រក្សាទុករួច';
+
+  @override
+  String get inspectionSavedMessage =>
+      'ការពិនិត្យវាលហុងស៊ុយរបស់អ្នកត្រូវបានរក្សាទុកដោយជោគជ័យ។';
+
+  @override
+  String get inspectionPdfDownloadStarted => 'ចាប់ផ្តើមទាញយក PDF ។';
+
+  @override
+  String get inspectionPdfExportFailed => 'ទាញយក PDF មិនជោគជ័យ';
+
+  @override
+  String get inspectionSaveFailed => 'រក្សាទុកការពិនិត្យមិនជោគជ័យ';
+
+  @override
+  String get inspectionSection0 => 'ក្បាល និងព័ត៌មានពិនិត្យ';
+
+  @override
+  String get inspectionSection1 => 'ផ្នែក ១៖ ព័ត៌មានគម្រោងមូលដ្ឋាន';
+
+  @override
+  String get inspectionSection2 => 'ផ្នែក ២៖ ការវាស់វែងវាល';
+
+  @override
+  String get inspectionSection3 => 'ផ្នែក ៣៖ រូបរាងខាងក្រៅ (សត្វអប្សរាចតុកោណ)';
+
+  @override
+  String get inspectionSection4 => 'ផ្នែក ៤៖ រូបរាងម៉ាក្រូ និងបរិស្ថាន';
+
+  @override
+  String get inspectionSection5 => 'ផ្នែក ៥៖ ការវិភាគផ្លូវ និងចរាចរ';
+
+  @override
+  String get inspectionSection6 => 'ផ្នែក ៦៖ លក្ខណៈទឹក';
+
+  @override
+  String get inspectionSection7 => 'ផ្នែក ៧៖ ស៉ាឈី - ឥទ្ធិពលអវិជ្ជមាន';
+
+  @override
+  String get inspectionSection8 => 'ផ្នែក ៨៖ ការអានខ្យុងទូទាំង';
+
+  @override
+  String get inspectionSection9 => 'ផ្នែក ៩៖ Xuan Kong Flying Star';
+
+  @override
+  String get inspectionSection10 => 'ផ្នែក ១០៖ ការវិភាគ Eight Mansions';
+
+  @override
+  String get inspectionSection11 => 'ផ្នែក ១១៖ Bazi អតិថិជន និងអ្នករស់';
+
+  @override
+  String get inspectionSection12 =>
+      'ផ្នែក ១២៖ Qi Men Dun Jia ជម្រើសកាលបរិច្ឆេទ';
+
+  @override
+  String get inspectionSection13 => 'ផ្នែក ១៣៖ ការពិនិត្យប្លង់ខាងក្នុង';
+
+  @override
+  String get inspectionSection14 => 'ផ្នែក ១៤៖ សុវត្ថិភាព ជាក់ស្តែង និងច្បាប់';
+
+  @override
+  String get inspectionSection15 => 'ផ្នែក ១៥៖ ឯកសារ និងភស្តុតាង';
+
+  @override
+  String get inspectionSection16 => 'ផ្នែក ១៦៖ សង្ខេបការវាយតម្លៃបឋម';
+
+  @override
+  String get inspectionSection17 => 'ផ្នែក ១៧៖ សកម្មភាពបន្ត';
+
+  @override
+  String get inspectionInspectorName => 'ឈ្មោះអ្នកពិនិត្យ';
+
+  @override
+  String get inspectionDate => 'កាលបរិច្ឆេទពិនិត្យ';
+
+  @override
+  String get inspectionTimeOfArrival => 'ពេលមកដល់';
+
+  @override
+  String get inspectionWeatherConditions => 'លក្ខខណ្ឌអាកាសធាតុ';
+
+  @override
+  String get inspectionProjectName => 'ឈ្មោះគម្រោង';
+
+  @override
+  String get inspectionAddress => 'អាសយដ្ឋាន';
+
+  @override
+  String get inspectionDistrictSangkat => 'ស្រុក/សង្កាត់';
+
+  @override
+  String get inspectionGoogleMapsLink => 'តំណភ្ជាប់ Google Maps';
+
+  @override
+  String get inspectionProjectType => 'ប្រភេទគម្រោង';
+
+  @override
+  String get inspectionProjectTypeShophouse => 'ផ្ទះហាង';
+
+  @override
+  String get inspectionProjectTypeCommercial => 'អគារពាណិជ្ជកម្ម';
+
+  @override
+  String get inspectionProjectTypeMixedUse => 'អភិវឌ្ឍន៍ប្រើប្រាស់ចម្រុះ';
+
+  @override
+  String get inspectionProjectTypeOther => 'ផ្សេងៗ';
+
+  @override
+  String get inspectionOtherSpecify => 'ផ្សេងៗ (បើជ្រើស)';
+
+  @override
+  String get inspectionHintSpecify => 'បញ្ជាក់';
+
+  @override
+  String get inspectionConstructionStatus => 'ស្ថានភាពសំណង់';
+
+  @override
+  String get inspectionConstructionUnder => 'កំពុងសាងសង់';
+
+  @override
+  String get inspectionConstructionCompleted => 'បានបញ្ចប់';
+
+  @override
+  String get inspectionConstructionPartially => 'រស់នៅដោយផ្នែក';
+
+  @override
+  String get inspectionConstructionFully => 'រស់នៅពេញ';
+
+  @override
+  String get inspectionEstimatedCompletionYear => 'ឆ្នាំប៉ាន់ស្មានបញ្ចប់';
+
+  @override
+  String get inspectionNumberOfFloors => 'ចំនួនជាន់';
+
+  @override
+  String get inspectionNumberOfUnits => 'ចំនួនអង្គភាព';
+
+  @override
+  String get inspectionRenovationDates => 'កាលបរិច្ឆេទកែលម្អមុន)';
+
+  @override
+  String get inspectionStructuralChanges => 'ការផ្លាស់ប្តូររចនាសម្ព័ន្ធ';
+
+  @override
+  String get inspectionYes => 'បាទ/ចាស';
+
+  @override
+  String get inspectionNo => 'ទេ';
+
+  @override
+  String get inspectionRenovationDetails => 'ព័ត៌មានលម្អ';
+
+  @override
+  String get inspectionConstructionPhase => 'ដំណាក់កាលសំណង់បច្ចុប្បន្ន';
+
+  @override
+  String get inspectionPhaseAllBlocks => 'ប្លុកទាំងអស់បញ្ចប់ក្នុងពេលតែមួយ';
+
+  @override
+  String get inspectionPhasePhased => 'បញ្ចប់ជាដំណាក់ (ប្លុក/ឆ្នាំខុសគ្នា)';
+
+  @override
+  String get inspectionPhaseDetails => 'ព័ត៌មានដំណាក់កាល';
+
+  @override
+  String get inspectionDimensions => '2.1 វិមាត្រ';
+
+  @override
+  String get inspectionFrontageWidth => 'ទទឹងមុខ (ម)';
+
+  @override
+  String get inspectionDepthLength => 'ជម្រៅ/ប្រវែង (ម)';
+
+  @override
+  String get inspectionTotalSiteArea => 'ផ្ទៃដីសរុប (ម²)';
+
+  @override
+  String get inspectionUnitWidth => 'ទទឹងអង្គភាព (ម)';
+
+  @override
+  String get inspectionUnitDepth => 'ជម្រៅអង្គភាព (ម)';
+
+  @override
+  String get inspectionUnitArea => 'ផ្ទៃអង្គភាព (ម²)';
+
+  @override
+  String get inspectionFloorToCeilingHeight => 'កម្ពស់ពីជាន់ដល់ពិដាន (ម)';
+
+  @override
+  String get inspectionOrientationCompass => '2.2 ទិសដៅ និងការអានខ្យុង';
+
+  @override
+  String get inspectionEquipmentUsed => 'ឧបករណ៍ប្រើ';
+
+  @override
+  String get inspectionEquipmentLuoPan => 'ខ្យុង Luo Pan ប្រពៃណី';
+
+  @override
+  String get inspectionEquipmentDigital => 'ខ្យុងឌីជីថល';
+
+  @override
+  String get inspectionEquipmentSmartphone => 'កម្មវិធីខ្យុងស្មាតហ្វូន';
+
+  @override
+  String get inspectionEquipmentOther => 'ផ្សេងៗ';
+
+  @override
+  String get inspectionOtherEquipment => 'ឧបករណ៍ផ្សេងៗ';
+
+  @override
+  String get inspectionFacingReading1 => 'ទិសមុខ - ការអាន ១ (ដឺក្រេ)';
+
+  @override
+  String get inspectionFacingReading2 => 'ទិសមុខ - ការអាន ២ (ដឺក្រេ)';
+
+  @override
+  String get inspectionFacingReading3 => 'ទិសមុខ - ការអាន ៣ (ដឺក្រេ)';
+
+  @override
+  String get inspectionAverageFacing => 'មធ្យមទិសមុខ (ដឺក្រេ)';
+
+  @override
+  String get inspectionConverted24Mountains => 'ប្តូរជា 24 Mountains';
+
+  @override
+  String get inspectionFacingCardinal => 'ទិសមុខ (Cardinal)';
+
+  @override
+  String get inspectionSittingDirection => 'ទិសអង្គុយ (ផ្ទុយ)';
+
+  @override
+  String get inspectionMagneticInterferenceNotes => 'កំណត់ហេតុរំខានម៉ាញេទិក';
+
+  @override
+  String get inspectionTortoiseTitle => 'អណ្តើកខ្មៅ (玄武) - គាំទ្រខាងក្រោយ';
+
+  @override
+  String get inspectionDragonTitle => 'នាគខៀវ (青龍) - ខាងឆ្វេង';
+
+  @override
+  String get inspectionTigerTitle => 'ខ្លាស (白虎) - ខាងស្តាំ';
+
+  @override
+  String get inspectionPhoenixTitle => 'ភ្នុកស័រក្រហម (朱雀) - សាលធំខាងមុខ';
+
+  @override
+  String get inspectionDescription => 'ការពិពណ៌នា';
+
+  @override
+  String get inspectionAssessment => 'ការវាយតម្លៃ';
+
+  @override
+  String get inspectionNotesSketch => 'កំណត់ហេតុ/គំនូរ';
+
+  @override
+  String get inspectionTortoiseDesc1 => 'ដីខ្ពស់/ភ្នំ';
+
+  @override
+  String get inspectionTortoiseDesc2 => 'អគារខ្ពស់ជាង';
+
+  @override
+  String get inspectionTortoiseDesc3 => 'រចនាសម្ព័ន្ធរឹង';
+
+  @override
+  String get inspectionTortoiseDesc4 => 'ដីទទេ/ទំនេរ';
+
+  @override
+  String get inspectionTortoiseDesc5 => 'ដីទាប';
+
+  @override
+  String get inspectionTortoiseDesc6 => 'ដងទឹក/បឹង';
+
+  @override
+  String get inspectionTortoiseDesc7 => 'ផ្លូវ';
+
+  @override
+  String get inspectionTortoiseAssess1 => 'គាំទ្រខ្លាំង (អំណោយផល)';
+
+  @override
+  String get inspectionTortoiseAssess2 => 'គាំទ្រមធ្យម';
+
+  @override
+  String get inspectionTortoiseAssess3 => 'គាំទ្រខ្សោយ (មិនអំណោយផល)';
+
+  @override
+  String get inspectionDragonDesc1 => 'ខ្ពស់ជាងខាង Tiger';
+
+  @override
+  String get inspectionDragonDesc2 => 'សកម្ម (ចរាចរ អគារ)';
+
+  @override
+  String get inspectionDragonDesc3 => 'ជម្រាលទន់';
+
+  @override
+  String get inspectionDragonDesc4 => 'លក្ខណៈទឹក';
+
+  @override
+  String get inspectionDragonDesc5 => 'ទាបជាងខាង Tiger';
+
+  @override
+  String get inspectionDragonDesc6 => 'រចនាសម្ព័ន្ធ/ជ្រុងមុត';
+
+  @override
+  String get inspectionDragonDesc7 => 'រូបរាងកាច';
+
+  @override
+  String get inspectionDragonAssess1 => 'គ្រប់គ្រង និងអំណោយផល';
+
+  @override
+  String get inspectionDragonAssess2 => 'រតុល';
+
+  @override
+  String get inspectionDragonAssess3 => 'ខ្សោយពេក';
+
+  @override
+  String get inspectionDragonAssess4 => 'កាចពេក';
+
+  @override
+  String get inspectionTigerDesc1 => 'ទាបជាងខាង Dragon';
+
+  @override
+  String get inspectionTigerDesc2 => 'លក្ខណៈស្ងប់/អកម្ម';
+
+  @override
+  String get inspectionTigerDesc3 => 'រចនាសម្ព័ន្ធទន់';
+
+  @override
+  String get inspectionTigerDesc4 => 'ខ្ពស់ជាងខាង Dragon';
+
+  @override
+  String get inspectionTigerDesc5 => 'រចនាសម្ព័ន្ធកាច (ប៉ម សសរ)';
+
+  @override
+  String get inspectionTigerDesc6 => 'ផ្លូវរវល់ណាស់';
+
+  @override
+  String get inspectionTigerAssess1 => 'រាបស្មើត្រឹមត្រូវ (អំណោយផល)';
+
+  @override
+  String get inspectionTigerAssess2 => 'រតុល';
+
+  @override
+  String get inspectionTigerAssess3 => 'គ្រប់គ្រងពេក (មិនអំណោយផល)';
+
+  @override
+  String get inspectionTigerAssess4 => 'កាចពេក (អាក្រក់)';
+
+  @override
+  String get inspectionPhoenixDesc1 => 'ទីធំទូលាយ/ផ្លាហ៍សា';
+
+  @override
+  String get inspectionPhoenixDesc2 => 'ផ្លូវធំ';
+
+  @override
+  String get inspectionPhoenixDesc3 => 'លក្ខណៈទឹក (ស្រះ ប្រឡាយ)';
+
+  @override
+  String get inspectionPhoenixDesc4 => 'សួន/ច្បារដំណាំ';
+
+  @override
+  String get inspectionPhoenixDesc5 => 'អគារខ្ពស់កំពុងរំលាយខាងមុខ';
+
+  @override
+  String get inspectionPhoenixDesc6 => 'ទីធំចង្អៀត';
+
+  @override
+  String get inspectionPhoenixAssess1 => 'សាលធំល្អឥតខ្ចោះ (ទូលាយ ប្រមូលឈី)';
+
+  @override
+  String get inspectionPhoenixAssess2 => 'សាលធំមធ្យម';
+
+  @override
+  String get inspectionPhoenixAssess3 => 'សាលធំអាក្រក់ (រារាំង រំលាយ)';
+
+  @override
+  String get inspectionWiderAreaContext => '4.1 បរិបទដែនធំជាង';
+
+  @override
+  String get inspectionDistanceToCityCenter => 'ចម្ងាយដល់កណ្តាលក្រុង (គ.ម)';
+
+  @override
+  String get inspectionMajorHighways => 'ផ្លូវហោ way សំខាន់';
+
+  @override
+  String get inspectionRiversWaterBodies => 'ទន្លេ/បន្ទប់ទឹកសំខាន់';
+
+  @override
+  String get inspectionMountainsTerrain => 'ភ្នំ/ដីមានកំពស់';
+
+  @override
+  String get inspectionDirectionOfMountains => 'ទិសភ្នំ';
+
+  @override
+  String get inspectionSurroundingDevelopment => 'ការអភិវឌ្ឍជុំវិញ';
+
+  @override
+  String get inspectionMicroEnvironment => '4.2 គុណភាពបរិស្ថានមីក្រូ';
+
+  @override
+  String get inspectionPowerLinesDirection => 'ខ្សែភ្លើង/ប៉មផ្ទេរ - ទិស';
+
+  @override
+  String get inspectionBridgesDirection => 'ស្ពាន/ផ្លូវហោ way - ទិស';
+
+  @override
+  String get inspectionLargeTreesLocation =>
+      'ដើមឈើធំ (កម្ពស់ > ៣ ជាន់) - ទីតាំង';
+
+  @override
+  String get inspectionReligiousBuildingsDirection => 'អគារសាសនា - ទិស';
+
+  @override
+  String get inspectionHospitalDirection => 'ពេទ្យ/គ្លីនិក - ទិស';
+
+  @override
+  String get inspectionSchoolDirection => 'វិទ្យាល័យ - ទិស';
+
+  @override
+  String get inspectionMarketDirection => 'ផ្សារ - ទិស';
+
+  @override
+  String get inspectionFactoryDirection => 'រោងចក្រ/ឧស្សាហកម្ម - ទិស';
+
+  @override
+  String get inspectionTrafficNoise => 'រំខានចរាចរ';
+
+  @override
+  String get inspectionNoiseSources => 'ប្រភពរំខាន';
+
+  @override
+  String get inspectionAirQuality => 'គុណភាពខ្យល់ និងការចំណាយ';
+
+  @override
+  String get inspectionFoulOdorsFrom => 'ក្លិនអាក្រក់ពី';
+
+  @override
+  String get inspectionHeavy => 'ធ្ងន់';
+
+  @override
+  String get inspectionModerate => 'មធ្យម';
+
+  @override
+  String get inspectionLight => 'ស្រាល';
+
+  @override
+  String get inspectionMainRoadName => 'ឈ្មោះផ្លូវចម្បង';
+
+  @override
+  String get inspectionRoadWidth => 'ទទឹងផ្លូវ (ប៉ាន់ស្មាន)';
+
+  @override
+  String get inspectionRoadPosition => 'ទីតាំងផ្លូវ';
+
+  @override
+  String get inspectionTrafficFlowDirection => 'ទិសចរាចរ';
+
+  @override
+  String get inspectionTrafficVolume => 'បរិមាណចរាចរ';
+
+  @override
+  String get inspectionNearbyJunctions => 'ចំណុចប្រសព្វជិត';
+
+  @override
+  String get inspectionJunctionDistance => 'ចម្ងាយពីអគារ (ម) - បើ T-junction';
+
+  @override
+  String get inspectionDeflectionBuffer => 'ការបង្វិល/របាំង (ដើមឈើ ជញ្ជាំង)';
+
+  @override
+  String get inspectionRoadAssessment => 'ការវាយតម្លៃ';
+
+  @override
+  String get inspectionRoadNotes => 'កំណត់ហេតុ';
+
+  @override
+  String get inspectionServiceRoad => 'ផ្លូវសេវា';
+
+  @override
+  String get inspectionServiceRoadLocation => 'ទីតាំងផ្លូវសេវា';
+
+  @override
+  String get inspectionBackAlley => 'ផ្លូវក្រោយ';
+
+  @override
+  String get inspectionBackAlleyWidth => 'ទទឹងផ្លូវក្រោយ';
+
+  @override
+  String get inspectionCarParkEntrance => 'ច្រកចូលចាក់រថយន្ត';
+
+  @override
+  String get inspectionLoadingBay => 'កន្លែងដាក់ទំនិញ';
+
+  @override
+  String get inspectionLoadingBayLocation => 'ទីតាំងកន្លែងដាក់ទំនិញ';
+
+  @override
+  String get inspectionFront => 'មុខ';
+
+  @override
+  String get inspectionSide => 'ចំហៀង';
+
+  @override
+  String get inspectionBack => 'ក្រោយ';
+
+  @override
+  String get inspectionWaterBodiesPresent => 'បន្ទប់ទឹកមាន';
+
+  @override
+  String get inspectionWaterLocation => 'ទីតាំងទឹក (ធៀបអគារ)';
+
+  @override
+  String get inspectionWaterFlowDirection => 'ទិសចរន្តទឹក';
+
+  @override
+  String get inspectionWaterQuality => 'គុណភាពទឹក';
+
+  @override
+  String get inspectionWaterAssessment => 'ការវាយតម្លៃ';
+
+  @override
+  String get inspectionWaterNotes => 'កំណត់ហេតុ';
+
+  @override
+  String get inspectionShaQiChecklist => 'បញ្ជីស៉ាឈីខាងក្រៅ';
+
+  @override
+  String get inspectionShaQiSeverity => 'ការវាយតម្លៃកម្លាំង';
+
+  @override
+  String get inspectionShaQiDetailedNotes => 'កំណត់ហេតុលម្អិត';
+
+  @override
+  String get inspectionLeftCornerReading => 'មុខផ្ទះ - ជ្រុងឆ្វេង (ដឺក្រេ)';
+
+  @override
+  String get inspectionCenterReading => 'មុខផ្ទះ - កណ្តាល (ដឺក្រេ)';
+
+  @override
+  String get inspectionRightCornerReading => 'មុខផ្ទះ - ជ្រុងស្តាំ (ដឺក្រេ)';
+
+  @override
+  String get inspectionMainFacadeAverage => 'មុខផ្ទះ - មធ្យម (ដឺក្រេ)';
+
+  @override
+  String get inspectionMainDoorReading1 => 'ទ្វារចូលចម្បង - ការអាន ១';
+
+  @override
+  String get inspectionMainDoorReading2 => 'ទ្វារចូលចម្បង - ការអាន ២';
+
+  @override
+  String get inspectionMainDoorAverage => 'ទ្វារចូលចម្បង - មធ្យម';
+
+  @override
+  String get inspectionMainDoor24Mountains => 'ទ្វារចូលចម្បង - 24 Mountains';
+
+  @override
+  String get inspectionBackEntranceReading => 'ការអានច្រកក្រោយ/សេវា';
+
+  @override
+  String get inspectionBackEntrance24Mountains =>
+      'ច្រកក្រោយ/សេវា - 24 Mountains';
+
+  @override
+  String get inspectionCarParkEntranceReading => 'ការអានច្រកចាក់រថយន្ត';
+
+  @override
+  String get inspectionCarPark24Mountains => 'ច្រកចាក់រថយន្ត - 24 Mountains';
+
+  @override
+  String get inspectionMetalDoorFrames => 'រូបរាងទ្វារលោហៈ';
+
+  @override
+  String get inspectionElectricalPanelsNearby => 'បន្ទះភ្លើងជិត';
+
+  @override
+  String get inspectionSteelReinforcement => 'ដែកពង្រឹង';
+
+  @override
+  String get inspectionAdjustmentsMade => 'ការកែតម្រូវធ្វើ';
+
+  @override
+  String get inspectionGroundFloorFunction => 'ជាន់ក្រោម - មុខងារ';
+
+  @override
+  String get inspectionGroundFloorHeight => 'ជាន់ក្រោម - កម្ពស់ពិដាន (ម)';
+
+  @override
+  String get inspectionGroundFloorFeatures => 'ជាន់ក្រោម - លក្ខណៈសំខាន់';
+
+  @override
+  String get inspectionStaircaseLocation => 'ទីតាំងជណ្តើរ (ផ្នែក)';
+
+  @override
+  String get inspectionLiftLocation => 'ទីតាំងលីហ្វ (ផ្នែក)';
+
+  @override
+  String get inspectionFireEscapeLocation => 'ទីតាំងច្រកគេចអគ្គិភ័យ';
+
+  @override
+  String get inspectionFavorable => 'អំណោយផល';
+
+  @override
+  String get inspectionUnfavorable => 'មិនអំណោយផល';
+
+  @override
+  String get inspectionNeutral => 'អព្យាក្រឹត';
+
+  @override
+  String get inspectionNotes => 'កំណត់ហេតុ';
+
+  @override
+  String get inspectionDirN => 'ជ';
+
+  @override
+  String get inspectionDirS => 'ត';
+
+  @override
+  String get inspectionDirE => 'ក';
+
+  @override
+  String get inspectionDirW => 'ល';
+
+  @override
+  String get inspectionDirNE => 'ឈ';
+
+  @override
+  String get inspectionDirNW => 'អ';
+
+  @override
+  String get inspectionDirSE => 'ខ';
+
+  @override
+  String get inspectionDirSW => 'ន';
+
+  @override
+  String get inspectionSurroundEstablished => 'តំបន់ពាណិជ្ជកម្មរឹងមាំ';
+
+  @override
+  String get inspectionSurroundDeveloping => 'តំបន់កំពុងអភិវឌ្ឍ';
+
+  @override
+  String get inspectionSurroundMixed => 'លំនៅដ្ឋាន-ពាណិជ្ជកម្មចម្រុះ';
+
+  @override
+  String get inspectionSurroundIndustrial => 'តំបន់ឧស្សាហកម្ម';
+
+  @override
+  String get inspectionSurroundSuburban => 'ក្រៅក្រុង/ជនបទ';
+
+  @override
+  String get inspectionNoiseConstruction => 'រំខានសំណង់ជិត';
+
+  @override
+  String get inspectionNoiseNightclub => 'ណាត់ក្លឹប/កន្លែងកម្សាន្ត';
+
+  @override
+  String get inspectionNoiseMarket => 'ផ្សារ/សកម្មភាពពាណិជ្ជកម្ម';
+
+  @override
+  String get inspectionNoiseAirport => 'អាកាសយានដ្ឋាន/រថភ្លើង';
+
+  @override
+  String get inspectionAirClean => 'ខ្យល់ស្អាត បរិស្ថានបៃតង';
+
+  @override
+  String get inspectionAirModerate => 'មធ្យម (បរិស្ថានក្រុង)';
+
+  @override
+  String get inspectionAirIndustrial => 'មានការចំណាយឧស្សាហកម្ម';
+
+  @override
+  String get inspectionAirDust => 'ធូលីពីសំណង់';
+
+  @override
+  String get inspectionAirFoul => 'ក្លិនអាក្រក់';
+
+  @override
+  String get inspectionRoadParallel => 'ស្របនឹងមុខផ្ទះ';
+
+  @override
+  String get inspectionRoadCurvesToward => 'កោងឆ្ពោះអគារ (ឱប)';
+
+  @override
+  String get inspectionRoadCurvesAway => 'កោងចាកអគារ';
+
+  @override
+  String get inspectionRoadStraight => 'តម្រង់ត្រង់';
+
+  @override
+  String get inspectionFlowDragonToTiger => 'ពីឆ្វេងទៅស្តាំ (Dragon ទៅ Tiger)';
+
+  @override
+  String get inspectionFlowTigerToDragon => 'ពីស្តាំទៅឆ្វេង (Tiger ទៅ Dragon)';
+
+  @override
+  String get inspectionFlowBoth => 'ទិសទាំងពីរ (ពីរលទ្ធិ)';
+
+  @override
+  String get inspectionJunctionT => 'ចំណុច T (ផ្លូវចង្អុលអគារ)';
+
+  @override
+  String get inspectionJunctionY => 'ចំណុច Y';
+
+  @override
+  String get inspectionJunctionCross => 'ចំណុចឆ្លង';
+
+  @override
+  String get inspectionJunctionRoundabout => 'វាលជុំ';
+
+  @override
+  String get inspectionJunctionNone => 'គ្មានចំណុចផ្ទាល់';
+
+  @override
+  String get inspectionRoadConfigFavorable => 'ការរៀបផ្លូវអំណោយផល';
+
+  @override
+  String get inspectionRoadConfigShaQi => 'ស៉ាឈីពីចំណុច (ត្រូវការកែ)';
+
+  @override
+  String get inspectionWaterRiver => 'ទន្លេ';
+
+  @override
+  String get inspectionWaterCanal => 'ប្រឡាយ';
+
+  @override
+  String get inspectionWaterPond => 'ស្រះ';
+
+  @override
+  String get inspectionWaterLake => 'បឹង';
+
+  @override
+  String get inspectionWaterDitch => 'រណ្តៅចាក់ទឹក';
+
+  @override
+  String get inspectionWaterPool => 'អាងហែលទឹក';
+
+  @override
+  String get inspectionWaterFountain => 'ផ្លុំទឹក';
+
+  @override
+  String get inspectionWaterNone => 'មិនមាន';
+
+  @override
+  String get inspectionWaterLeftDragon => 'ឆ្វេង (ខាង Dragon)';
+
+  @override
+  String get inspectionWaterRightTiger => 'ស្តាំ (ខាង Tiger)';
+
+  @override
+  String get inspectionFlowToward => 'ឆ្ពោះអគារ (ប្រមូលទ្រព្យ)';
+
+  @override
+  String get inspectionFlowAway => 'ចាកអគារ (ចាក់ទ្រព្យ)';
+
+  @override
+  String get inspectionFlowEmbracing => 'ឱប/កោងជុំវិញ';
+
+  @override
+  String get inspectionFlowStagnant => 'នឹង (គ្មានចរន្ត)';
+
+  @override
+  String get inspectionQualityClean => 'ស្អាត និងថ្លា';
+
+  @override
+  String get inspectionQualityModerate => 'មធ្យម (មានល្បាយ)';
+
+  @override
+  String get inspectionQualityPolluted => 'ចំណាយ/ខ្មៅ';
+
+  @override
+  String get inspectionQualityFoul => 'ក្លិនអាក្រក់';
+
+  @override
+  String get inspectionWaterConfigFavorable => 'ការរៀបទឹកអំណោយផល';
+
+  @override
+  String get inspectionWaterConfigUnfavorable => 'មិនអំណោយផល (ស៉ាឈី ឬចាក់)';
+
+  @override
+  String get inspectionShaLamppost => 'សសរភ្លើង/ប៉មចំពោះទ្វារចូលចម្បង';
+
+  @override
+  String get inspectionShaSharpCorners => 'ជ្រុងអគារមុតចង្អុលវាល';
+
+  @override
+  String get inspectionShaTransmission => 'ប៉មផ្ទេរ ឬខ្សែភ្លើងខ្ពស់ជិត';
+
+  @override
+  String get inspectionShaBridge => 'ស្ពាន/ផ្លូវហោ way កាត់រូប';
+
+  @override
+  String get inspectionShaDeadEnd => 'ផ្លូវចុង (ឈីកាត់)';
+
+  @override
+  String get inspectionShaChurch => 'វិហារ ក្រុមជំនុំ ពេទ្យ កន្លែងចំបាប់ទល់មុខ';
+
+  @override
+  String get inspectionShaTree => 'ដើមឈើធំរារាំងទ្វារចូលចម្បង';
+
+  @override
+  String get inspectionShaTriangular => 'រាងត្រីកោណ ឬរាងមិនទៀង';
+
+  @override
+  String get inspectionShaHighway =>
+      'ផ្លូវហោ way ខ្ពស់ ឬ MRT ធ្វើឱ្យរំខាន/សម្ពាធ';
+
+  @override
+  String get inspectionShaConstruction => 'កន្លែងសំណង់កំពុងធ្វើជិត';
+
+  @override
+  String get inspectionShaSeverityNone => 'គ្មានស៉ាឈីសំខាន់';
+
+  @override
+  String get inspectionShaSeverityMinor => 'ស៉ាឈីតូច (អាចកែបាន)';
+
+  @override
+  String get inspectionShaSeverityModerate => 'ស៉ាឈីមធ្យម (ត្រូវការកែ)';
+
+  @override
+  String get inspectionShaSeveritySevere => 'ស៉ាឈីធ្ងន់ (ត្រូវកែធំ)';
 }

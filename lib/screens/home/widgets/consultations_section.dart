@@ -115,15 +115,21 @@ class ConsultationsSection extends StatelessWidget {
                 children: [
                   _buildSectionHeading(context, l10n),
                   const SizedBox(height: 20),
-                  Text(
-                    l10n.sectionMapIntro,
-                    style: GoogleFonts.exo2(
-                      fontSize: width < 600 ? 15 : 17,
-                      height: 1.6,
-                      color: AppColors.onPrimary.withValues(alpha: 0.92),
-                      fontWeight: FontWeight.w400,
-                    ),
-                    textAlign: TextAlign.center,
+                  Builder(
+                    builder: (context) {
+                      final isKm = Localizations.localeOf(context).languageCode == 'km';
+                      return Text(
+                        l10n.sectionMapIntro,
+                        style: (isKm ? GoogleFonts.siemreap : GoogleFonts.exo2)(
+                          fontSize: width < 600 ? 15 : 17,
+                          height: 1.6,
+                          color: AppColors.onPrimary.withValues(alpha: 0.92),
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: isKm ? 0 : null,
+                        ),
+                        textAlign: TextAlign.center,
+                      );
+                    },
                   ),
                   const SizedBox(height: 44),
                   if (isMobile) ...[
@@ -175,12 +181,21 @@ class ConsultationsSection extends StatelessWidget {
   Widget _buildSectionHeading(BuildContext context, AppLocalizations l10n) {
     final width = MediaQuery.sizeOf(context).width;
     final size = width < 600 ? 22.0 : (width < 900 ? 26.0 : 32.0);
-    final normal = GoogleFonts.exo2(
-      color: AppColors.onPrimary,
-      fontWeight: FontWeight.w600,
-      fontSize: size,
-      height: 1.3,
-    );
+    final isKm = Localizations.localeOf(context).languageCode == 'km';
+    final normal = isKm
+        ? GoogleFonts.dangrek(
+            color: AppColors.onPrimary,
+            fontWeight: FontWeight.w600,
+            fontSize: size,
+            height: 1.3,
+            letterSpacing: 0,
+          )
+        : GoogleFonts.exo2(
+            color: AppColors.onPrimary,
+            fontWeight: FontWeight.w600,
+            fontSize: size,
+            height: 1.3,
+          );
     final highlight = highlightStyleForLocale(
       context,
       color: AppColors.accent,
@@ -258,6 +273,64 @@ class _ConsultBlock extends StatefulWidget {
 class _ConsultBlockState extends State<_ConsultBlock> {
   bool _isHovered = false;
 
+  /// Card header: Dangrek for Khmer, Exo2 otherwise.
+  static TextStyle _cardHeaderStyle(BuildContext context) {
+    final isKm = Localizations.localeOf(context).languageCode == 'km';
+    if (isKm) {
+      return GoogleFonts.dangrek(
+        color: AppColors.accent,
+        fontWeight: FontWeight.w700,
+        fontSize: 18,
+        height: 1.25,
+        letterSpacing: 0,
+      );
+    }
+    return GoogleFonts.exo2(
+      color: AppColors.accent,
+      fontWeight: FontWeight.w700,
+      fontSize: 18,
+      height: 1.25,
+      letterSpacing: 0.3,
+    );
+  }
+
+  /// Card subtext (method): Siem Reap for Khmer, Exo2 otherwise.
+  static TextStyle _cardSubtextStyle(BuildContext context) {
+    final isKm = Localizations.localeOf(context).languageCode == 'km';
+    if (isKm) {
+      return GoogleFonts.siemreap(
+        color: AppColors.onPrimary.withValues(alpha: 0.7),
+        fontSize: 13,
+        height: 1.3,
+        letterSpacing: 0,
+      );
+    }
+    return GoogleFonts.exo2(
+      color: AppColors.onPrimary.withValues(alpha: 0.7),
+      fontSize: 13,
+      height: 1.3,
+    );
+  }
+
+  /// Card body text: Siem Reap for Khmer, Exo2 otherwise.
+  static TextStyle _cardBodyStyle(BuildContext context) {
+    final isKm = Localizations.localeOf(context).languageCode == 'km';
+    if (isKm) {
+      return GoogleFonts.siemreap(
+        color: AppColors.onPrimary,
+        fontSize: 14,
+        height: 1.55,
+        letterSpacing: 0,
+      );
+    }
+    return GoogleFonts.exo2(
+      color: AppColors.onPrimary,
+      fontSize: 14,
+      height: 1.55,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -314,23 +387,13 @@ class _ConsultBlockState extends State<_ConsultBlock> {
                           children: [
                             Text(
                               widget.category,
-                              style: GoogleFonts.exo2(
-                                color: AppColors.accent,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18,
-                                height: 1.25,
-                                letterSpacing: 0.3,
-                              ),
+                              style: _cardHeaderStyle(context),
                             ),
                             if (widget.method != widget.category) ...[
                               const SizedBox(height: 4),
                               Text(
                                 widget.method,
-                                style: GoogleFonts.exo2(
-                                  color: AppColors.onPrimary.withValues(alpha: 0.7),
-                                  fontSize: 13,
-                                  height: 1.3,
-                                ),
+                                style: _cardSubtextStyle(context),
                               ),
                             ],
                           ],
@@ -341,7 +404,7 @@ class _ConsultBlockState extends State<_ConsultBlock> {
                   const SizedBox(height: 20),
                   Text(
                     widget.question,
-                    style: GoogleFonts.exo2(
+                    style: _cardBodyStyle(context).copyWith(
                       fontStyle: FontStyle.italic,
                       color: AppColors.onPrimary.withValues(alpha: 0.95),
                       fontSize: 15,
@@ -363,7 +426,7 @@ class _ConsultBlockState extends State<_ConsultBlock> {
                   const SizedBox(height: 14),
                   Text(
                     widget.description,
-                    style: GoogleFonts.exo2(
+                    style: _cardBodyStyle(context).copyWith(
                       color: AppColors.onPrimary.withValues(alpha: 0.9),
                       fontSize: 14,
                       height: 1.55,
@@ -387,7 +450,7 @@ class _ConsultBlockState extends State<_ConsultBlock> {
                       ),
                       child: Text(
                         l10n.getConsultation,
-                        style: GoogleFonts.exo2(
+                        style: _cardBodyStyle(context).copyWith(
                           fontWeight: FontWeight.w600,
                           fontSize: 15,
                         ),

@@ -434,3 +434,59 @@ TextStyle highlightStyleForLocale(
     height: height,
   );
 }
+
+/// TextStyle for menu/drawer labels. Khmer uses Dangrek with letterSpacing 0 for proper rendering.
+TextStyle menuLabelStyle(
+  BuildContext context, {
+  double? fontSize,
+  Color? color,
+  FontWeight? fontWeight,
+  double? height,
+  double? letterSpacing,
+}) {
+  final locale = Localizations.localeOf(context);
+  final isKm = locale.languageCode == 'km';
+  if (isKm) {
+    return GoogleFonts.dangrek(
+      fontSize: fontSize ?? 14,
+      color: color,
+      fontWeight: fontWeight ?? FontWeight.w500,
+      height: height ?? 1.2,
+      letterSpacing: 0,
+    );
+  }
+  return Theme.of(context).textTheme.labelLarge!.copyWith(
+    fontSize: fontSize,
+    color: color,
+    fontWeight: fontWeight,
+    height: height,
+    letterSpacing: letterSpacing,
+  );
+}
+
+/// TextStyle for menu/drawer item labels (tiles, links). Khmer uses Siem Reap; section headers stay Dangrek via [menuLabelStyle].
+TextStyle menuItemLabelStyle(
+  BuildContext context, {
+  double? fontSize,
+  Color? color,
+  FontWeight? fontWeight,
+  double? height,
+}) {
+  final locale = Localizations.localeOf(context);
+  final isKm = locale.languageCode == 'km';
+  if (isKm) {
+    return GoogleFonts.siemreap(
+      fontSize: fontSize ?? 14,
+      color: color,
+      fontWeight: fontWeight ?? FontWeight.w500,
+      height: height ?? 1.2,
+      letterSpacing: 0,
+    );
+  }
+  return Theme.of(context).textTheme.labelLarge!.copyWith(
+    fontSize: fontSize,
+    color: color,
+    fontWeight: fontWeight,
+    height: height,
+  );
+}

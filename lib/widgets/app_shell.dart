@@ -9,10 +9,10 @@ import 'app_footer.dart';
 import 'app_drawer.dart';
 import 'sticky_cta_bar.dart';
 
-/// Maximum height (from top of overlay) that participates in hit testing on mobile.
-/// Covers the menu bar (72px) and logo (~118px). Taps below this pass through to
-/// the hero buttons so they remain tappable when the header overlaps them.
-const double _kMobileHeaderHitTestHeight = 140.0;
+/// Maximum height (from top of overlay) that participates in hit testing.
+/// Taps below this pass through to content (breadcrumbs, buttons, etc.).
+/// Must include nav bar (~72px) plus language flags row (barHeight+8 ≈ 80, row ~24px) so flags are clickable.
+const double _kHeaderHitTestHeight = 130.0;
 
 /// Wraps each route with persistent header and footer.
 class AppShell extends StatefulWidget {
@@ -153,20 +153,16 @@ class _AppShellState extends State<AppShell> {
                   opacity: _menuVisible ? 1 : 0,
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
-                  child: SafeArea(
+                    child: SafeArea(
                     bottom: false,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 12),
-                      child: isMobile
-                          ? _HeaderHitTestLimit(
-                              maxHitTestHeight: _kMobileHeaderHitTestHeight,
-                              child: AppHeader(
-                                onOpenDrawer: () => _scaffoldKey.currentState?.openDrawer(),
-                              ),
-                            )
-                          : AppHeader(
-                              onOpenDrawer: () => _scaffoldKey.currentState?.openDrawer(),
-                            ),
+                      child: _HeaderHitTestLimit(
+                        maxHitTestHeight: _kHeaderHitTestHeight,
+                        child: AppHeader(
+                          onOpenDrawer: () => _scaffoldKey.currentState?.openDrawer(),
+                        ),
+                      ),
                     ),
                   ),
                 ),

@@ -1171,6 +1171,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get goToDashboard => '前往仪表板';
 
   @override
+  String get siteInspection => '现场勘察';
+
+  @override
   String get welcomeBack => '欢迎回来';
 
   @override
@@ -1510,4 +1513,846 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get sectionTestimonialsPart4 => '成果。';
+
+  @override
+  String get inspectionFormTitle => '风水堪舆现场勘察表';
+
+  @override
+  String get inspectionFormSubtitle => '商业住宅综合评估';
+
+  @override
+  String inspectionStepOf(int current, int total) {
+    return '第 $current 步，共 $total 步';
+  }
+
+  @override
+  String get inspectionSave => '保存勘察';
+
+  @override
+  String get inspectionSaving => '保存中…';
+
+  @override
+  String get inspectionNewInspection => '新建勘察';
+
+  @override
+  String get inspectionDownloadPdf => '下载 PDF';
+
+  @override
+  String get inspectionSavedTitle => '已保存';
+
+  @override
+  String get inspectionSavedMessage => '您的风水现场勘察已成功保存。';
+
+  @override
+  String get inspectionPdfDownloadStarted => 'PDF 开始下载。';
+
+  @override
+  String get inspectionPdfExportFailed => 'PDF 导出失败';
+
+  @override
+  String get inspectionSaveFailed => '保存勘察失败';
+
+  @override
+  String get inspectionSection0 => '表头与勘察信息';
+
+  @override
+  String get inspectionSection1 => '第一节：项目基本信息';
+
+  @override
+  String get inspectionSection2 => '第二节：现场测量';
+
+  @override
+  String get inspectionSection3 => '第三节：外局形势（四灵兽）';
+
+  @override
+  String get inspectionSection4 => '第四节：宏观形势与环境';
+
+  @override
+  String get inspectionSection5 => '第五节：道路与交通分析';
+
+  @override
+  String get inspectionSection6 => '第六节：水势';
+
+  @override
+  String get inspectionSection7 => '第七节：煞气';
+
+  @override
+  String get inspectionSection8 => '第八节：罗盘综合读数';
+
+  @override
+  String get inspectionSection9 => '第九节：玄空飞星';
+
+  @override
+  String get inspectionSection10 => '第十节：八宅分析';
+
+  @override
+  String get inspectionSection11 => '第十一节：客户与宅主八字';
+
+  @override
+  String get inspectionSection12 => '第十二节：奇门遁甲择日';
+
+  @override
+  String get inspectionSection13 => '第十三节：内局勘察';
+
+  @override
+  String get inspectionSection14 => '第十四节：安全、实务与法规';
+
+  @override
+  String get inspectionSection15 => '第十五节：文档与证据';
+
+  @override
+  String get inspectionSection16 => '第十六节：初步评估摘要';
+
+  @override
+  String get inspectionSection17 => '第十七节：后续行动';
+
+  @override
+  String get inspectionInspectorName => '勘察员姓名';
+
+  @override
+  String get inspectionDate => '勘察日期';
+
+  @override
+  String get inspectionTimeOfArrival => '到达时间';
+
+  @override
+  String get inspectionWeatherConditions => '天气状况';
+
+  @override
+  String get inspectionProjectName => '项目名称';
+
+  @override
+  String get inspectionAddress => '地址';
+
+  @override
+  String get inspectionDistrictSangkat => '区/乡';
+
+  @override
+  String get inspectionGoogleMapsLink => 'Google 地图链接';
+
+  @override
+  String get inspectionProjectType => '项目类型';
+
+  @override
+  String get inspectionProjectTypeShophouse => '店屋';
+
+  @override
+  String get inspectionProjectTypeCommercial => '商业楼宇';
+
+  @override
+  String get inspectionProjectTypeMixedUse => '综合发展';
+
+  @override
+  String get inspectionProjectTypeOther => '其他';
+
+  @override
+  String get inspectionOtherSpecify => '其他（若选）';
+
+  @override
+  String get inspectionHintSpecify => '请说明';
+
+  @override
+  String get inspectionConstructionStatus => '施工状态';
+
+  @override
+  String get inspectionConstructionUnder => '施工中';
+
+  @override
+  String get inspectionConstructionCompleted => '已完工';
+
+  @override
+  String get inspectionConstructionPartially => '部分入住';
+
+  @override
+  String get inspectionConstructionFully => '全部入住';
+
+  @override
+  String get inspectionEstimatedCompletionYear => '预计完工年份';
+
+  @override
+  String get inspectionNumberOfFloors => '层数';
+
+  @override
+  String get inspectionNumberOfUnits => '户数';
+
+  @override
+  String get inspectionRenovationDates => '以往装修日期';
+
+  @override
+  String get inspectionStructuralChanges => '结构改动';
+
+  @override
+  String get inspectionYes => '是';
+
+  @override
+  String get inspectionNo => '否';
+
+  @override
+  String get inspectionRenovationDetails => '装修详情';
+
+  @override
+  String get inspectionConstructionPhase => '当前施工阶段';
+
+  @override
+  String get inspectionPhaseAllBlocks => '全部楼栋同期完工';
+
+  @override
+  String get inspectionPhasePhased => '分期完工（不同楼栋/年份）';
+
+  @override
+  String get inspectionPhaseDetails => '阶段详情';
+
+  @override
+  String get inspectionDimensions => '2.1 尺寸';
+
+  @override
+  String get inspectionFrontageWidth => '面宽（米）';
+
+  @override
+  String get inspectionDepthLength => '进深/长度（米）';
+
+  @override
+  String get inspectionTotalSiteArea => '总用地面积（米²）';
+
+  @override
+  String get inspectionUnitWidth => '单元宽度（米）';
+
+  @override
+  String get inspectionUnitDepth => '单元进深（米）';
+
+  @override
+  String get inspectionUnitArea => '单元面积（米²）';
+
+  @override
+  String get inspectionFloorToCeilingHeight => '层高（米）';
+
+  @override
+  String get inspectionOrientationCompass => '2.2 朝向与罗盘读数';
+
+  @override
+  String get inspectionEquipmentUsed => '所用仪器';
+
+  @override
+  String get inspectionEquipmentLuoPan => '传统罗盘';
+
+  @override
+  String get inspectionEquipmentDigital => '电子罗盘';
+
+  @override
+  String get inspectionEquipmentSmartphone => '手机罗盘应用';
+
+  @override
+  String get inspectionEquipmentOther => '其他';
+
+  @override
+  String get inspectionOtherEquipment => '其他仪器';
+
+  @override
+  String get inspectionFacingReading1 => '向方 - 读数 1（度）';
+
+  @override
+  String get inspectionFacingReading2 => '向方 - 读数 2（度）';
+
+  @override
+  String get inspectionFacingReading3 => '向方 - 读数 3（度）';
+
+  @override
+  String get inspectionAverageFacing => '平均向（度）';
+
+  @override
+  String get inspectionConverted24Mountains => '换算为二十四山';
+
+  @override
+  String get inspectionFacingCardinal => '向方（方位）';
+
+  @override
+  String get inspectionSittingDirection => '坐向（相反）';
+
+  @override
+  String get inspectionMagneticInterferenceNotes => '磁干扰备注';
+
+  @override
+  String get inspectionTortoiseTitle => '玄武 - 后方靠山';
+
+  @override
+  String get inspectionDragonTitle => '青龙 - 左侧';
+
+  @override
+  String get inspectionTigerTitle => '白虎 - 右侧';
+
+  @override
+  String get inspectionPhoenixTitle => '朱雀 - 前方明堂';
+
+  @override
+  String get inspectionDescription => '描述';
+
+  @override
+  String get inspectionAssessment => '评估';
+
+  @override
+  String get inspectionNotesSketch => '备注/草图';
+
+  @override
+  String get inspectionTortoiseDesc1 => '高地/山丘';
+
+  @override
+  String get inspectionTortoiseDesc2 => '较高建筑';
+
+  @override
+  String get inspectionTortoiseDesc3 => '实体结构';
+
+  @override
+  String get inspectionTortoiseDesc4 => '空地/虚';
+
+  @override
+  String get inspectionTortoiseDesc5 => '低地';
+
+  @override
+  String get inspectionTortoiseDesc6 => '水体';
+
+  @override
+  String get inspectionTortoiseDesc7 => '道路';
+
+  @override
+  String get inspectionTortoiseAssess1 => '靠山有力（吉）';
+
+  @override
+  String get inspectionTortoiseAssess2 => '靠山适中';
+
+  @override
+  String get inspectionTortoiseAssess3 => '靠山无力（凶）';
+
+  @override
+  String get inspectionDragonDesc1 => '高于虎边';
+
+  @override
+  String get inspectionDragonDesc2 => '活跃（交通、建筑）';
+
+  @override
+  String get inspectionDragonDesc3 => '缓坡';
+
+  @override
+  String get inspectionDragonDesc4 => '水景';
+
+  @override
+  String get inspectionDragonDesc5 => '低于虎边';
+
+  @override
+  String get inspectionDragonDesc6 => '尖角/冲射';
+
+  @override
+  String get inspectionDragonDesc7 => '形煞';
+
+  @override
+  String get inspectionDragonAssess1 => '得势且吉';
+
+  @override
+  String get inspectionDragonAssess2 => '平衡';
+
+  @override
+  String get inspectionDragonAssess3 => '过弱';
+
+  @override
+  String get inspectionDragonAssess4 => '过猛';
+
+  @override
+  String get inspectionTigerDesc1 => '低于龙边';
+
+  @override
+  String get inspectionTigerDesc2 => '安静/被动';
+
+  @override
+  String get inspectionTigerDesc3 => '柔和结构';
+
+  @override
+  String get inspectionTigerDesc4 => '高于龙边';
+
+  @override
+  String get inspectionTigerDesc5 => '形煞（塔、杆）';
+
+  @override
+  String get inspectionTigerDesc6 => '道路极忙';
+
+  @override
+  String get inspectionTigerAssess1 => '白虎合度（吉）';
+
+  @override
+  String get inspectionTigerAssess2 => '平衡';
+
+  @override
+  String get inspectionTigerAssess3 => '白虎过强（凶）';
+
+  @override
+  String get inspectionTigerAssess4 => '白虎过猛（不吉）';
+
+  @override
+  String get inspectionPhoenixDesc1 => '开阔地/广场';
+
+  @override
+  String get inspectionPhoenixDesc2 => '宽路';
+
+  @override
+  String get inspectionPhoenixDesc3 => '水景（池、渠）';
+
+  @override
+  String get inspectionPhoenixDesc4 => '公园/园林';
+
+  @override
+  String get inspectionPhoenixDesc5 => '正前高楼压迫';
+
+  @override
+  String get inspectionPhoenixDesc6 => '狭窄拥挤';
+
+  @override
+  String get inspectionPhoenixAssess1 => '明堂佳（宽敞、聚气）';
+
+  @override
+  String get inspectionPhoenixAssess2 => '明堂适中';
+
+  @override
+  String get inspectionPhoenixAssess3 => '明堂差（阻挡、压迫）';
+
+  @override
+  String get inspectionWiderAreaContext => '4.1 大范围环境';
+
+  @override
+  String get inspectionDistanceToCityCenter => '距市中心（公里）';
+
+  @override
+  String get inspectionMajorHighways => '主要干道';
+
+  @override
+  String get inspectionRiversWaterBodies => '河流/主要水体';
+
+  @override
+  String get inspectionMountainsTerrain => '山体/高地';
+
+  @override
+  String get inspectionDirectionOfMountains => '山向';
+
+  @override
+  String get inspectionSurroundingDevelopment => '周边发展';
+
+  @override
+  String get inspectionMicroEnvironment => '4.2 微环境质量';
+
+  @override
+  String get inspectionPowerLinesDirection => '电线/铁塔 - 方位';
+
+  @override
+  String get inspectionBridgesDirection => '桥梁/高架 - 方位';
+
+  @override
+  String get inspectionLargeTreesLocation => '大树（高>3层）- 位置';
+
+  @override
+  String get inspectionReligiousBuildingsDirection => '宗教建筑 - 方位';
+
+  @override
+  String get inspectionHospitalDirection => '医院/诊所 - 方位';
+
+  @override
+  String get inspectionSchoolDirection => '学校 - 方位';
+
+  @override
+  String get inspectionMarketDirection => '市场 - 方位';
+
+  @override
+  String get inspectionFactoryDirection => '工厂/工业 - 方位';
+
+  @override
+  String get inspectionTrafficNoise => '交通噪音';
+
+  @override
+  String get inspectionNoiseSources => '噪音来源';
+
+  @override
+  String get inspectionAirQuality => '空气质量与污染';
+
+  @override
+  String get inspectionFoulOdorsFrom => '异味来源';
+
+  @override
+  String get inspectionHeavy => '重';
+
+  @override
+  String get inspectionModerate => '中';
+
+  @override
+  String get inspectionLight => '轻';
+
+  @override
+  String get inspectionMainRoadName => '主路名称';
+
+  @override
+  String get inspectionRoadWidth => '路宽（估计）';
+
+  @override
+  String get inspectionRoadPosition => '路位';
+
+  @override
+  String get inspectionTrafficFlowDirection => '车流方向';
+
+  @override
+  String get inspectionTrafficVolume => '交通量';
+
+  @override
+  String get inspectionNearbyJunctions => '附近路口';
+
+  @override
+  String get inspectionJunctionDistance => '距建筑（米）- 若为 T 字路口';
+
+  @override
+  String get inspectionDeflectionBuffer => '是否有化煞/缓冲（树、墙）';
+
+  @override
+  String get inspectionRoadAssessment => '评估';
+
+  @override
+  String get inspectionRoadNotes => '备注';
+
+  @override
+  String get inspectionServiceRoad => '后勤道路';
+
+  @override
+  String get inspectionServiceRoadLocation => '后勤道路位置';
+
+  @override
+  String get inspectionBackAlley => '后巷';
+
+  @override
+  String get inspectionBackAlleyWidth => '后巷宽度';
+
+  @override
+  String get inspectionCarParkEntrance => '停车场入口';
+
+  @override
+  String get inspectionLoadingBay => '卸货区';
+
+  @override
+  String get inspectionLoadingBayLocation => '卸货区位置';
+
+  @override
+  String get inspectionFront => '前';
+
+  @override
+  String get inspectionSide => '侧';
+
+  @override
+  String get inspectionBack => '后';
+
+  @override
+  String get inspectionWaterBodiesPresent => '现有水体';
+
+  @override
+  String get inspectionWaterLocation => '水相对建筑位置';
+
+  @override
+  String get inspectionWaterFlowDirection => '水流方向';
+
+  @override
+  String get inspectionWaterQuality => '水质';
+
+  @override
+  String get inspectionWaterAssessment => '评估';
+
+  @override
+  String get inspectionWaterNotes => '备注';
+
+  @override
+  String get inspectionShaQiChecklist => '外局煞气清单';
+
+  @override
+  String get inspectionShaQiSeverity => '严重程度评估';
+
+  @override
+  String get inspectionShaQiDetailedNotes => '详细备注';
+
+  @override
+  String get inspectionLeftCornerReading => '主立面 - 左角（度）';
+
+  @override
+  String get inspectionCenterReading => '主立面 - 中（度）';
+
+  @override
+  String get inspectionRightCornerReading => '主立面 - 右角（度）';
+
+  @override
+  String get inspectionMainFacadeAverage => '主立面 - 平均（度）';
+
+  @override
+  String get inspectionMainDoorReading1 => '大门 - 读数 1';
+
+  @override
+  String get inspectionMainDoorReading2 => '大门 - 读数 2';
+
+  @override
+  String get inspectionMainDoorAverage => '大门 - 平均';
+
+  @override
+  String get inspectionMainDoor24Mountains => '大门 - 二十四山';
+
+  @override
+  String get inspectionBackEntranceReading => '后门/服务入口读数';
+
+  @override
+  String get inspectionBackEntrance24Mountains => '后门/服务入口 - 二十四山';
+
+  @override
+  String get inspectionCarParkEntranceReading => '停车场入口读数';
+
+  @override
+  String get inspectionCarPark24Mountains => '停车场入口 - 二十四山';
+
+  @override
+  String get inspectionMetalDoorFrames => '金属门框';
+
+  @override
+  String get inspectionElectricalPanelsNearby => '附近配电箱';
+
+  @override
+  String get inspectionSteelReinforcement => '钢筋';
+
+  @override
+  String get inspectionAdjustmentsMade => '已做调整';
+
+  @override
+  String get inspectionGroundFloorFunction => '首层 - 功能';
+
+  @override
+  String get inspectionGroundFloorHeight => '首层 - 层高（米）';
+
+  @override
+  String get inspectionGroundFloorFeatures => '首层 - 主要特征';
+
+  @override
+  String get inspectionStaircaseLocation => '楼梯位置（宫位）';
+
+  @override
+  String get inspectionLiftLocation => '电梯位置（宫位）';
+
+  @override
+  String get inspectionFireEscapeLocation => '消防通道位置';
+
+  @override
+  String get inspectionFavorable => '吉';
+
+  @override
+  String get inspectionUnfavorable => '凶';
+
+  @override
+  String get inspectionNeutral => '平';
+
+  @override
+  String get inspectionNotes => '备注';
+
+  @override
+  String get inspectionDirN => '北';
+
+  @override
+  String get inspectionDirS => '南';
+
+  @override
+  String get inspectionDirE => '东';
+
+  @override
+  String get inspectionDirW => '西';
+
+  @override
+  String get inspectionDirNE => '东北';
+
+  @override
+  String get inspectionDirNW => '西北';
+
+  @override
+  String get inspectionDirSE => '东南';
+
+  @override
+  String get inspectionDirSW => '西南';
+
+  @override
+  String get inspectionSurroundEstablished => '成熟商业区';
+
+  @override
+  String get inspectionSurroundDeveloping => '发展中区域';
+
+  @override
+  String get inspectionSurroundMixed => '商住混合';
+
+  @override
+  String get inspectionSurroundIndustrial => '工业区';
+
+  @override
+  String get inspectionSurroundSuburban => '郊区/乡村';
+
+  @override
+  String get inspectionNoiseConstruction => '附近施工噪音';
+
+  @override
+  String get inspectionNoiseNightclub => '夜店/娱乐场所';
+
+  @override
+  String get inspectionNoiseMarket => '市场/商业活动';
+
+  @override
+  String get inspectionNoiseAirport => '机场/铁路';
+
+  @override
+  String get inspectionAirClean => '空气清新、绿化好';
+
+  @override
+  String get inspectionAirModerate => '一般（城市环境）';
+
+  @override
+  String get inspectionAirIndustrial => '存在工业污染';
+
+  @override
+  String get inspectionAirDust => '施工扬尘';
+
+  @override
+  String get inspectionAirFoul => '异味';
+
+  @override
+  String get inspectionRoadParallel => '与正面平行';
+
+  @override
+  String get inspectionRoadCurvesToward => '弯向建筑（环抱）';
+
+  @override
+  String get inspectionRoadCurvesAway => '弯离建筑';
+
+  @override
+  String get inspectionRoadStraight => '直线';
+
+  @override
+  String get inspectionFlowDragonToTiger => '左至右（龙到虎）';
+
+  @override
+  String get inspectionFlowTigerToDragon => '右至左（虎到龙）';
+
+  @override
+  String get inspectionFlowBoth => '双向';
+
+  @override
+  String get inspectionJunctionT => 'T 字路口（路冲）';
+
+  @override
+  String get inspectionJunctionY => 'Y 字路口';
+
+  @override
+  String get inspectionJunctionCross => '十字路口';
+
+  @override
+  String get inspectionJunctionRoundabout => '环岛';
+
+  @override
+  String get inspectionJunctionNone => '无直接路口';
+
+  @override
+  String get inspectionRoadConfigFavorable => '路形吉';
+
+  @override
+  String get inspectionRoadConfigShaQi => '路口煞（需化解）';
+
+  @override
+  String get inspectionWaterRiver => '河';
+
+  @override
+  String get inspectionWaterCanal => '渠';
+
+  @override
+  String get inspectionWaterPond => '池';
+
+  @override
+  String get inspectionWaterLake => '湖';
+
+  @override
+  String get inspectionWaterDitch => '排水沟';
+
+  @override
+  String get inspectionWaterPool => '泳池';
+
+  @override
+  String get inspectionWaterFountain => '喷泉';
+
+  @override
+  String get inspectionWaterNone => '无';
+
+  @override
+  String get inspectionWaterLeftDragon => '左（龙边）';
+
+  @override
+  String get inspectionWaterRightTiger => '右（虎边）';
+
+  @override
+  String get inspectionFlowToward => '朝建筑（聚财）';
+
+  @override
+  String get inspectionFlowAway => '离建筑（泄财）';
+
+  @override
+  String get inspectionFlowEmbracing => '环抱/弯绕';
+
+  @override
+  String get inspectionFlowStagnant => '静止（无明显流动）';
+
+  @override
+  String get inspectionQualityClean => '清澈';
+
+  @override
+  String get inspectionQualityModerate => '一般（有沉淀）';
+
+  @override
+  String get inspectionQualityPolluted => '污染/浑浊';
+
+  @override
+  String get inspectionQualityFoul => '恶臭';
+
+  @override
+  String get inspectionWaterConfigFavorable => '水势吉';
+
+  @override
+  String get inspectionWaterConfigUnfavorable => '水势凶（煞或泄）';
+
+  @override
+  String get inspectionShaLamppost => '灯柱/杆正对大门';
+
+  @override
+  String get inspectionShaSharpCorners => '尖角冲射';
+
+  @override
+  String get inspectionShaTransmission => '附近高压线/铁塔';
+
+  @override
+  String get inspectionShaBridge => '桥/高架切过明堂';
+
+  @override
+  String get inspectionShaDeadEnd => '死巷（刀煞）';
+
+  @override
+  String get inspectionShaChurch => '教堂、庙、医院、墓地正对';
+
+  @override
+  String get inspectionShaTree => '大树挡大门';
+
+  @override
+  String get inspectionShaTriangular => '三角或不规则地块';
+
+  @override
+  String get inspectionShaHighway => '高架/地铁噪音压迫';
+
+  @override
+  String get inspectionShaConstruction => '附近施工中';
+
+  @override
+  String get inspectionShaSeverityNone => '无明显煞气';
+
+  @override
+  String get inspectionShaSeverityMinor => '轻煞（可化解）';
+
+  @override
+  String get inspectionShaSeverityModerate => '中煞（需化解）';
+
+  @override
+  String get inspectionShaSeveritySevere => '重煞（需大改）';
 }

@@ -31,18 +31,27 @@ class StorySection extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final isMobile = Breakpoints.isMobile(width);
 
-    // Heading: new font + highlight "Story"
+    // Heading: Dangrek for Khmer, Exo2 otherwise; highlight "Story" where present
     final heading = l10n.sectionStoryHeading;
     final highlightWord = 'Story';
     final highlightIndex = heading.toLowerCase().indexOf(highlightWord.toLowerCase());
     final hasHighlight = highlightIndex >= 0;
+    final isKm = Localizations.localeOf(context).languageCode == 'km';
 
-    final headingStyle = GoogleFonts.exo2(
-      color: AppColors.onPrimary,
-      fontWeight: FontWeight.w700,
-      fontSize: isMobile ? 30 : 40,
-      height: 1.25,
-    );
+    final headingStyle = isKm
+        ? GoogleFonts.dangrek(
+            color: AppColors.onPrimary,
+            fontWeight: FontWeight.w700,
+            fontSize: isMobile ? 30 : 40,
+            height: 1.25,
+            letterSpacing: 0,
+          )
+        : GoogleFonts.exo2(
+            color: AppColors.onPrimary,
+            fontWeight: FontWeight.w700,
+            fontSize: isMobile ? 30 : 40,
+            height: 1.25,
+          );
     final headingHighlightStyle = highlightStyleForLocale(
       context,
       color: AppColors.accent,
@@ -64,20 +73,36 @@ class StorySection extends StatelessWidget {
           )
         : Text(heading, style: headingStyle);
 
-    // Body: Lora with optional phrase highlights
-    final bodyBase = GoogleFonts.exo2(
-      fontSize: isMobile ? 18 : 20,
-      height: 1.7,
-      color: AppColors.onPrimary.withValues(alpha: 0.92),
-      fontWeight: FontWeight.w400,
-    );
-    final bodyHighlight = highlightStyleForLocale(
-      context,
-      fontSize: isMobile ? 18 : 20,
-      height: 1.7,
-      color: AppColors.accent,
-      fontWeight: FontWeight.w600,
-    );
+    // Body: Siem Reap for Khmer, Exo2 otherwise; optional phrase highlights
+    final bodyBase = isKm
+        ? GoogleFonts.siemreap(
+            fontSize: isMobile ? 18 : 20,
+            height: 1.7,
+            color: AppColors.onPrimary.withValues(alpha: 0.92),
+            fontWeight: FontWeight.w400,
+            letterSpacing: 0,
+          )
+        : GoogleFonts.exo2(
+            fontSize: isMobile ? 18 : 20,
+            height: 1.7,
+            color: AppColors.onPrimary.withValues(alpha: 0.92),
+            fontWeight: FontWeight.w400,
+          );
+    final bodyHighlight = isKm
+        ? GoogleFonts.siemreap(
+            fontSize: isMobile ? 18 : 20,
+            height: 1.7,
+            color: AppColors.accent,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0,
+          )
+        : highlightStyleForLocale(
+            context,
+            fontSize: isMobile ? 18 : 20,
+            height: 1.7,
+            color: AppColors.accent,
+            fontWeight: FontWeight.w600,
+          );
 
     final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +137,9 @@ class StorySection extends StatelessWidget {
             foregroundColor: AppColors.onPrimary,
             side: const BorderSide(color: AppColors.accent, width: 1.5),
             padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
-            textStyle: GoogleFonts.exo2(fontSize: isMobile ? 17 : 19, fontWeight: FontWeight.w600),
+            textStyle: isKm
+                ? GoogleFonts.siemreap(fontSize: isMobile ? 17 : 19, fontWeight: FontWeight.w600, letterSpacing: 0)
+                : GoogleFonts.exo2(fontSize: isMobile ? 17 : 19, fontWeight: FontWeight.w600),
           ),
           child: Text(l10n.sectionStoryCtaButton),
         ),

@@ -97,14 +97,20 @@ class _MobileHeader extends StatelessWidget {
                 children: [
                   SizedBox(width: logoHeight + 10),
                   const SizedBox(width: 4),
-                  Text(
-                    l10n.menu,
-                    style: TextStyle(
-                      color: _MenuColors.linkText,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.2,
-                    ),
+                  Builder(
+                    builder: (context) {
+                      final isKm = Localizations.localeOf(context).languageCode == 'km';
+                      return Text(
+                        l10n.menu,
+                        style: menuLabelStyle(
+                          context,
+                          fontSize: 16,
+                          color: _MenuColors.linkText,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: isKm ? 0 : 1.2,
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(width: 6),
                   IconButton(
@@ -330,7 +336,8 @@ class _ContactUsButton extends StatelessWidget {
         ),
         child: Text(
           l10n.contactUs,
-          style: TextStyle(
+          style: menuLabelStyle(
+            context,
             fontSize: fontSize,
             fontWeight: FontWeight.w600,
           ),
@@ -377,10 +384,11 @@ class _NavLink extends StatelessWidget {
           children: [
             Text(
               label,
-              style: TextStyle(
+              style: menuLabelStyle(
+                context,
+                fontSize: 14,
                 color: isActive ? AppColors.accent : _MenuColors.linkText,
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
-                fontSize: 14,
               ),
             ),
             if (isActive)
@@ -495,10 +503,11 @@ class _NavDropdown extends StatelessWidget {
                     children: [
                       Text(
                         label,
-                        style: TextStyle(
+                        style: menuLabelStyle(
+                          context,
+                          fontSize: 14,
                           color: isActive ? AppColors.accent : _MenuColors.linkText,
                           fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
-                          fontSize: 14,
                         ),
                       ),
                       const SizedBox(width: 4),
@@ -549,10 +558,11 @@ class _DropdownItem extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: TextStyle(
+              style: menuLabelStyle(
+                context,
+                fontSize: 14,
                 color: isActive ? AppColors.accent : Colors.white,
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-                fontSize: 14,
               ),
             ),
           ),

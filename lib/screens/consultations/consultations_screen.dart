@@ -1180,7 +1180,6 @@ class _LoginSectionState extends State<_LoginSection> {
         _loading = false;
         _error = null;
       });
-      context.go('/consultations/dashboard');
     } catch (e) {
       if (!mounted) return;
       setState(() {
@@ -1211,30 +1210,36 @@ class _LoginSectionState extends State<_LoginSection> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (auth.isLoggedIn) ...[
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Icon(LucideIcons.userCheck, color: AppColors.accent, size: 28),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            l10n.welcomeBack,
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: AppColors.onPrimary,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                    Row(
+                      children: [
+                        Icon(LucideIcons.userCheck, color: AppColors.accent, size: 28),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                l10n.welcomeBack,
+                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                      color: AppColors.onPrimary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                              Text(
+                                auth.userEmail ?? '',
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: AppColors.onSurfaceVariantDark,
+                                    ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            auth.userEmail ?? '',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: AppColors.onSurfaceVariantDark,
-                                ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+                    const SizedBox(height: 20),
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
@@ -1243,6 +1248,15 @@ class _LoginSectionState extends State<_LoginSection> {
                           onPressed: () => context.go('/consultations/dashboard'),
                           icon: const Icon(LucideIcons.layoutDashboard, size: 18),
                           label: Text(l10n.goToDashboard),
+                          style: FilledButton.styleFrom(
+                            backgroundColor: AppColors.accent,
+                            foregroundColor: AppColors.onAccent,
+                          ),
+                        ),
+                        FilledButton.icon(
+                          onPressed: () => context.go('/consultations/site-inspection'),
+                          icon: const Icon(LucideIcons.clipboardList, size: 18),
+                          label: Text(l10n.siteInspection),
                           style: FilledButton.styleFrom(
                             backgroundColor: AppColors.accent,
                             foregroundColor: AppColors.onAccent,
