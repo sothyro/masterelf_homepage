@@ -104,7 +104,7 @@ class _MobileHeader extends StatelessWidget {
                         l10n.menu,
                         style: menuLabelStyle(
                           context,
-                          fontSize: 16,
+                          fontSize: 13,
                           color: _MenuColors.linkText,
                           fontWeight: FontWeight.w600,
                           letterSpacing: isKm ? 0 : 1.2,

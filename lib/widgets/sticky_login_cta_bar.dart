@@ -1,0 +1,113 @@
+import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+import 'package:provider/provider.dart';
+
+import '../l10n/app_localizations.dart';
+import '../providers/auth_provider.dart';
+import '../theme/app_theme.dart';
+import '../utils/breakpoints.dart';
+import 'glass_container.dart';
+import 'login_dialog.dart';
+
+/// Floating vertical bar on the right side for the Login CTA.
+/// Only visible when the user is not logged in.
+class StickyLoginCtaBar extends StatefulWidget {
+  const StickyLoginCtaBar({super.key});
+
+  @override
+  State<StickyLoginCtaBar> createState() => _StickyLoginCtaBarState();
+}
+
+class _StickyLoginCtaBarState extends State<StickyLoginCtaBar> {
+  bool _dismissed = false;
+
+  void _openLoginDialog() {
+    final l10n = AppLocalizations.of(context)!;
+    showLoginDialog(
+      context,
+      successActions: [
+        (label: l10n.dashboardTitle, route: '/consultations/dashboard'),
+        (label: l10n.inspectionDashboardTitle, route: '/consultations/inspection-dashboard'),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final auth = context.watch<AuthProvider>();
+    if (auth.isLoggedIn || _dismissed) return const SizedBox.shrink();
+
+    final l10n = AppLocalizations.of(context)!;
+
+    final textStyle = Theme.of(context).textTheme.titleSmall?.copyWith(
+          color: AppColors.onAccent,
+          fontWeight: FontWeight.w600,
+          fontSize: 12,
+        );
+
+    const radius = BorderRadius.only(
+      topLeft: Radius.circular(12),
+      bottomLeft: Radius.circular(12),
+    );
+    return GlassContainer(
+      blurSigma: 10,
+      color: AppColors.accent.withValues(alpha: 0.9),
+      borderRadius: radius,
+      border: const Border(
+        left: BorderSide(color: AppColors.borderLight, width: 1.5),
+        top: BorderSide(color: AppColors.borderLight, width: 1.5),
+        bottom: BorderSide(color: AppColors.borderLight, width: 1.5),
+      ),
+      boxShadow: AppShadows.stickyCta,
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+      child: IntrinsicWidth(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxHeight: 200),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: const Icon(LucideIcons.x, color: AppColors.onAccent, size: 18),
+                onPressed: () => setState(() => _dismissed = true),
+                tooltip: l10n.dismiss,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(
+                  minWidth: kMinTouchTargetSize,
+                  minHeight: kMinTouchTargetSize,
+                ),
+                style: IconButton.styleFrom(
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+              ),
+              const SizedBox(height: 8),
+              InkWell(
+                onTap: _openLoginDialog,
+                borderRadius: BorderRadius.circular(8),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(LucideIcons.logIn, color: AppColors.onAccent, size: 22),
+                      const SizedBox(height: 12),
+                      RotatedBox(
+                        quarterTurns: 3,
+                        child: Text(
+                          l10n.loginButton,
+                          style: textStyle,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

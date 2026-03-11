@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 
 import '../l10n/app_localizations.dart';
+import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/breakpoints.dart';
 import 'app_header.dart';
 import 'app_footer.dart';
 import 'app_drawer.dart';
+import 'mobile_sticky_cta_bar.dart';
+import 'sticky_appointment_cta_bar.dart';
 import 'sticky_cta_bar.dart';
+import 'sticky_inspection_cta_bar.dart';
+import 'sticky_login_cta_bar.dart';
+import 'sticky_logout_cta_bar.dart';
 
 /// Maximum height (from top of overlay) that participates in hit testing.
 /// Taps below this pass through to content (breadcrumbs, buttons, etc.).
@@ -91,7 +98,8 @@ class _AppShellState extends State<AppShell> {
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = Breakpoints.isMobile(width);
     final bottomSafe = MediaQuery.paddingOf(context).bottom;
-    final fabBottomPadding = (isMobile ? 24.0 : 60.0) + bottomSafe;
+    final mobileBarHeight = isMobile ? kMobileStickyCtaBarHeight : 0.0;
+    final fabBottomPadding = (isMobile ? 24.0 : 60.0) + bottomSafe + mobileBarHeight;
 
     return Scaffold(
       key: _scaffoldKey,
@@ -135,6 +143,8 @@ class _AppShellState extends State<AppShell> {
                     label: l10n.semanticsFooter,
                     child: const AppFooter(),
                   ),
+                  // Reserve space so content isn't obscured by mobile sticky bar
+                  if (isMobile) SizedBox(height: kMobileStickyCtaBarHeight + 16),
                 ],
               ),
             ),
@@ -169,7 +179,8 @@ class _AppShellState extends State<AppShell> {
               ),
             ),
           ),
-          // Sticky CTA bar: hidden on mobile to avoid overlapping content and improve UX
+          // Desktop: vertical sticky CTA bars on the right
+          // When logged in: Appointment + Inspection. When logged out: Login + 12 Zodiac.
           if (!isMobile)
             Positioned(
               right: 0,
@@ -179,9 +190,48 @@ class _AppShellState extends State<AppShell> {
                 left: false,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 0),
-                    child: StickyCtaBar(),
+                  child: Builder(
+                    builder: (context) {
+                      final auth = context.watch<AuthProvider>();
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (auth.isLoggedIn) ...[
+                            StickyAppointmentCtaBar(),
+                            const SizedBox(height: 12),
+                            StickyInspectionCtaBar(),
+                            const SizedBox(height: 12),
+                            StickyLogoutCtaBar(),
+                          ] else ...[
+                            StickyLoginCtaBar(),
+                            const SizedBox(height: 12),
+                            StickyCtaBar(),
+                          ],
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          // Mobile: horizontal sticky CTA bar at bottom (thumb zone, best practice)
+          // Same scroll-hide behaviour as menu bar: hide when scrolling down, show when scrolling up
+          if (isMobile)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: IgnorePointer(
+                ignoring: !_menuVisible,
+                child: AnimatedSlide(
+                  offset: _menuVisible ? Offset.zero : const Offset(0, 1),
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  child: AnimatedOpacity(
+                    opacity: _menuVisible ? 1 : 0,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    child: MobileStickyCtaBar(),
                   ),
                 ),
               ),

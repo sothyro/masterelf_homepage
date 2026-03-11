@@ -1,15 +1,20 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../../utils/inspection_form_constants.dart';
+import '../../utils/twenty_four_mountains.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../providers/auth_provider.dart';
-import '../../services/site_inspection_service.dart';
+import '../../services/site_inspection_service.dart' show getInspection, saveSiteInspection;
 import '../../services/site_inspection_pdf_service.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/login_dialog.dart';
 import '../../utils/breakpoints.dart';
 import '../../widgets/glass_container.dart';
 
@@ -17,7 +22,10 @@ import '../../widgets/glass_container.dart';
 /// Structure cloned from assets/Forms/Feng shui inspection form.txt
 /// Uses step-based flow (like Consultations booking) for better mobile UX.
 class SiteInspectionScreen extends StatefulWidget {
-  const SiteInspectionScreen({super.key});
+  const SiteInspectionScreen({super.key, this.inspectionId});
+
+  /// When set, loads existing inspection for edit/continue.
+  final String? inspectionId;
 
   @override
   State<SiteInspectionScreen> createState() => _SiteInspectionScreenState();
@@ -32,7 +40,9 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
   int _step = 0;
   bool _saved = false;
   bool _saving = false;
+  bool _loading = false;
   String? _saveError;
+  String? _inspectionId;
   Uint8List? _savedPdfBytes;
   String? _savedPdfFilename;
 
@@ -68,6 +78,74 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _inspectionId = widget.inspectionId;
+    if (widget.inspectionId != null && widget.inspectionId!.isNotEmpty) {
+      _loadInspection();
+    }
+  }
+
+  Future<void> _loadInspection() async {
+    if (widget.inspectionId == null) return;
+    setState(() => _loading = true);
+    try {
+      final data = await getInspection(widget.inspectionId!);
+      if (!mounted) return;
+      if (data != null) {
+        if (data.inspectionName.isNotEmpty && data.inspectionName != 'Inspection') {
+          _formData['inspectionName'] = data.inspectionName;
+        }
+        for (final e in data.formData.entries) {
+          final v = e.value;
+          if (v == null) continue;
+          if (v is List) {
+            _formData[e.key] = List<String>.from(v.map((x) => x.toString()));
+          } else if (v is String && _isDateString(v)) {
+            final dt = _parseDate(v);
+            if (dt != null) _formData[e.key] = dt;
+            else _formData[e.key] = v;
+          } else if (v is String && _isTimeString(v)) {
+            final t = _parseTime(v);
+            if (t != null) _formData[e.key] = t;
+            else _formData[e.key] = v;
+          } else {
+            _formData[e.key] = v;
+          }
+        }
+        _step = data.lastStep.clamp(0, _totalSteps - 1);
+      }
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  bool _isDateString(String s) =>
+      RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(s);
+
+  bool _isTimeString(String s) =>
+      RegExp(r'^\d{1,2}:\d{2}$').hasMatch(s);
+
+  DateTime? _parseDate(String s) {
+    final parts = s.split('-');
+    if (parts.length != 3) return null;
+    final y = int.tryParse(parts[0]);
+    final m = int.tryParse(parts[1]);
+    final d = int.tryParse(parts[2]);
+    if (y == null || m == null || d == null) return null;
+    return DateTime(y, m, d);
+  }
+
+  TimeOfDay? _parseTime(String s) {
+    final parts = s.split(':');
+    if (parts.length < 2) return null;
+    final h = int.tryParse(parts[0]);
+    final m = int.tryParse(parts[1]);
+    if (h == null || m == null) return null;
+    return TimeOfDay(hour: h.clamp(0, 23), minute: m.clamp(0, 59));
+  }
+
+  @override
   void dispose() {
     for (final c in _controllers.values) {
       c.dispose();
@@ -98,6 +176,182 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
         ),
         style: const TextStyle(color: AppColors.onPrimary),
         onChanged: (v) => _formData[key] = v,
+      ),
+    );
+  }
+
+  /// Degree field: numbers/decimals only, suffix ° always visible. Value stored as "91.99".
+  Widget _buildDegreeField(String key, String label) {
+    final raw = (_formData[key] ?? _getController(key).text)?.toString().replaceAll('°', '').trim() ?? '';
+    final ctrl = _getController(key, initial: raw);
+    if (ctrl.text != raw && raw.isNotEmpty) {
+      ctrl.text = raw;
+      ctrl.selection = TextSelection.collapsed(offset: raw.length);
+    }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: TextFormField(
+        controller: ctrl,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+        ],
+        decoration: InputDecoration(
+          labelText: label,
+          hintText: '91.99',
+          suffixText: '°',
+          suffixStyle: const TextStyle(color: AppColors.onPrimary, fontWeight: FontWeight.w500),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(color: AppColors.borderDark),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(color: AppColors.accent, width: 2),
+          ),
+          filled: true,
+          fillColor: AppColors.backgroundDark,
+        ),
+        style: const TextStyle(color: AppColors.onPrimary),
+        onChanged: (v) => _formData[key] = v.trim().isEmpty ? null : v.trim(),
+      ),
+    );
+  }
+
+  /// Dimension field: numbers/decimals, suffix m or m².
+  Widget _buildDimensionField(String key, String label, {bool squareMeters = false}) {
+    const suffix = ' m';
+    const suffixSq = ' m²';
+    final unit = squareMeters ? suffixSq : suffix;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: TextFormField(
+        controller: _getController(key),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+        ],
+        decoration: InputDecoration(
+          labelText: label,
+          hintText: '0.00',
+          suffixText: unit,
+          suffixStyle: const TextStyle(color: AppColors.onPrimary, fontWeight: FontWeight.w500),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(color: AppColors.borderDark),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(color: AppColors.accent, width: 2),
+          ),
+          filled: true,
+          fillColor: AppColors.backgroundDark,
+        ),
+        style: const TextStyle(color: AppColors.onPrimary),
+        onChanged: (v) => _formData[key] = v,
+      ),
+    );
+  }
+
+  /// 24 Mountains dropdown, auto-derived from source degree field. User can override.
+  Widget _build24MountainsField(String key, String label, String sourceDegreeKey) {
+    final ctrlText = _getController(sourceDegreeKey).text;
+    final sourceVal = ctrlText.isNotEmpty ? ctrlText : (_formData[sourceDegreeKey] ?? '');
+    final sourceStr = (sourceVal is String ? sourceVal : sourceVal?.toString() ?? '').replaceAll('°', '').trim();
+    final derived = degreesTo24Mountains(sourceStr);
+    final current = _formData[key] as String?;
+    final effective = derived ?? (k24Mountains.contains(current) ? current! : k24Mountains.first);
+    if (derived != null && (current == null || current.isEmpty || current == derived)) {
+      _formData[key] = derived;
+    }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: DropdownButtonFormField<String>(
+        value: k24Mountains.contains(effective) ? effective : k24Mountains.first,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(color: AppColors.borderDark),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(color: AppColors.accent, width: 2),
+          ),
+          filled: true,
+          fillColor: AppColors.backgroundDark,
+        ),
+        dropdownColor: AppColors.surfaceElevatedDark,
+        style: const TextStyle(color: AppColors.onPrimary),
+        items: k24Mountains.map((m) => DropdownMenuItem(value: m, child: Text(m))).toList(),
+        onChanged: (v) => setState(() => _formData[key] = v ?? effective),
+      ),
+    );
+  }
+
+  List<String> _eightDirections(AppLocalizations l10n) => [
+    l10n.dirNorth, l10n.dirSouth, l10n.dirEast, l10n.dirWest,
+    l10n.dirNortheast, l10n.dirNorthwest, l10n.dirSoutheast, l10n.dirSouthwest,
+  ];
+
+  List<String> _eightMansionsSectors(AppLocalizations l10n) => [
+    l10n.sectorKanNorth, l10n.sectorKunSouthwest, l10n.sectorZhenEast, l10n.sectorXunSoutheast,
+    l10n.sectorQianNorthwest, l10n.sectorDuiWest, l10n.sectorGenNortheast, l10n.sectorLiSouth,
+  ];
+
+  List<String> _months(AppLocalizations l10n) => [
+    l10n.monthJan, l10n.monthFeb, l10n.monthMar, l10n.monthApr, l10n.monthMay, l10n.monthJun,
+    l10n.monthJul, l10n.monthAug, l10n.monthSep, l10n.monthOct, l10n.monthNov, l10n.monthDec,
+  ];
+
+  List<String> _chineseZodiac(AppLocalizations l10n) => [
+    l10n.zodRat, l10n.zodOx, l10n.zodTiger, l10n.zodRabbit, l10n.zodDragon, l10n.zodSnake,
+    l10n.zodHorse, l10n.zodGoat, l10n.zodMonkey, l10n.zodRooster, l10n.zodDog, l10n.zodPig,
+  ];
+
+  List<String> _personalGua(AppLocalizations l10n) => [
+    l10n.personalGuaKan, l10n.personalGuaKun, l10n.personalGuaZhen, l10n.personalGuaXun,
+    l10n.personalGuaQian, l10n.personalGuaDui, l10n.personalGuaGen, l10n.personalGuaLi,
+  ];
+
+  List<String> _trigrams(AppLocalizations l10n) => [
+    l10n.trigramQian, l10n.trigramKun, l10n.trigramZhen, l10n.trigramXun,
+    l10n.trigramKan, l10n.trigramLi, l10n.trigramGen, l10n.trigramDui,
+  ];
+
+  Widget _buildDropdownField(String key, String label, List<String> options, {String? selectPlaceholder}) {
+    final current = _formData[key] as String?;
+    final effectiveOptions = current != null && !options.contains(current)
+        ? [current, ...options]
+        : options;
+    final value = current != null && effectiveOptions.contains(current) ? current : null;
+    final placeholder = selectPlaceholder ?? AppLocalizations.of(context)?.inspectionSelectPlaceholder ?? '— Select —';
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: DropdownButtonFormField<String?>(
+        value: value,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(color: AppColors.borderDark),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(color: AppColors.accent, width: 2),
+          ),
+          filled: true,
+          fillColor: AppColors.backgroundDark,
+        ),
+        dropdownColor: AppColors.surfaceElevatedDark,
+        style: const TextStyle(color: AppColors.onPrimary),
+        items: [DropdownMenuItem<String?>(value: null, child: Text(placeholder, style: TextStyle(color: AppColors.onSurfaceVariantDark)))]
+            .followedBy(effectiveOptions.map((o) => DropdownMenuItem<String?>(value: o, child: Text(o)))).toList(),
+        onChanged: (v) => setState(() => _formData[key] = v),
       ),
     );
   }
@@ -288,7 +542,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
     });
   }
 
-  Future<void> _saveInspection(AuthProvider auth) async {
+  Future<void> _saveInspection(AuthProvider auth, {bool isFinalStep = false}) async {
     final l10n = AppLocalizations.of(context)!;
     if (!auth.isLoggedIn || auth.userEmail == null) return;
     setState(() {
@@ -299,51 +553,60 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
     final result = await saveSiteInspection(
       formData: data,
       inspectorEmail: auth.userEmail!,
+      inspectionId: _inspectionId,
+      lastStep: _step,
     );
     if (!mounted) return;
     if (result.success) {
-      try {
-        final pdfBytes = await generateSiteInspectionPdf(data);
-        final raw = (data['projectName'] as String?)?.trim() ?? '';
-        final projectName = raw
-            .replaceAll(RegExp(r'\s+'), '-')
-            .replaceAll(RegExp(r'[^\w-]'), '')
-            .replaceAll(RegExp(r'-+'), '-')
-            .replaceAll(RegExp(r'^-|-$'), '');
-        final safeName = projectName.isEmpty ? 'inspection' : projectName;
-        final dateStr = DateTime.now().toIso8601String().substring(0, 10);
-        final filename = 'feng-shui-inspection-$safeName-$dateStr.pdf';
-        await saveSiteInspectionPdf(pdfBytes, filename);
-        if (mounted) {
-          setState(() {
-            _savedPdfBytes = pdfBytes;
-            _savedPdfFilename = filename;
-          });
-        }
-      } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('${l10n.inspectionPdfExportFailed}: $e'),
-              backgroundColor: AppColors.error,
-            ),
-          );
+      if (result.inspectionId != null && _inspectionId == null) {
+        _inspectionId = result.inspectionId;
+      }
+      if (isFinalStep) {
+        try {
+          final pdfBytes = await generateSiteInspectionPdf(data);
+          final raw = (data['projectName'] as String?)?.trim() ?? '';
+          final projectName = raw
+              .replaceAll(RegExp(r'\s+'), '-')
+              .replaceAll(RegExp(r'[^\w-]'), '')
+              .replaceAll(RegExp(r'-+'), '-')
+              .replaceAll(RegExp(r'^-|-$'), '');
+          final safeName = projectName.isEmpty ? 'inspection' : projectName;
+          final dateStr = DateTime.now().toIso8601String().substring(0, 10);
+          final filename = 'feng-shui-inspection-$safeName-$dateStr.pdf';
+          await saveSiteInspectionPdf(pdfBytes, filename);
+          if (mounted) {
+            setState(() {
+              _savedPdfBytes = pdfBytes;
+              _savedPdfFilename = filename;
+            });
+          }
+        } catch (e) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('${l10n.inspectionPdfExportFailed}: $e'),
+                backgroundColor: AppColors.error,
+              ),
+            );
+          }
         }
       }
     }
     if (!mounted) return;
     setState(() {
       _saving = false;
-      if (result.success) {
+      if (result.success && isFinalStep) {
         _saved = true;
-      } else {
+      } else if (!result.success) {
         _saveError = result.error ?? l10n.inspectionSaveFailed;
       }
     });
     if (result.success) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('${l10n.inspectionSavedTitle}. ${l10n.inspectionPdfDownloadStarted}'),
+          content: Text(isFinalStep
+              ? '${l10n.inspectionSavedTitle}. ${l10n.inspectionPdfDownloadStarted}'
+              : l10n.inspectionSavedTitle),
           backgroundColor: AppColors.accent,
         ),
       );
@@ -381,13 +644,57 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              FilledButton(
-                onPressed: () => context.go('/consultations'),
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.accent,
-                  foregroundColor: AppColors.onAccent,
-                ),
-                child: Text(l10n.consultations),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FilledButton(
+                    onPressed: () => showLoginDialog(
+                      context,
+                      successActions: [
+                        (label: l10n.inspectionNewInspection, route: '/consultations/site-inspection'),
+                        (label: l10n.goToDashboard, route: '/consultations/inspection-dashboard'),
+                      ],
+                    ),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.accent,
+                      foregroundColor: AppColors.onAccent,
+                    ),
+                    child: Text(l10n.loginButton),
+                  ),
+                  const SizedBox(width: 12),
+                  OutlinedButton(
+                    onPressed: () => context.go('/consultations'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.accent,
+                      side: const BorderSide(color: AppColors.accent),
+                    ),
+                    child: Text(l10n.consultations),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // Loading state when editing
+    if (_loading) {
+      return Container(
+        width: double.infinity,
+        color: AppColors.backgroundDark,
+        padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 24),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircularProgressIndicator(color: AppColors.accent),
+              const SizedBox(height: 16),
+              Text(
+                l10n.loadingAppointments,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.onSurfaceVariantDark,
+                    ),
               ),
             ],
           ),
@@ -444,7 +751,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
                           ),
                         ),
                         TextButton.icon(
-                          onPressed: () => context.go('/consultations/dashboard'),
+                          onPressed: () => context.go('/consultations/inspection-dashboard'),
                           icon: const Icon(LucideIcons.arrowLeft),
                           label: Text(l10n.back),
                           style: TextButton.styleFrom(foregroundColor: AppColors.accent),
@@ -509,6 +816,25 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
                           style: TextButton.styleFrom(foregroundColor: AppColors.accent),
                         ),
                         const Spacer(),
+                        OutlinedButton.icon(
+                          onPressed: _saving
+                              ? null
+                              : () => _saveInspection(auth, isFinalStep: false),
+                          icon: _saving
+                              ? const SizedBox(
+                                  width: 18,
+                                  height: 18,
+                                  child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accent),
+                                )
+                              : const Icon(LucideIcons.save, size: 18),
+                          label: Text(_saving ? l10n.inspectionSaving : l10n.inspectionSaveProgress),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.accent,
+                            side: const BorderSide(color: AppColors.accent),
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
                         if (_step < _totalSteps - 1)
                           FilledButton.icon(
                             onPressed: _nextStep,
@@ -522,7 +848,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
                           )
                         else
                           FilledButton.icon(
-                            onPressed: _saving ? null : () => _saveInspection(auth),
+                            onPressed: _saving ? null : () => _saveInspection(auth, isFinalStep: true),
                             icon: _saving
                                 ? const SizedBox(
                                     width: 20,
@@ -718,14 +1044,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
                 ),
                 const SizedBox(height: 32),
                 FilledButton.icon(
-                  onPressed: () => setState(() {
-                    _saved = false;
-                    _formData.clear();
-                    for (final c in _controllers.values) {
-                      c.clear();
-                    }
-                    _step = 0;
-                  }),
+                  onPressed: () => context.go('/consultations/site-inspection'),
                   icon: const Icon(LucideIcons.plus, size: 20),
                   label: Text(l10n.inspectionNewInspection),
                   style: FilledButton.styleFrom(
@@ -759,7 +1078,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
                 ],
                 const SizedBox(height: 12),
                 TextButton.icon(
-                  onPressed: () => context.go('/consultations/dashboard'),
+                  onPressed: () => context.go('/consultations/inspection-dashboard'),
                   icon: const Icon(LucideIcons.layoutDashboard, size: 18),
                   label: Text(l10n.goToDashboard),
                   style: TextButton.styleFrom(foregroundColor: AppColors.accent),
@@ -777,10 +1096,14 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        _buildTextField('inspectionName', l10n.inspectionNameLabel, hint: l10n.inspectionNameHint),
         _buildTextField('inspectorName', l10n.inspectionInspectorName),
         _buildDateField('inspectionDate', l10n.inspectionDate),
         _buildTimeField('timeOfArrival', l10n.inspectionTimeOfArrival),
-        _buildTextField('weatherConditions', l10n.inspectionWeatherConditions),
+        _buildDropdownField('weatherConditions', l10n.inspectionWeatherConditions, [
+          l10n.weatherSunny, l10n.weatherCloudy, l10n.weatherOvercast, l10n.weatherRainy,
+          l10n.weatherStormy, l10n.weatherFoggy, l10n.weatherPartlyCloudy,
+        ]),
       ],
     );
   }
@@ -807,7 +1130,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
           l10n.inspectionConstructionPartially,
           l10n.inspectionConstructionFully,
         ]),
-        _buildTextField('estimatedCompletionYear', l10n.inspectionEstimatedCompletionYear),
+        _buildDropdownField('estimatedCompletionYear', l10n.inspectionEstimatedCompletionYear, kYears),
         _buildTextField('numberOfFloors', l10n.inspectionNumberOfFloors),
         _buildTextField('numberOfUnits', l10n.inspectionNumberOfUnits),
         _buildTextField('renovationDates', l10n.inspectionRenovationDates),
@@ -829,13 +1152,13 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
       children: [
         Text(l10n.inspectionDimensions, style: TextStyle(color: AppColors.accent, fontWeight: FontWeight.w600)),
         const SizedBox(height: 12),
-        _buildTextField('frontageWidth', l10n.inspectionFrontageWidth),
-        _buildTextField('depthLength', l10n.inspectionDepthLength),
-        _buildTextField('totalSiteArea', l10n.inspectionTotalSiteArea),
-        _buildTextField('unitWidth', l10n.inspectionUnitWidth),
-        _buildTextField('unitDepth', l10n.inspectionUnitDepth),
-        _buildTextField('unitArea', l10n.inspectionUnitArea),
-        _buildTextField('floorToCeilingHeight', l10n.inspectionFloorToCeilingHeight),
+        _buildDimensionField('frontageWidth', l10n.inspectionFrontageWidth),
+        _buildDimensionField('depthLength', l10n.inspectionDepthLength),
+        _buildDimensionField('totalSiteArea', l10n.inspectionTotalSiteArea, squareMeters: true),
+        _buildDimensionField('unitWidth', l10n.inspectionUnitWidth),
+        _buildDimensionField('unitDepth', l10n.inspectionUnitDepth),
+        _buildDimensionField('unitArea', l10n.inspectionUnitArea, squareMeters: true),
+        _buildDimensionField('floorToCeilingHeight', l10n.inspectionFloorToCeilingHeight),
         const SizedBox(height: 24),
         Text(l10n.inspectionOrientationCompass, style: TextStyle(color: AppColors.accent, fontWeight: FontWeight.w600)),
         const SizedBox(height: 12),
@@ -846,13 +1169,19 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
           l10n.inspectionEquipmentOther,
         ]),
         _buildTextField('equipmentOther', l10n.inspectionOtherEquipment),
-        _buildTextField('facingReading1', l10n.inspectionFacingReading1),
-        _buildTextField('facingReading2', l10n.inspectionFacingReading2),
-        _buildTextField('facingReading3', l10n.inspectionFacingReading3),
-        _buildTextField('averageFacing', l10n.inspectionAverageFacing),
-        _buildTextField('converted24Mountains', l10n.inspectionConverted24Mountains),
-        _buildTextField('facingCardinal', l10n.inspectionFacingCardinal),
-        _buildTextField('sittingDirection', l10n.inspectionSittingDirection),
+        _buildDegreeField('facingReading1', l10n.inspectionFacingReading1),
+        _buildDegreeField('facingReading2', l10n.inspectionFacingReading2),
+        _buildDegreeField('facingReading3', l10n.inspectionFacingReading3),
+        _buildDegreeField('averageFacing', l10n.inspectionAverageFacing),
+        _build24MountainsField('converted24Mountains', l10n.inspectionConverted24Mountains, 'averageFacing'),
+        _buildDropdownField('facingCardinal', l10n.inspectionFacingCardinal, [
+          l10n.dirNorth, l10n.dirSouth, l10n.dirEast, l10n.dirWest,
+          l10n.dirNortheast, l10n.dirNorthwest, l10n.dirSoutheast, l10n.dirSouthwest,
+        ]),
+        _buildDropdownField('sittingDirection', l10n.inspectionSittingDirection, [
+          l10n.dirNorth, l10n.dirSouth, l10n.dirEast, l10n.dirWest,
+          l10n.dirNortheast, l10n.dirNorthwest, l10n.dirSoutheast, l10n.dirSouthwest,
+        ]),
         _buildTextField('magneticInterferenceNotes', l10n.inspectionMagneticInterferenceNotes, maxLines: 3),
       ],
     );
@@ -922,14 +1251,14 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
         const SizedBox(height: 24),
         Text(l10n.inspectionMicroEnvironment, style: TextStyle(color: AppColors.accent, fontWeight: FontWeight.w600)),
         const SizedBox(height: 12),
-        _buildTextField('powerLinesDirection', l10n.inspectionPowerLinesDirection),
-        _buildTextField('bridgesDirection', l10n.inspectionBridgesDirection),
+        _buildDropdownField('powerLinesDirection', l10n.inspectionPowerLinesDirection, _eightDirections(l10n)),
+        _buildDropdownField('bridgesDirection', l10n.inspectionBridgesDirection, _eightDirections(l10n)),
         _buildTextField('largeTreesLocation', l10n.inspectionLargeTreesLocation),
-        _buildTextField('religiousBuildingsDirection', l10n.inspectionReligiousBuildingsDirection),
-        _buildTextField('hospitalDirection', l10n.inspectionHospitalDirection),
-        _buildTextField('schoolDirection', l10n.inspectionSchoolDirection),
-        _buildTextField('marketDirection', l10n.inspectionMarketDirection),
-        _buildTextField('factoryDirection', l10n.inspectionFactoryDirection),
+        _buildDropdownField('religiousBuildingsDirection', l10n.inspectionReligiousBuildingsDirection, _eightDirections(l10n)),
+        _buildDropdownField('hospitalDirection', l10n.inspectionHospitalDirection, _eightDirections(l10n)),
+        _buildDropdownField('schoolDirection', l10n.inspectionSchoolDirection, _eightDirections(l10n)),
+        _buildDropdownField('marketDirection', l10n.inspectionMarketDirection, _eightDirections(l10n)),
+        _buildDropdownField('factoryDirection', l10n.inspectionFactoryDirection, _eightDirections(l10n)),
         _buildRadioGroup('trafficNoise', l10n.inspectionTrafficNoise, [l10n.inspectionHeavy, l10n.inspectionModerate, l10n.inspectionLight]),
         _buildCheckboxGroup('noiseSources', l10n.inspectionNoiseSources, [
           l10n.inspectionNoiseConstruction, l10n.inspectionNoiseNightclub, l10n.inspectionNoiseMarket, l10n.inspectionNoiseAirport,
@@ -949,7 +1278,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildTextField('mainRoadName', l10n.inspectionMainRoadName),
-        _buildTextField('roadWidth', l10n.inspectionRoadWidth),
+        _buildDimensionField('roadWidth', l10n.inspectionRoadWidth),
         _buildRadioGroup('roadPosition', l10n.inspectionRoadPosition, [
           l10n.inspectionRoadParallel, l10n.inspectionRoadCurvesToward, l10n.inspectionRoadCurvesAway, l10n.inspectionRoadStraight,
         ]),
@@ -960,7 +1289,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
         _buildCheckboxGroup('nearbyJunctions', l10n.inspectionNearbyJunctions, [
           l10n.inspectionJunctionT, l10n.inspectionJunctionY, l10n.inspectionJunctionCross, l10n.inspectionJunctionRoundabout, l10n.inspectionJunctionNone,
         ]),
-        _buildTextField('junctionDistance', l10n.inspectionJunctionDistance),
+        _buildDimensionField('junctionDistance', l10n.inspectionJunctionDistance),
         _buildRadioGroup('deflectionBuffer', l10n.inspectionDeflectionBuffer, [l10n.inspectionYes, l10n.inspectionNo]),
         _buildRadioGroup('roadAssessment', l10n.inspectionRoadAssessment, [
           l10n.inspectionRoadConfigFavorable, l10n.inspectionNeutral, l10n.inspectionRoadConfigShaQi,
@@ -969,7 +1298,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
         _buildRadioGroup('serviceRoad', l10n.inspectionServiceRoad, [l10n.inspectionYes, l10n.inspectionNo]),
         _buildTextField('serviceRoadLocation', l10n.inspectionServiceRoadLocation),
         _buildRadioGroup('backAlley', l10n.inspectionBackAlley, [l10n.inspectionYes, l10n.inspectionNo]),
-        _buildTextField('backAlleyWidth', l10n.inspectionBackAlleyWidth),
+        _buildDimensionField('backAlleyWidth', l10n.inspectionBackAlleyWidth),
         _buildRadioGroup('carParkEntrance', l10n.inspectionCarParkEntrance, [l10n.inspectionFront, l10n.inspectionSide, l10n.inspectionBack]),
         _buildRadioGroup('loadingBay', l10n.inspectionLoadingBay, [l10n.inspectionYes, l10n.inspectionNo]),
         _buildTextField('loadingBayLocation', l10n.inspectionLoadingBayLocation),
@@ -1026,24 +1355,24 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildTextField('leftCornerReading', l10n.inspectionLeftCornerReading),
-        _buildTextField('centerReading', l10n.inspectionCenterReading),
-        _buildTextField('rightCornerReading', l10n.inspectionRightCornerReading),
-        _buildTextField('mainFacadeAverage', l10n.inspectionMainFacadeAverage),
-        _buildTextField('mainDoorReading1', l10n.inspectionMainDoorReading1),
-        _buildTextField('mainDoorReading2', l10n.inspectionMainDoorReading2),
-        _buildTextField('mainDoorAverage', l10n.inspectionMainDoorAverage),
-        _buildTextField('mainDoor24Mountains', l10n.inspectionMainDoor24Mountains),
-        _buildTextField('backEntranceReading', l10n.inspectionBackEntranceReading),
-        _buildTextField('backEntrance24Mountains', l10n.inspectionBackEntrance24Mountains),
-        _buildTextField('carParkEntranceReading', l10n.inspectionCarParkEntranceReading),
-        _buildTextField('carPark24Mountains', l10n.inspectionCarPark24Mountains),
+        _buildDegreeField('leftCornerReading', l10n.inspectionLeftCornerReading),
+        _buildDegreeField('centerReading', l10n.inspectionCenterReading),
+        _buildDegreeField('rightCornerReading', l10n.inspectionRightCornerReading),
+        _buildDegreeField('mainFacadeAverage', l10n.inspectionMainFacadeAverage),
+        _buildDegreeField('mainDoorReading1', l10n.inspectionMainDoorReading1),
+        _buildDegreeField('mainDoorReading2', l10n.inspectionMainDoorReading2),
+        _buildDegreeField('mainDoorAverage', l10n.inspectionMainDoorAverage),
+        _build24MountainsField('mainDoor24Mountains', l10n.inspectionMainDoor24Mountains, 'mainDoorAverage'),
+        _buildDegreeField('backEntranceReading', l10n.inspectionBackEntranceReading),
+        _build24MountainsField('backEntrance24Mountains', l10n.inspectionBackEntrance24Mountains, 'backEntranceReading'),
+        _buildDegreeField('carParkEntranceReading', l10n.inspectionCarParkEntranceReading),
+        _build24MountainsField('carPark24Mountains', l10n.inspectionCarPark24Mountains, 'carParkEntranceReading'),
         _buildRadioGroup('metalDoorFrames', l10n.inspectionMetalDoorFrames, [l10n.inspectionYes, l10n.inspectionNo]),
         _buildRadioGroup('electricalPanelsNearby', l10n.inspectionElectricalPanelsNearby, [l10n.inspectionYes, l10n.inspectionNo]),
         _buildRadioGroup('steelReinforcement', l10n.inspectionSteelReinforcement, [l10n.inspectionYes, l10n.inspectionNo]),
         _buildTextField('magneticAdjustments', l10n.inspectionAdjustmentsMade),
         _buildTextField('groundFloorFunction', l10n.inspectionGroundFloorFunction),
-        _buildTextField('groundFloorHeight', l10n.inspectionGroundFloorHeight),
+        _buildDimensionField('groundFloorHeight', l10n.inspectionGroundFloorHeight),
         _buildTextField('groundFloorFeatures', l10n.inspectionGroundFloorFeatures),
         _buildTextField('staircaseLocation', l10n.inspectionStaircaseLocation),
         _buildTextField('liftLocation', l10n.inspectionLiftLocation),
@@ -1053,82 +1382,86 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
   }
 
   Widget _buildSection9(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final sectors = _eightMansionsSectors(l10n);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildTextField('buildingCompletionYear', 'Building Completion Year'),
+        _buildDropdownField('buildingCompletionYear', l10n.inspectionBuildingCompletionYear, kYears),
         _buildRadioGroup('xuanKongPeriod', 'Xuan Kong Period', [
           'Period 7 (1984–2003)', 'Period 8 (2004–2023)', 'Period 9 (2024–2043)',
         ]),
-        _buildTextField('facingDirectionDegrees', 'Facing Direction (degrees)'),
-        _buildTextField('facing24MountainPosition', '24 Mountain Position'),
-        _buildTextField('star9Location', 'Star 9 (Future Prosperity) location'),
-        _buildTextField('star1Location', 'Star 1 (Noble/Water Wealth) location'),
-        _buildTextField('star8Location', 'Star 8 (Current Wealth) location'),
-        _buildTextField('star5Location', 'Star 5 (Five Yellow - Misfortune) location'),
-        _buildTextField('star2Location', 'Star 2 (Illness Star) location'),
-        _buildTextField('star3Location', 'Star 3 (Quarrel Star) location'),
-        _buildTextField('monthOfVisit', 'Month of Visit'),
-        _buildTextField('criticalCombinations', 'Critical Combinations to Note', maxLines: 3),
+        _buildDegreeField('facingDirectionDegrees', l10n.inspectionFacingDirectionDegrees),
+        _build24MountainsField('facing24MountainPosition', l10n.inspection24MountainPosition, 'facingDirectionDegrees'),
+        _buildDropdownField('star9Location', l10n.inspectionStar9Location, sectors),
+        _buildDropdownField('star1Location', l10n.inspectionStar1Location, sectors),
+        _buildDropdownField('star8Location', l10n.inspectionStar8Location, sectors),
+        _buildDropdownField('star5Location', l10n.inspectionStar5Location, sectors),
+        _buildDropdownField('star2Location', l10n.inspectionStar2Location, sectors),
+        _buildDropdownField('star3Location', l10n.inspectionStar3Location, sectors),
+        _buildDropdownField('monthOfVisit', l10n.inspectionMonthOfVisit, _months(l10n)),
+        _buildTextField('criticalCombinations', l10n.inspectionCriticalCombinations, maxLines: 3),
       ],
     );
   }
 
   Widget _buildSection10(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final sectors = _eightMansionsSectors(l10n);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildTextField('facingDirectionForGua', 'Facing Direction (degrees)'),
-        _buildTextField('convertedToTrigram', 'Converted to Trigram'),
+        _buildDegreeField('facingDirectionForGua', l10n.inspectionFacingDirectionDegrees),
+        _buildDropdownField('convertedToTrigram', 'Converted to Trigram', _trigrams(l10n)),
         _buildRadioGroup('houseGua', 'House Gua', [
           'Kan House (坎) - Sitting North', 'Kun House (坤) - Sitting Southwest', 'Zhen House (震) - Sitting East',
           'Xun House (巽) - Sitting Southeast', 'Qian House (乾) - Sitting Northwest', 'Dui House (兌) - Sitting West',
           'Gen House (艮) - Sitting Northeast', 'Li House (離) - Sitting South',
         ]),
         _buildRadioGroup('houseGroup', 'House Group', ['East Group (Kan, Zhen, Xun, Li)', 'West Group (Qian, Kun, Gen, Dui)']),
-        _buildTextField('mainEntranceSector', 'Main Entrance - Eight Mansions sector'),
-        _buildRadioGroup('mainEntranceQuality', 'Main Entrance - Quality', ['Favorable', 'Unfavorable']),
-        _buildTextField('managerOfficeSector', 'Manager/Owner Office - Sector'),
-        _buildRadioGroup('managerOfficeQuality', 'Manager/Owner Office - Quality', ['Favorable', 'Unfavorable']),
-        _buildTextField('cashierSector', 'Cashier/Safe - Sector'),
-        _buildRadioGroup('cashierQuality', 'Cashier/Safe - Quality', ['Favorable', 'Unfavorable']),
-        _buildTextField('toiletSector', 'Toilet Location - Sector'),
+        _buildDropdownField('mainEntranceSector', 'Main Entrance - Eight Mansions sector', sectors),
+        _buildRadioGroup('mainEntranceQuality', 'Main Entrance - Quality', [l10n.inspectionFavorable, l10n.inspectionUnfavorable]),
+        _buildDropdownField('managerOfficeSector', 'Manager/Owner Office - Sector', sectors),
+        _buildRadioGroup('managerOfficeQuality', 'Manager/Owner Office - Quality', [l10n.inspectionFavorable, l10n.inspectionUnfavorable]),
+        _buildDropdownField('cashierSector', 'Cashier/Safe - Sector', sectors),
+        _buildRadioGroup('cashierQuality', 'Cashier/Safe - Quality', [l10n.inspectionFavorable, l10n.inspectionUnfavorable]),
+        _buildDropdownField('toiletSector', 'Toilet Location - Sector', sectors),
         _buildRadioGroup('toiletImpact', 'Toilet Impact', ['Acceptable (at unfavorable sector)', 'Poor (at favorable sector)']),
       ],
     );
   }
 
   Widget _buildSection11(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final directions = _eightDirections(l10n);
+    final personalGua = _personalGua(l10n);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildTextField('clientFullName', 'Primary Client/Owner - Full Name'),
         _buildRadioGroup('clientRole', 'Role', ['Owner', 'Main Tenant', 'CEO', 'Manager']),
-        _buildTextField('clientBirthDate', 'Birth Date (YYYY-MM-DD)'),
-        _buildTextField('clientBirthTime', 'Birth Time (24-hour format)'),
+        _buildDateField('clientBirthDate', 'Birth Date'),
+        _buildTimeField('clientBirthTime', 'Birth Time'),
         _buildTextField('clientPlaceOfBirth', 'Place of Birth'),
         _buildTextField('dayMaster', 'Day Master'),
         _buildCheckboxGroup('favorableElements', 'Favorable Elements', ['Wood (木)', 'Fire (火)', 'Earth (土)', 'Metal (金)', 'Water (水)']),
         _buildCheckboxGroup('unfavorableElements', 'Unfavorable Elements', ['Wood (木)', 'Fire (火)', 'Earth (土)', 'Metal (金)', 'Water (水)']),
-        _buildRadioGroup('personalGua', 'Personal Gua (Ming Gua)', [
-          'Kan (坎) - Water', 'Kun (坤) - Earth', 'Zhen (震) - Wood', 'Xun (巽) - Wood',
-          'Qian (乾) - Metal', 'Dui (兌) - Metal', 'Gen (艮) - Earth', 'Li (離) - Fire',
-        ]),
+        _buildRadioGroup('personalGua', 'Personal Gua (Ming Gua)', personalGua),
         _buildRadioGroup('personalGroup', 'Personal Group', ['East Group', 'West Group']),
-        _buildTextField('shengQiDirection', 'Sheng Qi (Best) direction'),
-        _buildTextField('tianYiDirection', 'Tian Yi (Health) direction'),
-        _buildTextField('yanNianDirection', 'Yan Nian (Relationship) direction'),
-        _buildTextField('fuWeiDirection', 'Fu Wei (Stability) direction'),
+        _buildDropdownField('shengQiDirection', 'Sheng Qi (Best) direction', directions),
+        _buildDropdownField('tianYiDirection', 'Tian Yi (Health) direction', directions),
+        _buildDropdownField('yanNianDirection', 'Yan Nian (Relationship) direction', directions),
+        _buildDropdownField('fuWeiDirection', 'Fu Wei (Stability) direction', directions),
         _buildTextField('person2Name', 'Person 2 - Name'),
         _buildTextField('person2Role', 'Person 2 - Role'),
-        _buildTextField('person2BirthDate', 'Person 2 - Birth Date'),
-        _buildTextField('person2BirthTime', 'Person 2 - Birth Time'),
-        _buildTextField('person2Gua', 'Person 2 - Personal Gua'),
+        _buildDateField('person2BirthDate', 'Person 2 - Birth Date'),
+        _buildTimeField('person2BirthTime', 'Person 2 - Birth Time'),
+        _buildDropdownField('person2Gua', 'Person 2 - Personal Gua', personalGua),
         _buildTextField('person3Name', 'Person 3 - Name'),
         _buildTextField('person3Role', 'Person 3 - Role'),
-        _buildTextField('person3BirthDate', 'Person 3 - Birth Date'),
-        _buildTextField('person3BirthTime', 'Person 3 - Birth Time'),
-        _buildTextField('person3Gua', 'Person 3 - Personal Gua'),
+        _buildDateField('person3BirthDate', 'Person 3 - Birth Date'),
+        _buildTimeField('person3BirthTime', 'Person 3 - Birth Time'),
+        _buildDropdownField('person3Gua', 'Person 3 - Personal Gua', personalGua),
         _buildCheckboxGroup('businessGoals', 'Primary Business Goals', [
           'Wealth/profit maximization', 'Customer flow', 'Business stability', 'Staff harmony', 'Health and wellbeing', 'Other',
         ]),
@@ -1142,38 +1475,42 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
   }
 
   Widget _buildSection12(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildTextField('plannedOpeningDate', 'Planned Opening Date'),
-        _buildTextField('preferredDateRangeFrom', 'Preferred Date Range - From'),
-        _buildTextField('preferredDateRangeTo', 'Preferred Date Range - To'),
+        _buildDateField('plannedOpeningDate', 'Planned Opening Date'),
+        _buildDateField('preferredDateRangeFrom', 'Preferred Date Range - From'),
+        _buildDateField('preferredDateRangeTo', 'Preferred Date Range - To'),
         _buildCheckboxGroup('activitiesForDateSelection', 'Important Activities Requiring Date Selection', [
           'Grand opening ceremony', 'Renovation commencement', 'Moving in/occupation', 'Sign installation',
           'Contract signing', 'Major purchases', 'Other',
         ]),
-        _buildTextField('solarTerm', 'Solar Term'),
-        _buildTextField('lunarDate', 'Lunar Date'),
+        _buildDropdownField('solarTerm', 'Solar Term', kSolarTerms),
+        _buildDropdownField('lunarDate', 'Lunar Date', kLunarDates),
         _buildTextField('favorablePalaces', 'Favorable Palaces for This Date/Time', maxLines: 2),
         _buildTextField('unfavorablePalaces', 'Unfavorable Palaces for This Date/Time', maxLines: 2),
-        _buildTextField('grandOpeningDate1', 'For Grand Opening - Date option 1'),
-        _buildTextField('grandOpeningDate2', 'For Grand Opening - Date option 2'),
-        _buildTextField('grandOpeningDate3', 'For Grand Opening - Date option 3'),
-        _buildTextField('renovationDate1', 'For Renovation Start - Date option 1'),
-        _buildTextField('renovationDate2', 'For Renovation Start - Date option 2'),
-        _buildTextField('avoidOwnerZodiac', 'Avoid clash with owner\'s zodiac'),
-        _buildTextField('avoidPartnerZodiac', 'Avoid clash with partner\'s zodiac'),
+        _buildDateField('grandOpeningDate1', 'For Grand Opening - Date option 1'),
+        _buildDateField('grandOpeningDate2', 'For Grand Opening - Date option 2'),
+        _buildDateField('grandOpeningDate3', 'For Grand Opening - Date option 3'),
+        _buildDateField('renovationDate1', 'For Renovation Start - Date option 1'),
+        _buildDateField('renovationDate2', 'For Renovation Start - Date option 2'),
+        _buildDropdownField('avoidOwnerZodiac', l10n.inspectionAvoidOwnerZodiac, _chineseZodiac(l10n)),
+        _buildDropdownField('avoidPartnerZodiac', l10n.inspectionAvoidPartnerZodiac, _chineseZodiac(l10n)),
         _buildTextField('mustAvoid', 'Must avoid'),
       ],
     );
   }
 
   Widget _buildSection13(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final sectors = _eightMansionsSectors(l10n);
+    final directions = _eightDirections(l10n);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildTextField('numberOfMainEntrances', 'Number of Main Entrances'),
-        _buildTextField('mainDoorPosition', 'Main Door Position (which palace/sector)'),
+        _buildDropdownField('mainDoorPosition', 'Main Door Position (which palace/sector)', sectors),
         _buildRadioGroup('doorConfiguration', 'Door Configuration', [
           'Opens inward', 'Opens outward', 'Sliding door', 'Automatic door',
         ]),
@@ -1184,27 +1521,27 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
         _buildRadioGroup('entranceAssessment', 'Assessment', [
           'Favorable entrance', 'Acceptable with minor adjustments', 'Requires remedial work',
         ]),
-        _buildTextField('ceilingHeight', 'Ceiling Height (m)'),
+        _buildDimensionField('ceilingHeight', 'Ceiling Height (m)'),
         _buildRadioGroup('naturalLight', 'Natural Light', ['Abundant (large windows)', 'Moderate', 'Dim/insufficient']),
         _buildRadioGroup('airCirculation', 'Air Circulation', ['Good ventilation', 'Moderate', 'Poor/stagnant']),
         _buildRadioGroup('floorPlanShape', 'Floor Plan Shape', [
           'Square/rectangular (ideal)', 'L-shaped', 'Irregular', 'Triangular sections',
         ]),
-        _buildTextField('receptionSector', 'Reception/Cashier - Sector'),
-        _buildTextField('receptionFlyingStar', 'Reception - Flying Star'),
-        _buildTextField('reception8Mansions', 'Reception - Eight Mansions'),
+        _buildDropdownField('receptionSector', 'Reception/Cashier - Sector', sectors),
+        _buildDropdownField('receptionFlyingStar', 'Reception - Flying Star', kFlyingStars),
+        _buildDropdownField('reception8Mansions', 'Reception - Eight Mansions', sectors),
         _buildRadioGroup('receptionAssessment', 'Reception - Assessment', ['Favorable', 'Neutral', 'Unfavorable']),
-        _buildTextField('officeSector', 'Office/Manager - Sector'),
-        _buildTextField('officeFlyingStar', 'Office - Flying Star'),
-        _buildTextField('office8Mansions', 'Office - Eight Mansions'),
+        _buildDropdownField('officeSector', 'Office/Manager - Sector', sectors),
+        _buildDropdownField('officeFlyingStar', 'Office - Flying Star', kFlyingStars),
+        _buildDropdownField('office8Mansions', 'Office - Eight Mansions', sectors),
         _buildRadioGroup('officeAssessment', 'Office - Assessment', ['Favorable', 'Neutral', 'Unfavorable']),
-        _buildTextField('toiletSectorInternal', 'Toilet/Bathroom - Sector'),
-        _buildTextField('toiletFlyingStar', 'Toilet - Flying Star'),
-        _buildTextField('toilet8Mansions', 'Toilet - Eight Mansions'),
+        _buildDropdownField('toiletSectorInternal', 'Toilet/Bathroom - Sector', sectors),
+        _buildDropdownField('toiletFlyingStar', 'Toilet - Flying Star', kFlyingStars),
+        _buildDropdownField('toilet8Mansions', 'Toilet - Eight Mansions', sectors),
         _buildCheckboxGroup('toiletIssues', 'Toilet Issues', ['At center palace', 'At wealth sector', 'No issues']),
-        _buildTextField('staircaseSector', 'Staircase/Elevator - Sector'),
-        _buildTextField('staircaseFlyingStar', 'Staircase - Flying Star'),
-        _buildTextField('staircase8Mansions', 'Staircase - Eight Mansions'),
+        _buildDropdownField('staircaseSector', 'Staircase/Elevator - Sector', sectors),
+        _buildDropdownField('staircaseFlyingStar', 'Staircase - Flying Star', kFlyingStars),
+        _buildDropdownField('staircase8Mansions', 'Staircase - Eight Mansions', sectors),
         _buildRadioGroup('staircaseAssessment', 'Staircase - Assessment', ['Favorable', 'Neutral', 'Unfavorable']),
         _buildCheckboxGroup('internalShaQi', 'Internal Sha Qi', [
           'Exposed beams over critical areas', 'Sharp corners pointing at seating areas', 'Long narrow corridor (arrow sha)',
@@ -1212,20 +1549,20 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
         ]),
         _buildTextField('internalShaQiNotes', 'Notes'),
         _buildTextField('room1Function', 'Room 1 - Function'),
-        _buildTextField('room1Sector', 'Room 1 - Sector'),
+        _buildDropdownField('room1Sector', 'Room 1 - Sector', sectors),
         _buildTextField('room1Dimensions', 'Room 1 - Dimensions (m × m)'),
-        _buildTextField('room1DoorDirection', 'Room 1 - Door direction'),
-        _buildTextField('room1WindowDirection', 'Room 1 - Window direction'),
+        _buildDropdownField('room1DoorDirection', l10n.inspectionRoom1DoorDirection, directions),
+        _buildDropdownField('room1WindowDirection', l10n.inspectionRoom1WindowDirection, directions),
         _buildTextField('room1CeilingFeatures', 'Room 1 - Ceiling features'),
-        _buildTextField('room1FlyingStar', 'Room 1 - Flying Star'),
-        _buildTextField('room1EightMansions', 'Room 1 - Eight Mansions'),
+        _buildDropdownField('room1FlyingStar', 'Room 1 - Flying Star', kFlyingStars),
+        _buildDropdownField('room1EightMansions', 'Room 1 - Eight Mansions', sectors),
         _buildTextField('room1Issues', 'Room 1 - Issues'),
         _buildTextField('room2Function', 'Room 2 - Function'),
-        _buildTextField('room2Sector', 'Room 2 - Sector'),
+        _buildDropdownField('room2Sector', 'Room 2 - Sector', sectors),
         _buildTextField('room2Dimensions', 'Room 2 - Dimensions'),
         _buildTextField('room2Issues', 'Room 2 - Issues'),
         _buildTextField('room3Function', 'Room 3 - Function'),
-        _buildTextField('room3Sector', 'Room 3 - Sector'),
+        _buildDropdownField('room3Sector', 'Room 3 - Sector', sectors),
         _buildTextField('room3Dimensions', 'Room 3 - Dimensions'),
         _buildTextField('room3Issues', 'Room 3 - Issues'),
         _buildTextField('numberOfColumns', 'Number of columns'),
@@ -1234,9 +1571,9 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
         _buildTextField('electricalPanelLocation', 'Main electrical panel location'),
         _buildTextField('acUnits', 'Air conditioning units'),
         _buildTextField('waterHeater', 'Water heater'),
-        _buildTextField('kitchenLocation', 'Kitchen/pantry location'),
-        _buildTextField('bathroomLocation', 'Bathroom/toilet location'),
-        _buildTextField('drainageDirection', 'Drainage direction'),
+        _buildDropdownField('kitchenLocation', l10n.inspectionKitchenLocation, sectors),
+        _buildDropdownField('bathroomLocation', l10n.inspectionBathroomLocation, sectors),
+        _buildDropdownField('drainageDirection', l10n.inspectionDrainageDirection, directions),
       ],
     );
   }
@@ -1288,6 +1625,8 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
   }
 
   Widget _buildSection17(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final sectors = _eightMansionsSectors(l10n);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -1301,10 +1640,10 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
           'Retail shop', 'Restaurant/café', 'Office/professional services', 'Showroom',
           'Healthcare/beauty', 'Education/training', 'Other',
         ]),
-        _buildTextField('bestSectorMainEntrance', 'Sectors Best for - Main entrance'),
-        _buildTextField('bestSectorCashier', 'Sectors Best for - Cashier/finance'),
-        _buildTextField('bestSectorManager', 'Sectors Best for - Manager office'),
-        _buildTextField('bestSectorStorage', 'Sectors Best for - Storage'),
+        _buildDropdownField('bestSectorMainEntrance', 'Sectors Best for - Main entrance', sectors),
+        _buildDropdownField('bestSectorCashier', 'Sectors Best for - Cashier/finance', sectors),
+        _buildDropdownField('bestSectorManager', 'Sectors Best for - Manager office', sectors),
+        _buildDropdownField('bestSectorStorage', 'Sectors Best for - Storage', sectors),
         _buildTextField('baziSpaceCompatibility', 'Bazi-Space Compatibility', maxLines: 2),
         _buildRadioGroup('elementSupport', 'House/sector element support', ['Strong', 'Moderate', 'Weak', 'Conflicting']),
         _buildTextField('priorityRanking', 'Priority Ranking for This Project', maxLines: 3),
@@ -1313,6 +1652,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
   }
 
   Widget _buildSection18(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -1331,7 +1671,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
           'Full written report preparation', 'Client presentation meeting', 'Interior design Feng Shui consultation',
           'Furniture placement guidance', 'Remedy implementation supervision', 'Post-occupation review (3-6 months)',
         ]),
-        _buildTextField('estimatedReportDeliveryDate', 'Estimated Report Delivery Date'),
+        _buildDateField('estimatedReportDeliveryDate', l10n.inspectionEstimatedReportDeliveryDate),
         _buildTextField('inspectorSignatureName', 'Inspector\'s Name'),
         _buildDateField('inspectorSignatureDate', 'Inspector\'s Signature Date'),
       ],

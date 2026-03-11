@@ -422,8 +422,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
               }
             },
           ),
-          _LoginSection(),
           _SmartMoveSection(),
+          _LoginSection(),
         ],
       ),
     );
@@ -1254,7 +1254,7 @@ class _LoginSectionState extends State<_LoginSection> {
                           ),
                         ),
                         FilledButton.icon(
-                          onPressed: () => context.go('/consultations/site-inspection'),
+                          onPressed: () => context.go('/consultations/inspection-dashboard'),
                           icon: const Icon(LucideIcons.clipboardList, size: 18),
                           label: Text(l10n.siteInspection),
                           style: FilledButton.styleFrom(
@@ -1667,34 +1667,40 @@ class _SmartMoveSection extends StatelessWidget {
                     childAspectRatio: 0.85,
                     children: [
                       _SmartMoveCard(
-                        icon: LucideIcons.crosshair,
-                        title: l10n.smartMoveCard1Title,
-                        description: l10n.smartMoveCard1Desc,
-                      ),
-                      _SmartMoveCard(
                         icon: LucideIcons.map,
                         title: l10n.smartMoveCard2Title,
                         description: l10n.smartMoveCard2Desc,
+                        imageAsset: AppContent.assetBackgroundDirection,
+                      ),
+                      _SmartMoveCard(
+                        icon: LucideIcons.crosshair,
+                        title: l10n.smartMoveCard1Title,
+                        description: l10n.smartMoveCard1Desc,
+                        imageAsset: AppContent.assetAppsHero,
                       ),
                       _SmartMoveCard(
                         icon: Icons.warning_amber_rounded,
                         title: l10n.smartMoveCard3Title,
                         description: l10n.smartMoveCard3Desc,
+                        imageAsset: AppContent.assetJourneyHero,
                       ),
                       _SmartMoveCard(
                         icon: LucideIcons.circleDot,
                         title: l10n.smartMoveCard4Title,
                         description: l10n.smartMoveCard4Desc,
+                        imageAsset: AppContent.assetConsultation,
                       ),
                       _SmartMoveCard(
                         icon: LucideIcons.hand,
                         title: l10n.smartMoveCard5Title,
                         description: l10n.smartMoveCard5Desc,
+                        imageAsset: AppContent.assetBetterOption,
                       ),
                       _SmartMoveCard(
                         icon: LucideIcons.arrowRight,
                         title: l10n.smartMoveCard6Title,
                         description: l10n.smartMoveCard6Desc,
+                        imageAsset: AppContent.assetDirection,
                       ),
                     ],
                   );
@@ -1713,11 +1719,13 @@ class _SmartMoveCard extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.description,
+    required this.imageAsset,
   });
 
   final IconData icon;
   final String title;
   final String description;
+  final String imageAsset;
 
   @override
   Widget build(BuildContext context) {
@@ -1738,7 +1746,7 @@ class _SmartMoveCard extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 16 / 9,
               child: Image.asset(
-                AppContent.assetConsultation,
+                imageAsset,
                 fit: BoxFit.cover,
                 alignment: Alignment.center,
                 errorBuilder: (_, __, ___) => Container(

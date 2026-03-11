@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:provider/provider.dart';
 
 import '../l10n/app_localizations.dart';
+import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/breakpoints.dart';
 import 'forecast_popup.dart';
 import 'glass_container.dart';
 
 /// Floating vertical bar on the right side for the Free 12 Animal Forecast CTA.
+/// Hidden when user is logged in.
 class StickyCtaBar extends StatefulWidget {
   const StickyCtaBar({super.key});
 
@@ -28,7 +31,8 @@ class _StickyCtaBarState extends State<StickyCtaBar> {
 
   @override
   Widget build(BuildContext context) {
-    if (_dismissed) return const SizedBox.shrink();
+    final auth = context.watch<AuthProvider>();
+    if (auth.isLoggedIn || _dismissed) return const SizedBox.shrink();
 
     final l10n = AppLocalizations.of(context)!;
 

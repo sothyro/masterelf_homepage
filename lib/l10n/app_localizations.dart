@@ -2377,7 +2377,7 @@ abstract class AppLocalizations {
   /// No description provided for @siteInspection.
   ///
   /// In en, this message translates to:
-  /// **'Site inspection'**
+  /// **'Site Inspection'**
   String get siteInspection;
 
   /// No description provided for @welcomeBack.
@@ -2517,6 +2517,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please log in to access the dashboard.'**
   String get loginRequired;
+
+  /// No description provided for @loginSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Login successful'**
+  String get loginSuccess;
 
   /// No description provided for @calendarView.
   ///
@@ -3076,11 +3082,47 @@ abstract class AppLocalizations {
   /// **'Step {current} of {total}'**
   String inspectionStepOf(int current, int total);
 
+  /// No description provided for @inspectionDashboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspection Dashboard'**
+  String get inspectionDashboardTitle;
+
+  /// No description provided for @inspectionDashboardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View, edit or continue your inspections'**
+  String get inspectionDashboardSubtitle;
+
+  /// No description provided for @inspectionContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit / Continue'**
+  String get inspectionContinue;
+
+  /// No description provided for @inspectionNoInspections.
+  ///
+  /// In en, this message translates to:
+  /// **'No inspections yet'**
+  String get inspectionNoInspections;
+
+  /// No description provided for @inspectionStartFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Start your first inspection'**
+  String get inspectionStartFirst;
+
   /// No description provided for @inspectionSave.
   ///
   /// In en, this message translates to:
   /// **'Save Inspection'**
   String get inspectionSave;
+
+  /// No description provided for @inspectionSaveProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Save progress'**
+  String get inspectionSaveProgress;
 
   /// No description provided for @inspectionSaving.
   ///
@@ -3237,6 +3279,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Section 17: Follow-up Actions'**
   String get inspectionSection17;
+
+  /// No description provided for @inspectionNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspection Name'**
+  String get inspectionNameLabel;
+
+  /// No description provided for @inspectionNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Riverside Shophouse, Tower A Site Visit'**
+  String get inspectionNameHint;
 
   /// No description provided for @inspectionInspectorName.
   ///
@@ -4737,6 +4791,504 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Severe sha qi (major remedial work required)'**
   String get inspectionShaSeveritySevere;
+
+  /// No description provided for @inspectionSelectPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'— Select —'**
+  String get inspectionSelectPlaceholder;
+
+  /// No description provided for @weatherSunny.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunny'**
+  String get weatherSunny;
+
+  /// No description provided for @weatherCloudy.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloudy'**
+  String get weatherCloudy;
+
+  /// No description provided for @weatherOvercast.
+  ///
+  /// In en, this message translates to:
+  /// **'Overcast'**
+  String get weatherOvercast;
+
+  /// No description provided for @weatherRainy.
+  ///
+  /// In en, this message translates to:
+  /// **'Rainy'**
+  String get weatherRainy;
+
+  /// No description provided for @weatherStormy.
+  ///
+  /// In en, this message translates to:
+  /// **'Stormy'**
+  String get weatherStormy;
+
+  /// No description provided for @weatherFoggy.
+  ///
+  /// In en, this message translates to:
+  /// **'Foggy'**
+  String get weatherFoggy;
+
+  /// No description provided for @weatherPartlyCloudy.
+  ///
+  /// In en, this message translates to:
+  /// **'Partly cloudy'**
+  String get weatherPartlyCloudy;
+
+  /// No description provided for @dirNorth.
+  ///
+  /// In en, this message translates to:
+  /// **'North'**
+  String get dirNorth;
+
+  /// No description provided for @dirSouth.
+  ///
+  /// In en, this message translates to:
+  /// **'South'**
+  String get dirSouth;
+
+  /// No description provided for @dirEast.
+  ///
+  /// In en, this message translates to:
+  /// **'East'**
+  String get dirEast;
+
+  /// No description provided for @dirWest.
+  ///
+  /// In en, this message translates to:
+  /// **'West'**
+  String get dirWest;
+
+  /// No description provided for @dirNortheast.
+  ///
+  /// In en, this message translates to:
+  /// **'Northeast'**
+  String get dirNortheast;
+
+  /// No description provided for @dirNorthwest.
+  ///
+  /// In en, this message translates to:
+  /// **'Northwest'**
+  String get dirNorthwest;
+
+  /// No description provided for @dirSoutheast.
+  ///
+  /// In en, this message translates to:
+  /// **'Southeast'**
+  String get dirSoutheast;
+
+  /// No description provided for @dirSouthwest.
+  ///
+  /// In en, this message translates to:
+  /// **'Southwest'**
+  String get dirSouthwest;
+
+  /// No description provided for @zodRat.
+  ///
+  /// In en, this message translates to:
+  /// **'Rat (鼠)'**
+  String get zodRat;
+
+  /// No description provided for @zodOx.
+  ///
+  /// In en, this message translates to:
+  /// **'Ox (牛)'**
+  String get zodOx;
+
+  /// No description provided for @zodTiger.
+  ///
+  /// In en, this message translates to:
+  /// **'Tiger (虎)'**
+  String get zodTiger;
+
+  /// No description provided for @zodRabbit.
+  ///
+  /// In en, this message translates to:
+  /// **'Rabbit (兔)'**
+  String get zodRabbit;
+
+  /// No description provided for @zodDragon.
+  ///
+  /// In en, this message translates to:
+  /// **'Dragon (龙)'**
+  String get zodDragon;
+
+  /// No description provided for @zodSnake.
+  ///
+  /// In en, this message translates to:
+  /// **'Snake (蛇)'**
+  String get zodSnake;
+
+  /// No description provided for @zodHorse.
+  ///
+  /// In en, this message translates to:
+  /// **'Horse (马)'**
+  String get zodHorse;
+
+  /// No description provided for @zodGoat.
+  ///
+  /// In en, this message translates to:
+  /// **'Goat (羊)'**
+  String get zodGoat;
+
+  /// No description provided for @zodMonkey.
+  ///
+  /// In en, this message translates to:
+  /// **'Monkey (猴)'**
+  String get zodMonkey;
+
+  /// No description provided for @zodRooster.
+  ///
+  /// In en, this message translates to:
+  /// **'Rooster (鸡)'**
+  String get zodRooster;
+
+  /// No description provided for @zodDog.
+  ///
+  /// In en, this message translates to:
+  /// **'Dog (狗)'**
+  String get zodDog;
+
+  /// No description provided for @zodPig.
+  ///
+  /// In en, this message translates to:
+  /// **'Pig (猪)'**
+  String get zodPig;
+
+  /// No description provided for @personalGuaKan.
+  ///
+  /// In en, this message translates to:
+  /// **'Kan (坎) - Water'**
+  String get personalGuaKan;
+
+  /// No description provided for @personalGuaKun.
+  ///
+  /// In en, this message translates to:
+  /// **'Kun (坤) - Earth'**
+  String get personalGuaKun;
+
+  /// No description provided for @personalGuaZhen.
+  ///
+  /// In en, this message translates to:
+  /// **'Zhen (震) - Wood'**
+  String get personalGuaZhen;
+
+  /// No description provided for @personalGuaXun.
+  ///
+  /// In en, this message translates to:
+  /// **'Xun (巽) - Wood'**
+  String get personalGuaXun;
+
+  /// No description provided for @personalGuaQian.
+  ///
+  /// In en, this message translates to:
+  /// **'Qian (乾) - Metal'**
+  String get personalGuaQian;
+
+  /// No description provided for @personalGuaDui.
+  ///
+  /// In en, this message translates to:
+  /// **'Dui (兌) - Metal'**
+  String get personalGuaDui;
+
+  /// No description provided for @personalGuaGen.
+  ///
+  /// In en, this message translates to:
+  /// **'Gen (艮) - Earth'**
+  String get personalGuaGen;
+
+  /// No description provided for @personalGuaLi.
+  ///
+  /// In en, this message translates to:
+  /// **'Li (離) - Fire'**
+  String get personalGuaLi;
+
+  /// No description provided for @sectorKanNorth.
+  ///
+  /// In en, this message translates to:
+  /// **'Kan (坎) - North'**
+  String get sectorKanNorth;
+
+  /// No description provided for @sectorKunSouthwest.
+  ///
+  /// In en, this message translates to:
+  /// **'Kun (坤) - Southwest'**
+  String get sectorKunSouthwest;
+
+  /// No description provided for @sectorZhenEast.
+  ///
+  /// In en, this message translates to:
+  /// **'Zhen (震) - East'**
+  String get sectorZhenEast;
+
+  /// No description provided for @sectorXunSoutheast.
+  ///
+  /// In en, this message translates to:
+  /// **'Xun (巽) - Southeast'**
+  String get sectorXunSoutheast;
+
+  /// No description provided for @sectorQianNorthwest.
+  ///
+  /// In en, this message translates to:
+  /// **'Qian (乾) - Northwest'**
+  String get sectorQianNorthwest;
+
+  /// No description provided for @sectorDuiWest.
+  ///
+  /// In en, this message translates to:
+  /// **'Dui (兌) - West'**
+  String get sectorDuiWest;
+
+  /// No description provided for @sectorGenNortheast.
+  ///
+  /// In en, this message translates to:
+  /// **'Gen (艮) - Northeast'**
+  String get sectorGenNortheast;
+
+  /// No description provided for @sectorLiSouth.
+  ///
+  /// In en, this message translates to:
+  /// **'Li (離) - South'**
+  String get sectorLiSouth;
+
+  /// No description provided for @trigramQian.
+  ///
+  /// In en, this message translates to:
+  /// **'Qian (乾) - Heaven'**
+  String get trigramQian;
+
+  /// No description provided for @trigramKun.
+  ///
+  /// In en, this message translates to:
+  /// **'Kun (坤) - Earth'**
+  String get trigramKun;
+
+  /// No description provided for @trigramZhen.
+  ///
+  /// In en, this message translates to:
+  /// **'Zhen (震) - Thunder'**
+  String get trigramZhen;
+
+  /// No description provided for @trigramXun.
+  ///
+  /// In en, this message translates to:
+  /// **'Xun (巽) - Wind'**
+  String get trigramXun;
+
+  /// No description provided for @trigramKan.
+  ///
+  /// In en, this message translates to:
+  /// **'Kan (坎) - Water'**
+  String get trigramKan;
+
+  /// No description provided for @trigramLi.
+  ///
+  /// In en, this message translates to:
+  /// **'Li (離) - Fire'**
+  String get trigramLi;
+
+  /// No description provided for @trigramGen.
+  ///
+  /// In en, this message translates to:
+  /// **'Gen (艮) - Mountain'**
+  String get trigramGen;
+
+  /// No description provided for @trigramDui.
+  ///
+  /// In en, this message translates to:
+  /// **'Dui (兌) - Lake'**
+  String get trigramDui;
+
+  /// No description provided for @monthJan.
+  ///
+  /// In en, this message translates to:
+  /// **'January'**
+  String get monthJan;
+
+  /// No description provided for @monthFeb.
+  ///
+  /// In en, this message translates to:
+  /// **'February'**
+  String get monthFeb;
+
+  /// No description provided for @monthMar.
+  ///
+  /// In en, this message translates to:
+  /// **'March'**
+  String get monthMar;
+
+  /// No description provided for @monthApr.
+  ///
+  /// In en, this message translates to:
+  /// **'April'**
+  String get monthApr;
+
+  /// No description provided for @monthMay.
+  ///
+  /// In en, this message translates to:
+  /// **'May'**
+  String get monthMay;
+
+  /// No description provided for @monthJun.
+  ///
+  /// In en, this message translates to:
+  /// **'June'**
+  String get monthJun;
+
+  /// No description provided for @monthJul.
+  ///
+  /// In en, this message translates to:
+  /// **'July'**
+  String get monthJul;
+
+  /// No description provided for @monthAug.
+  ///
+  /// In en, this message translates to:
+  /// **'August'**
+  String get monthAug;
+
+  /// No description provided for @monthSep.
+  ///
+  /// In en, this message translates to:
+  /// **'September'**
+  String get monthSep;
+
+  /// No description provided for @monthOct.
+  ///
+  /// In en, this message translates to:
+  /// **'October'**
+  String get monthOct;
+
+  /// No description provided for @monthNov.
+  ///
+  /// In en, this message translates to:
+  /// **'November'**
+  String get monthNov;
+
+  /// No description provided for @monthDec.
+  ///
+  /// In en, this message translates to:
+  /// **'December'**
+  String get monthDec;
+
+  /// No description provided for @inspectionBuildingCompletionYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Building Completion Year'**
+  String get inspectionBuildingCompletionYear;
+
+  /// No description provided for @inspectionMonthOfVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Month of Visit'**
+  String get inspectionMonthOfVisit;
+
+  /// No description provided for @inspectionFacingDirectionDegrees.
+  ///
+  /// In en, this message translates to:
+  /// **'Facing Direction (degrees)'**
+  String get inspectionFacingDirectionDegrees;
+
+  /// No description provided for @inspection24MountainPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'24 Mountain Position'**
+  String get inspection24MountainPosition;
+
+  /// No description provided for @inspectionStar9Location.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 9 (Future Prosperity) location'**
+  String get inspectionStar9Location;
+
+  /// No description provided for @inspectionStar1Location.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 1 (Noble/Water Wealth) location'**
+  String get inspectionStar1Location;
+
+  /// No description provided for @inspectionStar8Location.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 8 (Current Wealth) location'**
+  String get inspectionStar8Location;
+
+  /// No description provided for @inspectionStar5Location.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 5 (Five Yellow - Misfortune) location'**
+  String get inspectionStar5Location;
+
+  /// No description provided for @inspectionStar2Location.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 2 (Illness Star) location'**
+  String get inspectionStar2Location;
+
+  /// No description provided for @inspectionStar3Location.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 3 (Quarrel Star) location'**
+  String get inspectionStar3Location;
+
+  /// No description provided for @inspectionCriticalCombinations.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical Combinations to Note'**
+  String get inspectionCriticalCombinations;
+
+  /// No description provided for @inspectionAvoidOwnerZodiac.
+  ///
+  /// In en, this message translates to:
+  /// **'Avoid clash with owner\'s zodiac'**
+  String get inspectionAvoidOwnerZodiac;
+
+  /// No description provided for @inspectionAvoidPartnerZodiac.
+  ///
+  /// In en, this message translates to:
+  /// **'Avoid clash with partner\'s zodiac'**
+  String get inspectionAvoidPartnerZodiac;
+
+  /// No description provided for @inspectionRoom1DoorDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Room 1 - Door direction'**
+  String get inspectionRoom1DoorDirection;
+
+  /// No description provided for @inspectionRoom1WindowDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Room 1 - Window direction'**
+  String get inspectionRoom1WindowDirection;
+
+  /// No description provided for @inspectionKitchenLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Kitchen/pantry location'**
+  String get inspectionKitchenLocation;
+
+  /// No description provided for @inspectionBathroomLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Bathroom/toilet location'**
+  String get inspectionBathroomLocation;
+
+  /// No description provided for @inspectionDrainageDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Drainage direction'**
+  String get inspectionDrainageDirection;
+
+  /// No description provided for @inspectionEstimatedReportDeliveryDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated Report Delivery Date'**
+  String get inspectionEstimatedReportDeliveryDate;
 }
 
 class _AppLocalizationsDelegate

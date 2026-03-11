@@ -11,6 +11,7 @@ import '../screens/events/events_screen.dart';
 import '../screens/contact/contact_screen.dart';
 import '../screens/consultations/consultations_screen.dart';
 import '../screens/consultations/consultations_dashboard_screen.dart';
+import '../screens/consultations/inspection_dashboard_screen.dart';
 import '../screens/consultations/site_inspection_screen.dart';
 import '../screens/academy/academy_screen.dart';
 import '../screens/journey/journey_screen.dart';
@@ -32,6 +33,7 @@ const Set<String> _knownPaths = {
   '/contact',
   '/consultations',
   '/consultations/dashboard',
+  '/consultations/inspection-dashboard',
   '/consultations/site-inspection',
   '/not-found',
 };
@@ -82,10 +84,17 @@ GoRouter createAppRouter({
 
       if (normalized == '/' || _knownPaths.contains(normalized)) {
         if (normalized == '/consultations/dashboard' ||
+            normalized == '/consultations/inspection-dashboard' ||
             normalized == '/consultations/site-inspection') {
           final auth = context.read<AuthProvider>();
           if (!auth.isLoggedIn) return '/consultations';
         }
+        return null;
+      }
+      if (normalized.startsWith('/consultations/site-inspection/') &&
+          normalized.length > '/consultations/site-inspection/'.length) {
+        final auth = context.read<AuthProvider>();
+        if (!auth.isLoggedIn) return '/consultations';
         return null;
       }
       return '/not-found';
@@ -108,7 +117,20 @@ GoRouter createAppRouter({
             ),
           ),
           GoRoute(path: '/consultations/dashboard', builder: (_, __) => const AppointmentsDashboardScreen()),
-          GoRoute(path: '/consultations/site-inspection', builder: (_, __) => const SiteInspectionScreen()),
+          GoRoute(path: '/consultations/inspection-dashboard', builder: (_, __) => const InspectionDashboardScreen()),
+          GoRoute(
+            path: '/consultations/site-inspection',
+            builder: (_, __) => const SiteInspectionScreen(),
+            routes: [
+              GoRoute(
+                path: ':id',
+                builder: (_, state) {
+                  final id = state.pathParameters['id'] ?? '';
+                  return SiteInspectionScreen(inspectionId: id.isNotEmpty ? id : null);
+                },
+              ),
+            ],
+          ),
           GoRoute(path: '/not-found', builder: (_, __) => const _NotFoundScreen()),
         ],
       ),

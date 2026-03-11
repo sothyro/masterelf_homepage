@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../config/app_content.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../utils/launcher_utils.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
-import '../../../widgets/profile_dialog.dart';
 
 class HeroSection extends StatefulWidget {
   const HeroSection({super.key});
@@ -273,8 +274,9 @@ class _HeroSectionState extends State<HeroSection> {
                                     ),
                                   ),
                                 ),
-                                OutlinedButton(
-                                  onPressed: () => showProfileDialog(context),
+                                OutlinedButton.icon(
+                                  onPressed: () => launchUrlExternal(AppContent.facebookUrl),
+                                  icon: Icon(LucideIcons.facebook, size: width < 600 ? 18 : 20),
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor: AppColors.onPrimary,
                                     side: const BorderSide(color: AppColors.onPrimary),
@@ -283,7 +285,7 @@ class _HeroSectionState extends State<HeroSection> {
                                       vertical: width < 600 ? 14 : 18,
                                     ),
                                   ),
-                                  child: Text(
+                                  label: Text(
                                     l10n.heroMasterElfCaption,
                                     style: TextStyle(
                                       fontSize: width < 600 ? 15 : 17,
@@ -336,8 +338,9 @@ class _HeroSectionState extends State<HeroSection> {
                                     ),
                                   ),
                                 ),
-                                OutlinedButton(
-                                  onPressed: () => showProfileDialog(context),
+                                OutlinedButton.icon(
+                                  onPressed: () => launchUrlExternal(AppContent.facebookUrl),
+                                  icon: Icon(LucideIcons.facebook, size: width < 600 ? 18 : 20),
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor: AppColors.onPrimary,
                                     side: const BorderSide(color: AppColors.onPrimary),
@@ -346,7 +349,7 @@ class _HeroSectionState extends State<HeroSection> {
                                       vertical: width < 600 ? 14 : 18,
                                     ),
                                   ),
-                                  child: Text(
+                                  label: Text(
                                     l10n.heroMasterElfCaption,
                                     style: TextStyle(
                                       fontSize: width < 600 ? 15 : 17,

@@ -90,6 +90,8 @@ class AppContent {
   static const String assetAcademy = 'assets/images/apps.jpg';
   /// Consultation / appointments page (Smart Move cards).
   static const String assetConsultation = 'assets/images/consultation.jpg';
+  static const String assetBetterOption = 'assets/images/betteroption.jpg';
+  static const String assetDirection = 'assets/images/direction.jpg';
   /// BaZi Harmony card image on main page (Academies section).
   static const String assetBaziHarmony = 'assets/icons/baziharmony.jpg';
   /// QiMen card image on main page (Academies section).

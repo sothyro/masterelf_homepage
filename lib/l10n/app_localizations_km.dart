@@ -657,13 +657,13 @@ class AppLocalizationsKm extends AppLocalizations {
       'ស្វែងយល់ពីស្នាដៃរបស់យើងអំពីហុងស៊ុយ និងក្បួនចិនបុរាណ។';
 
   @override
-  String get stickyCtaText => 'ទស្សន៍ទាយឆ្នាំសត្វទាំង ១២ ឥតគិតថ្លៃ';
+  String get stickyCtaText => 'ទស្សន៍ទាយឆ្នាំតួរាសីទាំង12 ឥតគិតថ្លៃ';
 
   @override
   String get popupTitle1 => 'របស់ Master Elf';
 
   @override
-  String get popupTitle2 => 'ទស្សន៍ទាយឆ្នាំសត្វទាំង ១២';
+  String get popupTitle2 => 'ទស្សន៍ទាយឆ្នាំតួរាសីទាំង12';
 
   @override
   String get popupDescription =>
@@ -1318,6 +1318,9 @@ class AppLocalizationsKm extends AppLocalizations {
   String get loginRequired => 'សូមចូលដើម្បីចូលប្រើផ្ទាំងគ្រប់គ្រង។';
 
   @override
+  String get loginSuccess => 'ចូលដោយជោគជ័យ';
+
+  @override
   String get calendarView => 'ប្រតិទិន';
 
   @override
@@ -1615,7 +1618,26 @@ class AppLocalizationsKm extends AppLocalizations {
   }
 
   @override
+  String get inspectionDashboardTitle => 'ផ្ទាំងគ្រប់គ្រងការពិនិត្យ';
+
+  @override
+  String get inspectionDashboardSubtitle =>
+      'មើល កែសម្រួល ឬបន្តការពិនិត្យរបស់អ្នក';
+
+  @override
+  String get inspectionContinue => 'កែសម្រួល / បន្ត';
+
+  @override
+  String get inspectionNoInspections => 'មិនមានការពិនិត្យនៅឡើយទេ';
+
+  @override
+  String get inspectionStartFirst => 'ចាប់ផ្តើមការពិនិត្យដំបូងរបស់អ្នក';
+
+  @override
   String get inspectionSave => 'រក្សាទុកការពិនិត្យ';
+
+  @override
+  String get inspectionSaveProgress => 'រក្សាទុកវឌ្ឍនភាព';
 
   @override
   String get inspectionSaving => 'កំពុងរក្សាទុក…';
@@ -1696,6 +1718,12 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get inspectionSection17 => 'ផ្នែក ១៧៖ សកម្មភាពបន្ត';
+
+  @override
+  String get inspectionNameLabel => 'ឈ្មោះការពិនិត្យ';
+
+  @override
+  String get inspectionNameHint => 'ឧ. ផ្ទះហាង Riverside, ការទស្សនាវាល Tower A';
 
   @override
   String get inspectionInspectorName => 'ឈ្មោះអ្នកពិនិត្យ';
@@ -2449,4 +2477,254 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get inspectionShaSeveritySevere => 'ស៉ាឈីធ្ងន់ (ត្រូវកែធំ)';
+
+  @override
+  String get inspectionSelectPlaceholder => '— ជ្រើសរើស —';
+
+  @override
+  String get weatherSunny => 'ថ្ងៃចាំង';
+
+  @override
+  String get weatherCloudy => 'ពពក';
+
+  @override
+  String get weatherOvercast => 'ពពករុំ';
+
+  @override
+  String get weatherRainy => 'ភ្លៀង';
+
+  @override
+  String get weatherStormy => 'ព្យុះ';
+
+  @override
+  String get weatherFoggy => 'អ័ភ្រឹម';
+
+  @override
+  String get weatherPartlyCloudy => 'ពពករលាយ';
+
+  @override
+  String get dirNorth => 'ខាងជើង';
+
+  @override
+  String get dirSouth => 'ខាងត្បូង';
+
+  @override
+  String get dirEast => 'ខាងកើត';
+
+  @override
+  String get dirWest => 'ខាងលិច';
+
+  @override
+  String get dirNortheast => 'ឦសាន';
+
+  @override
+  String get dirNorthwest => 'ពាយ័ព្យ';
+
+  @override
+  String get dirSoutheast => 'អាគ្នេយ៍';
+
+  @override
+  String get dirSouthwest => 'និរតី';
+
+  @override
+  String get zodRat => 'ជ្រូក (鼠)';
+
+  @override
+  String get zodOx => 'គោ (牛)';
+
+  @override
+  String get zodTiger => 'ខ្លាធំ (虎)';
+
+  @override
+  String get zodRabbit => 'ទន្សាយ (兔)';
+
+  @override
+  String get zodDragon => 'នាគ (龙)';
+
+  @override
+  String get zodSnake => 'ពស់ (蛇)';
+
+  @override
+  String get zodHorse => 'សេះ (马)';
+
+  @override
+  String get zodGoat => 'ពពែ (羊)';
+
+  @override
+  String get zodMonkey => 'សត្វក្រាញ់ (猴)';
+
+  @override
+  String get zodRooster => 'មាន់ (鸡)';
+
+  @override
+  String get zodDog => 'ឆ្កែ (狗)';
+
+  @override
+  String get zodPig => 'ជ្រូក (猪)';
+
+  @override
+  String get personalGuaKan => 'Kan (坎) - ទឹក';
+
+  @override
+  String get personalGuaKun => 'Kun (坤) - ដី';
+
+  @override
+  String get personalGuaZhen => 'Zhen (震) - ឈើ';
+
+  @override
+  String get personalGuaXun => 'Xun (巽) - ឈើ';
+
+  @override
+  String get personalGuaQian => 'Qian (乾) - លោហៈ';
+
+  @override
+  String get personalGuaDui => 'Dui (兌) - លោហៈ';
+
+  @override
+  String get personalGuaGen => 'Gen (艮) - ដី';
+
+  @override
+  String get personalGuaLi => 'Li (離) - ភ្លើង';
+
+  @override
+  String get sectorKanNorth => 'Kan (坎) - ខាងជើង';
+
+  @override
+  String get sectorKunSouthwest => 'Kun (坤) - និរតី';
+
+  @override
+  String get sectorZhenEast => 'Zhen (震) - ខាងកើត';
+
+  @override
+  String get sectorXunSoutheast => 'Xun (巽) - អាគ្នេយ៍';
+
+  @override
+  String get sectorQianNorthwest => 'Qian (乾) - ពាយ័ព្យ';
+
+  @override
+  String get sectorDuiWest => 'Dui (兌) - ខាងលិច';
+
+  @override
+  String get sectorGenNortheast => 'Gen (艮) - ឦសាន';
+
+  @override
+  String get sectorLiSouth => 'Li (離) - ខាងត្បូង';
+
+  @override
+  String get trigramQian => 'Qian (乾) - ឋានសួគ៌';
+
+  @override
+  String get trigramKun => 'Kun (坤) - ដី';
+
+  @override
+  String get trigramZhen => 'Zhen (震) - រន្ទះ';
+
+  @override
+  String get trigramXun => 'Xun (巽) - ខ្យល់';
+
+  @override
+  String get trigramKan => 'Kan (坎) - ទឹក';
+
+  @override
+  String get trigramLi => 'Li (離) - ភ្លើង';
+
+  @override
+  String get trigramGen => 'Gen (艮) - ភ្នំ';
+
+  @override
+  String get trigramDui => 'Dui (兌) - បឹង';
+
+  @override
+  String get monthJan => 'មករា';
+
+  @override
+  String get monthFeb => 'កុម្ភៈ';
+
+  @override
+  String get monthMar => 'មីនា';
+
+  @override
+  String get monthApr => 'មេសា';
+
+  @override
+  String get monthMay => 'ឧសភា';
+
+  @override
+  String get monthJun => 'មិថុនា';
+
+  @override
+  String get monthJul => 'កក្កដា';
+
+  @override
+  String get monthAug => 'សីហា';
+
+  @override
+  String get monthSep => 'កញ្ញា';
+
+  @override
+  String get monthOct => 'តុលា';
+
+  @override
+  String get monthNov => 'វិច្ឆិកា';
+
+  @override
+  String get monthDec => 'ធ្នូ';
+
+  @override
+  String get inspectionBuildingCompletionYear => 'ឆ្នាំបញ្ចប់សំណង់';
+
+  @override
+  String get inspectionMonthOfVisit => 'ខែទស្សន៍';
+
+  @override
+  String get inspectionFacingDirectionDegrees => 'ទិសមុខ (ដឺក្រេ)';
+
+  @override
+  String get inspection24MountainPosition => 'ទីតាំង 24 Mountains';
+
+  @override
+  String get inspectionStar9Location => 'ទីតាំងផ្កាយ 9 (សម្បត្តិអនាគត)';
+
+  @override
+  String get inspectionStar1Location => 'ទីតាំងផ្កាយ 1 (អភិជន/ទឹកទ្រព្យ)';
+
+  @override
+  String get inspectionStar8Location => 'ទីតាំងផ្កាយ 8 (ទ្រព្យបច្ចុប្បន្ន)';
+
+  @override
+  String get inspectionStar5Location => 'ទីតាំងផ្កាយ 5 (ប្រាំលឿង - អាក្រក់)';
+
+  @override
+  String get inspectionStar2Location => 'ទីតាំងផ្កាយ 2 (ផ្កាយជំងឺ)';
+
+  @override
+  String get inspectionStar3Location => 'ទីតាំងផ្កាយ 3 (ផ្កាយជម្លោះ)';
+
+  @override
+  String get inspectionCriticalCombinations => 'ការរួមបញ្ចូលសំខាន់ចំណាំ';
+
+  @override
+  String get inspectionAvoidOwnerZodiac => 'ជៀសវាងជីវចក្រម្ចាស់';
+
+  @override
+  String get inspectionAvoidPartnerZodiac => 'ជៀសវាងជីវចក្រដៃគូ';
+
+  @override
+  String get inspectionRoom1DoorDirection => 'បន្ទប់ 1 - ទិសទ្វារ';
+
+  @override
+  String get inspectionRoom1WindowDirection => 'បន្ទប់ 1 - ទិសបង្អួច';
+
+  @override
+  String get inspectionKitchenLocation => 'ទីតាំងផ្ទះបាយ/ឃ្លាំង';
+
+  @override
+  String get inspectionBathroomLocation => 'ទីតាំងបន្ទប់ទឹក/បន្ទប់អាង';
+
+  @override
+  String get inspectionDrainageDirection => 'ទិសចាក់ទឹក';
+
+  @override
+  String get inspectionEstimatedReportDeliveryDate =>
+      'កាលបរិច្ឆេទប៉ាន់ស្មានចែករំលែករបាយការណ៍';
 }

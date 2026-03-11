@@ -23,12 +23,129 @@ class SiteInspectionSaveResult {
   final String? error;
 }
 
-/// Saves a site inspection to Firestore.
-/// [formData] should contain only serializable types (String, num, List, Map).
-/// Requires authenticated user (caller should verify).
-Future<SiteInspectionSaveResult> saveSiteInspection({
+/// Lightweight inspection record for list views.
+class InspectionRecord {
+  const InspectionRecord({
+    required this.id,
+    required this.inspectionName,
+    required this.inspectorEmail,
+    required this.lastStep,
+    this.updatedAt,
+    this.createdAt,
+  });
+
+  final String id;
+  final String inspectionName;
+  final String inspectorEmail;
+  final int lastStep;
+  final DateTime? updatedAt;
+  final DateTime? createdAt;
+
+  factory InspectionRecord.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+    final data = doc.data() ?? {};
+    final updatedAt = data['updatedAt'] as Timestamp?;
+    final createdAt = data['createdAt'] as Timestamp?;
+    return InspectionRecord(
+      id: doc.id,
+      inspectionName: data['inspectionName'] as String? ?? 'Inspection',
+      inspectorEmail: data['inspectorEmail'] as String? ?? '',
+      lastStep: (data['lastStep'] as int?) ?? 0,
+      updatedAt: updatedAt?.toDate(),
+      createdAt: createdAt?.toDate(),
+    );
+  }
+}
+
+/// Full inspection data for editing.
+class InspectionData {
+  const InspectionData({
+    required this.id,
+    required this.formData,
+    required this.inspectionName,
+    required this.inspectorEmail,
+    required this.lastStep,
+    this.updatedAt,
+    this.createdAt,
+  });
+
+  final String id;
+  final Map<String, dynamic> formData;
+  final String inspectionName;
+  final String inspectorEmail;
+  final int lastStep;
+  final DateTime? updatedAt;
+  final DateTime? createdAt;
+
+  factory InspectionData.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+    final data = doc.data() ?? {};
+    final formData = Map<String, dynamic>.from(data);
+    formData.remove('inspectorEmail');
+    formData.remove('inspectionName');
+    formData.remove('lastStep');
+    formData.remove('createdAt');
+    formData.remove('updatedAt');
+    final updatedAt = data['updatedAt'] as Timestamp?;
+    final createdAt = data['createdAt'] as Timestamp?;
+    return InspectionData(
+      id: doc.id,
+      formData: formData,
+      inspectionName: data['inspectionName'] as String? ?? 'Inspection',
+      inspectorEmail: data['inspectorEmail'] as String? ?? '',
+      lastStep: (data['lastStep'] as int?) ?? 0,
+      updatedAt: updatedAt?.toDate(),
+      createdAt: createdAt?.toDate(),
+    );
+  }
+}
+
+String _deriveInspectionName(Map<String, dynamic> formData, DateTime fallbackDate) {
+  final name = (formData['inspectionName'] as String?)?.trim();
+  if (name != null && name.isNotEmpty) return name;
+  final projectName = (formData['projectName'] as String?)?.trim() ?? '';
+  if (projectName.isNotEmpty) return projectName;
+  final dateStr = '${fallbackDate.year}-${fallbackDate.month.toString().padLeft(2, '0')}-${fallbackDate.day.toString().padLeft(2, '0')}';
+  return 'Inspection $dateStr';
+}
+
+/// Lists inspections for the given inspector, ordered by updatedAt desc.
+Future<List<InspectionRecord>> listInspections(String inspectorEmail) async {
+  if (!_isFirebaseEnabled) return [];
+
+  try {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('site_inspections')
+        .where('inspectorEmail', isEqualTo: inspectorEmail)
+        .orderBy('updatedAt', descending: true)
+        .get();
+
+    return snapshot.docs.map((d) => InspectionRecord.fromFirestore(d)).toList();
+  } catch (_) {
+    return [];
+  }
+}
+
+/// Fetches a single inspection by ID.
+Future<InspectionData?> getInspection(String inspectionId) async {
+  if (!_isFirebaseEnabled) return null;
+
+  try {
+    final doc = await FirebaseFirestore.instance
+        .collection('site_inspections')
+        .doc(inspectionId)
+        .get();
+
+    if (!doc.exists || doc.data() == null) return null;
+    return InspectionData.fromFirestore(doc);
+  } catch (_) {
+    return null;
+  }
+}
+
+/// Creates a new inspection.
+Future<SiteInspectionSaveResult> createInspection({
   required Map<String, dynamic> formData,
   required String inspectorEmail,
+  int lastStep = 0,
 }) async {
   if (!_isFirebaseEnabled) {
     return const SiteInspectionSaveResult(
@@ -40,10 +157,14 @@ Future<SiteInspectionSaveResult> saveSiteInspection({
   try {
     final firestore = FirebaseFirestore.instance;
     final ref = firestore.collection('site_inspections').doc();
+    final now = DateTime.now();
+    final inspectionName = _deriveInspectionName(formData, now);
 
     final data = <String, dynamic>{
       ...formData,
       'inspectorEmail': inspectorEmail,
+      'inspectionName': inspectionName,
+      'lastStep': lastStep,
       'createdAt': FieldValue.serverTimestamp(),
       'updatedAt': FieldValue.serverTimestamp(),
     };
@@ -60,4 +181,96 @@ Future<SiteInspectionSaveResult> saveSiteInspection({
       error: e.toString(),
     );
   }
+}
+
+/// Updates an existing inspection.
+Future<SiteInspectionSaveResult> updateInspection({
+  required String inspectionId,
+  required Map<String, dynamic> formData,
+  required String inspectorEmail,
+  int lastStep = 0,
+}) async {
+  if (!_isFirebaseEnabled) {
+    return const SiteInspectionSaveResult(
+      success: false,
+      error: 'Firebase is not configured. Inspection data cannot be saved.',
+    );
+  }
+
+  try {
+    final ref = FirebaseFirestore.instance
+        .collection('site_inspections')
+        .doc(inspectionId);
+
+    final doc = await ref.get();
+    if (!doc.exists) {
+      return SiteInspectionSaveResult(
+        success: false,
+        error: 'Inspection not found.',
+      );
+    }
+
+    final now = DateTime.now();
+    final inspectionName = _deriveInspectionName(formData, now);
+
+    final data = <String, dynamic>{
+      ...formData,
+      'inspectorEmail': inspectorEmail,
+      'inspectionName': inspectionName,
+      'lastStep': lastStep,
+      'updatedAt': FieldValue.serverTimestamp(),
+    };
+
+    await ref.set(data, SetOptions(merge: true));
+
+    return SiteInspectionSaveResult(
+      success: true,
+      inspectionId: inspectionId,
+    );
+  } catch (e) {
+    return SiteInspectionSaveResult(
+      success: false,
+      error: e.toString(),
+    );
+  }
+}
+
+/// Deletes an inspection.
+Future<bool> deleteInspection(String inspectionId) async {
+  if (!_isFirebaseEnabled) return false;
+
+  try {
+    await FirebaseFirestore.instance
+        .collection('site_inspections')
+        .doc(inspectionId)
+        .delete();
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
+/// Saves a site inspection to Firestore.
+/// Creates if [inspectionId] is null, updates otherwise.
+/// [formData] should contain only serializable types (String, num, List, Map).
+/// Requires authenticated user (caller should verify).
+Future<SiteInspectionSaveResult> saveSiteInspection({
+  required Map<String, dynamic> formData,
+  required String inspectorEmail,
+  String? inspectionId,
+  int lastStep = 0,
+}) async {
+  if (inspectionId != null && inspectionId.isNotEmpty) {
+    return updateInspection(
+      inspectionId: inspectionId,
+      formData: formData,
+      inspectorEmail: inspectorEmail,
+      lastStep: lastStep,
+    );
+  }
+  return createInspection(
+    formData: formData,
+    inspectorEmail: inspectorEmail,
+    lastStep: lastStep,
+  );
 }

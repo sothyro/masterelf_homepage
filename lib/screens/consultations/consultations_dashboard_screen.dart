@@ -5,6 +5,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../../widgets/login_dialog.dart';
 import '../../models/appointment.dart';
 import '../../providers/auth_provider.dart';
 import '../../theme/app_theme.dart';
@@ -240,13 +241,33 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              FilledButton(
-                onPressed: () => context.go('/consultations'),
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.accent,
-                  foregroundColor: AppColors.onAccent,
-                ),
-                child: Text(l10n.consultations),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FilledButton(
+                    onPressed: () => showLoginDialog(
+                      context,
+                      successActions: [
+                        (label: l10n.dashboardTitle, route: '/consultations/dashboard'),
+                        (label: l10n.inspectionDashboardTitle, route: '/consultations/inspection-dashboard'),
+                      ],
+                    ),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.accent,
+                      foregroundColor: AppColors.onAccent,
+                    ),
+                    child: Text(l10n.loginButton),
+                  ),
+                  const SizedBox(width: 12),
+                  OutlinedButton(
+                    onPressed: () => context.go('/consultations'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.accent,
+                      side: const BorderSide(color: AppColors.accent),
+                    ),
+                    child: Text(l10n.consultations),
+                  ),
+                ],
               ),
             ],
           ),

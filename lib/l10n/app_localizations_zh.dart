@@ -1243,6 +1243,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get loginRequired => '请登录以访问仪表板。';
 
   @override
+  String get loginSuccess => '登录成功';
+
+  @override
   String get calendarView => '日历';
 
   @override
@@ -1526,7 +1529,25 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get inspectionDashboardTitle => '勘察仪表板';
+
+  @override
+  String get inspectionDashboardSubtitle => '查看、编辑或继续您的勘察';
+
+  @override
+  String get inspectionContinue => '编辑 / 继续';
+
+  @override
+  String get inspectionNoInspections => '暂无勘察';
+
+  @override
+  String get inspectionStartFirst => '开始您的第一次勘察';
+
+  @override
   String get inspectionSave => '保存勘察';
+
+  @override
+  String get inspectionSaveProgress => '保存进度';
 
   @override
   String get inspectionSaving => '保存中…';
@@ -1605,6 +1626,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get inspectionSection17 => '第十七节：后续行动';
+
+  @override
+  String get inspectionNameLabel => '勘察名称';
+
+  @override
+  String get inspectionNameHint => '例如：河畔店屋、A 栋现场勘察';
 
   @override
   String get inspectionInspectorName => '勘察员姓名';
@@ -2355,4 +2382,253 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get inspectionShaSeveritySevere => '重煞（需大改）';
+
+  @override
+  String get inspectionSelectPlaceholder => '— 请选择 —';
+
+  @override
+  String get weatherSunny => '晴';
+
+  @override
+  String get weatherCloudy => '多云';
+
+  @override
+  String get weatherOvercast => '阴';
+
+  @override
+  String get weatherRainy => '雨';
+
+  @override
+  String get weatherStormy => '暴风雨';
+
+  @override
+  String get weatherFoggy => '雾';
+
+  @override
+  String get weatherPartlyCloudy => '局部多云';
+
+  @override
+  String get dirNorth => '北';
+
+  @override
+  String get dirSouth => '南';
+
+  @override
+  String get dirEast => '东';
+
+  @override
+  String get dirWest => '西';
+
+  @override
+  String get dirNortheast => '东北';
+
+  @override
+  String get dirNorthwest => '西北';
+
+  @override
+  String get dirSoutheast => '东南';
+
+  @override
+  String get dirSouthwest => '西南';
+
+  @override
+  String get zodRat => '鼠';
+
+  @override
+  String get zodOx => '牛';
+
+  @override
+  String get zodTiger => '虎';
+
+  @override
+  String get zodRabbit => '兔';
+
+  @override
+  String get zodDragon => '龙';
+
+  @override
+  String get zodSnake => '蛇';
+
+  @override
+  String get zodHorse => '马';
+
+  @override
+  String get zodGoat => '羊';
+
+  @override
+  String get zodMonkey => '猴';
+
+  @override
+  String get zodRooster => '鸡';
+
+  @override
+  String get zodDog => '狗';
+
+  @override
+  String get zodPig => '猪';
+
+  @override
+  String get personalGuaKan => '坎 - 水';
+
+  @override
+  String get personalGuaKun => '坤 - 土';
+
+  @override
+  String get personalGuaZhen => '震 - 木';
+
+  @override
+  String get personalGuaXun => '巽 - 木';
+
+  @override
+  String get personalGuaQian => '乾 - 金';
+
+  @override
+  String get personalGuaDui => '兑 - 金';
+
+  @override
+  String get personalGuaGen => '艮 - 土';
+
+  @override
+  String get personalGuaLi => '离 - 火';
+
+  @override
+  String get sectorKanNorth => '坎 - 北';
+
+  @override
+  String get sectorKunSouthwest => '坤 - 西南';
+
+  @override
+  String get sectorZhenEast => '震 - 东';
+
+  @override
+  String get sectorXunSoutheast => '巽 - 东南';
+
+  @override
+  String get sectorQianNorthwest => '乾 - 西北';
+
+  @override
+  String get sectorDuiWest => '兑 - 西';
+
+  @override
+  String get sectorGenNortheast => '艮 - 东北';
+
+  @override
+  String get sectorLiSouth => '离 - 南';
+
+  @override
+  String get trigramQian => '乾 - 天';
+
+  @override
+  String get trigramKun => '坤 - 地';
+
+  @override
+  String get trigramZhen => '震 - 雷';
+
+  @override
+  String get trigramXun => '巽 - 风';
+
+  @override
+  String get trigramKan => '坎 - 水';
+
+  @override
+  String get trigramLi => '离 - 火';
+
+  @override
+  String get trigramGen => '艮 - 山';
+
+  @override
+  String get trigramDui => '兑 - 泽';
+
+  @override
+  String get monthJan => '一月';
+
+  @override
+  String get monthFeb => '二月';
+
+  @override
+  String get monthMar => '三月';
+
+  @override
+  String get monthApr => '四月';
+
+  @override
+  String get monthMay => '五月';
+
+  @override
+  String get monthJun => '六月';
+
+  @override
+  String get monthJul => '七月';
+
+  @override
+  String get monthAug => '八月';
+
+  @override
+  String get monthSep => '九月';
+
+  @override
+  String get monthOct => '十月';
+
+  @override
+  String get monthNov => '十一月';
+
+  @override
+  String get monthDec => '十二月';
+
+  @override
+  String get inspectionBuildingCompletionYear => '建筑完工年份';
+
+  @override
+  String get inspectionMonthOfVisit => '勘察月份';
+
+  @override
+  String get inspectionFacingDirectionDegrees => '向方（度）';
+
+  @override
+  String get inspection24MountainPosition => '二十四山方位';
+
+  @override
+  String get inspectionStar9Location => '九紫（未来旺）方位';
+
+  @override
+  String get inspectionStar1Location => '一白（文昌/水财）方位';
+
+  @override
+  String get inspectionStar8Location => '八白（当旺财）方位';
+
+  @override
+  String get inspectionStar5Location => '五黄（灾星）方位';
+
+  @override
+  String get inspectionStar2Location => '二黑（病星）方位';
+
+  @override
+  String get inspectionStar3Location => '三碧（是非星）方位';
+
+  @override
+  String get inspectionCriticalCombinations => '需注意的凶煞组合';
+
+  @override
+  String get inspectionAvoidOwnerZodiac => '避免与业主生肖相冲';
+
+  @override
+  String get inspectionAvoidPartnerZodiac => '避免与合伙人生肖相冲';
+
+  @override
+  String get inspectionRoom1DoorDirection => '房间1 - 门向';
+
+  @override
+  String get inspectionRoom1WindowDirection => '房间1 - 窗向';
+
+  @override
+  String get inspectionKitchenLocation => '厨房/储物间位置';
+
+  @override
+  String get inspectionBathroomLocation => '浴室/卫生间位置';
+
+  @override
+  String get inspectionDrainageDirection => '排水方向';
+
+  @override
+  String get inspectionEstimatedReportDeliveryDate => '预计报告交付日期';
 }

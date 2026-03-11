@@ -1253,7 +1253,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get goToDashboard => 'Go to Dashboard';
 
   @override
-  String get siteInspection => 'Site inspection';
+  String get siteInspection => 'Site Inspection';
 
   @override
   String get welcomeBack => 'Welcome back';
@@ -1323,6 +1323,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loginRequired => 'Please log in to access the dashboard.';
+
+  @override
+  String get loginSuccess => 'Login successful';
 
   @override
   String get calendarView => 'Calendar';
@@ -1623,7 +1626,26 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get inspectionDashboardTitle => 'Inspection Dashboard';
+
+  @override
+  String get inspectionDashboardSubtitle =>
+      'View, edit or continue your inspections';
+
+  @override
+  String get inspectionContinue => 'Edit / Continue';
+
+  @override
+  String get inspectionNoInspections => 'No inspections yet';
+
+  @override
+  String get inspectionStartFirst => 'Start your first inspection';
+
+  @override
   String get inspectionSave => 'Save Inspection';
+
+  @override
+  String get inspectionSaveProgress => 'Save progress';
 
   @override
   String get inspectionSaving => 'Saving…';
@@ -1705,6 +1727,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get inspectionSection17 => 'Section 17: Follow-up Actions';
+
+  @override
+  String get inspectionNameLabel => 'Inspection Name';
+
+  @override
+  String get inspectionNameHint =>
+      'e.g. Riverside Shophouse, Tower A Site Visit';
 
   @override
   String get inspectionInspectorName => 'Inspector Name';
@@ -2481,4 +2510,256 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get inspectionShaSeveritySevere =>
       'Severe sha qi (major remedial work required)';
+
+  @override
+  String get inspectionSelectPlaceholder => '— Select —';
+
+  @override
+  String get weatherSunny => 'Sunny';
+
+  @override
+  String get weatherCloudy => 'Cloudy';
+
+  @override
+  String get weatherOvercast => 'Overcast';
+
+  @override
+  String get weatherRainy => 'Rainy';
+
+  @override
+  String get weatherStormy => 'Stormy';
+
+  @override
+  String get weatherFoggy => 'Foggy';
+
+  @override
+  String get weatherPartlyCloudy => 'Partly cloudy';
+
+  @override
+  String get dirNorth => 'North';
+
+  @override
+  String get dirSouth => 'South';
+
+  @override
+  String get dirEast => 'East';
+
+  @override
+  String get dirWest => 'West';
+
+  @override
+  String get dirNortheast => 'Northeast';
+
+  @override
+  String get dirNorthwest => 'Northwest';
+
+  @override
+  String get dirSoutheast => 'Southeast';
+
+  @override
+  String get dirSouthwest => 'Southwest';
+
+  @override
+  String get zodRat => 'Rat (鼠)';
+
+  @override
+  String get zodOx => 'Ox (牛)';
+
+  @override
+  String get zodTiger => 'Tiger (虎)';
+
+  @override
+  String get zodRabbit => 'Rabbit (兔)';
+
+  @override
+  String get zodDragon => 'Dragon (龙)';
+
+  @override
+  String get zodSnake => 'Snake (蛇)';
+
+  @override
+  String get zodHorse => 'Horse (马)';
+
+  @override
+  String get zodGoat => 'Goat (羊)';
+
+  @override
+  String get zodMonkey => 'Monkey (猴)';
+
+  @override
+  String get zodRooster => 'Rooster (鸡)';
+
+  @override
+  String get zodDog => 'Dog (狗)';
+
+  @override
+  String get zodPig => 'Pig (猪)';
+
+  @override
+  String get personalGuaKan => 'Kan (坎) - Water';
+
+  @override
+  String get personalGuaKun => 'Kun (坤) - Earth';
+
+  @override
+  String get personalGuaZhen => 'Zhen (震) - Wood';
+
+  @override
+  String get personalGuaXun => 'Xun (巽) - Wood';
+
+  @override
+  String get personalGuaQian => 'Qian (乾) - Metal';
+
+  @override
+  String get personalGuaDui => 'Dui (兌) - Metal';
+
+  @override
+  String get personalGuaGen => 'Gen (艮) - Earth';
+
+  @override
+  String get personalGuaLi => 'Li (離) - Fire';
+
+  @override
+  String get sectorKanNorth => 'Kan (坎) - North';
+
+  @override
+  String get sectorKunSouthwest => 'Kun (坤) - Southwest';
+
+  @override
+  String get sectorZhenEast => 'Zhen (震) - East';
+
+  @override
+  String get sectorXunSoutheast => 'Xun (巽) - Southeast';
+
+  @override
+  String get sectorQianNorthwest => 'Qian (乾) - Northwest';
+
+  @override
+  String get sectorDuiWest => 'Dui (兌) - West';
+
+  @override
+  String get sectorGenNortheast => 'Gen (艮) - Northeast';
+
+  @override
+  String get sectorLiSouth => 'Li (離) - South';
+
+  @override
+  String get trigramQian => 'Qian (乾) - Heaven';
+
+  @override
+  String get trigramKun => 'Kun (坤) - Earth';
+
+  @override
+  String get trigramZhen => 'Zhen (震) - Thunder';
+
+  @override
+  String get trigramXun => 'Xun (巽) - Wind';
+
+  @override
+  String get trigramKan => 'Kan (坎) - Water';
+
+  @override
+  String get trigramLi => 'Li (離) - Fire';
+
+  @override
+  String get trigramGen => 'Gen (艮) - Mountain';
+
+  @override
+  String get trigramDui => 'Dui (兌) - Lake';
+
+  @override
+  String get monthJan => 'January';
+
+  @override
+  String get monthFeb => 'February';
+
+  @override
+  String get monthMar => 'March';
+
+  @override
+  String get monthApr => 'April';
+
+  @override
+  String get monthMay => 'May';
+
+  @override
+  String get monthJun => 'June';
+
+  @override
+  String get monthJul => 'July';
+
+  @override
+  String get monthAug => 'August';
+
+  @override
+  String get monthSep => 'September';
+
+  @override
+  String get monthOct => 'October';
+
+  @override
+  String get monthNov => 'November';
+
+  @override
+  String get monthDec => 'December';
+
+  @override
+  String get inspectionBuildingCompletionYear => 'Building Completion Year';
+
+  @override
+  String get inspectionMonthOfVisit => 'Month of Visit';
+
+  @override
+  String get inspectionFacingDirectionDegrees => 'Facing Direction (degrees)';
+
+  @override
+  String get inspection24MountainPosition => '24 Mountain Position';
+
+  @override
+  String get inspectionStar9Location => 'Star 9 (Future Prosperity) location';
+
+  @override
+  String get inspectionStar1Location => 'Star 1 (Noble/Water Wealth) location';
+
+  @override
+  String get inspectionStar8Location => 'Star 8 (Current Wealth) location';
+
+  @override
+  String get inspectionStar5Location =>
+      'Star 5 (Five Yellow - Misfortune) location';
+
+  @override
+  String get inspectionStar2Location => 'Star 2 (Illness Star) location';
+
+  @override
+  String get inspectionStar3Location => 'Star 3 (Quarrel Star) location';
+
+  @override
+  String get inspectionCriticalCombinations => 'Critical Combinations to Note';
+
+  @override
+  String get inspectionAvoidOwnerZodiac => 'Avoid clash with owner\'s zodiac';
+
+  @override
+  String get inspectionAvoidPartnerZodiac =>
+      'Avoid clash with partner\'s zodiac';
+
+  @override
+  String get inspectionRoom1DoorDirection => 'Room 1 - Door direction';
+
+  @override
+  String get inspectionRoom1WindowDirection => 'Room 1 - Window direction';
+
+  @override
+  String get inspectionKitchenLocation => 'Kitchen/pantry location';
+
+  @override
+  String get inspectionBathroomLocation => 'Bathroom/toilet location';
+
+  @override
+  String get inspectionDrainageDirection => 'Drainage direction';
+
+  @override
+  String get inspectionEstimatedReportDeliveryDate =>
+      'Estimated Report Delivery Date';
 }
