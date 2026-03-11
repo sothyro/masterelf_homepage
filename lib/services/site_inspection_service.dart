@@ -30,6 +30,7 @@ class InspectionRecord {
     required this.inspectionName,
     required this.inspectorEmail,
     required this.lastStep,
+    this.visitDateTime,
     this.updatedAt,
     this.createdAt,
   });
@@ -38,6 +39,7 @@ class InspectionRecord {
   final String inspectionName;
   final String inspectorEmail;
   final int lastStep;
+  final DateTime? visitDateTime;
   final DateTime? updatedAt;
   final DateTime? createdAt;
 
@@ -45,11 +47,41 @@ class InspectionRecord {
     final data = doc.data() ?? {};
     final updatedAt = data['updatedAt'] as Timestamp?;
     final createdAt = data['createdAt'] as Timestamp?;
+
+    DateTime? parsedVisitDateTime;
+    final inspectionDateStr = data['inspectionDate'] as String?;
+    final timeOfArrivalStr = data['timeOfArrival'] as String?;
+    if (inspectionDateStr != null && inspectionDateStr.isNotEmpty) {
+      final parts = inspectionDateStr.split('-');
+      if (parts.length == 3) {
+        final y = int.tryParse(parts[0]);
+        final m = int.tryParse(parts[1]);
+        final d = int.tryParse(parts[2]);
+        if (y != null && m != null && d != null) {
+          int hour = 0;
+          int minute = 0;
+          if (timeOfArrivalStr != null && timeOfArrivalStr.isNotEmpty) {
+            final tParts = timeOfArrivalStr.split(':');
+            if (tParts.isNotEmpty) {
+              final h = int.tryParse(tParts[0]);
+              if (h != null) hour = h;
+              if (tParts.length > 1) {
+                final min = int.tryParse(tParts[1]);
+                if (min != null) minute = min;
+              }
+            }
+          }
+          parsedVisitDateTime = DateTime(y, m, d, hour, minute);
+        }
+      }
+    }
+
     return InspectionRecord(
       id: doc.id,
       inspectionName: data['inspectionName'] as String? ?? 'Inspection',
       inspectorEmail: data['inspectorEmail'] as String? ?? '',
       lastStep: (data['lastStep'] as int?) ?? 0,
+      visitDateTime: parsedVisitDateTime,
       updatedAt: updatedAt?.toDate(),
       createdAt: createdAt?.toDate(),
     );

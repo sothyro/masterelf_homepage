@@ -95,13 +95,13 @@ class _InspectionDashboardScreenState extends State<InspectionDashboardScreen> {
                           children: [
                             Text(
                               l10n.inspectionDashboardTitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium
+                              style: (isNarrow
+                                      ? Theme.of(context).textTheme.headlineSmall
+                                      : Theme.of(context).textTheme.headlineMedium)
                                   ?.copyWith(
-                                    color: AppColors.onPrimary,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                color: AppColors.onPrimary,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                             const SizedBox(height: 8),
                             Text(
@@ -357,8 +357,11 @@ class _InspectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final updatedStr = inspection.updatedAt != null
-        ? '${inspection.updatedAt!.day}/${inspection.updatedAt!.month}/${inspection.updatedAt!.year}'
+    final visitOrCreated =
+        inspection.visitDateTime ?? inspection.updatedAt ?? inspection.createdAt;
+    final updatedStr = visitOrCreated != null
+        ? '${visitOrCreated.day}/${visitOrCreated.month}/${visitOrCreated.year} '
+            '${visitOrCreated.hour.toString().padLeft(2, '0')}:${visitOrCreated.minute.toString().padLeft(2, '0')}'
         : null;
     final stepStr = l10n.inspectionStepOf(inspection.lastStep + 1, 18);
 

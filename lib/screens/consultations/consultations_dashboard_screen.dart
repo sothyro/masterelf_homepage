@@ -132,10 +132,13 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
                           children: [
                             Text(
                               l10n.dashboardTitle,
-                              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                    color: AppColors.onPrimary,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                              style: (isNarrow
+                                      ? Theme.of(context).textTheme.headlineSmall
+                                      : Theme.of(context).textTheme.headlineMedium)
+                                  ?.copyWith(
+                                color: AppColors.onPrimary,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                             const SizedBox(height: 8),
                             Text(
@@ -542,6 +545,124 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
   }
 
   Widget _buildViewToggleAndFilters(BuildContext context, AppLocalizations l10n) {
+    final width = MediaQuery.sizeOf(context).width;
+    final isMobile = Breakpoints.isMobile(width);
+
+    if (isMobile) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                SegmentedButton<bool>(
+                  segments: [
+                    ButtonSegment(
+                      value: true,
+                      label: Text(l10n.calendarView),
+                      icon: const Icon(LucideIcons.calendar, size: 18),
+                    ),
+                    ButtonSegment(
+                      value: false,
+                      label: Text(l10n.listView),
+                      icon: const Icon(LucideIcons.list, size: 18),
+                    ),
+                  ],
+                  selected: {_calendarView},
+                  showSelectedIcon: false,
+                  onSelectionChanged: (s) => setState(() => _calendarView = s.first),
+                  style: ButtonStyle(
+                    foregroundColor: WidgetStateProperty.resolveWith((states) {
+                      if (states.contains(WidgetState.selected)) return AppColors.onAccent;
+                      return AppColors.onPrimary;
+                    }),
+                    backgroundColor: WidgetStateProperty.resolveWith((states) {
+                      if (states.contains(WidgetState.selected)) return AppColors.accent;
+                      return AppColors.surfaceElevatedDark;
+                    }),
+                  ),
+                ),
+                const SizedBox(width: 16),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                SegmentedButton<String?>(
+                  segments: [
+                    ButtonSegment(value: null, label: Text(l10n.filterAll)),
+                    ButtonSegment(value: 'pending', label: Text(l10n.statusPending)),
+                    ButtonSegment(value: 'confirmed', label: const Text('Confirm')),
+                    ButtonSegment(value: 'completed', label: const Text('Complete')),
+                    ButtonSegment(value: 'cancelled', label: const Text('Cancel')),
+                  ],
+                  selected: {_statusFilter},
+                  showSelectedIcon: false,
+                  onSelectionChanged: (s) {
+                    setState(() {
+                      _statusFilter = s.isEmpty ? null : s.first;
+                      _loadAppointments();
+                    });
+                  },
+                  style: ButtonStyle(
+                    foregroundColor: WidgetStateProperty.resolveWith((states) {
+                      if (states.contains(WidgetState.selected)) return AppColors.onAccent;
+                      return AppColors.onPrimary;
+                    }),
+                    backgroundColor: WidgetStateProperty.resolveWith((states) {
+                      if (states.contains(WidgetState.selected)) return AppColors.accent;
+                      return AppColors.surfaceElevatedDark;
+                    }),
+                  ),
+                ),
+                const SizedBox(width: 16),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            alignment: WrapAlignment.end,
+            children: [
+              TextButton.icon(
+                onPressed: () async {
+                  await showCreateBookingDialog(
+                    context,
+                    initialDate: _calendarView ? _calendarSelectedDay : DateTime.now(),
+                    initialTime: '09:00',
+                    onCreated: _loadAppointments,
+                  );
+                },
+                icon: const Icon(LucideIcons.plus, size: 18),
+                label: Text(l10n.createBooking),
+                style: TextButton.styleFrom(foregroundColor: AppColors.accent),
+              ),
+              FilledButton.icon(
+                onPressed: _loading ? null : _loadAppointments,
+                icon: _loading
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.onAccent),
+                      )
+                    : const Icon(LucideIcons.refreshCw, size: 18),
+                label: Text(l10n.refresh),
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.accent,
+                  foregroundColor: AppColors.onAccent,
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -553,6 +674,7 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
               ButtonSegment(value: false, label: Text(l10n.listView), icon: const Icon(LucideIcons.list, size: 18)),
             ],
             selected: {_calendarView},
+            showSelectedIcon: false,
             onSelectionChanged: (s) => setState(() => _calendarView = s.first),
             style: ButtonStyle(
               foregroundColor: WidgetStateProperty.resolveWith((states) {
@@ -575,6 +697,7 @@ class _AppointmentsDashboardScreenState extends State<AppointmentsDashboardScree
               ButtonSegment(value: 'cancelled', label: Text(l10n.statusCancelled)),
             ],
             selected: {_statusFilter},
+            showSelectedIcon: false,
             onSelectionChanged: (s) {
               setState(() {
                 _statusFilter = s.isEmpty ? null : s.first;
