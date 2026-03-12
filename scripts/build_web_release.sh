@@ -21,6 +21,12 @@ echo ""
 echo "=== Building web ==="
 flutter build web
 
+# Copy .htaccess to build output (required for Apache/LiteSpeed hosting - SPA routing + www redirect)
+if [[ -f web/.htaccess ]]; then
+  cp web/.htaccess build/web/.htaccess
+  echo "Copied .htaccess to build/web/"
+fi
+
 if [[ "$1" == "--deploy" ]]; then
   echo ""
   echo "=== Deploying to Firebase Hosting ==="

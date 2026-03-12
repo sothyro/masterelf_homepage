@@ -1,10 +1,20 @@
 # SPA routing: serve index.html for all paths so Flutter (GoRouter) can handle deep links.
-# Required when using path-based URLs (usePathUrlStrategy) on Apache (e.g. Namecheap shared hosting).
+# Required when using path-based URLs (usePathUrlStrategy) on Apache/LiteSpeed (e.g. Namecheap shared hosting).
 # Place this file in the same directory as index.html (e.g. build/web or your site root).
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Force HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Redirect non-www to www (canonical: https://www.masterelf.vip)
+  # Ensures masterelf.vip, http://masterelf.vip, etc. all work and redirect to https://www.masterelf.vip
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteCond %{HTTP_HOST} !^$
+  RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
   # If the request is for an existing file or directory, serve it
   RewriteCond %{REQUEST_FILENAME} !-f
@@ -12,4 +22,9 @@
 
   # Otherwise send everything to index.html (Flutter app)
   RewriteRule ^ index.html [QSA,L]
+</IfModule>
+
+# Ensure index.html is the default document (prevents "Index of /" directory listing)
+<IfModule mod_dir.c>
+  DirectoryIndex index.html
 </IfModule>

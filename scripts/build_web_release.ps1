@@ -28,6 +28,14 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
+# Copy .htaccess to build output (required for Apache/LiteSpeed hosting - SPA routing + www redirect)
+$htaccessSrc = Join-Path $projectRoot "web\.htaccess"
+$htaccessDst = Join-Path $projectRoot "build\web\.htaccess"
+if (Test-Path $htaccessSrc) {
+    Copy-Item $htaccessSrc $htaccessDst -Force
+    Write-Host "Copied .htaccess to build/web/" -ForegroundColor Green
+}
+
 if ($Deploy) {
     Write-Host "`n=== Deploying to Firebase Hosting ===" -ForegroundColor Cyan
     firebase deploy --only hosting
