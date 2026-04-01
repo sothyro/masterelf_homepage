@@ -11,7 +11,7 @@ const db = getFirestore();
 const plasgatePrivateKey = defineSecret("PLASGATE_PRIVATE_KEY");
 const plasgateSecret = defineSecret("PLASGATE_SECRET");
 const adminSmsPhone = defineSecret("ADMIN_SMS_PHONE");
-const SMS_SENDER = "PlasGateUAT";
+const SMS_SENDER = "MasterElf";
 
 const APPOINTMENTS = "appointments";
 const SESSION_DURATION_MINUTES = 120;

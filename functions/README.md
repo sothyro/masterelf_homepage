@@ -4,7 +4,7 @@ Firebase Cloud Functions for appointments (slots, booking, PlasGate SMS) and con
 
 ## PlasGate SMS setup
 
-When a new document is created in the `appointments` collection, **3 SMS** are sent (sender **PlasGateUAT**): (1) customer, (2) admin, (3) Master Elf (+85512222211).
+When a new document is created in the `appointments` collection, **3 SMS** are sent (sender **MasterElf**): (1) customer, (2) admin, (3) Master Elf (+85512222211).
 
 ### Required secrets
 
