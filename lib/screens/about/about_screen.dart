@@ -14,6 +14,7 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
+    final useCompactLogos = !Breakpoints.isDesktop(MediaQuery.sizeOf(context).width);
     return Container(
       width: double.infinity,
       color: AppColors.backgroundDark,
@@ -71,8 +72,8 @@ class AboutScreen extends StatelessWidget {
                   ),
             ),
             const SizedBox(height: 16),
-            // Logo row: horizontal scroll on mobile so all logos are accessible
-            isMobile
+            // Logo row: horizontal scroll on mobile/tablet so all logos are accessible
+            useCompactLogos
                 ? SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(

@@ -146,40 +146,48 @@ class _BookStoreCardState extends State<BookStoreCard> {
             ],
             if (widget.stretch) const Spacer(),
             const SizedBox(height: 12),
-            if (Breakpoints.isSmall(MediaQuery.sizeOf(context).width))
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    '$prefix${widget.price}',
-                    style: highlightStyleForLocale(
-                      context,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.accent,
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final stackPriceCta = constraints.maxWidth < 280 ||
+                    Breakpoints.isSmall(MediaQuery.sizeOf(context).width);
+                if (stackPriceCta) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        '$prefix${widget.price}',
+                        style: highlightStyleForLocale(
+                          context,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.accent,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      _addToCartButton(context),
+                    ],
+                  );
+                }
+                return Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  crossAxisAlignment: WrapCrossAlignment.end,
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    Text(
+                      '$prefix${widget.price}',
+                      style: highlightStyleForLocale(
+                        context,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.accent,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  _addToCartButton(context),
-                ],
-              )
-            else
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    '$prefix${widget.price}',
-                    style: highlightStyleForLocale(
-                      context,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.accent,
-                    ),
-                  ),
-                  _addToCartButton(context),
-                ],
-              ),
+                    _addToCartButton(context),
+                  ],
+                );
+              },
+            ),
           ],
         ),
       ),

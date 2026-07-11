@@ -1105,7 +1105,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
       width: double.infinity,
       color: AppColors.backgroundDark,
       padding: EdgeInsets.only(
-        top: isMobile ? 168 : 120,
+        top: pageHeaderTopPadding(context),
         bottom: 48,
         left: isMobile ? 16 : 24,
         right: isMobile ? 16 : 24,

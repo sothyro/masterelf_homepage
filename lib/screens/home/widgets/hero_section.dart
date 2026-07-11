@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:video_player/video_player.dart';
 
@@ -85,6 +84,22 @@ class _HeroSectionState extends State<HeroSection> {
     super.dispose();
   }
 
+  double _headlineSize(double width) =>
+      Breakpoints.isSmall(width) ? 20 : (Breakpoints.isMedium(width) ? 26 : 32);
+
+  double _highlightSize(double width) =>
+      Breakpoints.isSmall(width) ? 38 : (Breakpoints.isMedium(width) ? 46 : 56);
+
+  double _sublineSize(double width) =>
+      Breakpoints.isSmall(width) ? 13 : (Breakpoints.isMedium(width) ? 15 : 17);
+
+  EdgeInsets _buttonPadding(double width) => EdgeInsets.symmetric(
+        horizontal: Breakpoints.isSmall(width) ? 24 : 32,
+        vertical: Breakpoints.isSmall(width) ? 14 : 18,
+      );
+
+  double _buttonFontSize(double width) => Breakpoints.isSmall(width) ? 15 : 17;
+
   List<Widget> _heroHeadlinesAndSubline(
     BuildContext context,
     AppLocalizations l10n,
@@ -100,7 +115,7 @@ class _HeroSectionState extends State<HeroSection> {
             style: (Theme.of(context).textTheme.headlineLarge ?? const TextStyle()).copyWith(
               color: AppColors.onPrimary,
               fontWeight: FontWeight.w600,
-              fontSize: width < 600 ? 20 : (width < 900 ? 26 : 32),
+              fontSize: _headlineSize(width),
               height: 0.88,
             ),
             children: [
@@ -111,7 +126,7 @@ class _HeroSectionState extends State<HeroSection> {
                   context,
                   color: AppColors.accent,
                   fontWeight: FontWeight.bold,
-                  fontSize: width < 600 ? 38 : (width < 900 ? 46 : 56),
+                  fontSize: _highlightSize(width),
                 ),
               ),
               TextSpan(text: l10n.heroHeadline1Suffix),
@@ -126,7 +141,7 @@ class _HeroSectionState extends State<HeroSection> {
           style: (Theme.of(context).textTheme.headlineLarge ?? const TextStyle()).copyWith(
             color: AppColors.onPrimary,
             fontWeight: FontWeight.w600,
-            fontSize: width < 600 ? 20 : (width < 900 ? 26 : 32),
+            fontSize: _headlineSize(width),
             height: 0.88,
           ),
           children: [
@@ -137,7 +152,7 @@ class _HeroSectionState extends State<HeroSection> {
                 context,
                 color: AppColors.accent,
                 fontWeight: FontWeight.bold,
-                fontSize: width < 600 ? 38 : (width < 900 ? 46 : 56),
+                fontSize: _highlightSize(width),
               ),
             ),
           ],
@@ -150,8 +165,66 @@ class _HeroSectionState extends State<HeroSection> {
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
           color: AppColors.onPrimary.withValues(alpha: 0.9),
           height: 0.9,
-          fontSize: width < 600 ? 13 : (width < 900 ? 15 : 17),
+          fontSize: _sublineSize(width),
         ),
+      ),
+    ];
+  }
+
+  List<Widget> _heroCtaButtons(
+    BuildContext context,
+    AppLocalizations l10n,
+    double width,
+    WrapAlignment alignment,
+  ) {
+    return [
+      Wrap(
+        alignment: alignment,
+        spacing: 20,
+        runSpacing: 14,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: AppShadows.accentButton,
+            ),
+            child: FilledButton(
+              onPressed: () => context.push('/consultations'),
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.accent,
+                foregroundColor: AppColors.onAccent,
+                padding: _buttonPadding(width),
+                elevation: 0,
+              ),
+              child: Text(
+                l10n.bookConsultation,
+                style: TextStyle(
+                  fontSize: _buttonFontSize(width),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+          OutlinedButton.icon(
+            onPressed: () => launchUrlExternal(AppContent.facebookUrl),
+            icon: Icon(
+              LucideIcons.facebook,
+              size: Breakpoints.isSmall(width) ? 18 : 20,
+            ),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: AppColors.onPrimary,
+              side: const BorderSide(color: AppColors.onPrimary),
+              padding: _buttonPadding(width),
+            ),
+            label: Text(
+              l10n.heroMasterElfCaption,
+              style: TextStyle(
+                fontSize: _buttonFontSize(width),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
       ),
     ];
   }
@@ -171,6 +244,7 @@ class _HeroSectionState extends State<HeroSection> {
     final contentAlignment = isMobile ? const Alignment(0, 1.0) : const Alignment(-0.38, 0.42);
     final crossAlign = isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start;
     final textAlign = isMobile ? TextAlign.center : TextAlign.left;
+    final wrapAlign = isMobile ? WrapAlignment.center : WrapAlignment.start;
 
     return RepaintBoundary(
       child: SizedBox(
@@ -227,142 +301,39 @@ class _HeroSectionState extends State<HeroSection> {
               ),
             ),
             // 5) Content
-            Padding(
-              padding: EdgeInsets.only(
-                left: horizontalPadding,
-                right: horizontalPadding,
-                top: topInset + verticalPadding,
-                bottom: isMobile ? 16.0 : verticalPadding,
-              ),
-              child: Align(
-                alignment: contentAlignment,
-                child: isMobile
-                    ? ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 900),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: crossAlign,
-                          children: [
-                            const SizedBox(height: 140),
-                            Wrap(
-                              alignment: WrapAlignment.center,
-                              spacing: 20,
-                              runSpacing: 14,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    boxShadow: AppShadows.accentButton,
-                                  ),
-                                  child: FilledButton(
-                                    onPressed: () => context.push('/consultations'),
-                                    style: FilledButton.styleFrom(
-                                      backgroundColor: AppColors.accent,
-                                      foregroundColor: AppColors.onAccent,
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: width < 600 ? 24 : 32,
-                                        vertical: width < 600 ? 14 : 18,
-                                      ),
-                                      elevation: 0,
-                                    ),
-                                    child: Text(
-                                      l10n.bookConsultation,
-                                      style: TextStyle(
-                                        fontSize: width < 600 ? 15 : 17,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                OutlinedButton.icon(
-                                  onPressed: () => launchUrlExternal(AppContent.facebookUrl),
-                                  icon: Icon(LucideIcons.facebook, size: width < 600 ? 18 : 20),
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor: AppColors.onPrimary,
-                                    side: const BorderSide(color: AppColors.onPrimary),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: width < 600 ? 24 : 32,
-                                      vertical: width < 600 ? 14 : 18,
-                                    ),
-                                  ),
-                                  label: Text(
-                                    l10n.heroMasterElfCaption,
-                                    style: TextStyle(
-                                      fontSize: width < 600 ? 15 : 17,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 28),
-                            ..._heroHeadlinesAndSubline(context, l10n, textAlign, width),
-                          ],
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                    left: horizontalPadding,
+                    right: horizontalPadding,
+                    top: topInset + verticalPadding,
+                    bottom: isMobile ? 16.0 : verticalPadding,
+                  ),
+                  child: Align(
+                    alignment: contentAlignment,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: isMobile ? Alignment.bottomCenter : Alignment.centerLeft,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: 900,
+                          maxHeight: constraints.maxHeight,
                         ),
-                      )
-                    : ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 900),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: crossAlign,
                           children: [
                             ..._heroHeadlinesAndSubline(context, l10n, textAlign, width),
-                            const SizedBox(height: 36),
-                            Wrap(
-                              alignment: WrapAlignment.start,
-                              spacing: 20,
-                              runSpacing: 14,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    boxShadow: AppShadows.accentButton,
-                                  ),
-                                  child: FilledButton(
-                                    onPressed: () => context.push('/consultations'),
-                                    style: FilledButton.styleFrom(
-                                      backgroundColor: AppColors.accent,
-                                      foregroundColor: AppColors.onAccent,
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: width < 600 ? 24 : 32,
-                                        vertical: width < 600 ? 14 : 18,
-                                      ),
-                                      elevation: 0,
-                                    ),
-                                    child: Text(
-                                      l10n.bookConsultation,
-                                      style: TextStyle(
-                                        fontSize: width < 600 ? 15 : 17,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                OutlinedButton.icon(
-                                  onPressed: () => launchUrlExternal(AppContent.facebookUrl),
-                                  icon: Icon(LucideIcons.facebook, size: width < 600 ? 18 : 20),
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor: AppColors.onPrimary,
-                                    side: const BorderSide(color: AppColors.onPrimary),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: width < 600 ? 24 : 32,
-                                      vertical: width < 600 ? 14 : 18,
-                                    ),
-                                  ),
-                                  label: Text(
-                                    l10n.heroMasterElfCaption,
-                                    style: TextStyle(
-                                      fontSize: width < 600 ? 15 : 17,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            SizedBox(height: isMobile ? 24 : 36),
+                            ..._heroCtaButtons(context, l10n, width, wrapAlign),
                           ],
                         ),
                       ),
-              ),
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),

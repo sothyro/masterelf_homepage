@@ -15,6 +15,7 @@ import 'sticky_cta_bar.dart';
 import 'sticky_inspection_cta_bar.dart';
 import 'sticky_login_cta_bar.dart';
 import 'sticky_logout_cta_bar.dart';
+import 'app_shell_scroll_scope.dart';
 
 /// Maximum height (from top of overlay) that participates in hit testing.
 /// Taps below this pass through to content (breadcrumbs, buttons, etc.).
@@ -101,7 +102,9 @@ class _AppShellState extends State<AppShell> {
     final mobileBarHeight = isMobile ? kMobileStickyCtaBarHeight : 0.0;
     final fabBottomPadding = (isMobile ? 24.0 : 60.0) + bottomSafe + mobileBarHeight;
 
-    return Scaffold(
+    return AppShellScrollScope(
+      scrollController: _scrollController,
+      child: Scaffold(
       key: _scaffoldKey,
       backgroundColor: AppColors.backgroundDark,
       drawer: const AppDrawer(),
@@ -240,6 +243,7 @@ class _AppShellState extends State<AppShell> {
             ),
         ],
       ),
+    ),
     );
   }
 }

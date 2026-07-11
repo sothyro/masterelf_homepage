@@ -4,6 +4,8 @@
 /// - **Mobile** (< 768): single column, drawer nav, stacked actions
 /// - **Tablet** (768–1023): condensed layouts, 1–2 columns for cards
 /// - **Desktop** (>= 1024): full nav, multi-column grids
+///
+/// Typography tiers: small (< 600), medium (< 900), compact (< 960).
 class Breakpoints {
   Breakpoints._();
 
@@ -19,12 +21,16 @@ class Breakpoints {
   /// Compact: field-work hub and similar mid-width stacked layouts (< 960).
   static const double compact = 960;
 
+  /// Medium: hero typography and card icon sizing tier (< 900).
+  static const double medium = 900;
+
   /// Tablet / desktop boundary (>= 1024).
   static const double tablet = 1024;
 
   static bool isSmall(double width) => width < small;
   static bool isMobile(double width) => width < mobile;
   static bool isNarrow(double width) => width < narrow;
+  static bool isMedium(double width) => width < medium;
   static bool isCompact(double width) => width < compact;
   static bool isTabletOnly(double width) => width >= mobile && width < tablet;
   static bool isTabletOrLarger(double width) => width >= mobile;

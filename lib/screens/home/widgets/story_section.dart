@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -150,15 +152,16 @@ class StorySection extends StatelessWidget {
     );
 
     // Desktop: centered story block. Mobile: image full height behind text (stacked), with light scrim for readability.
+    final mobileStoryHeight = math.max(520.0, width * 1.1);
     final storyContent = isMobile
         ? Padding(
             padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 820),
+              constraints: BoxConstraints(minHeight: mobileStoryHeight),
               child: Stack(
                 children: [
                   // Give Stack a size so positioned children have a layout (Stack with only positioned children otherwise has zero size).
-                  SizedBox(width: double.infinity, height: 820),
+                  SizedBox(width: double.infinity, height: mobileStoryHeight),
                   Positioned.fill(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
@@ -266,7 +269,7 @@ class StorySection extends StatelessWidget {
                 right: 0,
                 top: 48,
                 bottom: 0,
-                width: 800,
+                width: math.min(800, width * 0.55),
                 child: Opacity(
                   opacity: 0.77,
                   child: Align(

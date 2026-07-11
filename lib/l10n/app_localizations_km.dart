@@ -36,6 +36,13 @@ class AppLocalizationsKm extends AppLocalizations {
   String get masterElfSystem => 'ប្រព័ន្ធកម្មវិធី Master Elf';
 
   @override
+  String get appsHeroBrandSubtitle => 'ប្រព័ន្ធ Master Elf Chinese Metaphysic';
+
+  @override
+  String get appsIntroTagline =>
+      'គូរក្រាប។ អានពេលវេលា។ សម្រេចចិត្តដោយទំនុកចិត្ត — លើអេក្រង់គ្រប់មួយ។';
+
+  @override
   String get period9MobileApp => 'កម្មវិធីយុគទី ៩ (Period 9)';
 
   @override
@@ -64,6 +71,90 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get appsFeatureShowcaseMarketingHighlight => 'បន្ថែមទៅកន្ត្រក ឬជាវ';
+
+  @override
+  String get appsChapterDigitalPlatform => 'វេទិកាឌីជីថល';
+
+  @override
+  String get appsChapterDigitalPlatformHeadline =>
+      'ប្រព័ន្ធ Master Elf — មជ្ឈមណ្ឌលបញ្ជាញណ្ណរបស់អ្នក។';
+
+  @override
+  String get appsChapterDigitalPlatformSubline =>
+      'គូរតារាងបរិច្ឆាយ វិភាគទម្រង់ឈីមិន និងសម្រេចចិត្តតាមពេលវេលាដោយទំនុកចិត្ត។';
+
+  @override
+  String get appsChapterFeatureAtlas => 'ផែនទីមុខងារ';
+
+  @override
+  String get appsChapterFeatureAtlasHeadline =>
+      'មុខងារទាំងអស់ ក្នុងប្រព័ន្ធតែមួយ។';
+
+  @override
+  String get appsChapterFeatureAtlasSubline =>
+      'ស្វែងយល់អេក្រង់ដែលគាំទ្រការពិគ្រោះយោបល់ ការសម្រេចចិត្ត និងការណែនាំប្រចាំថ្ងៃ។';
+
+  @override
+  String get appsChapterPeriod9Mobile => 'កម្មវិធីយុគ ៩';
+
+  @override
+  String get appsGroupOverview => 'ទិដ្ឋភាពទូទៅ';
+
+  @override
+  String get appsGroupOverviewBenefit =>
+      'មជ្ឈមណ្ឌលសម្រាប់បរិច្ឆាយ ឈីមិន ឧបករណ៍ហុងស៊ុយ និងច្រើនទៀត។';
+
+  @override
+  String get appsGroupOverviewPlatforms => 'កុំព្យូទ័រ · ថេប្លេត · វេប';
+
+  @override
+  String get appsGroupBazi => 'បរិច្ឆាយ';
+
+  @override
+  String get appsGroupBaziBenefit =>
+      'ដោះស្រាយរចនាប័ទ្មជីវិត វដ្តសំណាង និងពេលវេលាផ្ទាល់ខ្លួន។';
+
+  @override
+  String get appsGroupQiMen => 'ឈីមិនទុនជា';
+
+  @override
+  String get appsGroupQiMenBenefit =>
+      'ទម្រង់យុទ្ធសាស្ត្រសម្រាប់ការសម្រេចចិត្តពេលពេលវេលាសំខាន់។';
+
+  @override
+  String get appsGroupDateSelection => 'ជ្រើសរើសថ្ងៃ';
+
+  @override
+  String get appsGroupDateSelectionBenefit =>
+      'ជ្រើសថ្ងៃហេងសម្រាប់បើកដំណើរការ អាពាហ៍ធម៌ និងកិច្ចសន្យាធំ។';
+
+  @override
+  String get appsGroupMarriage => 'អាពាហ៍ធម៌ និងភាពសមស្រប';
+
+  @override
+  String get appsGroupMarriageBenefit =>
+      'ប្រៀបធៀបតារាង និងវាយតម្លៃភាពឆ្លើយឆ្លងមុនពេលសន្យា។';
+
+  @override
+  String get appsGroupBusiness => 'ភាពជាដៃគូអាជីវកម្ម';
+
+  @override
+  String get appsGroupBusinessBenefit =>
+      'វាយតម្លៃដៃគូ និងកិច្ចព្រមព្រៀងដោយច្បាស់លាស់។';
+
+  @override
+  String get appsGroupFengShuiTools => 'ឧបករណ៍ហុងស៊ុយ';
+
+  @override
+  String get appsGroupFengShuiToolsBenefit =>
+      'ត្រីមាស ទិស និងការកែយុគ ៩ នៅក្នុងដៃអ្នក។';
+
+  @override
+  String get appsGroupIChing => 'អ៊ីឈីង';
+
+  @override
+  String get appsGroupIChingBenefit =>
+      'ទស្សន៍ទាយបុរាណសម្រាប់ពេលផ្លូវមិនច្បាស់។';
 
   @override
   String get marketplaceCategoryDigital => 'ឌីជីថល';

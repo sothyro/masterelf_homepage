@@ -25,7 +25,6 @@ void main() {
 
   testWidgets('App smoke test loads contact route', (WidgetTester tester) async {
     await pumpRouteAtWidth(tester, '/contact', 1280);
-    drainLayoutExceptions(tester);
 
     expect(find.text('Contact'), findsAtLeastNWidgets(1));
   });

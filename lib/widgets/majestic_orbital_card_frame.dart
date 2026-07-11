@@ -256,6 +256,32 @@ class _MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
   }
 }
 
+/// Satellite orbit overlay without card chrome — for hero medallions and custom stages.
+class MajesticOrbitalRings extends StatelessWidget {
+  const MajesticOrbitalRings({
+    super.key,
+    required this.progress,
+    required this.hovered,
+    required this.behind,
+    this.extentScale = 1.0,
+  });
+
+  final double progress;
+  final bool hovered;
+  final bool behind;
+  final double extentScale;
+
+  @override
+  Widget build(BuildContext context) {
+    return _CardOrbitalRingsLayer(
+      progress: progress,
+      hovered: hovered,
+      layer: behind ? _OrbitalRingLayer.behind : _OrbitalRingLayer.front,
+      extentScale: extentScale,
+    );
+  }
+}
+
 class _CardOrbitalRingsLayer extends StatelessWidget {
   const _CardOrbitalRingsLayer({
     required this.progress,

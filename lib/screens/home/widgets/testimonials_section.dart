@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -163,6 +164,9 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   static double _cardWidthForAvailable(double availableWidth) =>
       math.min(_cardWidth, availableWidth);
 
+  static double _cardHeightForAvailable(double availableWidth) =>
+      math.min(_cardsHeight, availableWidth * 1.35);
+
   /// Extra vertical space so hover scale (1.02) is not clipped.
   static const double _cardsVerticalPadding = 24;
   static const Duration _fadeDuration = Duration(milliseconds: 400);
@@ -177,6 +181,9 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   int? _pageReadyForFlip;
   int _flipScheduleId = 0;
   int? _lastCardsPerPage;
+  Timer? _initialRevealTimer;
+  Timer? _autoLoopTimer;
+  Timer? _fadeAfterTransitionTimer;
 
   @override
   void initState() {
@@ -186,7 +193,8 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
       if (!mounted) return;
       final available = MediaQuery.sizeOf(context).width - 2 * _sectionHorizontalPadding;
       final cardsPerPage = _cardsPerPageForAvailableWidth(available);
-      Future<void>.delayed(const Duration(milliseconds: 200), () {
+      _initialRevealTimer?.cancel();
+      _initialRevealTimer = Timer(const Duration(milliseconds: 200), () {
         if (mounted) {
           setState(() => _pageReadyForFlip = 0);
           _startAutoLoop(cardsPerPage);
@@ -197,7 +205,8 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
 
   void _scheduleFadeAfterTransition(int page) {
     final id = ++_flipScheduleId;
-    Future<void>.delayed(_pageTransitionDuration, () {
+    _fadeAfterTransitionTimer?.cancel();
+    _fadeAfterTransitionTimer = Timer(_pageTransitionDuration, () {
       if (mounted && id == _flipScheduleId) {
         setState(() => _pageReadyForFlip = page);
       }
@@ -205,7 +214,8 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   }
 
   void _startAutoLoop(int cardsPerPage) {
-    Future<void>.delayed(_pageDisplayDuration, () {
+    _autoLoopTimer?.cancel();
+    _autoLoopTimer = Timer(_pageDisplayDuration, () {
       if (!mounted) return;
       final totalPages = (_shuffledItems.length / cardsPerPage).ceil();
       if (totalPages == 0) return;
@@ -245,6 +255,9 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
 
   @override
   void dispose() {
+    _initialRevealTimer?.cancel();
+    _autoLoopTimer?.cancel();
+    _fadeAfterTransitionTimer?.cancel();
     _pageController.dispose();
     super.dispose();
   }
@@ -272,6 +285,7 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
     final availableWidth = width - 2 * _sectionHorizontalPadding;
     final cardsPerPage = _cardsPerPageForAvailableWidth(availableWidth);
     final cardWidth = _cardWidthForAvailable(availableWidth);
+    final cardHeight = _cardHeightForAvailable(availableWidth);
     final textTheme = Theme.of(context).textTheme;
 
     final headingFontSize = isMobile ? 24.0 : 28.0;
@@ -407,7 +421,7 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
           headerContent,
           const SizedBox(height: 40),
           SizedBox(
-            height: _cardsHeight + 2 * _cardsVerticalPadding,
+            height: cardHeight + 2 * _cardsVerticalPadding,
             width: double.infinity,
             child: PageView.builder(
               controller: _pageController,
@@ -435,7 +449,7 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                         const SizedBox(width: _cardGap),
                       SizedBox(
                         width: cardWidth,
-                        height: _cardsHeight,
+                        height: cardHeight,
                         child: _FadeTestimonialCard(
                           visible: isVisible,
                           delay: Duration(milliseconds: 50 * (i - start)),

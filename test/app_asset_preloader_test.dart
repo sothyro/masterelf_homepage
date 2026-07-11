@@ -6,6 +6,8 @@ import 'package:masterelf_homepage/main.dart';
 import 'package:masterelf_homepage/utils/app_asset_preloader.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+import 'test_helpers/pump_app.dart';
+
 void drainPendingExceptions(WidgetTester tester) {
   while (tester.takeException() != null) {}
 }
@@ -84,6 +86,7 @@ void main() {
 
       expect(find.byType(MasterElfApp), findsOneWidget);
 
+      await settleHomeScreenTimers(tester);
       VisibilityDetectorController.instance.notifyNow();
       await tester.pump();
       drainPendingExceptions(tester);

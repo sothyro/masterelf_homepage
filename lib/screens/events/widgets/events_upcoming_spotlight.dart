@@ -34,80 +34,84 @@ class _EventsUpcomingSpotlightState extends State<EventsUpcomingSpotlight> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = Breakpoints.isMobile(width);
-    final event = widget.event;
-    final l10n = widget.l10n;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isNarrow = constraints.maxWidth < Breakpoints.mobile;
+        final event = widget.event;
+        final l10n = widget.l10n;
 
-    final orbitalStage = _OrbitalVisualStage(
-      hovered: _hovered,
-      isNarrow: isNarrow,
-      imageAsset: event.imageAsset,
-      limitedSeats: event.limitedSeats,
-      l10n: l10n,
-      event: event,
-    );
+        final orbitalStage = _OrbitalVisualStage(
+          hovered: _hovered,
+          isNarrow: isNarrow,
+          imageAsset: event.imageAsset,
+          limitedSeats: event.limitedSeats,
+          l10n: l10n,
+          event: event,
+        );
 
-    final detailsPanel = _UpcomingDetailsPanel(
-      event: event,
-      l10n: l10n,
-      isNarrow: isNarrow,
-      onRegister: widget.onRegister,
-    );
+        final detailsPanel = _UpcomingDetailsPanel(
+          event: event,
+          l10n: l10n,
+          isNarrow: isNarrow,
+          stretchCta: !isNarrow && constraints.hasBoundedHeight,
+          onRegister: widget.onRegister,
+        );
 
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
-        curve: Curves.easeOutCubic,
-        clipBehavior: Clip.none,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(isNarrow ? 20 : 24),
-          border: Border.all(
-            color: _hovered
-                ? AppColors.accent.withValues(alpha: 0.55)
-                : AppColors.borderDark,
-            width: _hovered ? 1.5 : 1,
-          ),
-          boxShadow: _hovered ? AppShadows.eventCardHover : AppShadows.card,
-        ),
-        child: isNarrow
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  orbitalStage,
-                  const ChineseMountingBar(),
-                  ClipRRect(
-                    borderRadius: const BorderRadius.vertical(
-                      bottom: Radius.circular(20),
-                    ),
-                    child: detailsPanel,
-                  ),
-                ],
-              )
-            : IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(flex: 12, child: orbitalStage),
-                    Container(
-                      width: 1,
-                      color: AppColors.borderDark.withValues(alpha: 0.85),
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.horizontal(
-                          right: Radius.circular(24),
+        return MouseRegion(
+          onEnter: (_) => setState(() => _hovered = true),
+          onExit: (_) => setState(() => _hovered = false),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOutCubic,
+            clipBehavior: Clip.none,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(isNarrow ? 20 : 24),
+              border: Border.all(
+                color: _hovered
+                    ? AppColors.accent.withValues(alpha: 0.55)
+                    : AppColors.borderDark,
+                width: _hovered ? 1.5 : 1,
+              ),
+              boxShadow: _hovered ? AppShadows.eventCardHover : AppShadows.card,
+            ),
+            child: isNarrow || !constraints.hasBoundedHeight
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      orbitalStage,
+                      const ChineseMountingBar(),
+                      ClipRRect(
+                        borderRadius: const BorderRadius.vertical(
+                          bottom: Radius.circular(20),
                         ),
                         child: detailsPanel,
                       ),
+                    ],
+                  )
+                : IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(flex: 12, child: orbitalStage),
+                        Container(
+                          width: 1,
+                          color: AppColors.borderDark.withValues(alpha: 0.85),
+                        ),
+                        Expanded(
+                          flex: 10,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.horizontal(
+                              right: Radius.circular(24),
+                            ),
+                            child: detailsPanel,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-      ),
+                  ),
+          ),
+        );
+      },
     );
   }
 }
@@ -213,12 +217,14 @@ class _UpcomingDetailsPanel extends StatelessWidget {
     required this.event,
     required this.l10n,
     required this.isNarrow,
+    required this.stretchCta,
     required this.onRegister,
   });
 
   final EventItem event;
   final AppLocalizations l10n;
   final bool isNarrow;
+  final bool stretchCta;
   final VoidCallback onRegister;
 
   @override
@@ -278,7 +284,7 @@ class _UpcomingDetailsPanel extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           EventsZodiacCalendarStrip(l10n: l10n),
-          if (!isNarrow) const Spacer(),
+          if (stretchCta) const Spacer(),
           SizedBox(height: isNarrow ? 24 : 20),
           SizedBox(
             width: double.infinity,

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../config/book_store_content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
-import '../../utils/breakpoints.dart';
+import '../../widgets/app_shell_scroll_scope.dart';
 import '../store/widgets/marketplace_category_strip.dart';
 import '../store/widgets/section_anchor.dart';
 import '../store/widgets/store_content_container.dart';
@@ -43,9 +43,6 @@ class _BookStoreScreenState extends State<BookStoreScreen> {
   void _scrollToTargetIfNeeded() {
     final fragment = GoRouterState.of(context).uri.fragment;
     if (fragment.isEmpty) return;
-    final width = MediaQuery.sizeOf(context).width;
-    final isBookDeepLink = isBookStoreDeepLinkFragment(fragment);
-    if (Breakpoints.isMobile(width) && !isBookDeepLink) return;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
@@ -54,13 +51,8 @@ class _BookStoreScreenState extends State<BookStoreScreen> {
         _ when _bookScrollKeys.containsKey(fragment) => _bookScrollKeys[fragment],
         _ => null,
       };
-      if (key?.currentContext != null) {
-        Scrollable.ensureVisible(
-          key!.currentContext!,
-          duration: const Duration(milliseconds: 400),
-          curve: Curves.easeInOut,
-          alignment: 0.15,
-        );
+      if (key != null) {
+        ensureShellSectionVisible(context, key);
       }
     });
   }

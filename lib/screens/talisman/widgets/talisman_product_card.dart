@@ -55,7 +55,8 @@ class _TalismanProductCardState extends State<TalismanProductCard> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
+            AspectRatio(
+              aspectRatio: isNarrow ? 1.35 : 1.2,
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.accent.withValues(alpha: 0.08),
@@ -104,24 +105,19 @@ class _TalismanProductCardState extends State<TalismanProductCard> {
               ),
             ],
             const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Flexible(
-                  child: Text(
-                    '${widget.pricePrefix}${widget.price}',
-                    style: highlightStyleForLocale(
-                      context,
-                      fontSize: isNarrow ? 18 : 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.accent,
-                    ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final stackPriceCta = constraints.maxWidth < 220;
+                final priceText = Text(
+                  '${widget.pricePrefix}${widget.price}',
+                  style: highlightStyleForLocale(
+                    context,
+                    fontSize: isNarrow ? 18 : 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.accent,
                   ),
-                ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: FilledButton.icon(
+                );
+                final cartButton = FilledButton.icon(
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -153,9 +149,29 @@ class _TalismanProductCardState extends State<TalismanProductCard> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                ),
-              ),
-              ],
+                );
+
+                if (stackPriceCta) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      priceText,
+                      const SizedBox(height: 8),
+                      cartButton,
+                    ],
+                  );
+                }
+
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Flexible(child: priceText),
+                    const SizedBox(width: 8),
+                    Flexible(child: cartButton),
+                  ],
+                );
+              },
             ),
           ],
         ),

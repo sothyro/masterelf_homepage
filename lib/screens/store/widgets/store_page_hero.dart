@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../config/app_content.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../widgets/page_content_inset.dart';
 import 'description_with_highlight.dart';
 
 /// Shared hero block for Apps, Book Store, and Talisman Store pages.
@@ -34,7 +35,7 @@ class StorePageHero extends StatelessWidget {
     final isNarrow = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
     final minHeight = isNarrow ? heroHeightNarrow : heroHeightWide;
     final horizontalPadding = isNarrow ? 16.0 : 24.0;
-    final topPadding = isNarrow ? 148.0 : 120.0;
+    final topPadding = pageHeaderTopPadding(context);
     final bottomPadding = isNarrow ? 48.0 : 56.0;
 
     final titleBlock = titleContent ??
@@ -61,21 +62,23 @@ class StorePageHero extends StatelessWidget {
         );
 
     if (bottomChild == null && titleContent == null) {
-      return SizedBox(
-        height: minHeight,
-        width: double.infinity,
-        child: _HeroBackground(
-          backgroundAsset: backgroundAsset,
-          child: Align(
-            alignment: const Alignment(0, 0.12),
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                horizontalPadding,
-                topPadding,
-                horizontalPadding,
-                bottomPadding,
+      return ConstrainedBox(
+        constraints: BoxConstraints(minHeight: minHeight),
+        child: SizedBox(
+          width: double.infinity,
+          child: _HeroBackground(
+            backgroundAsset: backgroundAsset,
+            child: Align(
+              alignment: const Alignment(0, 0.12),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  horizontalPadding,
+                  topPadding,
+                  horizontalPadding,
+                  bottomPadding,
+                ),
+                child: titleBlock,
               ),
-              child: titleBlock,
             ),
           ),
         ),

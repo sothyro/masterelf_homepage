@@ -36,7 +36,7 @@ void main() {
 
   testWidgets('Home screen shows Khmer navigation labels', (tester) async {
     await pumpMasterElfAppWithLocale(tester, 'km');
-    await navigateTo(tester, '/');
+    await settleHomeScreenTimers(tester);
     drainLayoutExceptions(tester);
 
     expect(find.text('ទំព័រដើម'), findsWidgets);
@@ -44,7 +44,7 @@ void main() {
 
   testWidgets('Home screen shows Chinese navigation labels', (tester) async {
     await pumpMasterElfAppWithLocale(tester, 'zh');
-    await navigateTo(tester, '/');
+    await settleHomeScreenTimers(tester);
     drainLayoutExceptions(tester);
 
     expect(find.text('首页'), findsWidgets);
@@ -52,6 +52,8 @@ void main() {
 
   testWidgets('Field work hub shows Khmer headline', (tester) async {
     await pumpMasterElfAppWithLocale(tester, 'km');
+    await settleHomeScreenTimers(tester);
+    drainLayoutExceptions(tester);
     await navigateTo(tester, '/field-work');
     drainLayoutExceptions(tester);
 
@@ -60,6 +62,8 @@ void main() {
 
   testWidgets('Events screen shows Chinese event title', (tester) async {
     await pumpMasterElfAppWithLocale(tester, 'zh');
+    await settleHomeScreenTimers(tester);
+    drainLayoutExceptions(tester);
     await navigateTo(tester, '/events');
     drainLayoutExceptions(tester);
 
@@ -97,6 +101,8 @@ void main() {
 
   testWidgets('Activity video detail shows localized Chinese title', (tester) async {
     await pumpMasterElfAppWithLocale(tester, 'zh');
+    await settleHomeScreenTimers(tester);
+    drainLayoutExceptions(tester);
     await navigateTo(tester, '/field-work/video/feng-shui-compass-on-site');
     drainLayoutExceptions(tester);
 

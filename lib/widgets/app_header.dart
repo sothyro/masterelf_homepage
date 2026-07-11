@@ -11,6 +11,7 @@ import '../utils/breakpoints.dart';
 import 'glass_container.dart';
 import 'logo_with_shape_shadow.dart';
 import 'media_posts_popup.dart';
+import 'page_content_inset.dart';
 
 /// Menu bar colors: gold accents and link text (glass fill uses [AppColors.overlayDark]).
 class _MenuColors {
@@ -28,7 +29,8 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onOpenDrawer;
 
   @override
-  Size get preferredSize => const Size.fromHeight(264);
+  Size get preferredSize =>
+      const Size.fromHeight(kAppHeaderStackHeight + kAppShellHeaderTopPadding * 2);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class _MobileHeader extends StatelessWidget {
 
   /// Match desktop: bar 72, stack 240, logo 154×184.
   static void _mobileDimensions(void Function(double barHeight, double logoHeight, double logoSlotWidth, double stackHeight) fn) {
-    fn(72, 154, 184, 240);
+    fn(72, 154, 184, kAppHeaderStackHeight);
   }
 
   @override
@@ -194,7 +196,7 @@ class _DesktopHeader extends StatelessWidget {
     final isTablet = width >= Breakpoints.mobile && width < Breakpoints.tablet;
     const logoHeight = 154.0;
     const logoSlotWidth = 184.0;
-    const stackHeight = 240.0;
+    const stackHeight = kAppHeaderStackHeight;
     const barHeight = 72.0;
     final rowChildren = [
       const SizedBox(width: logoSlotWidth),
@@ -243,10 +245,7 @@ class _DesktopHeader extends StatelessWidget {
         minHeight: 56,
       ),
       child: isTablet
-          ? SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: row,
-            )
+          ? _TabletNavScrollFade(child: row)
           : row,
     );
     return Center(
@@ -616,6 +615,121 @@ class _LanguageFlagsRow extends StatelessWidget {
           ),
         );
       }).toList(),
+    );
+  }
+}
+
+/// Horizontal nav for tablet widths with edge fades and a scroll affordance cue.
+class _TabletNavScrollFade extends StatefulWidget {
+  const _TabletNavScrollFade({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_TabletNavScrollFade> createState() => _TabletNavScrollFadeState();
+}
+
+class _TabletNavScrollFadeState extends State<_TabletNavScrollFade> {
+  final ScrollController _controller = ScrollController();
+  bool _showLeft = false;
+  bool _showRight = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_updateEdges);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _updateEdges());
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_updateEdges);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _updateEdges() {
+    if (!_controller.hasClients) return;
+    final position = _controller.position;
+    final left = position.pixels > 4;
+    final right = position.maxScrollExtent > 4 &&
+        position.pixels < position.maxScrollExtent - 4;
+    if (left != _showLeft || right != _showRight) {
+      setState(() {
+        _showLeft = left;
+        _showRight = right;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        SingleChildScrollView(
+          controller: _controller,
+          scrollDirection: Axis.horizontal,
+          child: widget.child,
+        ),
+        if (_showLeft)
+          Positioned(
+            left: 0,
+            top: 0,
+            bottom: 0,
+            child: IgnorePointer(
+              child: Container(
+                width: 32,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      AppColors.overlayDark.withValues(alpha: 0.9),
+                      AppColors.overlayDark.withValues(alpha: 0),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        if (_showRight) ...[
+          Positioned(
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: IgnorePointer(
+              child: Container(
+                width: 32,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerRight,
+                    end: Alignment.centerLeft,
+                    colors: [
+                      AppColors.overlayDark.withValues(alpha: 0.9),
+                      AppColors.overlayDark.withValues(alpha: 0),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 6,
+            top: 0,
+            bottom: 0,
+            child: IgnorePointer(
+              child: Center(
+                child: Icon(
+                  LucideIcons.chevronRight,
+                  size: 18,
+                  color: _MenuColors.linkText.withValues(alpha: 0.75),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

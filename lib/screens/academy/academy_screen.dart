@@ -6,7 +6,7 @@ import '../../config/app_content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
-import '../home/widgets/testimonials_section.dart';
+import '../store/widgets/store_page_hero.dart';
 
 class AcademyScreen extends StatelessWidget {
   const AcademyScreen({super.key});
@@ -26,7 +26,6 @@ class AcademyScreen extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (!isDesktop) const SizedBox(height: 80),
           _AcademyHero(isDesktop: isDesktop, l10n: l10n),
           Padding(
             padding: EdgeInsets.symmetric(
@@ -309,7 +308,6 @@ class AcademyScreen extends StatelessWidget {
               ),
             ),
           ),
-          const TestimonialsSection(),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: isMobile ? 16 : 32,
@@ -706,60 +704,36 @@ class _AcademyHero extends StatelessWidget {
         ),
       );
     }
-    // Mobile/tablet: keep original design with overlay CTA
-    final height = Breakpoints.isSmall(width) ? 320.0 : 420.0;
-
-    return SizedBox(
-      width: double.infinity,
-      height: height,
-      child: Stack(
-        fit: StackFit.expand,
+    // Mobile/tablet: shared hero layout (background from top, header clearance inside).
+    return StorePageHero(
+      title: l10n.academyPageTitle,
+      description: '',
+      descriptionHighlight: '',
+      backgroundAsset: AppContent.assetAppsHero,
+      heroHeightNarrow: 480,
+      heroHeightWide: 520,
+      titleContent: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.asset(
-            AppContent.assetAppsHero,
-            fit: BoxFit.cover,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  AppColors.backgroundDark.withValues(alpha: 0.35),
-                  AppColors.backgroundDark.withValues(alpha: 0.15),
-                  AppColors.backgroundDark.withValues(alpha: 0.08),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            left: 20,
-            right: 20,
-            bottom: 24,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  l10n.academyPageTitle,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: AppColors.onPrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
+          Text(
+            l10n.academyPageTitle,
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  color: AppColors.onPrimary,
+                  fontWeight: FontWeight.w600,
                 ),
-                const SizedBox(height: 8),
-                FilledButton.icon(
-                  onPressed: () => context.push('/consultations'),
-                  icon: const Icon(LucideIcons.calendarCheck, size: 18),
-                  label: Text(l10n.bookConsultation),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.accent,
-                    foregroundColor: AppColors.onAccent,
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                    elevation: 0,
-                  ),
-                ),
-              ],
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          FilledButton.icon(
+            onPressed: () => context.push('/consultations'),
+            icon: const Icon(LucideIcons.calendarCheck, size: 18),
+            label: Text(l10n.bookConsultation),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.accent,
+              foregroundColor: AppColors.onAccent,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+              elevation: 0,
             ),
           ),
         ],

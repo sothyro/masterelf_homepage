@@ -12,82 +12,86 @@ class EventsZodiacCalendarStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isNarrow = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isNarrow = constraints.maxWidth < Breakpoints.mobile;
 
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(isNarrow ? 16 : 20),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceElevatedDark.withValues(alpha: 0.65),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.3)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
+        return Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(isNarrow ? 16 : 20),
+          decoration: BoxDecoration(
+            color: AppColors.surfaceElevatedDark.withValues(alpha: 0.65),
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.3)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Icon(
-                LucideIcons.calendarRange,
-                size: 18,
-                color: AppColors.accent.withValues(alpha: 0.9),
+              Row(
+                children: [
+                  Icon(
+                    LucideIcons.calendarRange,
+                    size: 18,
+                    color: AppColors.accent.withValues(alpha: 0.9),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      l10n.eventsZodiacStripLabel,
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: AppColors.accentLight,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  l10n.eventsZodiacStripLabel,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: AppColors.accentLight,
-                        fontWeight: FontWeight.w600,
+              const SizedBox(height: 14),
+              if (isNarrow)
+                Column(
+                  children: [
+                    _ZodiacNode(label: l10n.eventsZodiacStripPhoenix, completed: true),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Icon(
+                        LucideIcons.arrowDown,
+                        size: 18,
+                        color: AppColors.accent.withValues(alpha: 0.6),
                       ),
+                    ),
+                    _ZodiacNode(label: l10n.eventsZodiacStripGoat, completed: false),
+                  ],
+                )
+              else
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ZodiacNode(
+                        label: l10n.eventsZodiacStripPhoenix,
+                        completed: true,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Icon(
+                        LucideIcons.arrowRight,
+                        size: 20,
+                        color: AppColors.accent.withValues(alpha: 0.6),
+                      ),
+                    ),
+                    Expanded(
+                      child: _ZodiacNode(
+                        label: l10n.eventsZodiacStripGoat,
+                        completed: false,
+                        highlight: true,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
             ],
           ),
-          const SizedBox(height: 14),
-          if (isNarrow)
-            Column(
-              children: [
-                _ZodiacNode(label: l10n.eventsZodiacStripPhoenix, completed: true),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Icon(
-                    LucideIcons.arrowDown,
-                    size: 18,
-                    color: AppColors.accent.withValues(alpha: 0.6),
-                  ),
-                ),
-                _ZodiacNode(label: l10n.eventsZodiacStripGoat, completed: false),
-              ],
-            )
-          else
-            Row(
-              children: [
-                Expanded(
-                  child: _ZodiacNode(
-                    label: l10n.eventsZodiacStripPhoenix,
-                    completed: true,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Icon(
-                    LucideIcons.arrowRight,
-                    size: 20,
-                    color: AppColors.accent.withValues(alpha: 0.6),
-                  ),
-                ),
-                Expanded(
-                  child: _ZodiacNode(
-                    label: l10n.eventsZodiacStripGoat,
-                    completed: false,
-                    highlight: true,
-                  ),
-                ),
-              ],
-            ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

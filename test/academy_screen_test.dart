@@ -8,25 +8,13 @@ import 'package:visibility_detector/visibility_detector.dart';
 import 'test_helpers/pump_app.dart';
 
 void main() {
-  late void Function(FlutterErrorDetails)? previousErrorHandler;
-
   setUp(() {
     VisibilityDetectorController.instance.updateInterval = Duration.zero;
-    previousErrorHandler = FlutterError.onError;
-    FlutterError.onError = (details) {
-      final message = details.exceptionAsString();
-      if (message.contains('overflowed') ||
-          message.contains('Build scheduled during frame')) {
-        return;
-      }
-      previousErrorHandler?.call(details);
-    };
   });
 
   tearDown(() {
     VisibilityDetectorController.instance.updateInterval =
         const Duration(milliseconds: 500);
-    FlutterError.onError = previousErrorHandler;
   });
 
   Future<void> pumpAcademy(WidgetTester tester, {required double width}) async {
@@ -49,7 +37,7 @@ void main() {
     );
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
-    drainLayoutExceptions(tester);
+    assertNoLayoutOverflow(tester);
   }
 
   Future<void> disposeAcademy(WidgetTester tester) async {

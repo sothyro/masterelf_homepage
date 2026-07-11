@@ -121,7 +121,7 @@ class ConsultationsSection extends StatelessWidget {
                       return Text(
                         l10n.sectionMapIntro,
                         style: (isKm ? GoogleFonts.siemreap : GoogleFonts.exo2)(
-                          fontSize: width < 600 ? 15 : 17,
+                          fontSize: Breakpoints.isSmall(width) ? 15 : 17,
                           height: 1.6,
                           color: AppColors.onPrimary.withValues(alpha: 0.92),
                           fontWeight: FontWeight.w400,
@@ -180,7 +180,9 @@ class ConsultationsSection extends StatelessWidget {
 
   Widget _buildSectionHeading(BuildContext context, AppLocalizations l10n) {
     final width = MediaQuery.sizeOf(context).width;
-    final size = width < 600 ? 22.0 : (width < 900 ? 26.0 : 32.0);
+    final size = Breakpoints.isSmall(width)
+        ? 22.0
+        : (Breakpoints.isMedium(width) ? 26.0 : 32.0);
     final isKm = Localizations.localeOf(context).languageCode == 'km';
     final normal = isKm
         ? GoogleFonts.dangrek(

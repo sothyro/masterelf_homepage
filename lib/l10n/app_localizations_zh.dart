@@ -36,6 +36,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get masterElfSystem => 'Master Elf 系统';
 
   @override
+  String get appsHeroBrandSubtitle => 'Master Elf 中华玄学系统';
+
+  @override
+  String get appsIntroTagline => '排盘、识时、决断 — 每一台设备，同一套系统。';
+
+  @override
   String get period9MobileApp => '九运手机应用';
 
   @override
@@ -63,6 +69,78 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get appsFeatureShowcaseMarketingHighlight => '改变人生';
+
+  @override
+  String get appsChapterDigitalPlatform => '数字平台';
+
+  @override
+  String get appsChapterDigitalPlatformHeadline => 'Master Elf 系统 — 您的玄学指挥中心。';
+
+  @override
+  String get appsChapterDigitalPlatformSubline => '排盘八字、分析奇门格局，在正确时机自信行动。';
+
+  @override
+  String get appsChapterFeatureAtlas => '功能全览';
+
+  @override
+  String get appsChapterFeatureAtlasHeadline => '所有模块，一个集成系统。';
+
+  @override
+  String get appsChapterFeatureAtlasSubline => '探索为咨询、决策与日常指引提供动力的界面。';
+
+  @override
+  String get appsChapterPeriod9Mobile => '九运随身';
+
+  @override
+  String get appsGroupOverview => '总览';
+
+  @override
+  String get appsGroupOverviewBenefit => '八字、奇门、风水工具等 — 尽在一处。';
+
+  @override
+  String get appsGroupOverviewPlatforms => '桌面端 · 平板端 · 网页端';
+
+  @override
+  String get appsGroupBazi => '八字命理';
+
+  @override
+  String get appsGroupBaziBenefit => '精准解读人生格局、运势周期与个人时机。';
+
+  @override
+  String get appsGroupQiMen => '奇门遁甲';
+
+  @override
+  String get appsGroupQiMenBenefit => '时机至上时的战略格局与决策支持。';
+
+  @override
+  String get appsGroupDateSelection => '择日';
+
+  @override
+  String get appsGroupDateSelectionBenefit => '为开业、婚礼与重大承诺选择吉日良辰。';
+
+  @override
+  String get appsGroupMarriage => '合婚配对';
+
+  @override
+  String get appsGroupMarriageBenefit => '承诺前比对命盘，评估和谐与契合。';
+
+  @override
+  String get appsGroupBusiness => '商业合作';
+
+  @override
+  String get appsGroupBusinessBenefit => '签约前清晰评估伙伴与交易。';
+
+  @override
+  String get appsGroupFengShuiTools => '风水工具';
+
+  @override
+  String get appsGroupFengShuiToolsBenefit => '罗盘、坐向与九运调整，触手可及。';
+
+  @override
+  String get appsGroupIChing => '易经';
+
+  @override
+  String get appsGroupIChingBenefit => '路径不明时，以传统占卜获得洞见。';
 
   @override
   String get marketplaceCategoryDigital => '数字';

@@ -154,6 +154,18 @@ abstract class AppLocalizations {
   /// **'Master Elf System'**
   String get masterElfSystem;
 
+  /// No description provided for @appsHeroBrandSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf Chinese Metaphysic System'**
+  String get appsHeroBrandSubtitle;
+
+  /// No description provided for @appsIntroTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Plot charts. Read the moment. Act with certainty — on every screen.'**
+  String get appsIntroTagline;
+
   /// No description provided for @period9MobileApp.
   ///
   /// In en, this message translates to:
@@ -207,6 +219,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add to cart or subscribe'**
   String get appsFeatureShowcaseMarketingHighlight;
+
+  /// No description provided for @appsChapterDigitalPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Digital Platform'**
+  String get appsChapterDigitalPlatform;
+
+  /// No description provided for @appsChapterDigitalPlatformHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf System — your metaphysics command centre.'**
+  String get appsChapterDigitalPlatformHeadline;
+
+  /// No description provided for @appsChapterDigitalPlatformSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Plot BaZi charts, analyse Qi Men formations, and act on timing with confidence.'**
+  String get appsChapterDigitalPlatformSubline;
+
+  /// No description provided for @appsChapterFeatureAtlas.
+  ///
+  /// In en, this message translates to:
+  /// **'Feature Atlas'**
+  String get appsChapterFeatureAtlas;
+
+  /// No description provided for @appsChapterFeatureAtlasHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Every module, one integrated system.'**
+  String get appsChapterFeatureAtlasHeadline;
+
+  /// No description provided for @appsChapterFeatureAtlasSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore the screens that power consultations, decisions, and daily guidance.'**
+  String get appsChapterFeatureAtlasSubline;
+
+  /// No description provided for @appsChapterPeriod9Mobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Period 9 Mobile'**
+  String get appsChapterPeriod9Mobile;
+
+  /// No description provided for @appsGroupOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get appsGroupOverview;
+
+  /// No description provided for @appsGroupOverviewBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Your hub for BaZi, Qi Men, Feng Shui tools, and more — all in one place.'**
+  String get appsGroupOverviewBenefit;
+
+  /// No description provided for @appsGroupOverviewPlatforms.
+  ///
+  /// In en, this message translates to:
+  /// **'Desktop · Tablet · Web'**
+  String get appsGroupOverviewPlatforms;
+
+  /// No description provided for @appsGroupBazi.
+  ///
+  /// In en, this message translates to:
+  /// **'BaZi Destiny'**
+  String get appsGroupBazi;
+
+  /// No description provided for @appsGroupBaziBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Decode life patterns, luck cycles, and personal timing with precision.'**
+  String get appsGroupBaziBenefit;
+
+  /// No description provided for @appsGroupQiMen.
+  ///
+  /// In en, this message translates to:
+  /// **'Qi Men Dunjia'**
+  String get appsGroupQiMen;
+
+  /// No description provided for @appsGroupQiMenBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Strategic formations for decisions when timing is everything.'**
+  String get appsGroupQiMenBenefit;
+
+  /// No description provided for @appsGroupDateSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Selection'**
+  String get appsGroupDateSelection;
+
+  /// No description provided for @appsGroupDateSelectionBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose auspicious dates for launches, weddings, and major commitments.'**
+  String get appsGroupDateSelectionBenefit;
+
+  /// No description provided for @appsGroupMarriage.
+  ///
+  /// In en, this message translates to:
+  /// **'Marriage & Compatibility'**
+  String get appsGroupMarriage;
+
+  /// No description provided for @appsGroupMarriageBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare charts and assess harmony before you commit.'**
+  String get appsGroupMarriageBenefit;
+
+  /// No description provided for @appsGroupBusiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Partnership'**
+  String get appsGroupBusiness;
+
+  /// No description provided for @appsGroupBusinessBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Evaluate partners and deals with clarity before you sign.'**
+  String get appsGroupBusinessBenefit;
+
+  /// No description provided for @appsGroupFengShuiTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Feng Shui Tools'**
+  String get appsGroupFengShuiTools;
+
+  /// No description provided for @appsGroupFengShuiToolsBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Compass, facing, and Period 9 adjustments at your fingertips.'**
+  String get appsGroupFengShuiToolsBenefit;
+
+  /// No description provided for @appsGroupIChing.
+  ///
+  /// In en, this message translates to:
+  /// **'I Ching'**
+  String get appsGroupIChing;
+
+  /// No description provided for @appsGroupIChingBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Classical divination for insight when the path is unclear.'**
+  String get appsGroupIChingBenefit;
 
   /// No description provided for @marketplaceCategoryDigital.
   ///

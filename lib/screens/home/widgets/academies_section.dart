@@ -150,7 +150,9 @@ class AcademiesSection extends StatelessWidget {
 
   Widget _buildHeading(BuildContext context, AppLocalizations l10n) {
     final width = MediaQuery.sizeOf(context).width;
-    final baseSize = width < 600 ? 22.0 : (width < 900 ? 26.0 : 32.0);
+    final baseSize = Breakpoints.isSmall(width)
+        ? 22.0
+        : (Breakpoints.isMedium(width) ? 26.0 : 32.0);
     final normal = textStyleWithLocale(
       context,
       isHeading: true,
@@ -209,7 +211,7 @@ class AcademiesSection extends StatelessWidget {
     final bodyStyle = textStyleWithLocale(
       context,
       isHeading: false,
-      fontSize: width < 600 ? 15 : 17,
+      fontSize: Breakpoints.isSmall(width) ? 15 : 17,
       fontWeight: FontWeight.w400,
       color: _textMuted,
     ).copyWith(height: 1.65);

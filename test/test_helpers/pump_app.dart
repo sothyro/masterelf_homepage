@@ -13,6 +13,16 @@ void ensureTestAppInitialized() {
   initializeAppBootstrap('/');
 }
 
+/// Returns the first pending layout exception, if any.
+Object? takeLayoutException(WidgetTester tester) => tester.takeException();
+
+void assertNoLayoutOverflow(WidgetTester tester) {
+  final exception = takeLayoutException(tester);
+  if (exception != null) {
+    fail('Layout exception: $exception');
+  }
+}
+
 void drainLayoutExceptions(WidgetTester tester) {
   while (tester.takeException() != null) {}
 }
@@ -26,7 +36,10 @@ Future<void> pumpMasterElfApp(
   addTearDown(() => tester.binding.setSurfaceSize(null));
   await tester.pumpWidget(const MasterElfApp());
   await tester.pump();
-  await tester.pump(const Duration(milliseconds: 500));
+  await resetAppToHome(tester);
+  await settleHomeScreenTimers(tester);
+  drainLayoutExceptions(tester);
+  await tester.pump(const Duration(milliseconds: 100));
 }
 
 /// Pumps the full app with a specific locale via [localeNotifier].
@@ -48,14 +61,67 @@ Future<void> navigateTo(WidgetTester tester, String path) async {
   await tester.pump(const Duration(milliseconds: 500));
 }
 
-/// Pumps the full app at [width], navigates to [path], and drains layout overflows.
+/// Resets the global router to home so tests do not inherit a stale route.
+Future<void> resetAppToHome(WidgetTester tester) async {
+  if (find.byType(Scaffold).evaluate().isEmpty) return;
+  final context = tester.element(find.byType(Scaffold).first);
+  GoRouter.of(context).go('/');
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 100));
+  drainLayoutExceptions(tester);
+}
+
+/// Lets [HomeScreen] progressive section timers finish before leaving `/`.
+Future<void> settleHomeScreenTimers(WidgetTester tester) async {
+  for (var i = 0; i < 16; i++) {
+    await tester.pump(const Duration(milliseconds: 250));
+  }
+}
+
+/// Pumps the full app at [width], navigates to [path], and asserts no layout overflows.
 Future<void> pumpRouteAtWidth(
   WidgetTester tester,
   String path,
   double width, {
   double height = 2400,
+  bool drainOverflows = false,
 }) async {
   await pumpMasterElfApp(tester, surfaceSize: Size(width, height));
+  await resetAppToHome(tester);
+  if (path.split('#').first != '/') {
+    await settleHomeScreenTimers(tester);
+    drainLayoutExceptions(tester);
+  }
   await navigateTo(tester, path);
+  await tester.pump(const Duration(milliseconds: 300));
   drainLayoutExceptions(tester);
+  if (drainOverflows) {
+    drainLayoutExceptions(tester);
+  } else {
+    assertNoLayoutOverflow(tester);
+  }
+}
+
+/// Pumps a route at [width] with [languageCode] and asserts no layout overflows.
+Future<void> pumpRouteAtWidthWithLocale(
+  WidgetTester tester,
+  String path,
+  double width,
+  String languageCode, {
+  double height = 2400,
+}) async {
+  await pumpMasterElfAppWithLocale(
+    tester,
+    languageCode,
+    surfaceSize: Size(width, height),
+  );
+  await resetAppToHome(tester);
+  if (path.split('#').first != '/') {
+    await settleHomeScreenTimers(tester);
+    drainLayoutExceptions(tester);
+  }
+  await navigateTo(tester, path);
+  await tester.pump(const Duration(milliseconds: 300));
+  drainLayoutExceptions(tester);
+  assertNoLayoutOverflow(tester);
 }

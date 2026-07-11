@@ -15,6 +15,7 @@ import '../../utils/validators.dart';
 import '../../widgets/confirm_cancel_dialog.dart';
 import '../../widgets/error_display.dart' show ErrorDisplay, ErrorSnackbar;
 import '../../widgets/glass_container.dart';
+import '../../widgets/page_content_inset.dart';
 
 /// Consultation type for booking.
 class _ConsultationOption {
@@ -340,7 +341,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 148 : 120,
+                  top: pageHeaderTopPadding(context),
                   bottom: (Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 32 : 48) +
                       MediaQuery.paddingOf(context).bottom,
                   left: Breakpoints.isMobile(MediaQuery.sizeOf(context).width) ? 16 : 24,
@@ -1510,44 +1511,61 @@ class _BookingDashboardSection extends StatelessWidget {
                       height: 1.4,
                     ),
               ),
-              const SizedBox(height: 20),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: phoneController,
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        hintText: l10n.yourPhone,
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(color: AppColors.borderDark),
-                        ),
-                        filled: true,
-                        fillColor: AppColors.backgroundDark,
-                      ),
-                      style: const TextStyle(color: AppColors.onPrimary),
+            const SizedBox(height: 20),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final stackFields = constraints.maxWidth < 360;
+                final phoneField = TextField(
+                  controller: phoneController,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    hintText: l10n.yourPhone,
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: AppColors.borderDark),
                     ),
+                    filled: true,
+                    fillColor: AppColors.backgroundDark,
                   ),
-                  const SizedBox(width: 12),
-                  FilledButton(
-                    onPressed: loading ? null : onFind,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppColors.accent,
-                      foregroundColor: AppColors.onAccent,
-                    ),
-                    child: loading
-                        ? const SizedBox(
-                            width: 22,
-                            height: 22,
-                            child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.onAccent),
-                          )
-                        : Text(l10n.findMyBookings),
+                  style: const TextStyle(color: AppColors.onPrimary),
+                );
+                final findButton = FilledButton(
+                  onPressed: loading ? null : onFind,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.accent,
+                    foregroundColor: AppColors.onAccent,
                   ),
-                ],
-              ),
+                  child: loading
+                      ? const SizedBox(
+                          width: 22,
+                          height: 22,
+                          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.onAccent),
+                        )
+                      : Text(l10n.findMyBookings),
+                );
+
+                if (stackFields) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      phoneField,
+                      const SizedBox(height: 12),
+                      findButton,
+                    ],
+                  );
+                }
+
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(child: phoneField),
+                    const SizedBox(width: 12),
+                    findButton,
+                  ],
+                );
+              },
+            ),
               if (error != null) ...[
                 const SizedBox(height: 12),
                 Text(
@@ -1740,46 +1758,65 @@ class _SmartMoveSection extends StatelessWidget {
               const SizedBox(height: 48),
               LayoutBuilder(
                 builder: (context, constraints) {
-                  final crossCount = constraints.maxWidth < 600 ? 1 : (constraints.maxWidth < 900 ? 2 : 3);
-                  return GridView.count(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: crossCount,
-                    mainAxisSpacing: 20,
-                    crossAxisSpacing: 20,
-                    childAspectRatio: 0.85,
+                  final maxWidth = constraints.maxWidth;
+                  final cardWidth = maxWidth < Breakpoints.small
+                      ? maxWidth
+                      : maxWidth < Breakpoints.medium
+                          ? (maxWidth - 20) / 2
+                          : (maxWidth - 40) / 3;
+
+                  Widget buildCard({
+                    required IconData icon,
+                    required String title,
+                    required String description,
+                    required String imageAsset,
+                  }) {
+                    return SizedBox(
+                      width: cardWidth,
+                      child: _SmartMoveCard(
+                        icon: icon,
+                        title: title,
+                        description: description,
+                        imageAsset: imageAsset,
+                      ),
+                    );
+                  }
+
+                  return Wrap(
+                    spacing: 20,
+                    runSpacing: 20,
                     children: [
-                      _SmartMoveCard(
+                      buildCard(
                         icon: LucideIcons.map,
                         title: l10n.smartMoveCard2Title,
                         description: l10n.smartMoveCard2Desc,
                         imageAsset: AppContent.assetBackgroundDirection,
                       ),
-                      _SmartMoveCard(
+                      buildCard(
                         icon: LucideIcons.crosshair,
                         title: l10n.smartMoveCard1Title,
                         description: l10n.smartMoveCard1Desc,
                         imageAsset: AppContent.assetAppsHero,
                       ),
-                      _SmartMoveCard(
+                      buildCard(
                         icon: Icons.warning_amber_rounded,
                         title: l10n.smartMoveCard3Title,
                         description: l10n.smartMoveCard3Desc,
                         imageAsset: AppContent.assetJourneyHero,
                       ),
-                      _SmartMoveCard(
+                      buildCard(
                         icon: LucideIcons.circleDot,
                         title: l10n.smartMoveCard4Title,
                         description: l10n.smartMoveCard4Desc,
                         imageAsset: AppContent.assetConsultation,
                       ),
-                      _SmartMoveCard(
+                      buildCard(
                         icon: LucideIcons.hand,
                         title: l10n.smartMoveCard5Title,
                         description: l10n.smartMoveCard5Desc,
                         imageAsset: AppContent.assetBetterOption,
                       ),
-                      _SmartMoveCard(
+                      buildCard(
                         icon: LucideIcons.arrowRight,
                         title: l10n.smartMoveCard6Title,
                         description: l10n.smartMoveCard6Desc,
@@ -1861,6 +1898,8 @@ class _SmartMoveCard extends StatelessWidget {
                         color: AppColors.onPrimary.withValues(alpha: 0.9),
                         height: 1.5,
                       ),
+                  maxLines: 6,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),

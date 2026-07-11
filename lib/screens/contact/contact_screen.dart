@@ -11,6 +11,7 @@ import '../../utils/launcher_utils.dart';
 import '../../utils/validators.dart';
 import '../../widgets/error_display.dart';
 import '../../widgets/glass_container.dart';
+import '../../widgets/page_content_inset.dart';
 
 /// Contact page: hero banner + two-column layout (contact info left, form right).
 class ContactScreen extends StatefulWidget {
@@ -190,7 +191,7 @@ class _ContactScreenState extends State<ContactScreen> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: isNarrow ? 148 : 120,
+                  top: pageHeaderTopPadding(context),
                   bottom: (isNarrow ? 32 : 48) + MediaQuery.paddingOf(context).bottom,
                   left: isNarrow ? 16 : 24,
                   right: isNarrow ? 16 : 24,
@@ -275,8 +276,9 @@ class _ContactScreenState extends State<ContactScreen> {
 
   Widget _buildLeftColumnContent(AppLocalizations l10n) {
     final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
-    final buttons = Row(
-      mainAxisSize: MainAxisSize.min,
+    final buttons = Wrap(
+      spacing: 12,
+      runSpacing: 12,
       children: [
         IconButton.filled(
           onPressed: () => launchWhatsApp(),
@@ -287,7 +289,6 @@ class _ContactScreenState extends State<ContactScreen> {
             foregroundColor: AppColors.onAccent,
           ),
         ),
-        const SizedBox(width: 12),
         IconButton.outlined(
           onPressed: () => launchEmail(),
           icon: const Icon(LucideIcons.mail, size: 22),
@@ -297,7 +298,6 @@ class _ContactScreenState extends State<ContactScreen> {
             side: const BorderSide(color: AppColors.borderLight),
           ),
         ),
-        const SizedBox(width: 12),
         IconButton.outlined(
           onPressed: () => launchTelegram(),
           icon: const Icon(LucideIcons.send, size: 22),
@@ -703,11 +703,13 @@ class _OfficeBlock extends StatelessWidget {
           children: [
             const Icon(LucideIcons.phone, size: 18, color: AppColors.onPrimary),
             const SizedBox(width: 10),
-            Text(
-              phone,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.onSurfaceVariantDark,
-                  ),
+            Expanded(
+              child: Text(
+                phone,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.onSurfaceVariantDark,
+                    ),
+              ),
             ),
           ],
         ),
@@ -717,11 +719,13 @@ class _OfficeBlock extends StatelessWidget {
             children: [
               const Icon(LucideIcons.phone, size: 18, color: AppColors.onPrimary),
               const SizedBox(width: 10),
-              Text(
-                phone2!,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.onSurfaceVariantDark,
-                    ),
+              Expanded(
+                child: Text(
+                  phone2!,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.onSurfaceVariantDark,
+                      ),
+                ),
               ),
             ],
           ),
@@ -732,11 +736,13 @@ class _OfficeBlock extends StatelessWidget {
             children: [
               const Icon(LucideIcons.mail, size: 18, color: AppColors.onPrimary),
               const SizedBox(width: 10),
-              Text(
-                email!,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.onSurfaceVariantDark,
-                    ),
+              Expanded(
+                child: Text(
+                  email!,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.onSurfaceVariantDark,
+                      ),
+                ),
               ),
             ],
           ),

@@ -36,6 +36,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get masterElfSystem => 'Master Elf System';
 
   @override
+  String get appsHeroBrandSubtitle => 'Master Elf Chinese Metaphysic System';
+
+  @override
+  String get appsIntroTagline =>
+      'Plot charts. Read the moment. Act with certainty — on every screen.';
+
+  @override
   String get period9MobileApp => 'Period 9 Mobile App';
 
   @override
@@ -65,6 +72,90 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get appsFeatureShowcaseMarketingHighlight =>
       'Add to cart or subscribe';
+
+  @override
+  String get appsChapterDigitalPlatform => 'Digital Platform';
+
+  @override
+  String get appsChapterDigitalPlatformHeadline =>
+      'Master Elf System — your metaphysics command centre.';
+
+  @override
+  String get appsChapterDigitalPlatformSubline =>
+      'Plot BaZi charts, analyse Qi Men formations, and act on timing with confidence.';
+
+  @override
+  String get appsChapterFeatureAtlas => 'Feature Atlas';
+
+  @override
+  String get appsChapterFeatureAtlasHeadline =>
+      'Every module, one integrated system.';
+
+  @override
+  String get appsChapterFeatureAtlasSubline =>
+      'Explore the screens that power consultations, decisions, and daily guidance.';
+
+  @override
+  String get appsChapterPeriod9Mobile => 'Period 9 Mobile';
+
+  @override
+  String get appsGroupOverview => 'Overview';
+
+  @override
+  String get appsGroupOverviewBenefit =>
+      'Your hub for BaZi, Qi Men, Feng Shui tools, and more — all in one place.';
+
+  @override
+  String get appsGroupOverviewPlatforms => 'Desktop · Tablet · Web';
+
+  @override
+  String get appsGroupBazi => 'BaZi Destiny';
+
+  @override
+  String get appsGroupBaziBenefit =>
+      'Decode life patterns, luck cycles, and personal timing with precision.';
+
+  @override
+  String get appsGroupQiMen => 'Qi Men Dunjia';
+
+  @override
+  String get appsGroupQiMenBenefit =>
+      'Strategic formations for decisions when timing is everything.';
+
+  @override
+  String get appsGroupDateSelection => 'Date Selection';
+
+  @override
+  String get appsGroupDateSelectionBenefit =>
+      'Choose auspicious dates for launches, weddings, and major commitments.';
+
+  @override
+  String get appsGroupMarriage => 'Marriage & Compatibility';
+
+  @override
+  String get appsGroupMarriageBenefit =>
+      'Compare charts and assess harmony before you commit.';
+
+  @override
+  String get appsGroupBusiness => 'Business Partnership';
+
+  @override
+  String get appsGroupBusinessBenefit =>
+      'Evaluate partners and deals with clarity before you sign.';
+
+  @override
+  String get appsGroupFengShuiTools => 'Feng Shui Tools';
+
+  @override
+  String get appsGroupFengShuiToolsBenefit =>
+      'Compass, facing, and Period 9 adjustments at your fingertips.';
+
+  @override
+  String get appsGroupIChing => 'I Ching';
+
+  @override
+  String get appsGroupIChingBenefit =>
+      'Classical divination for insight when the path is unclear.';
 
   @override
   String get marketplaceCategoryDigital => 'Digital';

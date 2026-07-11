@@ -743,7 +743,9 @@ class _FieldWorkShowcaseCardState extends State<FieldWorkShowcaseCard> {
                 child: Builder(
                   builder: (context) {
                     final width = MediaQuery.sizeOf(context).width;
-                    final titleSize = width < 600 ? 17.0 : (width < 960 ? 19.0 : 21.0);
+                    final titleSize = Breakpoints.isSmall(width)
+                        ? 17.0
+                        : (Breakpoints.isCompact(width) ? 19.0 : 21.0);
                     final titleStyle = highlightStyleForLocale(
                       context,
                       fontSize: titleSize,

@@ -15,22 +15,13 @@ import 'package:masterelf_homepage/theme/app_theme.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 void main() {
-  late void Function(FlutterErrorDetails)? previousErrorHandler;
-
   setUp(() {
     VisibilityDetectorController.instance.updateInterval = Duration.zero;
-    previousErrorHandler = FlutterError.onError;
-    FlutterError.onError = (details) {
-      final message = details.exceptionAsString();
-      if (message.contains('overflowed')) return;
-      previousErrorHandler?.call(details);
-    };
   });
 
   tearDown(() {
     VisibilityDetectorController.instance.updateInterval =
         const Duration(milliseconds: 500);
-    FlutterError.onError = previousErrorHandler;
   });
 
   void drainExceptions(WidgetTester tester) {
