@@ -5,6 +5,7 @@ import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
 import '../../widgets/breadcrumb.dart';
+import '../../widgets/page_content_inset.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -13,11 +14,13 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
-    final paddingH = isMobile ? 16.0 : 24.0;
     return Container(
       width: double.infinity,
       color: AppColors.backgroundDark,
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 32 : 48, horizontal: paddingH),
+      padding: pageContentPadding(
+        context,
+        vertical: isMobile ? 32 : 48,
+      ),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 800),
         child: Column(

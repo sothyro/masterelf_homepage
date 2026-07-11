@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 
 /// Whether Firebase is available for site inspection storage.
 bool get _isFirebaseEnabled {
@@ -139,21 +140,23 @@ String _deriveInspectionName(Map<String, dynamic> formData, DateTime fallbackDat
   return 'Inspection $dateStr';
 }
 
+/// Normalizes inspector email for Firestore queries and ownership checks.
+@visibleForTesting
+String normalizeInspectorEmail(String email) => email.trim().toLowerCase();
+
 /// Lists inspections for the given inspector, ordered by updatedAt desc.
+/// Throws on Firestore errors so callers can surface the real failure.
 Future<List<InspectionRecord>> listInspections(String inspectorEmail) async {
   if (!_isFirebaseEnabled) return [];
 
-  try {
-    final snapshot = await FirebaseFirestore.instance
-        .collection('site_inspections')
-        .where('inspectorEmail', isEqualTo: inspectorEmail)
-        .orderBy('updatedAt', descending: true)
-        .get();
+  final normalizedEmail = normalizeInspectorEmail(inspectorEmail);
+  final snapshot = await FirebaseFirestore.instance
+      .collection('site_inspections')
+      .where('inspectorEmail', isEqualTo: normalizedEmail)
+      .orderBy('updatedAt', descending: true)
+      .get();
 
-    return snapshot.docs.map((d) => InspectionRecord.fromFirestore(d)).toList();
-  } catch (_) {
-    return [];
-  }
+  return snapshot.docs.map((d) => InspectionRecord.fromFirestore(d)).toList();
 }
 
 /// Fetches a single inspection by ID.
@@ -191,10 +194,11 @@ Future<SiteInspectionSaveResult> createInspection({
     final ref = firestore.collection('site_inspections').doc();
     final now = DateTime.now();
     final inspectionName = _deriveInspectionName(formData, now);
+    final normalizedEmail = normalizeInspectorEmail(inspectorEmail);
 
     final data = <String, dynamic>{
       ...formData,
-      'inspectorEmail': inspectorEmail,
+      'inspectorEmail': normalizedEmail,
       'inspectionName': inspectionName,
       'lastStep': lastStep,
       'createdAt': FieldValue.serverTimestamp(),
@@ -244,10 +248,11 @@ Future<SiteInspectionSaveResult> updateInspection({
 
     final now = DateTime.now();
     final inspectionName = _deriveInspectionName(formData, now);
+    final normalizedEmail = normalizeInspectorEmail(inspectorEmail);
 
     final data = <String, dynamic>{
       ...formData,
-      'inspectorEmail': inspectorEmail,
+      'inspectorEmail': normalizedEmail,
       'inspectionName': inspectionName,
       'lastStep': lastStep,
       'updatedAt': FieldValue.serverTimestamp(),

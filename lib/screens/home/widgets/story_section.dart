@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,10 +6,6 @@ import '../../../config/app_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
-
-/// Number of logo placeholders in the Featured in section (15 = 3 pages × 5 logos).
-const int _kLogosPerLine = 5;
-const int _kFeaturedLogoPages = 3; // 15 / 5
 
 class StorySection extends StatelessWidget {
   const StorySection({super.key});
@@ -28,7 +22,6 @@ class StorySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
-    final textTheme = Theme.of(context).textTheme;
     final isMobile = Breakpoints.isMobile(width);
 
     // Heading: Dangrek for Khmer, Exo2 otherwise; highlight "Story" where present
@@ -271,14 +264,18 @@ class StorySection extends StatelessWidget {
             if (!isMobile)
               Positioned(
                 right: 0,
+                top: 48,
                 bottom: 0,
                 width: 800,
-                height: 850,
                 child: Opacity(
                   opacity: 0.77,
-                  child: Image.asset(
-                    AppContent.assetStoryBackground,
-                    fit: BoxFit.contain,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Image.asset(
+                      AppContent.assetStoryBackground,
+                      fit: BoxFit.contain,
+                      alignment: Alignment.bottomCenter,
+                    ),
                   ),
                 ),
               ),
@@ -287,60 +284,9 @@ class StorySection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 storyContent,
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 24, horizontal: isMobile ? 16 : 32),
-                  decoration: BoxDecoration(
-                    color: AppColors.backgroundDark,
-                    border: Border(
-                      top: BorderSide(color: AppColors.borderDark, width: 1),
-                    ),
-                  ),
-                  child: Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 1100),
-                      child: _FeaturedInCarousel(
-                        l10n: l10n,
-                        textTheme: textTheme,
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  static Widget _buildLogoChip(
-    AppLocalizations l10n,
-    TextTheme textTheme,
-    int index, {
-    double width = 88,
-    double height = 40,
-    double rightPadding = 24,
-    double fontSize = 13,
-  }) {
-    return Padding(
-      padding: EdgeInsets.only(right: rightPadding),
-      child: Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: AppColors.surfaceElevatedDark.withValues(alpha: 0.6),
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: AppColors.borderDark, width: 1),
-        ),
-        child: Center(
-          child: Text(
-            l10n.logoPlaceholder(index),
-            style: textTheme.bodySmall?.copyWith(
-              color: AppColors.onPrimary.withValues(alpha: 0.5),
-              fontSize: fontSize,
-            ),
-          ),
         ),
       ),
     );
@@ -376,125 +322,6 @@ class StorySection extends StatelessWidget {
       start = nextIndex + (matched?.length ?? 0);
     }
     return result;
-  }
-}
-
-/// Fade-in / fade-out logo strip: 5 logos per row, 3 rows (15 logos), looping.
-class _FeaturedInCarousel extends StatefulWidget {
-  const _FeaturedInCarousel({
-    required this.l10n,
-    required this.textTheme,
-  });
-
-  final AppLocalizations l10n;
-  final TextTheme textTheme;
-
-  @override
-  State<_FeaturedInCarousel> createState() => _FeaturedInCarouselState();
-}
-
-class _FeaturedInCarouselState extends State<_FeaturedInCarousel> {
-  int _currentPage = 0;
-  Timer? _timer;
-  static const double _headerGap = 32;
-  static const Duration _slideDuration = Duration(milliseconds: 1200);
-  static const Duration _displayDuration = Duration(seconds: 5);
-
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(_displayDuration, (_) {
-      if (!mounted) return;
-      setState(() {
-        _currentPage = (_currentPage + 1) % _kFeaturedLogoPages;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = widget.l10n;
-    final textTheme = widget.textTheme;
-    final width = MediaQuery.sizeOf(context).width;
-    final isMobile = width < Breakpoints.mobile;
-
-    final logoWidth = isMobile ? 58.0 : 88.0;
-    final logoHeight = isMobile ? 32.0 : 40.0;
-    final logoGap = isMobile ? 10.0 : 24.0;
-    final logoFontSize = isMobile ? 11.0 : 13.0;
-
-    final header = Text(
-      l10n.featuredIn,
-      style: highlightStyleForLocale(
-        context,
-        fontSize: isMobile ? 28 : 52,
-        fontWeight: FontWeight.bold,
-        color: AppColors.accent,
-        height: 1.2,
-      ).copyWith(shadows: [
-        Shadow(
-          color: AppColors.accent.withValues(alpha: 0.4),
-          offset: const Offset(0, 2),
-          blurRadius: 8,
-        ),
-      ]),
-    );
-
-    final startIndex = _currentPage * _kLogosPerLine;
-    final logosRow = Row(
-      mainAxisSize: MainAxisSize.min,
-      key: ValueKey<int>(_currentPage),
-      children: [
-        for (var i = 0; i < _kLogosPerLine; i++)
-          StorySection._buildLogoChip(
-            l10n,
-            textTheme,
-            startIndex + i + 1,
-            width: logoWidth,
-            height: logoHeight,
-            rightPadding: i < _kLogosPerLine - 1 ? logoGap : 0,
-            fontSize: logoFontSize,
-          ),
-      ],
-    );
-
-    final content = AnimatedSwitcher(
-      duration: _slideDuration,
-      switchInCurve: Curves.easeInOut,
-      switchOutCurve: Curves.easeInOut,
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return FadeTransition(opacity: animation, child: child);
-      },
-      child: logosRow,
-    );
-
-    if (isMobile) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          header,
-          SizedBox(height: _headerGap * 0.75),
-          Center(child: content),
-        ],
-      );
-    }
-
-    return Row(
-      children: [
-        header,
-        const SizedBox(width: _headerGap),
-        Expanded(
-          child: Center(child: content),
-        ),
-      ],
-    );
   }
 }
 

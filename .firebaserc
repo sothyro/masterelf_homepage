@@ -1,5 +1,6 @@
 {
   "projects": {
+    "default": "masterelf-website",
     "contactform": "masterelf-website"
   },
   "targets": {},

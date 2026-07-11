@@ -11,19 +11,94 @@ const db = getFirestore();
 const plasgatePrivateKey = defineSecret("PLASGATE_PRIVATE_KEY");
 const plasgateSecret = defineSecret("PLASGATE_SECRET");
 const adminSmsPhone = defineSecret("ADMIN_SMS_PHONE");
+/** Comma-separated admin emails allowed to access dashboard callables. */
+const adminEmails = defineSecret("ADMIN_EMAILS");
 const SMS_SENDER = "MasterElf";
 
 const APPOINTMENTS = "appointments";
-const SESSION_DURATION_MINUTES = 120;
-const BREAK_AFTER_MINUTES = 60;  // 1 hour between sessions
-const BUSINESS_OPEN_HOUR = 9;
-const BUSINESS_CLOSE_HOUR = 22;  // Slots up to 21:00 (special: 1h or 2h to 23:00)
+// Mirror lib/config/booking_config.dart
+const SESSION_DURATION_MINUTES = 60;
+const BREAK_AFTER_MINUTES = 0;
+const BUSINESS_OPEN_HOUR = 8;
+const BUSINESS_CLOSE_HOUR = 22;
+const SLOT_INTERVAL_MINUTES = 60;
+const MIN_SESSION_DURATION_MINUTES = 60;
+const MAX_SESSION_DURATION_MINUTES = 480;
 
 const PLASGATE_API_URL = "https://cloudapi.plasgate.com/rest/send";
 const MIN_PHONE_DIGITS = 9; // Cambodia local number length without country code
 const SMS_RETRY_DELAY_MS = 2000;
 /** Master Elf business line – receives SMS on every new booking. */
 const MASTER_ELF_SMS_PHONE = "85512222211";
+
+function parseAdminEmailList(raw) {
+  if (!raw || typeof raw !== "string") return [];
+  const trimmed = raw.trim();
+  if (!trimmed || trimmed.toLowerCase() === "legacy") return [];
+  return trimmed.split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
+}
+
+/** Require Firebase Auth; enforce ADMIN_EMAILS allowlist when configured. */
+function assertAdmin(request) {
+  if (!request.auth) {
+    throw new HttpsError("unauthenticated", "You must be logged in to access the dashboard.");
+  }
+  let allowed = [];
+  try {
+    allowed = parseAdminEmailList(adminEmails.value());
+  } catch {
+    // Secret not configured yet — legacy mode until ADMIN_EMAILS is set.
+    console.warn("assertAdmin: ADMIN_EMAILS secret not configured; allowing any authenticated user.");
+    return;
+  }
+  if (allowed.length === 0) {
+    console.warn("assertAdmin: ADMIN_EMAILS is empty; allowing any authenticated user.");
+    return;
+  }
+  const email = (request.auth.token.email || "").toLowerCase();
+  if (!allowed.includes(email)) {
+    throw new HttpsError("permission-denied", "Not authorized for admin access.");
+  }
+}
+
+function rethrowIfHttpsError(err) {
+  if (err instanceof HttpsError) throw err;
+  const code = err?.code;
+  if (typeof code === "string" && code !== "internal") {
+    throw new HttpsError(code, err.message || code);
+  }
+}
+
+function mapAppointmentDoc(doc) {
+  try {
+    const d = doc.data();
+    const start = d.startTime?.toDate?.();
+    const end = d.endTime?.toDate?.();
+    return {
+      id: doc.id,
+      name: d.name || "",
+      phone: d.phone || "",
+      bookingReference: d.bookingReference || doc.id.slice(-6).toUpperCase(),
+      serviceName: d.serviceName || "",
+      serviceId: d.serviceId || "",
+      date: d.date || "",
+      time: d.time || "",
+      startTime: start ? start.toISOString() : null,
+      endTime: end ? end.toISOString() : null,
+      durationMinutes: d.durationMinutes ?? SESSION_DURATION_MINUTES,
+      status: d.status || "pending",
+      sessionType: d.sessionType || "VISIT",
+      notes: d.notes || "",
+      createdAt: d.createdAt?.toDate?.()?.toISOString?.() || null,
+      smsStatus: d.smsStatus || null,
+      smsErrorReason: d.smsErrorReason || null,
+      smsErrorBody: d.smsErrorBody || null,
+    };
+  } catch (docErr) {
+    console.warn(`mapAppointmentDoc: skipped corrupt doc ${doc.id}:`, docErr.message || docErr);
+    return null;
+  }
+}
 
 /**
  * Normalize phone to E.164 (digits only, Cambodia 855).
@@ -252,14 +327,24 @@ export const onAppointmentCreated = onDocumentCreated(
 
 /**
  * Callable: get available slot start times for a given date.
- * Returns array of "HH:mm" strings (2h session, 1h break between).
- * Business hours: 09:00–20:00 Cambodia time.
+ * Returns array of "HH:mm" strings. Hourly starts 08:00–21:00 Cambodia time;
+ * filters by requested duration (must end by 22:00).
  */
 export const getAvailableSlots = onCall(async (request) => {
   const dateStr = request.data?.date;
   if (!dateStr || typeof dateStr !== "string") {
     throw new HttpsError("invalid-argument", "date is required (YYYY-MM-DD)");
   }
+
+  let durationMinutes = request.data?.durationMinutes ?? SESSION_DURATION_MINUTES;
+  if (typeof durationMinutes !== "number") {
+    durationMinutes = parseInt(durationMinutes, 10) || SESSION_DURATION_MINUTES;
+  }
+  durationMinutes = Math.max(
+    MIN_SESSION_DURATION_MINUTES,
+    Math.min(MAX_SESSION_DURATION_MINUTES, durationMinutes)
+  );
+
   const CAMBODIA_OFFSET_MS = 7 * 60 * 60 * 1000;
   const dayStart = new Date(new Date(dateStr + "T00:00:00Z").getTime() - CAMBODIA_OFFSET_MS);
   const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000 - 1);
@@ -282,18 +367,20 @@ export const getAvailableSlots = onCall(async (request) => {
     };
   });
 
-  // Business hours 09:00–20:00 Cambodia; slot 2h, break 1h → 09:00, 12:00, 15:00, 18:00
   const slots = [];
-  const slotDurationMs = SESSION_DURATION_MINUTES * 60 * 1000;
-  let hour = BUSINESS_OPEN_HOUR;
-  let minute = 0;
+  const durationMs = durationMinutes * 60 * 1000;
+  const closeBoundaryMs = BUSINESS_CLOSE_HOUR * 60 * 60 * 1000;
 
-  while (hour < BUSINESS_CLOSE_HOUR || (hour === BUSINESS_CLOSE_HOUR && minute === 0)) {
+  for (let hour = BUSINESS_OPEN_HOUR; hour < BUSINESS_CLOSE_HOUR; hour++) {
+    const minute = 0;
+    const startLocalMs = (hour * 60 + minute) * 60 * 1000;
+    if (startLocalMs + durationMs > closeBoundaryMs) continue;
+
     const localDate = new Date(dateStr + "T00:00:00.000Z");
     const slotStartUtc = new Date(
-      localDate.getTime() + (hour * 60 + minute) * 60 * 1000 - CAMBODIA_OFFSET_MS
+      localDate.getTime() + startLocalMs - CAMBODIA_OFFSET_MS
     );
-    const slotEndUtc = new Date(slotStartUtc.getTime() + slotDurationMs);
+    const slotEndUtc = new Date(slotStartUtc.getTime() + durationMs);
 
     const overlaps = occupied.some(
       (o) => slotStartUtc < o.end && slotEndUtc > o.start
@@ -303,9 +390,6 @@ export const getAvailableSlots = onCall(async (request) => {
         `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`
       );
     }
-
-    // Next slot: +2h session + 1h break = +3h
-    hour += Math.floor(SESSION_DURATION_MINUTES / 60) + Math.floor(BREAK_AFTER_MINUTES / 60);
   }
 
   return { slots };
@@ -346,67 +430,65 @@ export const getMyBookings = onCall(async (request) => {
 });
 
 /**
- * Callable: get all appointments (admin only - requires authenticated user).
+ * Callable: lightweight health check for booking backend (no auth).
+ * Verifies Firestore read access to appointments collection.
  */
-export const getAllAppointments = onCall(async (request) => {
+export const bookingHealthCheck = onCall(async () => {
   try {
-    if (!request.auth) {
-      throw new HttpsError("unauthenticated", "You must be logged in to access the dashboard.");
-    }
-    const { status: statusFilter, limit: limitParam } = request.data || {};
-    const limit = Math.min(Math.max(limitParam || 100, 1), 500);
-
-    let snapshot;
-    try {
-      snapshot = await db
-        .collection(APPOINTMENTS)
-        .orderBy("startTime", "desc")
-        .limit(limit * 2)
-        .get();
-    } catch (queryError) {
-      // Fallback: startTime query may fail (missing index or field); fetch without order
-      console.warn("getAllAppointments: startTime query failed:", queryError.message);
-      snapshot = await db.collection(APPOINTMENTS).limit(limit * 2).get();
-    }
-
-    let list = snapshot.docs.map((doc) => {
-      const d = doc.data();
-      const start = d.startTime?.toDate?.();
-      return {
-        id: doc.id,
-        name: d.name || "",
-        phone: d.phone || "",
-        bookingReference: d.bookingReference || doc.id.slice(-6).toUpperCase(),
-        serviceName: d.serviceName || "",
-        serviceId: d.serviceId || "",
-        date: d.date || "",
-        time: d.time || "",
-        startTime: start ? start.toISOString() : null,
-        status: d.status || "pending",
-        sessionType: d.sessionType || "VISIT",
-        notes: d.notes || "",
-        createdAt: d.createdAt?.toDate?.()?.toISOString?.() || null,
-        smsStatus: d.smsStatus || null,
-        smsErrorReason: d.smsErrorReason || null,
-        smsErrorBody: d.smsErrorBody || null,
-      };
-    });
-    // Sort by startTime desc in memory (handles unordered fetch)
-    list.sort((a, b) => {
-      const aVal = a.startTime ? new Date(a.startTime).getTime() : 0;
-      const bVal = b.startTime ? new Date(b.startTime).getTime() : 0;
-      return bVal - aVal;
-    });
-    if (statusFilter && ["pending", "confirmed", "cancelled", "completed"].includes(statusFilter)) {
-      list = list.filter((a) => a.status === statusFilter);
-    }
-    return { appointments: list.slice(0, limit) };
+    const snapshot = await db.collection(APPOINTMENTS).limit(1).get();
+    return {
+      ok: true,
+      firestore: true,
+      hasAppointments: !snapshot.empty,
+    };
   } catch (err) {
-    if (err instanceof HttpsError) throw err;
-    console.error("getAllAppointments error:", err);
-    throw new HttpsError("internal", err.message || "Failed to load appointments");
+    console.error("bookingHealthCheck error:", err?.stack || err);
+    throw new HttpsError("internal", err.message || "Booking health check failed");
   }
 });
+
+/**
+ * Callable: get all appointments (admin only - requires authenticated user).
+ */
+export const getAllAppointments = onCall(
+  { secrets: [adminEmails] },
+  async (request) => {
+    try {
+      assertAdmin(request);
+      const { status: statusFilter, limit: limitParam } = request.data || {};
+      const limit = Math.min(Math.max(limitParam || 100, 1), 500);
+
+      let snapshot;
+      try {
+        snapshot = await db
+          .collection(APPOINTMENTS)
+          .orderBy("startTime", "desc")
+          .limit(limit * 2)
+          .get();
+      } catch (queryError) {
+        console.warn("getAllAppointments: startTime query failed:", queryError.message);
+        snapshot = await db.collection(APPOINTMENTS).limit(limit * 2).get();
+      }
+
+      let list = snapshot.docs
+        .map((doc) => mapAppointmentDoc(doc))
+        .filter(Boolean);
+      list.sort((a, b) => {
+        const aVal = a.startTime ? new Date(a.startTime).getTime() : 0;
+        const bVal = b.startTime ? new Date(b.startTime).getTime() : 0;
+        return bVal - aVal;
+      });
+      if (statusFilter && ["pending", "confirmed", "cancelled", "completed"].includes(statusFilter)) {
+        list = list.filter((a) => a.status === statusFilter);
+      }
+      return { appointments: list.slice(0, limit) };
+    } catch (err) {
+      rethrowIfHttpsError(err);
+      console.error("getAllAppointments error:", err?.stack || err);
+      throw new HttpsError("internal", err.message || "Failed to load appointments");
+    }
+  }
+);
 
 /**
  * Parse date (YYYY-MM-DD) and time (HH:mm) to Date in Cambodia timezone.
@@ -427,11 +509,11 @@ function parseDateTime(dateStr, timeStr) {
 /**
  * Callable: update appointment date and time (admin only).
  */
-export const updateAppointment = onCall(async (request) => {
-  if (!request.auth) {
-    throw new HttpsError("unauthenticated", "You must be logged in to update appointments.");
-  }
-  const { appointmentId, date, time } = request.data || {};
+export const updateAppointment = onCall(
+  { secrets: [adminEmails] },
+  async (request) => {
+    assertAdmin(request);
+    const { appointmentId, date, time } = request.data || {};
   if (!appointmentId || !date || !time) {
     throw new HttpsError("invalid-argument", "appointmentId, date, and time are required");
   }
@@ -453,16 +535,17 @@ export const updateAppointment = onCall(async (request) => {
     endTime: Timestamp.fromDate(endDate),
   });
   return { ok: true };
-});
+  }
+);
 
 /**
  * Callable: update appointment status (admin only).
  */
-export const updateAppointmentStatus = onCall(async (request) => {
-  if (!request.auth) {
-    throw new HttpsError("unauthenticated", "You must be logged in to update appointments.");
-  }
-  const { appointmentId, status } = request.data || {};
+export const updateAppointmentStatus = onCall(
+  { secrets: [adminEmails] },
+  async (request) => {
+    assertAdmin(request);
+    const { appointmentId, status } = request.data || {};
   if (!appointmentId || !status) {
     throw new HttpsError("invalid-argument", "appointmentId and status are required");
   }
@@ -476,7 +559,8 @@ export const updateAppointmentStatus = onCall(async (request) => {
   }
   await ref.update({ status });
   return { ok: true };
-});
+  }
+);
 
 /**
  * Callable: cancel an appointment (verify phone matches).
@@ -508,11 +592,9 @@ export const cancelBooking = onCall(async (request) => {
  * Body: { phone: "855..." or "0...", message?: "Optional custom text" }
  */
 export const sendTestSms = onCall(
-  { secrets: [plasgatePrivateKey, plasgateSecret] },
+  { secrets: [plasgatePrivateKey, plasgateSecret, adminEmails] },
   async (request) => {
-    if (!request.auth) {
-      throw new HttpsError("unauthenticated", "You must be logged in to send a test SMS.");
-    }
+    assertAdmin(request);
     const phone = request.data?.phone;
     const message = typeof request.data?.message === "string" ? request.data.message.trim() : null;
     if (!phone || typeof phone !== "string") {

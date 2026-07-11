@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../app_bootstrap.dart';
+import '../config/app_content.dart';
+import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
 
-/// Status messages shown while loading so users see activity even when progress is slow.
-const List<String> _loadingMessages = [
-  'Loading your experience…',
-  'Optimising view…',
-  'Almost there…',
-  'Just a moment…',
-];
-
-/// Full-screen loading view shown until critical assets (logo, hero image) are ready.
+/// Full-screen loading view shown until above-fold homepage assets are ready.
 /// Hero video loads in the hero section after the app is visible.
 class HeroLoadingScreen extends StatefulWidget {
   const HeroLoadingScreen({super.key, this.progress = 0.0});
@@ -26,7 +21,6 @@ class _HeroLoadingScreenState extends State<HeroLoadingScreen>
   double _displayProgress = 0.0;
   late AnimationController _progressController;
   late AnimationController _pulseController;
-  int _messageIndex = 0;
 
   @override
   void initState() {
@@ -42,15 +36,6 @@ class _HeroLoadingScreenState extends State<HeroLoadingScreen>
     )..addListener(() {
         if (mounted) setState(() {});
       })..repeat(reverse: true);
-    _scheduleNextMessage();
-  }
-
-  void _scheduleNextMessage() {
-    Future<void>.delayed(const Duration(seconds: 2), () {
-      if (!mounted) return;
-      setState(() => _messageIndex = (_messageIndex + 1) % _loadingMessages.length);
-      _scheduleNextMessage();
-    });
   }
 
   @override
@@ -87,12 +72,39 @@ class _HeroLoadingScreenState extends State<HeroLoadingScreen>
     super.dispose();
   }
 
+  String _messageForProgress(double progress, AppLocalizations l10n) {
+    if (progress < 0.25) return l10n.loadingExperience;
+    if (progress < 0.92) return l10n.loadingOptimising;
+    return l10n.loadingAlmostThere;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _LoadingContent(
-      displayProgress: _displayProgress,
-      pulseValue: _pulseController.value,
-      message: _loadingMessages[_messageIndex % _loadingMessages.length],
+    return ListenableBuilder(
+      listenable: localeNotifier,
+      builder: (context, _) {
+        final locale = localeNotifier.locale;
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          locale: locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: AppTheme.dark().copyWith(
+            scaffoldBackgroundColor: AppColors.backgroundDark,
+            textTheme: textThemeForLocale(locale.languageCode),
+          ),
+          home: Builder(
+            builder: (context) {
+              final l10n = AppLocalizations.of(context)!;
+              return _LoadingContent(
+                displayProgress: _displayProgress,
+                pulseValue: _pulseController.value,
+                message: _messageForProgress(_displayProgress, l10n),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
@@ -111,71 +123,70 @@ class _LoadingContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pulseScale = 1.0 + (0.04 * (0.5 - (pulseValue - 0.5).abs()));
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark().copyWith(
-        scaffoldBackgroundColor: AppColors.backgroundDark,
-        textTheme: textThemeForLocale('en'),
-      ),
-      home: Scaffold(
-        backgroundColor: AppColors.backgroundDark,
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                AppColors.backgroundDark,
-                AppColors.surfaceDark,
-                AppColors.primary.withValues(alpha: 0.95),
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: AppColors.backgroundDark,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppColors.backgroundDark,
+              AppColors.surfaceDark,
+              AppColors.primary.withValues(alpha: 0.95),
+            ],
           ),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Transform.scale(
-                  scale: pulseScale,
-                  child: SizedBox(
-                    width: 52,
-                    height: 52,
-                    child: CircularProgressIndicator(
-                      value: displayProgress > 0 && displayProgress <= 1
-                          ? displayProgress
-                          : null,
-                      strokeWidth: 2.5,
-                      valueColor: const AlwaysStoppedAnimation<Color>(AppColors.accent),
-                      backgroundColor: AppColors.accent.withValues(alpha: 0.2),
-                    ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                AppContent.assetLogo,
+                width: 140,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 32),
+              Transform.scale(
+                scale: pulseScale,
+                child: SizedBox(
+                  width: 52,
+                  height: 52,
+                  child: CircularProgressIndicator(
+                    value: displayProgress > 0 && displayProgress <= 1
+                        ? displayProgress
+                        : null,
+                    strokeWidth: 2.5,
+                    valueColor: const AlwaysStoppedAnimation<Color>(AppColors.accent),
+                    backgroundColor: AppColors.accent.withValues(alpha: 0.2),
                   ),
                 ),
-                const SizedBox(height: 20),
-                Text(
-                  '${(displayProgress * 100).round()}%',
+              ),
+              const SizedBox(height: 20),
+              Text(
+                '${(displayProgress * 100).round()}%',
+                style: TextStyle(
+                  color: AppColors.accent.withValues(alpha: 0.95),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: Text(
+                  message,
+                  key: ValueKey<String>(message),
                   style: TextStyle(
-                    color: AppColors.accent.withValues(alpha: 0.95),
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
+                    color: AppColors.accent.withValues(alpha: 0.7),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-                const SizedBox(height: 8),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  child: Text(
-                    message,
-                    key: ValueKey<String>(message),
-                    style: TextStyle(
-                      color: AppColors.accent.withValues(alpha: 0.7),
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -5,13 +5,14 @@ import 'package:provider/provider.dart';
 
 import '../../config/app_content.dart';
 import '../../l10n/app_localizations.dart';
-import '../../models/appointment.dart' show AppointmentRecord, defaultSessionDurationMinutes, sessionTypeOnline, sessionTypeVisit;
+import '../../models/appointment.dart' show AppointmentRecord, defaultSessionDurationMinutes, durationHoursLabel, selectableDurationsMinutes, sessionTypeOnline, sessionTypeVisit;
 import '../../providers/auth_provider.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
 import '../../services/appointment_booking_service.dart';
 import '../../services/error_service.dart' show AppError, executeWithRetry;
 import '../../utils/validators.dart';
+import '../../widgets/confirm_cancel_dialog.dart';
 import '../../widgets/error_display.dart' show ErrorDisplay, ErrorSnackbar;
 import '../../widgets/glass_container.dart';
 
@@ -53,11 +54,13 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   TimeOfDay? _selectedTime;
   List<String> _availableSlots = [];
   bool _loadingSlots = false;
+  bool _slotsFetchFailed = false;
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _nameFocus = FocusNode();
   final _phoneFocus = FocusNode();
   String _selectedSessionType = sessionTypeVisit;
+  int _selectedDurationMinutes = defaultSessionDurationMinutes;
 
   bool _isSubmitting = false;
   AppError? _submitError;
@@ -126,19 +129,26 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       _loadingSlots = true;
       _availableSlots = [];
       _selectedTime = null;
+      _slotsFetchFailed = false;
     });
-    final slots = await getAvailableSlots(dateStr);
+    final availability = await getAvailableSlots(
+      dateStr,
+      durationMinutes: _selectedDurationMinutes,
+    );
     if (!mounted) return;
     setState(() {
-      _availableSlots = slots;
+      _availableSlots = availability.slots;
+      _slotsFetchFailed = availability.fetchFailed;
       _loadingSlots = false;
-      if (slots.isNotEmpty) _selectedTime = _parseSlotToTimeOfDay(slots.first);
+      if (availability.slots.isNotEmpty) {
+        _selectedTime = _parseSlotToTimeOfDay(availability.slots.first);
+      }
     });
   }
 
   static TimeOfDay _parseSlotToTimeOfDay(String slot) {
     final parts = slot.split(':');
-    final hour = parts.isNotEmpty ? int.tryParse(parts[0]) ?? 9 : 9;
+    final hour = parts.isNotEmpty ? int.tryParse(parts[0]) ?? 8 : 8;
     final minute = parts.length > 1 ? int.tryParse(parts[1]) ?? 0 : 0;
     return TimeOfDay(hour: hour, minute: minute);
   }
@@ -148,6 +158,28 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       setState(() => _step++);
       _focusSteppingSection();
     }
+  }
+
+  void _validateDetailsAndAdvance() {
+    final l10n = AppLocalizations.of(context)!;
+    final nameValidation = Validators.name(_nameController.text.trim(), l10n: l10n);
+    if (!nameValidation.isValid) {
+      setState(() {
+        _submitError = AppError.validation(message: nameValidation.errorMessage!);
+      });
+      _nameFocus.requestFocus();
+      return;
+    }
+    final phoneValidation = Validators.phone(_phoneController.text.trim(), l10n: l10n);
+    if (!phoneValidation.isValid) {
+      setState(() {
+        _submitError = AppError.validation(message: phoneValidation.errorMessage!);
+      });
+      _phoneFocus.requestFocus();
+      return;
+    }
+    setState(() => _submitError = null);
+    _nextStep();
   }
 
   void _backStep() {
@@ -167,6 +199,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       _nameController.clear();
       _phoneController.clear();
       _selectedSessionType = sessionTypeVisit;
+      _selectedDurationMinutes = defaultSessionDurationMinutes;
       _submitError = null;
       _lastBookingReference = null;
     });
@@ -246,7 +279,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
           date: dateStr,
           time: timeStr,
           sessionType: _selectedSessionType,
-          durationMinutes: defaultSessionDurationMinutes,
+          durationMinutes: _selectedDurationMinutes,
         ),
         maxRetries: 3,
         l10n: l10n,
@@ -361,7 +394,12 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
             cancellingId: _cancellingId,
             onFind: () async {
               final phone = _dashboardPhoneController.text.trim();
-              if (phone.isEmpty) return;
+              final l10n = AppLocalizations.of(context)!;
+              final phoneValidation = Validators.phone(phone, l10n: l10n);
+              if (!phoneValidation.isValid) {
+                setState(() => _dashboardError = phoneValidation.errorMessage);
+                return;
+              }
               setState(() {
                 _dashboardLoading = true;
                 _dashboardError = null;
@@ -391,8 +429,9 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
             onCancel: (id) async {
               final phone = _dashboardPhoneController.text.trim();
               if (phone.isEmpty) return;
-              if (!mounted) return;
               final messenger = ScaffoldMessenger.maybeOf(context);
+              final confirmed = await showCancelBookingConfirm(context);
+              if (!confirmed || !mounted) return;
               setState(() => _cancellingId = id);
               try {
                 await cancelBooking(id, phone);
@@ -651,6 +690,35 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
+            l10n.selectDuration,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(color: AppColors.onSurfaceVariantDark),
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: selectableDurationsMinutes.map((minutes) {
+              final selected = _selectedDurationMinutes == minutes;
+              final hours = durationHoursLabel(minutes);
+              return ChoiceChip(
+                label: Text(l10n.durationHours(hours)),
+                selected: selected,
+                onSelected: (v) async {
+                  if (!v) return;
+                  setState(() => _selectedDurationMinutes = minutes);
+                  if (_selectedDate != null) {
+                    await _loadSlotsForDate(_selectedDate!);
+                  }
+                },
+                selectedColor: AppColors.accent.withValues(alpha: 0.3),
+                side: BorderSide(
+                  color: selected ? AppColors.accent : AppColors.borderDark,
+                ),
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: 20),
+          Text(
             l10n.selectDate,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(color: AppColors.onSurfaceVariantDark),
           ),
@@ -704,6 +772,17 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                 ),
           ),
           const SizedBox(height: 8),
+          if (!_loadingSlots && _slotsFetchFailed && _availableSlots.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                l10n.slotsFetchFailed,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.error,
+                      fontStyle: FontStyle.italic,
+                    ),
+              ),
+            ),
           if (_loadingSlots)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -878,6 +957,10 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
             ),
           ),
           const SizedBox(height: 24),
+          if (_submitError != null) ...[
+            ErrorDisplay(error: _submitError!, compact: true),
+            const SizedBox(height: 16),
+          ],
           Row(
             children: [
               TextButton(
@@ -887,7 +970,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
               const Spacer(),
               FilledButton(
                 onPressed: (_nameController.text.trim().isNotEmpty && _phoneController.text.trim().isNotEmpty)
-                    ? _nextStep
+                    ? _validateDetailsAndAdvance
                     : null,
                 style: FilledButton.styleFrom(
                   backgroundColor: AppColors.accent,
@@ -923,7 +1006,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
           _ConfirmRow(
             label: l10n.stepDateAndTime,
             value: _selectedDate != null && _selectedTime != null
-                ? '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year} at ${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')} (2h session)'
+                ? '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year} at ${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')} (${l10n.confirmSessionDuration(durationHoursLabel(_selectedDurationMinutes))})'
                 : '—',
           ),
           const SizedBox(height: 12),

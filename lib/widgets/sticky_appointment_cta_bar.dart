@@ -53,7 +53,7 @@ class StickyAppointmentCtaBar extends StatelessWidget {
                   RotatedBox(
                     quarterTurns: 3,
                     child: Text(
-                      l10n.consultations,
+                      l10n.dashboardTitle,
                       style: textStyle,
                       textAlign: TextAlign.center,
                       maxLines: 2,

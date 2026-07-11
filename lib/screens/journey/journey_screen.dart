@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../config/app_content.dart';
@@ -8,6 +7,7 @@ import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
 import '../../widgets/academy_card.dart';
+import '../field_work/field_work_widgets.dart';
 
 /// Master Elf's Journey page: hero, story, Period 9, and The Rise of the Phoenix.
 class JourneyScreen extends StatelessWidget {
@@ -46,7 +46,9 @@ class JourneyScreen extends StatelessWidget {
                     SizedBox(height: isNarrow ? 40 : 56),
                     _SectionPhoenix(l10n: l10n),
                     SizedBox(height: isNarrow ? 40 : 56),
-                    _JourneyAcademyCards(l10n: l10n, isNarrow: isNarrow),
+                    const FieldWorkJourneyTeaser(),
+                    SizedBox(height: isNarrow ? 40 : 56),
+                    _JourneyAcademyCards(l10n: l10n),
                     const SizedBox(height: 32),
                   ],
                 ),
@@ -379,40 +381,66 @@ class _SectionPhoenix extends StatelessWidget {
 
 /// Three academy cards (BaZi Harmony, Feng Shui Charter, QiMen Dunjia) — same design as main page.
 class _JourneyAcademyCards extends StatelessWidget {
-  const _JourneyAcademyCards({required this.l10n, required this.isNarrow});
+  const _JourneyAcademyCards({required this.l10n});
 
   final AppLocalizations l10n;
-  final bool isNarrow;
 
   @override
   Widget build(BuildContext context) {
-    if (isNarrow) {
+    final width = MediaQuery.sizeOf(context).width;
+    final isMobile = Breakpoints.isMobile(width);
+    final isTablet = Breakpoints.isTabletOnly(width);
+
+    final bazi = AcademyCard(
+      icon: LucideIcons.user,
+      title: l10n.academyBaZi,
+      description: l10n.academyBaZiDesc,
+      imageAsset: AppContent.assetBaziHarmony,
+      onExplore: () => context.push('/apps'),
+    );
+    final fengShui = AcademyCard(
+      icon: LucideIcons.home,
+      title: l10n.academyFengShui,
+      description: l10n.academyFengShuiDesc,
+      imageAsset: AppContent.assetAcademyFengShui,
+      onExplore: () => context.push('/apps'),
+    );
+    final qiMen = AcademyCard(
+      icon: LucideIcons.compass,
+      title: l10n.academyQiMen,
+      description: l10n.academyQiMenDesc,
+      imageAsset: AppContent.assetAcademyQiMen,
+      onExplore: () => context.push('/apps'),
+    );
+
+    if (isMobile) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AcademyCard(
-            icon: LucideIcons.user,
-            title: l10n.academyBaZi,
-            description: l10n.academyBaZiDesc,
-            imageAsset: AppContent.assetBaziHarmony,
-            onExplore: () => context.push('/apps'),
+          bazi,
+          const SizedBox(height: 20),
+          fengShui,
+          const SizedBox(height: 20),
+          qiMen,
+        ],
+      );
+    }
+    if (isTablet) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(child: bazi),
+                const SizedBox(width: 24),
+                Expanded(child: fengShui),
+              ],
+            ),
           ),
           const SizedBox(height: 20),
-          AcademyCard(
-            icon: LucideIcons.home,
-            title: l10n.academyFengShui,
-            description: l10n.academyFengShuiDesc,
-            imageAsset: AppContent.assetAcademyFengShui,
-            onExplore: () => context.push('/apps'),
-          ),
-          const SizedBox(height: 20),
-          AcademyCard(
-            icon: LucideIcons.compass,
-            title: l10n.academyQiMen,
-            description: l10n.academyQiMenDesc,
-            imageAsset: AppContent.assetAcademyQiMen,
-            onExplore: () => context.push('/apps'),
-          ),
+          qiMen,
         ],
       );
     }
@@ -420,35 +448,11 @@ class _JourneyAcademyCards extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: AcademyCard(
-              icon: LucideIcons.user,
-              title: l10n.academyBaZi,
-              description: l10n.academyBaZiDesc,
-              imageAsset: AppContent.assetBaziHarmony,
-              onExplore: () => context.push('/apps'),
-            ),
-          ),
+          Expanded(child: bazi),
           const SizedBox(width: 24),
-          Expanded(
-            child: AcademyCard(
-              icon: LucideIcons.home,
-              title: l10n.academyFengShui,
-              description: l10n.academyFengShuiDesc,
-              imageAsset: AppContent.assetAcademyFengShui,
-              onExplore: () => context.push('/apps'),
-            ),
-          ),
+          Expanded(child: fengShui),
           const SizedBox(width: 24),
-          Expanded(
-            child: AcademyCard(
-              icon: LucideIcons.compass,
-              title: l10n.academyQiMen,
-              description: l10n.academyQiMenDesc,
-              imageAsset: AppContent.assetAcademyQiMen,
-              onExplore: () => context.push('/apps'),
-            ),
-          ),
+          Expanded(child: qiMen),
         ],
       ),
     );

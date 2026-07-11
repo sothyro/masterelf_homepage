@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../l10n/app_localizations.dart';
 import '../providers/auth_provider.dart';
+import '../utils/breakpoints.dart';
 import '../theme/app_theme.dart';
 
 /// A pair of (label, route) for post-login navigation buttons.
@@ -83,14 +84,16 @@ class _LoginDialogState extends State<LoginDialog> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final auth = context.watch<AuthProvider>();
+    final width = MediaQuery.sizeOf(context).width;
+    final isMobile = Breakpoints.isMobile(width);
 
     return Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+      insetPadding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : 24, vertical: isMobile ? 24 : 48),
       child: Material(
         color: Colors.transparent,
         child: Container(
-          constraints: const BoxConstraints(maxWidth: 440),
+          constraints: BoxConstraints(maxWidth: isMobile ? width - 32 : 440),
           decoration: BoxDecoration(
             color: AppColors.surfaceElevatedDark,
             borderRadius: BorderRadius.circular(16),
@@ -98,7 +101,7 @@ class _LoginDialogState extends State<LoginDialog> {
             boxShadow: AppShadows.dialog,
           ),
           child: Padding(
-            padding: const EdgeInsets.all(32),
+            padding: EdgeInsets.all(isMobile ? 20 : 32),
             child: _success ? _buildSuccessContent(l10n) : _buildLoginForm(l10n, auth),
           ),
         ),

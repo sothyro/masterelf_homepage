@@ -9,7 +9,7 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appTitle => 'Master Elf Feng Shui';
+  String get appTitle => 'Master Elf 风水';
 
   @override
   String get skipToContent => '跳到主内容';
@@ -162,44 +162,302 @@ class AppLocalizationsZh extends AppLocalizations {
   String get period9SpotlightTaglineHighlight => '随身随行';
 
   @override
-  String get talismanStoreSpotlightTagline => '把护佑戴在身上。';
+  String get talismanStoreSpotlightTagline => '天赐护佑，随身可佩。';
 
   @override
-  String get talismanStoreSpotlightTaglineHighlight => '护佑';
+  String get talismanStoreSpotlightTaglineHighlight => '随身可佩';
+
+  @override
+  String get talismanStoreIntroHeading => '虔诚甄选，灵符护佑';
+
+  @override
+  String get talismanStoreIntroBody =>
+      '每一枚符咒都承袭传统祈福之意——为护佑、招福、调和失衡而生，在人生动荡时给予依靠。';
+
+  @override
+  String get talismanStoreIntroHighlight => '护佑、招福、调和';
+
+  @override
+  String get talismanStoreCollectionHeading => '九种灵符';
+
+  @override
+  String get talismanStoreCollectionIntro => '九种心愿，同一使命——在最需要指引之时，行于天赐福泽之下。';
+
+  @override
+  String get talismanStoreCollectionIntroHighlight => '天赐福泽';
+
+  @override
+  String get talismanStoreTrustHeading => '可贴身携带的信仰';
+
+  @override
+  String get talismanStoreTrustBody => '亲手甄选。传承祈福。灵性加持——不是批量生产的饰品。';
+
+  @override
+  String get talismanStoreClosingHeading => '想为特定心愿求一道护佑？';
+
+  @override
+  String get talismanStoreClosingBody => '告诉我们你的挂虑——家宅、出行或心事——我们会为你指引合适的灵符。';
+
+  @override
+  String get talismanStoreClosingCta => '预约咨询';
+
+  @override
+  String get talismanProduct1Subtitle => '日常佩戴的守护符';
+
+  @override
+  String get talismanProduct1Hook => '挡煞护体——把天赐护佑带在身边。';
+
+  @override
+  String get talismanProduct2Subtitle => '招财纳福灵符';
+
+  @override
+  String get talismanProduct2Hook => '开启富足之门；步步迎福。';
+
+  @override
+  String get talismanProduct3Subtitle => '健康平安祈福';
+
+  @override
+  String get talismanProduct3Hook => '滋养身心——提醒健康亦是天赐之福。';
+
+  @override
+  String get talismanProduct4Subtitle => '姻缘和合护符';
+
+  @override
+  String get talismanProduct4Hook => '化戾生和，加深缘分——为彼此相守的心而设。';
+
+  @override
+  String get talismanProduct5Subtitle => '事业顺遂灵符';
+
+  @override
+  String get talismanProduct5Hook => '让努力与机遇同频；在明确福运中前行。';
+
+  @override
+  String get talismanProduct6Subtitle => '心安宁静护符';
+
+  @override
+  String get talismanProduct6Hook => '平息纷乱之心；在护佑中安然歇息。';
+
+  @override
+  String get talismanProduct7Subtitle => '出行平安守护';
+
+  @override
+  String get talismanProduct7Hook => '旅途有护——平安归来，如出发时一样完整。';
+
+  @override
+  String get talismanProduct8Subtitle => '家宅祈福灵符';
+
+  @override
+  String get talismanProduct8Hook => '以平安封印家宅；让每一间屋都迎福。';
+
+  @override
+  String get talismanProduct9Subtitle => '人生抉择智慧符';
+
+  @override
+  String get talismanProduct9Hook => '看清难选之路——前路迷茫时，给予指引。';
 
   @override
   String get bookStoreSectionHeading => 'Master Elf 书店';
 
   @override
-  String get bookStoreSectionTagline => '握在手中的智慧。历久弥新的知识。';
+  String get bookStoreSectionTagline => '古老体系。今日可用的清晰指引。';
 
   @override
-  String get bookStoreSectionTaglineHighlight => '智慧';
+  String get bookStoreSectionTaglineHighlight => '今日可用';
 
   @override
   String get bookStoreSectionMarketing =>
-      '通过我们精选的书籍，深入探索九运风水与中华玄学。适合修行者与爱好者—立即订购，转变你的认知。';
+      'Master Elf 精选书库——为家居、事业与人生抉择而写。选一卷，或建立完整基础。';
 
   @override
-  String get bookStoreSectionMarketingHighlight => '转变你的认知';
+  String get bookStoreSectionMarketingHighlight => '完整基础';
 
   @override
-  String get bookStoreBook1Title => '九运风水 — 第一卷';
+  String get bookStoreIntroHeading => '值得放在案头的书';
 
   @override
-  String get bookStoreBook1Subtitle => '基础与飞星';
+  String get bookStoreIntroBody => '中华玄学，以平实语言讲解。每卷都够实用，今晚就能翻开；也够深刻，值得多年反复研读。';
+
+  @override
+  String get bookStoreIntroHighlight => '反复研读';
+
+  @override
+  String get bookStoreBlessingSeriesIntro => '五门古典学问，一条完整路径——从空间与战略，到择时与护佑。';
+
+  @override
+  String get bookStoreBlessingSeriesIntroHighlight => '完整路径';
+
+  @override
+  String get bookStorePeriod9SeriesIntro => '九运改写格局。这两卷告诉你什么变了，以及如何应用。';
+
+  @override
+  String get bookStorePeriod9SeriesIntroHighlight => '如何应用';
+
+  @override
+  String get bookStoreTrustHeading => '为真实决策而写';
+
+  @override
+  String get bookStoreTrustBody => '实用章节。真实案例逻辑。可信赖的智慧——不是博物馆里的理论。';
+
+  @override
+  String bookStoreBundleSaveLabel(String amount) {
+    return '比单买节省 $amount';
+  }
+
+  @override
+  String get bookStoreClosingHeading => '不确定从哪一本开始？';
+
+  @override
+  String get bookStoreClosingBody => '告诉我们你的目标——家居、事业或择时——我们会推荐合适的卷册。';
+
+  @override
+  String get bookStoreClosingCta => '预约咨询';
+
+  @override
+  String get bookStoreBook1Hook => '调整空间气场，让家宅流通、富足、安宁。';
+
+  @override
+  String get bookStoreBook2Hook => '为事业、出行与重大决定，选择更优时机。';
+
+  @override
+  String get bookStoreBook3Hook => '看清变化——然后自信行动。';
+
+  @override
+  String get bookStoreBook4Hook => '祈福护佑仪式，逐步详解。';
+
+  @override
+  String get bookStoreBook5Hook => '为搬迁、婚礼与开业，挑选吉日。';
+
+  @override
+  String get bookStoreBlessingBundleHook => '五门学问，一套典藏——Master Elf 推荐的全套书库。';
+
+  @override
+  String get bookStorePeriod9Book1Hook => '装修或搬迁前，先掌握九运基础。';
+
+  @override
+  String get bookStorePeriod9Book2Hook => '飞星进阶方法，适合进阶学员与执业者。';
+
+  @override
+  String get bookStoreBook1Title => '现代风水';
+
+  @override
+  String get bookStoreBook1Subtitle => '空间、气场与繁荣的生活科学';
 
   @override
   String get bookStoreBook1Price => '24.99';
 
   @override
-  String get bookStoreBook2Title => '九运风水 — 第二卷';
+  String get bookStoreBook2Title => '奇门遁甲应用';
 
   @override
-  String get bookStoreBook2Subtitle => '进阶应用';
+  String get bookStoreBook2Subtitle => '战略、时机与胜利的秘密科学';
 
   @override
   String get bookStoreBook2Price => '24.99';
+
+  @override
+  String get bookStoreBook3Title => '战略易经';
+
+  @override
+  String get bookStoreBook3Subtitle => '选择、变化与清晰的古代智慧';
+
+  @override
+  String get bookStoreBook3Price => '24.99';
+
+  @override
+  String get bookStoreBook4Title => '茅山之道';
+
+  @override
+  String get bookStoreBook4Subtitle => '祈福、神灵与护佑的秘密仪式';
+
+  @override
+  String get bookStoreBook4Price => '24.99';
+
+  @override
+  String get bookStoreBook5Title => '择日';
+
+  @override
+  String get bookStoreBook5Subtitle => '力量、希望与命运的神圣时机艺术';
+
+  @override
+  String get bookStoreBook5Price => '24.99';
+
+  @override
+  String get bookStoreBlessingBundleTitle => '五福全书套装';
+
+  @override
+  String get bookStoreBlessingBundleSubtitle => '五卷全集 — 套装购买更优惠';
+
+  @override
+  String get bookStoreBlessingBundlePrice => '99.99';
+
+  @override
+  String get bookStoreBlessingBundleOriginalPrice => '124.95';
+
+  @override
+  String get bookStoreBundleBadge => '套装';
+
+  @override
+  String get bookStoreAddBundleToCart => '加入套装';
+
+  @override
+  String get bookStorePeriod9Book1Title => '九运风水 — 第一卷';
+
+  @override
+  String get bookStorePeriod9Book1Subtitle => '基础与飞星';
+
+  @override
+  String get bookStorePeriod9Book1Price => '24.99';
+
+  @override
+  String get bookStorePeriod9Book2Title => '九运风水 — 第二卷';
+
+  @override
+  String get bookStorePeriod9Book2Subtitle => '进阶应用';
+
+  @override
+  String get bookStorePeriod9Book2Price => '24.99';
+
+  @override
+  String get bookStoreBlessingSeriesHeading => '五福书系';
+
+  @override
+  String get bookStoreShelfPanoramaTopHeading => '五福书系正式发布';
+
+  @override
+  String get bookStoreShelfPanoramaTopBody =>
+      '洪财亨大师权威五卷集——将古典玄学化为您可以信赖的日常决策指南。';
+
+  @override
+  String get bookStoreShelfPanoramaTopHighlight => '日常决策指南';
+
+  @override
+  String get bookStoreShelfPanoramaBottomHeading => '收藏完整参考套装';
+
+  @override
+  String get bookStoreShelfPanoramaBottomBody =>
+      '从 Feng Shui、奇门遁甲到 I Ching、茅山与择日——每本自成体系，合在一起便是资深从业者案头常备的典籍。';
+
+  @override
+  String get bookStoreShelfPanoramaBottomHighlight => '案头常备的典籍';
+
+  @override
+  String get bookStorePeriod9BridgeHeading => '以九运系列延续您的藏书';
+
+  @override
+  String get bookStorePeriod9BridgeBody =>
+      '五方神库奠定根基——这两卷书以飞星之法，为您勾勒2024–2043火运时代的布局与应用。';
+
+  @override
+  String get bookStorePeriod9BridgeHighlight => '2024–2043火运时代';
+
+  @override
+  String get bookStorePeriod9EraBadge => '九运 · 2024–2043';
+
+  @override
+  String get bookStorePeriod9SeriesKicker => '高阶风水 · 双卷套装';
+
+  @override
+  String get bookStorePeriod9SeriesHeading => '九运风水系列';
 
   @override
   String get bookStorePricePrefix => '\$';
@@ -292,7 +550,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get aboutMasterElf => '关于 Master Elf';
 
   @override
-  String get heroMasterElfCaption => 'Master Elf';
+  String get heroMasterElfCaption => 'Master Elf 风水';
 
   @override
   String get journey => '我的奋进';
@@ -372,6 +630,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exploreAllEvents => '探索所有活动';
 
   @override
+  String get eventsSectionTitle => '活动';
+
+  @override
+  String get eventsSectionHeadline => '将洞见转化为体验。';
+
+  @override
+  String get eventsSectionSubline => '亲临 Master Elf 现场 — 工作坊、启示与实地课程。';
+
+  @override
+  String get earlyBirdEnds => '早鸟优惠';
+
+  @override
   String get comingUpNext => '即将举行';
 
   @override
@@ -418,13 +688,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get sectionKnowledgeBody =>
-      '超过 44,000 名追随者已使用这一系统。与对的人、对的地方、对的时间同频，成功必然。';
+      '超过 51,000 名追随者已使用这一系统。与对的人、对的地方、对的时间同频，成功必然。';
 
   @override
   String get sectionKnowledgeBody2 => '成功不是来自更努力地工作。它来自在正确的时间，用正确的系统，做出正确的行动。';
 
   @override
-  String get sectionKnowledgeStat => '44,000+ 追随者';
+  String get sectionKnowledgeStat => '51K+ 追随者';
 
   @override
   String get sectionMapHeading => '你不需要更多建议。你需要一张路线图。\n让天道指引你走上正途。';
@@ -442,7 +712,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sectionStoryPara2 => '经年研习、验证与提炼，形成根植于中华玄学的可验证方法。';
 
   @override
-  String get sectionStoryPara3 => '如今，这套方法已帮助 44,000 多名追随者为己为人创造更好结果。';
+  String get sectionStoryPara3 => '如今，这套方法已帮助 51,000 多名追随者为己为人创造更好结果。';
 
   @override
   String get sectionStoryCtaButton => 'Master Elf 的奋进';
@@ -653,26 +923,121 @@ class AppLocalizationsZh extends AppLocalizations {
   String get eventsDescriptionHighlight => '顶尖的风水、中华玄学与占星盛会';
 
   @override
-  String get eventsWhyAttendTitle => '为什么这是最好的盛会';
+  String get eventsUpcomingSubline => '选择活动并预订座位。期待与您相见。';
+
+  @override
+  String get eventsPageHeroHeadline => '洞见化为体验之地';
+
+  @override
+  String get eventsPageHeroSubline => '现场启示、在线典藏，以及 Master Elf 教学旅程的下一章。';
+
+  @override
+  String get eventsPageHeroHighlight => '下一章';
+
+  @override
+  String get eventsCompletedHeading => '近期已完成';
+
+  @override
+  String get eventsCompletedSubline => '感动我们社群的时刻——现场与线上，皆有留存。';
+
+  @override
+  String get eventsCompletedBadge => '已完成';
+
+  @override
+  String get eventsOnlineBadge => '线上';
+
+  @override
+  String get eventsUpcomingBadge => '即将举行';
+
+  @override
+  String get eventsUpcomingSpotlightHeading => '即将登场';
+
+  @override
+  String get eventsUpcomingSpotlightSubline => '下一场盛会正在筹备中。尽早预留席位。';
+
+  @override
+  String get eventsGoat2027Title => 'Master Elf — 迎接 2027 血羊年';
+
+  @override
+  String get eventsGoat2027Subtitle => '新生肖周期的年度启示';
+
+  @override
+  String get eventsGoat2027Hook => '以清晰、策略与天时应势，迈入血羊之年。';
+
+  @override
+  String get eventsGoat2027Description =>
+      'Master Elf 年度盛会回归——现场授课、九运战略，以及血羊年兴旺之路。';
+
+  @override
+  String get eventsGoat2027DescriptionHighlight => '血羊之年';
+
+  @override
+  String get eventsGoat2027Date => '2027年2月 · 金边';
+
+  @override
+  String get eventsGoat2027Location => '金边';
+
+  @override
+  String get eventsZodiacStripLabel => '血羊年始于2027年2月';
+
+  @override
+  String get eventsZodiacStripPhoenix => '凤凰 2026';
+
+  @override
+  String get eventsZodiacStripGoat => '血羊 2027';
+
+  @override
+  String get eventsPhoenixRecapHook => '开启新时代的启示——金边现场见证。';
+
+  @override
+  String get eventsPhoenixRecapBody =>
+      '数百人齐聚 Master Elf 最受期待的启示。《凤凰崛起》标志着一个转折点——重生、转化，以及在九运中崛起的框架。';
+
+  @override
+  String get eventsPhoenixRecapHighlight => '转折点';
+
+  @override
+  String get eventsExploreJourney => '探索旅程';
+
+  @override
+  String get eventsHomeFeaturedUpcoming => '即将登场';
+
+  @override
+  String get eventsHomeRecentCompleted => '近期已完成';
+
+  @override
+  String get event1Subtitle => '大师启示——金边现场';
+
+  @override
+  String get event1Hook => '洞见化为行动的一刻——Master Elf 2026 年标志性启示。';
+
+  @override
+  String get event2Subtitle => '新加坡版——现已上线';
+
+  @override
+  String get event2Hook => '风水与占星精髓，录播回放，随时重温。';
+
+  @override
+  String get event3Subtitle => '火马年战略——线上典藏';
+
+  @override
+  String get event3Hook => '火马年兵法艺术——策略随时回看。';
+
+  @override
+  String get eventsWhyAttendTitle => '为何 Master Elf 活动值得参与';
 
   @override
   String get eventsWhyAttendLead =>
-      '这不仅是又一堂讲座。这是最受期待的风水与中华玄学体验——古老智慧与实战策略相遇，让你满载而归、改变人生。';
+      '无论您曾在金边或线上参与，还是正在为血羊年做准备——这些聚会都将古典智慧化为可行动的决定。';
 
   @override
-  String get eventsWhyAttend1 => '向大师学习——现场授课与独到见解，别处难求。';
+  String get eventsWhyAttend1 => '直接向 Master Elf 学习——现场启示与书本难以替代的纵深。';
 
   @override
-  String get eventsWhyAttend2 => '结识同修与爱好者，与志同道合者同行。';
+  String get eventsWhyAttend2 => '加入准备在每一轮生肖周期中崛起的同修社群。';
 
   @override
-  String get eventsWhyAttend3 => '席位有限。立即预订，成为这场盛会的一员。';
-
-  @override
-  String get eventsUpcomingHeadline => '即将举行的活动';
-
-  @override
-  String get eventsUpcomingSubline => '选择活动并预订座位。期待与您相见。';
+  String get eventsWhyAttend3 => '即将举行的席位有限。尽早报名血羊年 2027 盛会。';
 
   @override
   String get secureYourSeat => '预订座位';
@@ -760,7 +1125,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get journeyStory1 =>
-      'Master Elf 是公认的风水与中华玄学实践者，拥有超过 44,000 名追随者，长期为个人与企业提供清晰指引与成果。他的道路并非偶然，而是始于一份使命。';
+      'Master Elf 是公认的风水与中华玄学实践者，拥有超过 51,000 名追随者，长期为个人与企业提供清晰指引与成果。他的道路并非偶然，而是始于一份使命。';
 
   @override
   String get journeyStory2 =>
@@ -894,7 +1259,28 @@ class AppLocalizationsZh extends AppLocalizations {
   String get smsStatusLabel => '短信状态';
 
   @override
-  String get sessionDurationNote => '每次咨询为 2 小时，场次间隔 1 小时。';
+  String get sessionDurationNote => '咨询时长从 1 小时起。每日 8:00–22:00 开放（柬埔寨时间）。';
+
+  @override
+  String get selectDuration => '咨询时长';
+
+  @override
+  String durationHours(int hours) {
+    return '$hours小时';
+  }
+
+  @override
+  String confirmSessionDuration(int hours) {
+    return '$hours小时咨询';
+  }
+
+  @override
+  String bookingUntilTime(String time) {
+    return '至 $time';
+  }
+
+  @override
+  String get bookingContinued => '进行中';
 
   @override
   String get sessionType => '预约类型';
@@ -927,7 +1313,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noBookingsFound => '未找到该号码的预约。';
 
   @override
-  String get cancelBookingButton => '取消预约';
+  String get cancelBookingButton => '取消';
 
   @override
   String get cancelBookingConfirm => '确定取消此预约？';
@@ -951,7 +1337,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get statusCompleted => '已完成';
 
   @override
-  String get markAsCompleted => '标记完成';
+  String get markAsCompleted => '完成';
 
   @override
   String get customTime => '自定义时间…';
@@ -1123,7 +1509,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sampleFeature => '示例專題';
 
   @override
-  String get event1Title => 'Master Elf - The Rise of Phoenix 2026';
+  String get event1Title => 'Master Elf - 凤凰崛起 2026';
 
   @override
   String get event1Description => '師父開示。';
@@ -1135,19 +1521,28 @@ class AppLocalizationsZh extends AppLocalizations {
   String get event2Title => '風水與占星 2026';
 
   @override
-  String get event2Description => '新加坡版風水與占星 2026 現場活動。';
+  String get event2Description => '新加坡版风水与占星 2026——现已提供线上回放。';
 
   @override
-  String get event2Location => 'Resorts World Sentosa, Singapore';
+  String get event2Location => '新加坡圣淘沙名胜世界';
 
   @override
   String get event3Title => '赤馬奇門';
 
   @override
-  String get event3Description => '火馬年之兵法藝術';
+  String get event3Description => '火马年兵法艺术——已完成的线上活动，可供回放。';
 
   @override
-  String get event3Location => 'Resorts World Singapore';
+  String get event3Location => '新加坡名胜世界';
+
+  @override
+  String get event4Title => '择日大师班';
+
+  @override
+  String get event4Description => '为人生重要决定选择吉时。';
+
+  @override
+  String get event4Location => '金边';
 
   @override
   String get loginSectionTitle => '员工/管理员登录';
@@ -1202,6 +1597,46 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get statusColumn => '状态';
+
+  @override
+  String get actionsColumn => '操作';
+
+  @override
+  String appointmentsListRange(int start, int end, int total) {
+    return '显示第 $start–$end 条，共 $total 条';
+  }
+
+  @override
+  String appointmentsListPage(int current, int total) {
+    return '第 $current / $total 页';
+  }
+
+  @override
+  String get searchAppointments => '搜索预约…';
+
+  @override
+  String get exportAppointmentsList => '导出列表';
+
+  @override
+  String get noAppointmentsMatchSearch => '没有符合搜索条件的预约。';
+
+  @override
+  String get appointmentsListPdfTitle => '预约列表';
+
+  @override
+  String get appointmentsPdfExportStarted => '预约列表 PDF 开始下载。';
+
+  @override
+  String get appointmentsPdfExportFailed => '预约列表导出失败。';
+
+  @override
+  String get dashboardStatsFilteredTotal => '筛选合计';
+
+  @override
+  String get switchToListToSearchExport => '切换到列表视图以搜索或导出。';
+
+  @override
+  String get slotTimeNotAvailable => '所选时段不可用，请选择其他时段。';
 
   @override
   String get filterAll => '全部';
@@ -1467,13 +1902,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noSlotsAvailable => '此日期暂无可用时段。';
 
   @override
+  String get slotsEstimateWarning => '显示的是预估时段——无法加载实时可用性。预订后请与我们确认。';
+
+  @override
+  String get slotsFetchFailed => '无法连接预订服务器。显示的时段仅为预估——预订后请与我们确认。';
+
+  @override
   String get poweredBy => '由 Stonechat Communications 提供支持';
 
   @override
-  String get tooltipWhatsApp => 'WhatsApp';
+  String get tooltipWhatsApp => 'WhatsApp 联系';
 
   @override
-  String get tooltipFacebook => 'Facebook';
+  String get tooltipFacebook => 'Facebook 专页';
 
   @override
   String get tooltipInstagram => 'Instagram';
@@ -1482,7 +1923,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tooltipTikTok => 'TikTok';
 
   @override
-  String get tooltipTelegram => 'Telegram';
+  String get tooltipTelegram => 'Telegram 群组';
 
   @override
   String get tooltipEmail => '邮箱';
@@ -2631,4 +3072,848 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get inspectionEstimatedReportDeliveryDate => '预计报告交付日期';
+
+  @override
+  String get fieldWorkSectionTitle => '真实工作现场';
+
+  @override
+  String get fieldWorkSectionHeadline => '真实工作。真实地点。真实成果。';
+
+  @override
+  String get fieldWorkSectionSubline => '办公室咨询、茅山仪式与现场风水勘察——如实记录。';
+
+  @override
+  String get fieldWorkRealmAll => '全部';
+
+  @override
+  String get fieldWorkRealmOffice => '办公室';
+
+  @override
+  String get fieldWorkRealmRitual => '茅山仪式';
+
+  @override
+  String get fieldWorkRealmSite => '现场勘察';
+
+  @override
+  String get fieldWorkFilterVideos => '视频';
+
+  @override
+  String get fieldWorkViewAll => '查看全部活动';
+
+  @override
+  String get fieldWorkBookConsultation => '预约咨询';
+
+  @override
+  String get fieldWorkNav => '实地工作';
+
+  @override
+  String get fieldWorkPageTitle => 'Master Elf 实战记录';
+
+  @override
+  String get fieldWorkPageSubline => '记录在柬埔寨各地的咨询、仪式与风水现场勘察。';
+
+  @override
+  String get fieldWorkFeaturedLabel => '精选';
+
+  @override
+  String get fieldWorkSeeRealSessions => '查看真实咨询与现场勘察';
+
+  @override
+  String get fieldWorkSeeRealSessionsLink => '浏览实地工作';
+
+  @override
+  String get fieldWorkJourneyTeaser => '课堂之外——看看我们在现场如何工作。';
+
+  @override
+  String get fieldWorkJourneyCta => '探索实地工作';
+
+  @override
+  String get fieldWorkRelatedService => '预约此类服务';
+
+  @override
+  String get fieldWorkShareFacebook => '分享到 Facebook';
+
+  @override
+  String get fieldWorkBackToJournal => '返回实地工作';
+
+  @override
+  String get fieldWorkEmptyFilter => '暂无符合此筛选条件的活动。';
+
+  @override
+  String get fieldWorkGalleryHeading => '照片集';
+
+  @override
+  String get fieldWorkPillarFengShuiTitle => '风水实地勘察';
+
+  @override
+  String get fieldWorkPillarFengShuiSubtitle => '在真实物业上进行罗盘读数与地貌评估。';
+
+  @override
+  String get fieldWorkPillarConsultTitle => '八字、奇门与易经咨询';
+
+  @override
+  String get fieldWorkPillarConsultSubtitle => '办公室咨询——命盘、策略与可执行的下一步。';
+
+  @override
+  String get fieldWorkPillarMaoShanTitle => '茅山住家祈福';
+
+  @override
+  String get fieldWorkPillarMaoShanSubtitle => '仪式助力居家安宁、护佑与和谐。';
+
+  @override
+  String get fieldWorkPillarDateSelectionTitle => '择日 (Date Selection)';
+
+  @override
+  String get fieldWorkPillarDateSelectionSubtitle => '为开业、签约与重要里程碑选择吉时。';
+
+  @override
+  String get fieldWorkPillarBooksTitle => '五福祈福丛书';
+
+  @override
+  String get fieldWorkPillarBooksSubtitle => '可握在手中的智慧——Master Elf 出版物，助您深入学习。';
+
+  @override
+  String get homePublicationsHeading => '五福祈福丛书';
+
+  @override
+  String get homePublicationsSubline => 'Master Elf 出版物——可握在手中的智慧。';
+
+  @override
+  String get homePublicationsViewAll => '查看全部书籍';
+
+  @override
+  String get homeCoreActivitiesHeading => '真实服务，真实成果';
+
+  @override
+  String get homeCoreActivitiesSubline =>
+      '以下每一张照片都来自真实案例——绝非素材图。看看 Master Elf 如何将正统中国玄学化为实地、办公室与祭坛上的清晰指引、护佑与旺运。您的下一篇章，也可以从这里开始。';
+
+  @override
+  String get fieldWorkFromEventsLink => '查看实地工作';
+
+  @override
+  String get fieldWorkVideosHeading => '观看真实工作现场';
+
+  @override
+  String get fieldWorkVideosSubline => '六个现场瞬间——咨询、仪式与实地勘察，如实记录。';
+
+  @override
+  String get fieldWorkStoriesHeading => '核心服务';
+
+  @override
+  String get fieldWorkStoriesSubline => '实地勘察、办公室咨询、茅山仪式与择日——以现场照片真实记录。';
+
+  @override
+  String get fieldWorkWatchVideo => '观看';
+
+  @override
+  String get fieldWorkBackToActivities => '返回活动';
+
+  @override
+  String get fieldWorkVideoSpotlight1Title => '风水实地勘察 — 现场罗盘';
+
+  @override
+  String get fieldWorkVideoSpotlight1Subtitle => '在商业物业上进行现场读数与地貌评估。';
+
+  @override
+  String get fieldWorkVideoSpotlight2Title => '风水勘察 — 向与坐向';
+
+  @override
+  String get fieldWorkVideoSpotlight2Subtitle => '为飞星分析记录准确朝向，再进行室内布局。';
+
+  @override
+  String get fieldWorkVideoSpotlight3Title => '办公室八字咨询';
+
+  @override
+  String get fieldWorkVideoSpotlight3Subtitle => '一对一咨询——命盘、运程与可执行的下一步。';
+
+  @override
+  String get fieldWorkVideoSpotlight4Title => '奇门战略咨询';
+
+  @override
+  String get fieldWorkVideoSpotlight4Subtitle => '将古老择时工具应用于现代商业决策。';
+
+  @override
+  String get fieldWorkVideoSpotlight5Title => '茅山仪式 — 办公室祈福';
+
+  @override
+  String get fieldWorkVideoSpotlight5Subtitle => '为新商业周期净化并调整办公空间气场。';
+
+  @override
+  String get fieldWorkVideoSpotlight6Title => '择日实践';
+
+  @override
+  String get fieldWorkVideoSpotlight6Subtitle => '为开业、签约与重要里程碑选择吉时。';
+
+  @override
+  String get inspectionXuanKongPeriod => '玄空运期';
+
+  @override
+  String get inspectionPeriod7 => '七运 (1984–2003)';
+
+  @override
+  String get inspectionPeriod8 => '八运 (2004–2023)';
+
+  @override
+  String get inspectionPeriod9Option => '九运 (2024–2043)';
+
+  @override
+  String get inspectionConvertedToTrigram => '转换为卦象';
+
+  @override
+  String get inspectionHouseGua => '宅卦';
+
+  @override
+  String get inspectionHouseKan => '坎宅 (坎) - 坐北';
+
+  @override
+  String get inspectionHouseKun => '坤宅 (坤) - 坐西南';
+
+  @override
+  String get inspectionHouseZhen => '震宅 (震) - 坐东';
+
+  @override
+  String get inspectionHouseXun => '巽宅 (巽) - 坐东南';
+
+  @override
+  String get inspectionHouseQian => '乾宅 (乾) - 坐西北';
+
+  @override
+  String get inspectionHouseDui => '兑宅 (兌) - 坐西';
+
+  @override
+  String get inspectionHouseGen => '艮宅 (艮) - 坐东北';
+
+  @override
+  String get inspectionHouseLi => '离宅 (離) - 坐南';
+
+  @override
+  String get inspectionHouseGroup => '宅组';
+
+  @override
+  String get inspectionHouseGroupEast => '东四命 (坎、震、巽、离)';
+
+  @override
+  String get inspectionHouseGroupWest => '西四命 (乾、坤、艮、兑)';
+
+  @override
+  String get inspectionMainEntranceSector => '主入口 - 八宅方位';
+
+  @override
+  String get inspectionMainEntranceQuality => '主入口 - 吉凶';
+
+  @override
+  String get inspectionManagerOfficeSector => '经理/业主办公室 - 方位';
+
+  @override
+  String get inspectionManagerOfficeQuality => '经理/业主办公室 - 吉凶';
+
+  @override
+  String get inspectionCashierSector => '收银/保险柜 - 方位';
+
+  @override
+  String get inspectionCashierQuality => '收银/保险柜 - 吉凶';
+
+  @override
+  String get inspectionToiletSector => '厕所位置 - 方位';
+
+  @override
+  String get inspectionToiletImpact => '厕所影响';
+
+  @override
+  String get inspectionToiletAcceptable => '可接受（位于凶方）';
+
+  @override
+  String get inspectionToiletPoor => '不佳（位于吉方）';
+
+  @override
+  String get inspectionClientFullName => '主要客户/业主 - 全名';
+
+  @override
+  String get inspectionClientRole => '角色';
+
+  @override
+  String get inspectionRoleOwner => '业主';
+
+  @override
+  String get inspectionRoleMainTenant => '主租户';
+
+  @override
+  String get inspectionRoleCeo => '首席执行官';
+
+  @override
+  String get inspectionRoleManager => '经理';
+
+  @override
+  String get inspectionBirthDate => '出生日期';
+
+  @override
+  String get inspectionBirthTime => '出生时间';
+
+  @override
+  String get inspectionPlaceOfBirth => '出生地';
+
+  @override
+  String get inspectionDayMaster => '日主';
+
+  @override
+  String get inspectionFavorableElements => '喜用神';
+
+  @override
+  String get inspectionUnfavorableElements => '忌神';
+
+  @override
+  String get inspectionElementWood => '木 (木)';
+
+  @override
+  String get inspectionElementFire => '火 (火)';
+
+  @override
+  String get inspectionElementEarth => '土 (土)';
+
+  @override
+  String get inspectionElementMetal => '金 (金)';
+
+  @override
+  String get inspectionElementWater => '水 (水)';
+
+  @override
+  String get inspectionPersonalGuaLabel => '命卦 (命卦)';
+
+  @override
+  String get inspectionPersonalGroup => '命组';
+
+  @override
+  String get inspectionPersonalGroupEast => '东四命';
+
+  @override
+  String get inspectionPersonalGroupWest => '西四命';
+
+  @override
+  String get inspectionShengQiDirection => '生气（最佳）方位';
+
+  @override
+  String get inspectionTianYiDirection => '天医（健康）方位';
+
+  @override
+  String get inspectionYanNianDirection => '延年（人际）方位';
+
+  @override
+  String get inspectionFuWeiDirection => '伏位（稳定）方位';
+
+  @override
+  String get inspectionPerson2Name => '第二人 - 姓名';
+
+  @override
+  String get inspectionPerson2Role => '第二人 - 角色';
+
+  @override
+  String get inspectionPerson2BirthDate => '第二人 - 出生日期';
+
+  @override
+  String get inspectionPerson2BirthTime => '第二人 - 出生时间';
+
+  @override
+  String get inspectionPerson2Gua => '第二人 - 命卦';
+
+  @override
+  String get inspectionPerson3Name => '第三人 - 姓名';
+
+  @override
+  String get inspectionPerson3Role => '第三人 - 角色';
+
+  @override
+  String get inspectionPerson3BirthDate => '第三人 - 出生日期';
+
+  @override
+  String get inspectionPerson3BirthTime => '第三人 - 出生时间';
+
+  @override
+  String get inspectionPerson3Gua => '第三人 - 命卦';
+
+  @override
+  String get inspectionBusinessGoals => '主要商业目标';
+
+  @override
+  String get inspectionGoalWealth => '财富/利润最大化';
+
+  @override
+  String get inspectionGoalCustomerFlow => '客流';
+
+  @override
+  String get inspectionGoalStability => '业务稳定';
+
+  @override
+  String get inspectionGoalStaffHarmony => '员工和谐';
+
+  @override
+  String get inspectionGoalHealth => '健康与福祉';
+
+  @override
+  String get inspectionGoalOther => '其他';
+
+  @override
+  String get inspectionSpecificConcerns => '提出的具体关切';
+
+  @override
+  String get inspectionCurrentChallenges => '当前挑战';
+
+  @override
+  String get inspectionChallengeFinancial => '财务困难';
+
+  @override
+  String get inspectionChallengeHealth => '健康问题';
+
+  @override
+  String get inspectionChallengeStaff => '员工冲突';
+
+  @override
+  String get inspectionChallengeLegal => '法律问题';
+
+  @override
+  String get inspectionChallengeRelationship => '人际关系问题';
+
+  @override
+  String get inspectionChallengeCustomerFlow => '客流不佳';
+
+  @override
+  String get inspectionHealthIssuesSpecify => '健康问题（请注明）';
+
+  @override
+  String get inspectionPlannedOpeningDate => '计划开业日期';
+
+  @override
+  String get inspectionPreferredDateFrom => '首选日期范围 - 起';
+
+  @override
+  String get inspectionPreferredDateTo => '首选日期范围 - 止';
+
+  @override
+  String get inspectionActivitiesDateSelection => '需要择日的重要活动';
+
+  @override
+  String get inspectionActivityGrandOpening => '盛大开业典礼';
+
+  @override
+  String get inspectionActivityRenovation => '装修开工';
+
+  @override
+  String get inspectionActivityMovingIn => '入伙/入驻';
+
+  @override
+  String get inspectionActivitySignInstall => '招牌安装';
+
+  @override
+  String get inspectionActivityContract => '签约';
+
+  @override
+  String get inspectionActivityPurchases => '重大采购';
+
+  @override
+  String get inspectionSolarTerm => '节气';
+
+  @override
+  String get inspectionLunarDate => '农历日期';
+
+  @override
+  String get inspectionFavorablePalaces => '此日期/时辰的吉方';
+
+  @override
+  String get inspectionUnfavorablePalaces => '此日期/时辰的凶方';
+
+  @override
+  String get inspectionGrandOpeningDate1 => '开业 - 日期选项 1';
+
+  @override
+  String get inspectionGrandOpeningDate2 => '开业 - 日期选项 2';
+
+  @override
+  String get inspectionGrandOpeningDate3 => '开业 - 日期选项 3';
+
+  @override
+  String get inspectionRenovationDate1 => '装修开工 - 日期选项 1';
+
+  @override
+  String get inspectionRenovationDate2 => '装修开工 - 日期选项 2';
+
+  @override
+  String get inspectionMustAvoid => '必须避开';
+
+  @override
+  String get inspectionNumberOfMainEntrances => '主入口数量';
+
+  @override
+  String get inspectionMainDoorPosition => '大门位置（宫位/方位）';
+
+  @override
+  String get inspectionDoorConfiguration => '门向配置';
+
+  @override
+  String get inspectionDoorOpensInward => '向内开';
+
+  @override
+  String get inspectionDoorOpensOutward => '向外开';
+
+  @override
+  String get inspectionDoorSliding => '推拉门';
+
+  @override
+  String get inspectionDoorAutomatic => '自动门';
+
+  @override
+  String get inspectionEntranceIssues => '问题';
+
+  @override
+  String get inspectionIssueBeamAboveDoor => '门上有横梁';
+
+  @override
+  String get inspectionIssueThroughFlow => '前后门直通';
+
+  @override
+  String get inspectionIssueToStaircase => '门对楼梯';
+
+  @override
+  String get inspectionIssueToToilet => '门对厕所';
+
+  @override
+  String get inspectionIssueNarrowEntrance => '入口狭窄';
+
+  @override
+  String get inspectionIssueNone => '未发现问题';
+
+  @override
+  String get inspectionEntranceAssessment => '评估';
+
+  @override
+  String get inspectionEntranceFavorable => '吉门';
+
+  @override
+  String get inspectionEntranceAcceptable => '可接受（微调即可）';
+
+  @override
+  String get inspectionEntranceRemedial => '需要化解';
+
+  @override
+  String get inspectionCeilingHeight => '层高（米）';
+
+  @override
+  String get inspectionNaturalLight => '自然采光';
+
+  @override
+  String get inspectionLightAbundant => '充足（大窗）';
+
+  @override
+  String get inspectionLightModerate => '适中';
+
+  @override
+  String get inspectionLightDim => '昏暗/不足';
+
+  @override
+  String get inspectionAirCirculation => '空气流通';
+
+  @override
+  String get inspectionAirGood => '通风良好';
+
+  @override
+  String get inspectionAirPoor => '差/停滞';
+
+  @override
+  String get inspectionFloorPlanShape => '平面形状';
+
+  @override
+  String get inspectionShapeSquare => '方正（理想）';
+
+  @override
+  String get inspectionShapeL => 'L形';
+
+  @override
+  String get inspectionShapeIrregular => '不规则';
+
+  @override
+  String get inspectionShapeTriangular => '三角形区域';
+
+  @override
+  String get inspectionReceptionSector => '前台/收银 - 方位';
+
+  @override
+  String get inspectionReceptionFlyingStar => '前台 - 飞星';
+
+  @override
+  String get inspectionReception8Mansions => '前台 - 八宅';
+
+  @override
+  String get inspectionReceptionAssessment => '前台 - 评估';
+
+  @override
+  String get inspectionOfficeSector => '办公室/经理 - 方位';
+
+  @override
+  String get inspectionOfficeFlyingStar => '办公室 - 飞星';
+
+  @override
+  String get inspectionOffice8Mansions => '办公室 - 八宅';
+
+  @override
+  String get inspectionOfficeAssessment => '办公室 - 评估';
+
+  @override
+  String get inspectionToiletSectorInternal => '厕所/浴室 - 方位';
+
+  @override
+  String get inspectionToiletFlyingStar => '厕所 - 飞星';
+
+  @override
+  String get inspectionToilet8Mansions => '厕所 - 八宅';
+
+  @override
+  String get inspectionToiletIssues => '厕所问题';
+
+  @override
+  String get inspectionToiletAtCenter => '位于中宫';
+
+  @override
+  String get inspectionToiletAtWealth => '位于财位';
+
+  @override
+  String get inspectionToiletNoIssues => '无问题';
+
+  @override
+  String get inspectionStaircaseSector => '楼梯/电梯 - 方位';
+
+  @override
+  String get inspectionStaircaseFlyingStar => '楼梯 - 飞星';
+
+  @override
+  String get inspectionStaircase8Mansions => '楼梯 - 八宅';
+
+  @override
+  String get inspectionStaircaseAssessment => '楼梯 - 评估';
+
+  @override
+  String get inspectionRoom1Sector => '房间 1 - 方位';
+
+  @override
+  String get inspectionRoom1FlyingStar => '房间 1 - 飞星';
+
+  @override
+  String get inspectionRoom1EightMansions => '房间 1 - 八宅';
+
+  @override
+  String get inspectionRoom2Sector => '房间 2 - 方位';
+
+  @override
+  String get inspectionRoom3Sector => '房间 3 - 方位';
+
+  @override
+  String get inspectionBestSectorMainEntrance => '最佳方位 - 主入口';
+
+  @override
+  String get inspectionBestSectorCashier => '最佳方位 - 收银/财务';
+
+  @override
+  String get inspectionBestSectorManager => '最佳方位 - 经理办公室';
+
+  @override
+  String get inspectionBestSectorStorage => '最佳方位 - 仓储';
+
+  @override
+  String get inspectionQualityStrong => '强';
+
+  @override
+  String get inspectionQualityWeak => '弱';
+
+  @override
+  String get inspectionQualityConflicting => '冲突';
+
+  @override
+  String get inspectionPdfTitle => '现场勘察报告';
+
+  @override
+  String get solarTerm01 => 'Lichun (立春)';
+
+  @override
+  String get solarTerm02 => 'Yushui (雨水)';
+
+  @override
+  String get solarTerm03 => 'Jingzhe (惊蛰)';
+
+  @override
+  String get solarTerm04 => 'Chunfen (春分)';
+
+  @override
+  String get solarTerm05 => 'Qingming (清明)';
+
+  @override
+  String get solarTerm06 => 'Guyu (谷雨)';
+
+  @override
+  String get solarTerm07 => 'Lixia (立夏)';
+
+  @override
+  String get solarTerm08 => 'Xiaoman (小满)';
+
+  @override
+  String get solarTerm09 => 'Mangzhong (芒种)';
+
+  @override
+  String get solarTerm10 => 'Xiazhi (夏至)';
+
+  @override
+  String get solarTerm11 => 'Xiaoshu (小暑)';
+
+  @override
+  String get solarTerm12 => 'Dashu (大暑)';
+
+  @override
+  String get solarTerm13 => 'Liqiu (立秋)';
+
+  @override
+  String get solarTerm14 => 'Chushu (处暑)';
+
+  @override
+  String get solarTerm15 => 'Bailu (白露)';
+
+  @override
+  String get solarTerm16 => 'Qiufen (秋分)';
+
+  @override
+  String get solarTerm17 => 'Hanlu (寒露)';
+
+  @override
+  String get solarTerm18 => 'Shuangjiang (霜降)';
+
+  @override
+  String get solarTerm19 => 'Lidong (立冬)';
+
+  @override
+  String get solarTerm20 => 'Xiaoxue (小雪)';
+
+  @override
+  String get solarTerm21 => 'Daxue (大雪)';
+
+  @override
+  String get solarTerm22 => 'Dongzhi (冬至)';
+
+  @override
+  String get solarTerm23 => 'Xiaohan (小寒)';
+
+  @override
+  String get solarTerm24 => 'Dahan (大寒)';
+
+  @override
+  String get lunarDay01 => '第1日';
+
+  @override
+  String get lunarDay02 => '第2日';
+
+  @override
+  String get lunarDay03 => '第3日';
+
+  @override
+  String get lunarDay04 => '第4日';
+
+  @override
+  String get lunarDay05 => '第5日';
+
+  @override
+  String get lunarDay06 => '第6日';
+
+  @override
+  String get lunarDay07 => '第7日';
+
+  @override
+  String get lunarDay08 => '第8日';
+
+  @override
+  String get lunarDay09 => '第9日';
+
+  @override
+  String get lunarDay10 => '第10日';
+
+  @override
+  String get lunarDay11 => '第11日';
+
+  @override
+  String get lunarDay12 => '第12日';
+
+  @override
+  String get lunarDay13 => '第13日';
+
+  @override
+  String get lunarDay14 => '第14日';
+
+  @override
+  String get lunarDay15 => '第15日';
+
+  @override
+  String get lunarDay16 => '第16日';
+
+  @override
+  String get lunarDay17 => '第17日';
+
+  @override
+  String get lunarDay18 => '第18日';
+
+  @override
+  String get lunarDay19 => '第19日';
+
+  @override
+  String get lunarDay20 => '第20日';
+
+  @override
+  String get lunarDay21 => '第21日';
+
+  @override
+  String get lunarDay22 => '第22日';
+
+  @override
+  String get lunarDay23 => '第23日';
+
+  @override
+  String get lunarDay24 => '第24日';
+
+  @override
+  String get lunarDay25 => '第25日';
+
+  @override
+  String get lunarDay26 => '第26日';
+
+  @override
+  String get lunarDay27 => '第27日';
+
+  @override
+  String get lunarDay28 => '第28日';
+
+  @override
+  String get lunarDay29 => '第29日';
+
+  @override
+  String get lunarDay30 => '第30日';
+
+  @override
+  String get flyingStar1 => '1星';
+
+  @override
+  String get flyingStar2 => '2星';
+
+  @override
+  String get flyingStar3 => '3星';
+
+  @override
+  String get flyingStar4 => '4星';
+
+  @override
+  String get flyingStar5 => '5星';
+
+  @override
+  String get flyingStar6 => '6星';
+
+  @override
+  String get flyingStar7 => '7星';
+
+  @override
+  String get flyingStar8 => '8星';
+
+  @override
+  String get flyingStar9 => '9星';
 }

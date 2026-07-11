@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+import '../../config/home_core_activities_content.dart';
+import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
+import '../field_work/widgets/activity_stories_section.dart';
 import 'widgets/hero_section.dart';
 import 'widgets/events_section.dart';
 import 'widgets/academies_section.dart';
 import 'widgets/consultations_section.dart';
+import 'widgets/field_work_section.dart';
 import 'widgets/story_section.dart';
-import 'widgets/testimonials_section.dart';
+import 'widgets/featured_in_consultation_band.dart';
 import 'widgets/cta_section.dart';
 
 /// Placeholder heights so scroll extent is correct before below-the-fold sections build.
 const double _placeholderEvents = 520;
 const double _placeholderAcademies = 820;
 const double _placeholderConsultations = 520;
-const double _placeholderStory = 580;
-const double _placeholderTestimonials = 480;
+const double _placeholderFieldWork = 920;
+const double _placeholderStory = 420;
+const double _placeholderFeaturedIn = 380;
+const double _placeholderCoreActivities = 620;
 const double _placeholderCta = 360;
 
 /// Number of below-the-fold sections (Events, Academies, …, CTA).
-const int _kBelowFoldSectionCount = 6;
+const int _kBelowFoldSectionCount = 8;
 
 /// Delay between revealing each section so the main thread can paint and the hero
 /// video keeps playing smoothly instead of freezing.
@@ -120,16 +126,46 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         RepaintBoundary(
           child: _visibleSectionCount > 3
+              ? const FieldWorkSection()
+              : const SizedBox(height: _placeholderFieldWork),
+        ),
+        RepaintBoundary(
+          child: _visibleSectionCount > 4
               ? const StorySection()
               : const SizedBox(height: _placeholderStory),
         ),
         RepaintBoundary(
-          child: _visibleSectionCount > 4
-              ? const TestimonialsSection()
-              : const SizedBox(height: _placeholderTestimonials),
+          child: _visibleSectionCount > 5
+              ? Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    return FeaturedInConsultationBand(
+                      l10n: l10n,
+                      showConsultationButton: false,
+                    );
+                  },
+                )
+              : const SizedBox(height: _placeholderFeaturedIn),
         ),
         RepaintBoundary(
-          child: _visibleSectionCount > 5
+          child: _visibleSectionCount > 6
+              ? Builder(
+                  builder: (context) {
+                    final l10n = AppLocalizations.of(context)!;
+                    final languageCode =
+                        Localizations.localeOf(context).languageCode;
+                    return ActivityStoriesSection(
+                      l10n: l10n,
+                      heading: l10n.homeCoreActivitiesHeading,
+                      subline: l10n.homeCoreActivitiesSubline,
+                      pillars: buildHomeCoreActivities(l10n, languageCode),
+                    );
+                  },
+                )
+              : const SizedBox(height: _placeholderCoreActivities),
+        ),
+        RepaintBoundary(
+          child: _visibleSectionCount > 7
               ? const CtaSection()
               : const SizedBox(height: _placeholderCta),
         ),

@@ -90,14 +90,24 @@ class _AcademyCardState extends State<AcademyCard> {
                 children: [
                   AspectRatio(
                     aspectRatio: _imageAspectRatio,
-                    child: Image.asset(
-                      imageAsset,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.center,
-                      errorBuilder: (_, __, ___) => Container(
-                        color: AppColors.accent.withValues(alpha: 0.15),
-                        child: Icon(fallbackIcon, size: 56, color: AppColors.accent),
-                      ),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        final dpr = MediaQuery.devicePixelRatioOf(context);
+                        final side = constraints.maxWidth;
+                        final cacheSide =
+                            (side * dpr).ceil().clamp(400, 1280);
+                        return Image.asset(
+                          imageAsset,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                          cacheWidth: cacheSide,
+                          filterQuality: FilterQuality.high,
+                          errorBuilder: (_, __, ___) => Container(
+                            color: AppColors.accent.withValues(alpha: 0.15),
+                            child: Icon(fallbackIcon, size: 56, color: AppColors.accent),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   Padding(

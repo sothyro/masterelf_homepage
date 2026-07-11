@@ -333,6 +333,59 @@ class AppFonts {
   }
 }
 
+/// Resolved Google Font family names for script fallbacks.
+class AppFontFamilies {
+  AppFontFamilies._();
+
+  static const String siemreap = 'Siemreap';
+  static const String dangrek = 'Dangrek';
+  static const String notoSansSc = 'Noto Sans SC';
+  static const String exo2 = 'Exo 2';
+  static const String condiment = 'Condiment';
+
+  /// Siem Reap first so Khmer glyphs render correctly when mixed into EN/ZH UI.
+  static List<String> fallbackForLocale(String languageCode) {
+    switch (languageCode) {
+      case 'km':
+        return [notoSansSc];
+      case 'zh':
+        return [siemreap];
+      default:
+        return [siemreap, notoSansSc];
+    }
+  }
+}
+
+/// Adds locale-appropriate script fallbacks so Khmer text uses Siem Reap even when EN/ZH is selected.
+TextStyle withScriptFallbacks(TextStyle style, String languageCode) {
+  final fallbacks = AppFontFamilies.fallbackForLocale(languageCode);
+  if (fallbacks.isEmpty) return style;
+  return style.copyWith(fontFamilyFallback: fallbacks);
+}
+
+TextTheme _applyFallbacksToTextTheme(TextTheme theme, String languageCode) {
+  TextStyle apply(TextStyle? style) =>
+      style == null ? const TextStyle() : withScriptFallbacks(style, languageCode);
+
+  return theme.copyWith(
+    displayLarge: apply(theme.displayLarge),
+    displayMedium: apply(theme.displayMedium),
+    displaySmall: apply(theme.displaySmall),
+    headlineLarge: apply(theme.headlineLarge),
+    headlineMedium: apply(theme.headlineMedium),
+    headlineSmall: apply(theme.headlineSmall),
+    titleLarge: apply(theme.titleLarge),
+    titleMedium: apply(theme.titleMedium),
+    titleSmall: apply(theme.titleSmall),
+    bodyLarge: apply(theme.bodyLarge),
+    bodyMedium: apply(theme.bodyMedium),
+    bodySmall: apply(theme.bodySmall),
+    labelLarge: apply(theme.labelLarge),
+    labelMedium: apply(theme.labelMedium),
+    labelSmall: apply(theme.labelSmall),
+  );
+}
+
 /// Builds a [TextTheme] for the given language code (EN/KM/ZH).
 TextTheme textThemeForLocale(String languageCode) {
   final headingFamily = AppFonts.headingFamily(languageCode);
@@ -360,22 +413,25 @@ TextTheme textThemeForLocale(String languageCode) {
     }
   }
 
-  return TextTheme(
-    displayLarge: headingStyle(57, FontWeight.w400),
-    displayMedium: headingStyle(45, FontWeight.w400),
-    displaySmall: headingStyle(36, FontWeight.w400),
-    headlineLarge: headingStyle(32, FontWeight.w600),
-    headlineMedium: headingStyle(28, FontWeight.w600),
-    headlineSmall: headingStyle(24, FontWeight.w600),
-    titleLarge: headingStyle(22, FontWeight.w600),
-    titleMedium: bodyStyle(16, FontWeight.w600),
-    titleSmall: bodyStyle(14, FontWeight.w600),
-    bodyLarge: bodyStyle(16, FontWeight.w400),
-    bodyMedium: bodyStyle(14, FontWeight.w400),
-    bodySmall: bodyStyle(12, FontWeight.w400),
-    labelLarge: bodyStyle(14, FontWeight.w500),
-    labelMedium: bodyStyle(12, FontWeight.w500),
-    labelSmall: bodyStyle(11, FontWeight.w500),
+  return _applyFallbacksToTextTheme(
+    TextTheme(
+      displayLarge: headingStyle(57, FontWeight.w400),
+      displayMedium: headingStyle(45, FontWeight.w400),
+      displaySmall: headingStyle(36, FontWeight.w400),
+      headlineLarge: headingStyle(32, FontWeight.w600),
+      headlineMedium: headingStyle(28, FontWeight.w600),
+      headlineSmall: headingStyle(24, FontWeight.w600),
+      titleLarge: headingStyle(22, FontWeight.w600),
+      titleMedium: bodyStyle(16, FontWeight.w600),
+      titleSmall: bodyStyle(14, FontWeight.w600),
+      bodyLarge: bodyStyle(16, FontWeight.w400),
+      bodyMedium: bodyStyle(14, FontWeight.w400),
+      bodySmall: bodyStyle(12, FontWeight.w400),
+      labelLarge: bodyStyle(14, FontWeight.w500),
+      labelMedium: bodyStyle(12, FontWeight.w500),
+      labelSmall: bodyStyle(11, FontWeight.w500),
+    ),
+    languageCode,
   );
 }
 
@@ -406,7 +462,7 @@ TextStyle textStyleWithLocale(
       base = GoogleFonts.exo2(fontSize: fontSize, fontWeight: fontWeight);
   }
   if (color != null) base = base.copyWith(color: color);
-  return base;
+  return withScriptFallbacks(base, lang);
 }
 
 /// Highlight text style: Khmer locale uses Dangrek; other locales use Condiment.
@@ -427,11 +483,14 @@ TextStyle highlightStyleForLocale(
       height: height,
     );
   }
-  return GoogleFonts.condiment(
-    fontSize: fontSize,
-    color: color ?? AppColors.accent,
-    fontWeight: fontWeight ?? FontWeight.bold,
-    height: height,
+  return withScriptFallbacks(
+    GoogleFonts.condiment(
+      fontSize: fontSize,
+      color: color ?? AppColors.accent,
+      fontWeight: fontWeight ?? FontWeight.bold,
+      height: height,
+    ),
+    lang,
   );
 }
 
@@ -447,12 +506,15 @@ TextStyle menuLabelStyle(
   final locale = Localizations.localeOf(context);
   final isKm = locale.languageCode == 'km';
   if (isKm) {
-    return GoogleFonts.dangrek(
-      fontSize: fontSize ?? 14,
-      color: color,
-      fontWeight: fontWeight ?? FontWeight.w500,
-      height: height ?? 1.2,
-      letterSpacing: 0,
+    return withScriptFallbacks(
+      GoogleFonts.dangrek(
+        fontSize: fontSize ?? 14,
+        color: color,
+        fontWeight: fontWeight ?? FontWeight.w500,
+        height: height ?? 1.2,
+        letterSpacing: 0,
+      ),
+      'km',
     );
   }
   return Theme.of(context).textTheme.labelLarge!.copyWith(
@@ -475,12 +537,15 @@ TextStyle menuItemLabelStyle(
   final locale = Localizations.localeOf(context);
   final isKm = locale.languageCode == 'km';
   if (isKm) {
-    return GoogleFonts.siemreap(
-      fontSize: fontSize ?? 14,
-      color: color,
-      fontWeight: fontWeight ?? FontWeight.w500,
-      height: height ?? 1.2,
-      letterSpacing: 0,
+    return withScriptFallbacks(
+      GoogleFonts.siemreap(
+        fontSize: fontSize ?? 14,
+        color: color,
+        fontWeight: fontWeight ?? FontWeight.w500,
+        height: height ?? 1.2,
+        letterSpacing: 0,
+      ),
+      'km',
     );
   }
   return Theme.of(context).textTheme.labelLarge!.copyWith(

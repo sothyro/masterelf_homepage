@@ -60,7 +60,21 @@ class AppContent {
   static const String assetAppPageVideo = 'assets/videos/appads.mp4';
   static const String assetEventCard = 'assets/images/event.jpg';
   static const String assetEventMain = 'assets/images/event2026.jpg';
+  static const String assetEvent2027 = 'assets/images/events/comingsoon2027.jpg';
+  static const String assetEvent2026FengShui = 'assets/images/events/event2026_1.jpg';
+  static const String assetEvent2026CrimsonHorse = 'assets/images/events/event2026_2.jpg';
+  /// Events page hero background.
+  static const String assetEventHero = 'assets/images/eventbg.jpg';
+  /// Activities page hero background.
+  static const String assetActivitiesHero = 'assets/images/activitiesbg.jpg';
+  /// Phoenix 2026 venue partners (Chipmong, Legend Cinema).
+  static const String assetVenueChipmong = 'assets/CL/CL (2).jpg';
+  static const String assetVenueLegendCinema = 'assets/CL/CL (3).jpg';
   static const String assetAboutHero = 'assets/images/sessions.jpg';
+  static const String assetSessions = 'assets/images/sessions.jpg';
+  static const String assetParticipants = 'assets/images/participants.jpg';
+  static const String assetRegistration = 'assets/images/registration.jpg';
+  static const String assetDirection = 'assets/images/direction.jpg';
   /// Contact page hero background.
   static const String assetContactHero = 'assets/images/herobackground.jpg';
   /// Journey page hero background.
@@ -90,8 +104,23 @@ class AppContent {
   static const String assetAcademy = 'assets/images/apps.jpg';
   /// Consultation / appointments page (Smart Move cards).
   static const String assetConsultation = 'assets/images/consultation.jpg';
+  /// Field Work homepage showcase pillars (assets/images/activities/).
+  static const String assetActivityFengShui = 'assets/images/activities/fengshui.jpg';
+  static const String assetActivityConsultation = 'assets/images/activities/consultation.jpg';
+  static const String assetActivityMaoShan = 'assets/images/activities/maosan.jpg';
+  static const String assetActivityDateSelection = 'assets/images/activities/dateselection.jpg';
+
+  /// Field Work photo carousel image (activity_01.jpg … activity_29.jpg).
+  static String assetActivityPhoto(int n) =>
+      'assets/images/activities/activity_${n.toString().padLeft(2, '0')}.jpg';
+  /// Activity spotlight videos (9:16) under assets/videos/activities/.
+  static const String assetActivityVideo01 = 'assets/videos/activities/1.mp4';
+  static const String assetActivityVideo02 = 'assets/videos/activities/2.mp4';
+  static const String assetActivityVideo03 = 'assets/videos/activities/3.mp4';
+  static const String assetActivityVideo04 = 'assets/videos/activities/4.mp4';
+  static const String assetActivityVideo05 = 'assets/videos/activities/5.mp4';
+  static const String assetActivityVideo06 = 'assets/videos/activities/6.mp4';
   static const String assetBetterOption = 'assets/images/betteroption.jpg';
-  static const String assetDirection = 'assets/images/direction.jpg';
   /// BaZi Harmony card image on main page (Academies section).
   static const String assetBaziHarmony = 'assets/icons/baziharmony.jpg';
   /// QiMen card image on main page (Academies section).
@@ -116,7 +145,28 @@ class AppContent {
   /// Period 9 mobile app screenshots
   static const String assetPeriod9_1 = 'assets/images/apps/period9_1.JPG';
   static const String assetPeriod9_2 = 'assets/images/apps/period9_2.JPG';
-  /// Book store (Period 9 books)
-  static const String assetBook1 = 'assets/stores/books/period9book1.jpg';
-  static const String assetBook2 = 'assets/stores/books/period9book2.jpg';
+  /// Book store — 5-Blessing series (1080×1350, 4:5 covers)
+  static const String assetBook1 = 'assets/images/books/book1.jpg';
+  static const String assetBook2 = 'assets/images/books/book2.jpg';
+  static const String assetBook3 = 'assets/images/books/book3.jpg';
+  static const String assetBook4 = 'assets/images/books/book4.jpg';
+  static const String assetBook5 = 'assets/images/books/book5.jpg';
+  /// Full-width shelf mockup panorama for the 5-Blessing series band.
+  static const String assetShelfMockupFiveBlessings =
+      'assets/images/books/shelf_mockup_five_blessings.jpg';
+  /// Period 9 Feng Shui book store volumes (legacy covers).
+  static const String assetPeriod9Book1 = 'assets/stores/books/period9book1.jpg';
+  static const String assetPeriod9Book2 = 'assets/stores/books/period9book2.jpg';
+
+  /// Press / media logos shown in the home page Featured In section.
+  static const List<String> featuredPressLogos = [
+    'assets/CL/CL (1).jpg',
+    'assets/CL/CL (2).jpg',
+    'assets/CL/CL (3).jpg',
+    'assets/CL/CL (4).jpg',
+    'assets/CL/CL (5).jpg',
+    'assets/CL/CL (6).jpg',
+    'assets/CL/CL (7).jpg',
+    'assets/CL/CL (8).jpg',
+  ];
 }

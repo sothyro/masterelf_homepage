@@ -138,6 +138,41 @@ When a new document is created in `appointments`, a Cloud Function sends an SMS 
 
 Implementation details: on every new booking, 3 SMS are sent—(1) customer (confirmation), (2) admin (summary to `ADMIN_SMS_PHONE`), (3) Master Elf (+85512222211, summary). Phone numbers are normalized to E.164. Invalid or missing customer phone skips only the customer SMS and sets `smsStatus: "skipped"`. The function retries once on 5xx or network errors. Customer SMS status is written to the appointment document (`smsStatus`, `smsSentAt`, and on failure `smsErrorReason`, `smsErrorBody`, etc.).
 
+### Booking system runbook
+
+**Requirements:** Firebase **Blaze (pay-as-you-go) plan** is required. Cloud Functions fail with `billing is disabled` on the free Spark plan.
+
+**Required secrets:**
+
+| Secret | Purpose |
+|--------|---------|
+| `PLASGATE_PRIVATE_KEY` / `PLASGATE_SECRET` | SMS via PlasGate |
+| `ADMIN_SMS_PHONE` | Admin SMS on new bookings (`0` to disable) |
+| `ADMIN_EMAILS` | Comma-separated staff emails allowed on admin dashboard (optional; if unset, any logged-in user can access admin callables) |
+
+**Deploy:**
+
+```powershell
+firebase use contactform
+cd functions; npm ci; cd ..
+firebase deploy --only functions,firestore:indexes
+```
+
+**Check logs after an error:**
+
+```powershell
+firebase functions:log --only getAllAppointments,getAvailableSlots,getMyBookings,bookingHealthCheck
+```
+
+**Verify end-to-end:**
+
+1. Consultations page → pick a date → slots load (`getAvailableSlots`)
+2. Book a test appointment → document appears in Firestore `appointments`
+3. Search by phone → bookings list (`getMyBookings`)
+4. Staff login → `/consultations/dashboard` → appointments load (`getAllAppointments`)
+
+**After re-creating a Firebase Auth user:** sign in again with the same email. No UID migration is needed. If `ADMIN_EMAILS` is configured, ensure the staff email is in that list.
+
 ## Resources
 
 - [Flutter documentation](https://docs.flutter.dev/)

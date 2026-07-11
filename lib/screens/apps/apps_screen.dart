@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../config/app_content.dart';
+import '../../config/store_routes.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
 import '../../utils/launcher_utils.dart';
+import '../store/widgets/description_with_highlight.dart';
+import '../store/widgets/marketplace_category_strip.dart';
+import '../store/widgets/section_anchor.dart';
+import '../store/widgets/store_content_container.dart';
+import '../store/widgets/store_page_hero.dart';
 
-/// Fragment IDs for Apps & Store sections (used in /apps#fragment).
-const String _sectionMasterElf = 'master-elf';
-const String _sectionPeriod9 = 'period9';
-const String _sectionBooks = 'books';
-const String _sectionTalisman = 'talisman';
-
-/// Apps & Store page: Master Elf System, Period 9 Mobile App, Talisman Store.
+/// Apps page: Master Elf System and Period 9 Mobile App.
 class AppsScreen extends StatefulWidget {
   const AppsScreen({super.key});
 
@@ -27,8 +26,6 @@ class AppsScreen extends StatefulWidget {
 class _AppsScreenState extends State<AppsScreen> {
   final GlobalKey _keyMasterElf = GlobalKey();
   final GlobalKey _keyPeriod9 = GlobalKey();
-  final GlobalKey _keyBooks = GlobalKey();
-  final GlobalKey _keyTalisman = GlobalKey();
 
   @override
   void didChangeDependencies() {
@@ -39,16 +36,12 @@ class _AppsScreenState extends State<AppsScreen> {
   void _scrollToSectionIfNeeded() {
     final fragment = GoRouterState.of(context).uri.fragment;
     if (fragment.isEmpty) return;
-    final width = MediaQuery.sizeOf(context).width;
-    // On mobile, skip scroll-to-section so the hero stays visible; desktop keeps section navigation.
-    if (Breakpoints.isMobile(width)) return;
+    if (Breakpoints.isMobile(MediaQuery.sizeOf(context).width)) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       final key = switch (fragment) {
-        _sectionMasterElf => _keyMasterElf,
-        _sectionPeriod9 => _keyPeriod9,
-        _sectionBooks => _keyBooks,
-        _sectionTalisman => _keyTalisman,
+        kAppsMasterElfFragment => _keyMasterElf,
+        kAppsPeriod9Fragment => _keyPeriod9,
         _ => null,
       };
       if (key?.currentContext != null) {
@@ -56,252 +49,119 @@ class _AppsScreenState extends State<AppsScreen> {
           key!.currentContext!,
           duration: const Duration(milliseconds: 400),
           curve: Curves.easeInOut,
-          alignment: 0.1,
+          alignment: 0.15,
         );
       }
     });
   }
 
-  static Widget _buildDescriptionWithHighlight(
-    BuildContext context,
-    String description,
-    String highlightPhrase, {
-    TextAlign textAlign = TextAlign.center,
-    Color? baseColor,
-  }) {
-    final bodyStyle = (Theme.of(context).textTheme.bodyLarge?.copyWith(
-      color: baseColor ?? AppColors.onSurfaceVariantDark,
-      height: 1.5,
-    ) ?? TextStyle(fontSize: 16, color: baseColor ?? AppColors.onSurfaceVariantDark, height: 1.5));
-    final highlightStyle = highlightStyleForLocale(
-      context,
-      color: baseColor != null ? AppColors.accentLight : AppColors.accent,
-      fontWeight: FontWeight.bold,
-      fontSize: (bodyStyle.fontSize ?? 16) * 1.45,
-    );
-    final span = _textSpanWithHighlight(description, highlightPhrase, bodyStyle, highlightStyle);
-    return RichText(text: span, textAlign: textAlign);
-  }
-
-  static InlineSpan _textSpanWithHighlight(String text, String highlight, TextStyle base, TextStyle highlightStyle) {
-    if (highlight.isEmpty) return TextSpan(text: text, style: base);
-    final i = text.toLowerCase().indexOf(highlight.toLowerCase());
-    if (i < 0) return TextSpan(text: text, style: base);
-    return TextSpan(
-      children: [
-        if (i > 0) TextSpan(text: text.substring(0, i), style: base),
-        TextSpan(text: text.substring(i, i + highlight.length), style: highlightStyle),
-        if (i + highlight.length < text.length)
-          TextSpan(text: text.substring(i + highlight.length), style: base),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = Breakpoints.isMobile(width);
 
-    return Container(
-      width: double.infinity,
+    return Material(
       color: AppColors.backgroundDark,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Hero: background image + title + subline + description + Master Elf System card.
-          SizedBox(
-            height: isNarrow ? 780 : 720,
-            width: double.infinity,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Positioned.fill(
-                  child: Image.asset(
-                    AppContent.assetContactHero,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => const SizedBox.expand(),
+          StorePageHero(
+            title: l10n.appsPageTitle,
+            description: l10n.appsPageDescription,
+            descriptionHighlight: l10n.appsPageDescriptionHighlight,
+            heroHeightNarrow: 480,
+            heroHeightWide: 440,
+            bottomChild: _SpotlightSection(
+              icon: LucideIcons.cpu,
+              title: l10n.masterElfSystemSpotlightTitle,
+              description: l10n.masterElfSystemSpotlightDesc,
+              transparent: true,
+              child: _MarketplaceCtaRow(
+                primaryButton: FilledButton.icon(
+                  onPressed: () => launchUrlExternal(AppContent.baziSystemUrl),
+                  icon: const Icon(LucideIcons.externalLink, size: 20),
+                  label: Text(l10n.openMasterElfSystem),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.accent,
+                    foregroundColor: AppColors.onAccent,
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                   ),
                 ),
-                Positioned.fill(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          AppColors.backgroundDark.withValues(alpha: 0.72),
-                          AppColors.backgroundDark.withValues(alpha: 0.88),
-                        ],
+                secondaryLabel:
+                    '${l10n.bookStorePricePrefix}${l10n.masterElfSubscriptionPrice}${l10n.masterElfPricePerMonth}',
+                secondaryButton: OutlinedButton.icon(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(l10n.marketplaceAddedToCart),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: AppColors.surfaceElevatedDark,
                       ),
-                    ),
+                    );
+                  },
+                  icon: const Icon(LucideIcons.creditCard, size: 18),
+                  label: Text(l10n.masterElfSubscribe),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.accent,
+                    side: const BorderSide(color: AppColors.accent),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                   ),
-                ),
-                // Content centered vertically with extra top clearance from the main menu (match Consultations page).
-                Align(
-                  alignment: const Alignment(0, 0.12),
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      isNarrow ? 16 : 24,
-                      isNarrow ? 148 : 120,
-                      isNarrow ? 16 : 24,
-                      isNarrow ? 48 : 56,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          l10n.appsPageTitle,
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                color: AppColors.onPrimary,
-                                fontWeight: FontWeight.w600,
-                              ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: isNarrow ? 20 : 24),
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 640),
-                          child: _buildDescriptionWithHighlight(
-                            context,
-                            l10n.appsPageDescription,
-                            l10n.appsPageDescriptionHighlight,
-                          ),
-                        ),
-                        SizedBox(height: isNarrow ? 32 : 40),
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 1000),
-                          child: _SpotlightSection(
-                            icon: LucideIcons.cpu,
-                            title: l10n.masterElfSystemSpotlightTitle,
-                            description: l10n.masterElfSystemSpotlightDesc,
-                            transparent: true,
-                            child: _MarketplaceCtaRow(
-                              primaryButton: FilledButton.icon(
-                                onPressed: () => launchUrlExternal(AppContent.baziSystemUrl),
-                                icon: const Icon(LucideIcons.externalLink, size: 20),
-                                label: Text(l10n.openMasterElfSystem),
-                                style: FilledButton.styleFrom(
-                                  backgroundColor: AppColors.accent,
-                                  foregroundColor: AppColors.onAccent,
-                                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                                ),
-                              ),
-                              secondaryLabel: '${l10n.bookStorePricePrefix}${l10n.masterElfSubscriptionPrice}${l10n.masterElfPricePerMonth}',
-                              secondaryButton: OutlinedButton.icon(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(l10n.marketplaceAddedToCart),
-                                      behavior: SnackBarBehavior.floating,
-                                      backgroundColor: AppColors.surfaceElevatedDark,
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(LucideIcons.creditCard, size: 18),
-                                label: Text(l10n.masterElfSubscribe),
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: AppColors.accent,
-                                  side: const BorderSide(color: AppColors.accent),
-                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                                ),
-                              ),
-                            ),
-                            ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Store section: vibrant product showcase below hero.
-          Padding(
-            padding: EdgeInsets.only(
-              top: isNarrow ? 40 : 56,
-              bottom: isNarrow ? 48 : 64,
-              left: isNarrow ? 16 : 24,
-              right: isNarrow ? 16 : 24,
-            ),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1100),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _StoreSectionHeader(
-                      heading: l10n.appsFeatureShowcaseHeading,
-                      subline: l10n.appsPageSubline,
-                    ),
-                    const SizedBox(height: 20),
-                    Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 680),
-                        child: _buildDescriptionWithHighlight(
-                          context,
-                          l10n.appsFeatureShowcaseMarketingDesc,
-                          l10n.appsFeatureShowcaseMarketingHighlight,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 28),
-                    _MarketplaceCategoryStrip(l10n: l10n),
-                    const SizedBox(height: 48),
-                    _SectionAnchor(
-                      key: _keyMasterElf,
-                      child: _FeaturedMasterElfSection(l10n: l10n),
-                    ),
-                    const SizedBox(height: 56),
-                    _AppFeatureShowcase(
-                      features: [
-                        (AppContent.assetAppQiMen, l10n.appFeatureQiMen),
-                        (AppContent.assetAppBaziKhmer, l10n.appFeatureBaziKhmer),
-                        (AppContent.assetAppBaziReport, l10n.appFeatureBaziReport),
-                        (AppContent.assetAppBaziAge, l10n.appFeatureBaziAge),
-                        (AppContent.assetAppBaziStars, l10n.appFeatureBaziStars),
-                        (AppContent.assetAppBaziLife, l10n.appFeatureBaziLife),
-                        (AppContent.assetAppAdvancedFeatures, l10n.appFeatureAdvancedFeatures),
-                        (AppContent.assetAppDateSelection, l10n.appFeatureDateSelection),
-                        (AppContent.assetAppMarriage, l10n.appFeatureMarriage),
-                      ],
-                    ),
-                    const SizedBox(height: 56),
-                    _SectionAnchor(
-                      key: _keyPeriod9,
-                      child: _FeaturedPeriod9Section(l10n: l10n),
-                    ),
-                    const SizedBox(height: 56),
-                    _SectionAnchor(
-                      key: _keyBooks,
-                      child: _BookStoreSection(l10n: l10n),
-                    ),
-                    const SizedBox(height: 56),
-                    _SectionAnchor(
-                      key: _keyTalisman,
-                      child: _TalismanStoreSection(l10n: l10n),
-                    ),
-                    const SizedBox(height: 32),
-                  ],
                 ),
               ),
+            ),
+          ),
+          StoreContentContainer(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _StoreSectionHeader(
+                  heading: l10n.appsFeatureShowcaseHeading,
+                  subline: l10n.appsPageSubline,
+                ),
+                const SizedBox(height: 20),
+                Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 680),
+                    child: DescriptionWithHighlight(
+                      description: l10n.appsFeatureShowcaseMarketingDesc,
+                      highlightPhrase: l10n.appsFeatureShowcaseMarketingHighlight,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 28),
+                MarketplaceCategoryStrip(l10n: l10n),
+                const SizedBox(height: 48),
+                SectionAnchor(
+                  key: _keyMasterElf,
+                  child: _FeaturedMasterElfSection(l10n: l10n),
+                ),
+                const SizedBox(height: 56),
+                _AppFeatureShowcase(
+                  features: [
+                    (AppContent.assetAppQiMen, l10n.appFeatureQiMen),
+                    (AppContent.assetAppBaziKhmer, l10n.appFeatureBaziKhmer),
+                    (AppContent.assetAppBaziReport, l10n.appFeatureBaziReport),
+                    (AppContent.assetAppBaziAge, l10n.appFeatureBaziAge),
+                    (AppContent.assetAppBaziStars, l10n.appFeatureBaziStars),
+                    (AppContent.assetAppBaziLife, l10n.appFeatureBaziLife),
+                    (AppContent.assetAppAdvancedFeatures, l10n.appFeatureAdvancedFeatures),
+                    (AppContent.assetAppDateSelection, l10n.appFeatureDateSelection),
+                    (AppContent.assetAppMarriage, l10n.appFeatureMarriage),
+                  ],
+                ),
+                const SizedBox(height: 56),
+                SectionAnchor(
+                  key: _keyPeriod9,
+                  child: _FeaturedPeriod9Section(l10n: l10n),
+                ),
+                const SizedBox(height: 32),
+              ],
             ),
           ),
         ],
       ),
     );
   }
-}
-
-/// Wrapper that holds a [GlobalKey] for scroll-to-section.
-class _SectionAnchor extends StatelessWidget {
-  const _SectionAnchor({super.key, required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) => child;
 }
 
 /// Row of primary CTA, optional price label, and secondary (e.g. Subscribe) for marketplace hero.
@@ -340,22 +200,20 @@ class _MarketplaceCtaRow extends StatelessWidget {
               secondaryButton!,
             ],
           )
-        : Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
+        : Wrap(
+            spacing: 16,
+            runSpacing: 12,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               primaryButton,
-              if (secondaryLabel != null) ...[
-                const SizedBox(width: 16),
+              if (secondaryLabel != null)
                 Text(
                   secondaryLabel!,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: AppColors.onSurfaceVariantDark,
                       ),
                 ),
-                const SizedBox(width: 16),
-              ],
-              if (secondaryButton != null) secondaryButton!,
+              secondaryButton!,
             ],
           );
   }
@@ -370,6 +228,7 @@ class _StoreSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -377,7 +236,7 @@ class _StoreSectionHeader extends StatelessWidget {
           heading,
           style: highlightStyleForLocale(
             context,
-            fontSize: 36,
+            fontSize: Breakpoints.isMobile(width) ? 28 : 36,
             fontWeight: FontWeight.bold,
             color: AppColors.accent,
             height: 1.2,
@@ -394,43 +253,6 @@ class _StoreSectionHeader extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ],
-    );
-  }
-}
-
-/// Category pills for marketplace: Digital, Books, Talismans — tap to scroll to section.
-class _MarketplaceCategoryStrip extends StatelessWidget {
-  const _MarketplaceCategoryStrip({required this.l10n});
-
-  final AppLocalizations l10n;
-
-  @override
-  Widget build(BuildContext context) {
-    final isNarrow = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
-    final items = [
-      (l10n.marketplaceCategoryDigital, _sectionMasterElf),
-      (l10n.marketplaceCategoryBooks, _sectionBooks),
-      (l10n.marketplaceCategoryTalismans, _sectionTalisman),
-    ];
-    return Wrap(
-      alignment: WrapAlignment.center,
-      spacing: 12,
-      runSpacing: 10,
-      children: items.map((e) {
-        return ActionChip(
-          label: Text(e.$1),
-          onPressed: () => context.go('/apps#${e.$2}'),
-          backgroundColor: AppColors.surfaceElevatedDark,
-          side: BorderSide(color: AppColors.borderLight.withValues(alpha: 0.4)),
-          labelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: AppColors.onPrimary,
-              ),
-          padding: EdgeInsets.symmetric(
-            horizontal: isNarrow ? 14 : 18,
-            vertical: isNarrow ? 8 : 10,
-          ),
-        );
-      }).toList(),
     );
   }
 }
@@ -670,10 +492,9 @@ class _FeaturedMasterElfSectionState extends State<_FeaturedMasterElfSection> {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        _AppsScreenState._buildDescriptionWithHighlight(
-                          context,
-                          widget.l10n.masterElfSystemSpotlightTagline,
-                          widget.l10n.masterElfSystemSpotlightTaglineHighlight,
+                        DescriptionWithHighlight(
+                          description: widget.l10n.masterElfSystemSpotlightTagline,
+                          highlightPhrase: widget.l10n.masterElfSystemSpotlightTaglineHighlight,
                           baseColor: AppColors.onPrimary,
                         ),
                       ],
@@ -745,10 +566,9 @@ class _FeaturedPeriod9Section extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 6),
-                _AppsScreenState._buildDescriptionWithHighlight(
-                  context,
-                  l10n.period9SpotlightTagline,
-                  l10n.period9SpotlightTaglineHighlight,
+                DescriptionWithHighlight(
+                  description: l10n.period9SpotlightTagline,
+                  highlightPhrase: l10n.period9SpotlightTaglineHighlight,
                   textAlign: TextAlign.left,
                 ),
                 const SizedBox(height: 10),
@@ -804,10 +624,9 @@ class _FeaturedPeriod9Section extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 6),
-                      _AppsScreenState._buildDescriptionWithHighlight(
-                        context,
-                        l10n.period9SpotlightTagline,
-                        l10n.period9SpotlightTaglineHighlight,
+                      DescriptionWithHighlight(
+                        description: l10n.period9SpotlightTagline,
+                        highlightPhrase: l10n.period9SpotlightTaglineHighlight,
                         textAlign: TextAlign.left,
                       ),
                       const SizedBox(height: 12),
@@ -961,313 +780,6 @@ class _ProminentStoreButton extends StatelessWidget {
         elevation: enabled ? 3 : 0,
         shadowColor: AppColors.accentGlow.withValues(alpha: 0.45),
       ),
-    );
-  }
-}
-
-/// Book Store section: creative heading, marketing copy, two featured books with Add to Cart.
-class _BookStoreSection extends StatelessWidget {
-  const _BookStoreSection({required this.l10n});
-
-  final AppLocalizations l10n;
-
-  @override
-  Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = Breakpoints.isMobile(width);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          l10n.bookStoreSectionHeading,
-          style: highlightStyleForLocale(
-            context,
-            fontSize: isNarrow ? 28 : 34,
-            fontWeight: FontWeight.bold,
-            color: AppColors.accent,
-          ),
-        ),
-        const SizedBox(height: 8),
-        _AppsScreenState._buildDescriptionWithHighlight(
-          context,
-          l10n.bookStoreSectionTagline,
-          l10n.bookStoreSectionTaglineHighlight,
-          textAlign: TextAlign.left,
-        ),
-        const SizedBox(height: 16),
-        _AppsScreenState._buildDescriptionWithHighlight(
-          context,
-          l10n.bookStoreSectionMarketing,
-          l10n.bookStoreSectionMarketingHighlight,
-          textAlign: TextAlign.left,
-        ),
-        const SizedBox(height: 32),
-        isNarrow
-            ? Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _BookStoreCard(
-                    l10n: l10n,
-                    asset: AppContent.assetBook1,
-                    title: l10n.bookStoreBook1Title,
-                    subtitle: l10n.bookStoreBook1Subtitle,
-                    price: l10n.bookStoreBook1Price,
-                    showBestseller: true,
-                  ),
-                  const SizedBox(height: 24),
-                  _BookStoreCard(
-                    l10n: l10n,
-                    asset: AppContent.assetBook2,
-                    title: l10n.bookStoreBook2Title,
-                    subtitle: l10n.bookStoreBook2Subtitle,
-                    price: l10n.bookStoreBook2Price,
-                    showBestseller: false,
-                  ),
-                ],
-              )
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: _BookStoreCard(
-                      l10n: l10n,
-                      asset: AppContent.assetBook1,
-                      title: l10n.bookStoreBook1Title,
-                      subtitle: l10n.bookStoreBook1Subtitle,
-                      price: l10n.bookStoreBook1Price,
-                      showBestseller: true,
-                    ),
-                  ),
-                  const SizedBox(width: 24),
-                  Expanded(
-                    child: _BookStoreCard(
-                      l10n: l10n,
-                      asset: AppContent.assetBook2,
-                      title: l10n.bookStoreBook2Title,
-                      subtitle: l10n.bookStoreBook2Subtitle,
-                      price: l10n.bookStoreBook2Price,
-                      showBestseller: false,
-                    ),
-                  ),
-                ],
-              ),
-      ],
-    );
-  }
-}
-
-/// Single book card with cover, title, price, and Add to Cart.
-class _BookStoreCard extends StatefulWidget {
-  const _BookStoreCard({
-    required this.l10n,
-    required this.asset,
-    required this.title,
-    required this.subtitle,
-    required this.price,
-    this.showBestseller = false,
-  });
-
-  final AppLocalizations l10n;
-  final String asset;
-  final String title;
-  final String subtitle;
-  final String price;
-  final bool showBestseller;
-
-  @override
-  State<_BookStoreCard> createState() => _BookStoreCardState();
-}
-
-class _BookStoreCardState extends State<_BookStoreCard> {
-  bool _hovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final isNarrow = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
-    final prefix = widget.l10n.bookStorePricePrefix;
-
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeOut,
-        padding: EdgeInsets.all(isNarrow ? 16 : 20),
-        decoration: BoxDecoration(
-          color: AppColors.surfaceElevatedDark,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: _hovered
-                ? AppColors.accent.withValues(alpha: 0.5)
-                : AppColors.borderDark,
-            width: _hovered ? 2 : 1,
-          ),
-          boxShadow: _hovered ? AppShadows.cardHover : AppShadows.card,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: AspectRatio(
-                    aspectRatio: 3 / 4,
-                    child: Image.asset(
-                      widget.asset,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(
-                        color: AppColors.borderDark,
-                        child: Icon(
-                          LucideIcons.bookOpen,
-                          size: 48,
-                          color: AppColors.onSurfaceVariantDark.withValues(alpha: 0.5),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                if (widget.showBestseller)
-                  Positioned(
-                    top: 8,
-                    left: 8,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: AppColors.accent,
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.3),
-                            blurRadius: 6,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Text(
-                        widget.l10n.bookStoreBestsellerBadge,
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: AppColors.onAccent,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 0.5,
-                            ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            SizedBox(height: isNarrow ? 14 : 18),
-            Text(
-              widget.title,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppColors.onPrimary,
-                    fontWeight: FontWeight.w600,
-                  ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              widget.subtitle,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppColors.onSurfaceVariantDark,
-                    height: 1.4,
-                  ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '$prefix${widget.price}',
-                  style: highlightStyleForLocale(
-                    context,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.accent,
-                  ),
-                ),
-                FilledButton.icon(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(widget.l10n.bookStoreAddedToCart),
-                        behavior: SnackBarBehavior.floating,
-                        backgroundColor: AppColors.surfaceElevatedDark,
-                        action: SnackBarAction(
-                          label: widget.l10n.buttonOk,
-                          textColor: AppColors.accent,
-                          onPressed: () {},
-                        ),
-                      ),
-                    );
-                  },
-                  icon: const Icon(LucideIcons.shoppingCart, size: 18),
-                  label: Text(widget.l10n.bookStoreAddToCart),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.accent,
-                    foregroundColor: AppColors.onAccent,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Talisman Store as a product section with highlight title.
-class _TalismanStoreSection extends StatelessWidget {
-  const _TalismanStoreSection({required this.l10n});
-
-  final AppLocalizations l10n;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          l10n.talismanStoreSpotlightTitle,
-          style: highlightStyleForLocale(
-            context,
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: AppColors.accent,
-          ),
-        ),
-        const SizedBox(height: 6),
-        _AppsScreenState._buildDescriptionWithHighlight(
-          context,
-          l10n.talismanStoreSpotlightTagline,
-          l10n.talismanStoreSpotlightTaglineHighlight,
-          textAlign: TextAlign.left,
-        ),
-        const SizedBox(height: 8),
-        Text(
-          l10n.talismanStoreSpotlightDesc,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: AppColors.onSurfaceVariantDark,
-                height: 1.5,
-              ),
-        ),
-        const SizedBox(height: 28),
-        _TalismanGrid(l10n: l10n),
-      ],
     );
   }
 }
@@ -1559,7 +1071,11 @@ class _AppFeatureShowcase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    final crossAxisCount = Breakpoints.isMobile(width) ? 2 : (width < Breakpoints.tablet ? 2 : 3);
+    final crossAxisCount = Breakpoints.isSmall(width) || Breakpoints.isMobile(width)
+        ? 1
+        : Breakpoints.isTabletOnly(width)
+            ? 2
+            : 3;
 
     return GridView.builder(
       shrinkWrap: true,
@@ -1641,173 +1157,3 @@ class _AppFeatureCardState extends State<_AppFeatureCard> {
   }
 }
 
-/// Product grid for Talisman Store with price and Add to Cart.
-class _TalismanGrid extends StatelessWidget {
-  const _TalismanGrid({required this.l10n});
-
-  final AppLocalizations l10n;
-
-  static String _talismanTitle(AppLocalizations l10n, int index) {
-    return switch (index) {
-      1 => l10n.talismanProduct1Title,
-      2 => l10n.talismanProduct2Title,
-      3 => l10n.talismanProduct3Title,
-      4 => l10n.talismanProduct4Title,
-      5 => l10n.talismanProduct5Title,
-      6 => l10n.talismanProduct6Title,
-      7 => l10n.talismanProduct7Title,
-      8 => l10n.talismanProduct8Title,
-      9 => l10n.talismanProduct9Title,
-      _ => l10n.talismanProduct1Title,
-    };
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
-    final crossAxisCount = Breakpoints.isMobile(width) ? 2 : 3;
-    final price = l10n.talismanProductPrice;
-    final prefix = l10n.bookStorePricePrefix;
-
-    return GridView.count(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: crossAxisCount,
-      mainAxisSpacing: 20,
-      crossAxisSpacing: 20,
-      childAspectRatio: 1 / 1.42,
-      children: List.generate(
-        9,
-        (i) => _TalismanProductCard(
-          l10n: l10n,
-          title: _talismanTitle(l10n, i + 1),
-          price: price,
-          pricePrefix: prefix,
-          index: i + 1,
-        ),
-      ),
-    );
-  }
-}
-
-class _TalismanProductCard extends StatefulWidget {
-  const _TalismanProductCard({
-    required this.l10n,
-    required this.title,
-    required this.price,
-    required this.pricePrefix,
-    required this.index,
-  });
-
-  final AppLocalizations l10n;
-  final String title;
-  final String price;
-  final String pricePrefix;
-  final int index;
-
-  @override
-  State<_TalismanProductCard> createState() => _TalismanProductCardState();
-}
-
-class _TalismanProductCardState extends State<_TalismanProductCard> {
-  bool _hovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final isNarrow = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
-
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: EdgeInsets.all(isNarrow ? 12 : 16),
-        decoration: BoxDecoration(
-          color: AppColors.surfaceElevatedDark,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: _hovered ? AppColors.accent.withValues(alpha: 0.5) : AppColors.borderDark,
-            width: _hovered ? 2 : 1,
-          ),
-          boxShadow: _hovered ? AppShadows.cardHover : AppShadows.card,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.accent.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: Icon(
-                    LucideIcons.sparkles,
-                    size: 40,
-                    color: AppColors.accent.withValues(alpha: 0.6),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: isNarrow ? 10 : 12),
-            Text(
-              widget.title,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: AppColors.onPrimary,
-                    fontWeight: FontWeight.w600,
-                  ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '${widget.pricePrefix}${widget.price}',
-                  style: highlightStyleForLocale(
-                    context,
-                    fontSize: isNarrow ? 18 : 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.accent,
-                  ),
-                ),
-                FilledButton.icon(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(widget.l10n.marketplaceAddedToCart),
-                        behavior: SnackBarBehavior.floating,
-                        backgroundColor: AppColors.surfaceElevatedDark,
-                        action: SnackBarAction(
-                          label: widget.l10n.buttonOk,
-                          textColor: AppColors.accent,
-                          onPressed: () {},
-                        ),
-                      ),
-                    );
-                  },
-                  icon: const Icon(LucideIcons.shoppingCart, size: 16),
-                  label: Text(isNarrow ? widget.l10n.buttonAdd : widget.l10n.bookStoreAddToCart),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.accent,
-                    foregroundColor: AppColors.onAccent,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isNarrow ? 10 : 14,
-                      vertical: isNarrow ? 8 : 10,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

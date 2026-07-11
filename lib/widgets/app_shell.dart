@@ -193,21 +193,23 @@ class _AppShellState extends State<AppShell> {
                   child: Builder(
                     builder: (context) {
                       final auth = context.watch<AuthProvider>();
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (auth.isLoggedIn) ...[
-                            StickyAppointmentCtaBar(),
-                            const SizedBox(height: 12),
-                            StickyInspectionCtaBar(),
-                            const SizedBox(height: 12),
-                            StickyLogoutCtaBar(),
-                          ] else ...[
-                            StickyLoginCtaBar(),
-                            const SizedBox(height: 12),
-                            StickyCtaBar(),
+                      return SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (auth.isLoggedIn) ...[
+                              StickyAppointmentCtaBar(),
+                              const SizedBox(height: 12),
+                              StickyInspectionCtaBar(),
+                              const SizedBox(height: 12),
+                              StickyLogoutCtaBar(),
+                            ] else ...[
+                              StickyLoginCtaBar(),
+                              const SizedBox(height: 12),
+                              StickyCtaBar(),
+                            ],
                           ],
-                        ],
+                        ),
                       );
                     },
                   ),

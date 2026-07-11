@@ -403,14 +403,188 @@ abstract class AppLocalizations {
   /// No description provided for @talismanStoreSpotlightTagline.
   ///
   /// In en, this message translates to:
-  /// **'Wear your protection.'**
+  /// **'Heaven\'s blessings. Protection you can carry.'**
   String get talismanStoreSpotlightTagline;
 
   /// No description provided for @talismanStoreSpotlightTaglineHighlight.
   ///
   /// In en, this message translates to:
-  /// **'protection'**
+  /// **'carry'**
   String get talismanStoreSpotlightTaglineHighlight;
+
+  /// No description provided for @talismanStoreIntroHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Sacred charms, chosen with devotion'**
+  String get talismanStoreIntroHeading;
+
+  /// No description provided for @talismanStoreIntroBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Each talisman carries the intention of classical blessing rites—made to guard, attract, and restore balance when life feels unsettled.'**
+  String get talismanStoreIntroBody;
+
+  /// No description provided for @talismanStoreIntroHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'guard, attract, and restore'**
+  String get talismanStoreIntroHighlight;
+
+  /// No description provided for @talismanStoreCollectionHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Nine Sacred Charms'**
+  String get talismanStoreCollectionHeading;
+
+  /// No description provided for @talismanStoreCollectionIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Nine intentions, one calling—to walk under heaven\'s favour when you need a sign most.'**
+  String get talismanStoreCollectionIntro;
+
+  /// No description provided for @talismanStoreCollectionIntroHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'heaven\'s favour'**
+  String get talismanStoreCollectionIntroHighlight;
+
+  /// No description provided for @talismanStoreTrustHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Faith you can hold close'**
+  String get talismanStoreTrustHeading;
+
+  /// No description provided for @talismanStoreTrustBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Hand-selected remedies. Time-honoured blessings. Spiritually prepared—not mass-made trinkets.'**
+  String get talismanStoreTrustBody;
+
+  /// No description provided for @talismanStoreClosingHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Seeking a blessing for something specific?'**
+  String get talismanStoreClosingHeading;
+
+  /// No description provided for @talismanStoreClosingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us what you carry—worries at home, on the road, or in the heart—and we\'ll guide you to the charm that fits.'**
+  String get talismanStoreClosingBody;
+
+  /// No description provided for @talismanStoreClosingCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a consultation'**
+  String get talismanStoreClosingCta;
+
+  /// No description provided for @talismanProduct1Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Guardian charm for daily wear'**
+  String get talismanProduct1Subtitle;
+
+  /// No description provided for @talismanProduct1Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Shield against harm—carry heaven\'s guard wherever you go.'**
+  String get talismanProduct1Hook;
+
+  /// No description provided for @talismanProduct2Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fortune-attracting talisman'**
+  String get talismanProduct2Subtitle;
+
+  /// No description provided for @talismanProduct2Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the path to abundance; invite prosperity with every step.'**
+  String get talismanProduct2Hook;
+
+  /// No description provided for @talismanProduct3Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vitality and wellbeing blessing'**
+  String get talismanProduct3Subtitle;
+
+  /// No description provided for @talismanProduct3Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Nurture body and spirit—a sacred reminder that wellness is divine.'**
+  String get talismanProduct3Hook;
+
+  /// No description provided for @talismanProduct4Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bond-deepening blessing charm'**
+  String get talismanProduct4Subtitle;
+
+  /// No description provided for @talismanProduct4Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Soften conflict, deepen connection—for hearts meant to stay together.'**
+  String get talismanProduct4Hook;
+
+  /// No description provided for @talismanProduct5Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Path-aligning fortune charm'**
+  String get talismanProduct5Subtitle;
+
+  /// No description provided for @talismanProduct5Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Align effort with opportunity; walk your career under decisive fortune.'**
+  String get talismanProduct5Hook;
+
+  /// No description provided for @talismanProduct6Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest-for-the-soul amulet'**
+  String get talismanProduct6Subtitle;
+
+  /// No description provided for @talismanProduct6Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet the restless mind; rest in blessings that never leave you.'**
+  String get talismanProduct6Hook;
+
+  /// No description provided for @talismanProduct7Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Journey guardian talisman'**
+  String get talismanProduct7Subtitle;
+
+  /// No description provided for @talismanProduct7Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel under protection—return home as you departed, safe and whole.'**
+  String get talismanProduct7Hook;
+
+  /// No description provided for @talismanProduct8Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dwelling-sealing prosperity charm'**
+  String get talismanProduct8Subtitle;
+
+  /// No description provided for @talismanProduct8Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Seal your home with peace; let every room welcome good fortune.'**
+  String get talismanProduct8Hook;
+
+  /// No description provided for @talismanProduct9Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clarity for life\'s crossroads'**
+  String get talismanProduct9Subtitle;
+
+  /// No description provided for @talismanProduct9Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear sight for hard choices—guidance when the way ahead feels clouded.'**
+  String get talismanProduct9Hook;
 
   /// No description provided for @bookStoreSectionHeading.
   ///
@@ -421,37 +595,163 @@ abstract class AppLocalizations {
   /// No description provided for @bookStoreSectionTagline.
   ///
   /// In en, this message translates to:
-  /// **'Wisdom you can hold. Knowledge that lasts.'**
+  /// **'Ancient systems. Clear guidance you can use today.'**
   String get bookStoreSectionTagline;
 
   /// No description provided for @bookStoreSectionTaglineHighlight.
   ///
   /// In en, this message translates to:
-  /// **'Wisdom'**
+  /// **'use today'**
   String get bookStoreSectionTaglineHighlight;
 
   /// No description provided for @bookStoreSectionMarketing.
   ///
   /// In en, this message translates to:
-  /// **'Dive deeper into Period 9 Feng Shui and Chinese metaphysics with our curated books. Perfect for practitioners and enthusiasts—order now and transform your understanding.'**
+  /// **'Master Elf\'s curated library—written for homes, businesses, and life decisions. Pick one volume or build your full foundation.'**
   String get bookStoreSectionMarketing;
 
   /// No description provided for @bookStoreSectionMarketingHighlight.
   ///
   /// In en, this message translates to:
-  /// **'transform your understanding'**
+  /// **'build your full foundation'**
   String get bookStoreSectionMarketingHighlight;
+
+  /// No description provided for @bookStoreIntroHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Books that earn a place on your desk'**
+  String get bookStoreIntroHeading;
+
+  /// No description provided for @bookStoreIntroBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Classical Chinese metaphysics, explained in plain language. Each volume is practical enough to open tonight and wise enough to revisit for years.'**
+  String get bookStoreIntroBody;
+
+  /// No description provided for @bookStoreIntroHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'revisit for years'**
+  String get bookStoreIntroHighlight;
+
+  /// No description provided for @bookStoreBlessingSeriesIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Five classical disciplines, one complete path—from space and strategy to timing and protection.'**
+  String get bookStoreBlessingSeriesIntro;
+
+  /// No description provided for @bookStoreBlessingSeriesIntroHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'one complete path'**
+  String get bookStoreBlessingSeriesIntroHighlight;
+
+  /// No description provided for @bookStorePeriod9SeriesIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Period 9 changes the map. These volumes show what shifted and how to apply it.'**
+  String get bookStorePeriod9SeriesIntro;
+
+  /// No description provided for @bookStorePeriod9SeriesIntroHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'how to apply it'**
+  String get bookStorePeriod9SeriesIntroHighlight;
+
+  /// No description provided for @bookStoreTrustHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Built for real decisions'**
+  String get bookStoreTrustHeading;
+
+  /// No description provided for @bookStoreTrustBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Practical chapters. Real case logic. Wisdom you can trust—not museum theory.'**
+  String get bookStoreTrustBody;
+
+  /// No description provided for @bookStoreBundleSaveLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Save {amount} vs buying separately'**
+  String bookStoreBundleSaveLabel(String amount);
+
+  /// No description provided for @bookStoreClosingHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sure where to start?'**
+  String get bookStoreClosingHeading;
+
+  /// No description provided for @bookStoreClosingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us your goal—home, business, or timing—and we\'ll point you to the right volume.'**
+  String get bookStoreClosingBody;
+
+  /// No description provided for @bookStoreClosingCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a consultation'**
+  String get bookStoreClosingCta;
+
+  /// No description provided for @bookStoreBook1Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Shape your space for flow, wealth, and calm at home.'**
+  String get bookStoreBook1Hook;
+
+  /// No description provided for @bookStoreBook2Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose better timing for business, travel, and big decisions.'**
+  String get bookStoreBook2Hook;
+
+  /// No description provided for @bookStoreBook3Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Read change clearly—then act with confidence.'**
+  String get bookStoreBook3Hook;
+
+  /// No description provided for @bookStoreBook4Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Blessings and protection rituals, explained step by step.'**
+  String get bookStoreBook4Hook;
+
+  /// No description provided for @bookStoreBook5Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick auspicious dates for moves, weddings, and launches.'**
+  String get bookStoreBook5Hook;
+
+  /// No description provided for @bookStoreBlessingBundleHook.
+  ///
+  /// In en, this message translates to:
+  /// **'Five disciplines, one trusted set—the library Master Elf recommends.'**
+  String get bookStoreBlessingBundleHook;
+
+  /// No description provided for @bookStorePeriod9Book1Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Period 9 foundations before you renovate or move.'**
+  String get bookStorePeriod9Book1Hook;
+
+  /// No description provided for @bookStorePeriod9Book2Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced flying-star methods for serious students and practitioners.'**
+  String get bookStorePeriod9Book2Hook;
 
   /// No description provided for @bookStoreBook1Title.
   ///
   /// In en, this message translates to:
-  /// **'Period 9 Feng Shui — Volume 1'**
+  /// **'Modern Feng Shui'**
   String get bookStoreBook1Title;
 
   /// No description provided for @bookStoreBook1Subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Foundations & Flying Stars'**
+  /// **'The Living Science of Space, Flow & Prosperity'**
   String get bookStoreBook1Subtitle;
 
   /// No description provided for @bookStoreBook1Price.
@@ -463,13 +763,13 @@ abstract class AppLocalizations {
   /// No description provided for @bookStoreBook2Title.
   ///
   /// In en, this message translates to:
-  /// **'Period 9 Feng Shui — Volume 2'**
+  /// **'Applied Qi Men Dun Jia'**
   String get bookStoreBook2Title;
 
   /// No description provided for @bookStoreBook2Subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Advanced Applications'**
+  /// **'The Hidden Science of Strategy, Timing & Victory'**
   String get bookStoreBook2Subtitle;
 
   /// No description provided for @bookStoreBook2Price.
@@ -477,6 +777,210 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'24.99'**
   String get bookStoreBook2Price;
+
+  /// No description provided for @bookStoreBook3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Strategic I Ching'**
+  String get bookStoreBook3Title;
+
+  /// No description provided for @bookStoreBook3Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The Ancient Wisdom of Choice, Change & Clarity'**
+  String get bookStoreBook3Subtitle;
+
+  /// No description provided for @bookStoreBook3Price.
+  ///
+  /// In en, this message translates to:
+  /// **'24.99'**
+  String get bookStoreBook3Price;
+
+  /// No description provided for @bookStoreBook4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'The Mao Shan Way'**
+  String get bookStoreBook4Title;
+
+  /// No description provided for @bookStoreBook4Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The Secret Rituals of Blessing, Spirit & Protection'**
+  String get bookStoreBook4Subtitle;
+
+  /// No description provided for @bookStoreBook4Price.
+  ///
+  /// In en, this message translates to:
+  /// **'24.99'**
+  String get bookStoreBook4Price;
+
+  /// No description provided for @bookStoreBook5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Ze Ri'**
+  String get bookStoreBook5Title;
+
+  /// No description provided for @bookStoreBook5Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The Sacred Art of Timing for Power, Hope & Destiny'**
+  String get bookStoreBook5Subtitle;
+
+  /// No description provided for @bookStoreBook5Price.
+  ///
+  /// In en, this message translates to:
+  /// **'24.99'**
+  String get bookStoreBook5Price;
+
+  /// No description provided for @bookStoreBlessingBundleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete 5-Blessing Bundle'**
+  String get bookStoreBlessingBundleTitle;
+
+  /// No description provided for @bookStoreBlessingBundleSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All five volumes — save when you buy the full set'**
+  String get bookStoreBlessingBundleSubtitle;
+
+  /// No description provided for @bookStoreBlessingBundlePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'99.99'**
+  String get bookStoreBlessingBundlePrice;
+
+  /// No description provided for @bookStoreBlessingBundleOriginalPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'124.95'**
+  String get bookStoreBlessingBundleOriginalPrice;
+
+  /// No description provided for @bookStoreBundleBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Bundle'**
+  String get bookStoreBundleBadge;
+
+  /// No description provided for @bookStoreAddBundleToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Bundle to Cart'**
+  String get bookStoreAddBundleToCart;
+
+  /// No description provided for @bookStorePeriod9Book1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Period 9 Feng Shui — Volume 1'**
+  String get bookStorePeriod9Book1Title;
+
+  /// No description provided for @bookStorePeriod9Book1Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Foundations & Flying Stars'**
+  String get bookStorePeriod9Book1Subtitle;
+
+  /// No description provided for @bookStorePeriod9Book1Price.
+  ///
+  /// In en, this message translates to:
+  /// **'24.99'**
+  String get bookStorePeriod9Book1Price;
+
+  /// No description provided for @bookStorePeriod9Book2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Period 9 Feng Shui — Volume 2'**
+  String get bookStorePeriod9Book2Title;
+
+  /// No description provided for @bookStorePeriod9Book2Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Applications'**
+  String get bookStorePeriod9Book2Subtitle;
+
+  /// No description provided for @bookStorePeriod9Book2Price.
+  ///
+  /// In en, this message translates to:
+  /// **'24.99'**
+  String get bookStorePeriod9Book2Price;
+
+  /// No description provided for @bookStoreBlessingSeriesHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'The 5-Blessing Book Series'**
+  String get bookStoreBlessingSeriesHeading;
+
+  /// No description provided for @bookStoreShelfPanoramaTopHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Introducing The Five Blessings Series'**
+  String get bookStoreShelfPanoramaTopHeading;
+
+  /// No description provided for @bookStoreShelfPanoramaTopBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A definitive library from Master Hong Chhay Heng—five volumes that turn classical metaphysics into daily decisions you can trust.'**
+  String get bookStoreShelfPanoramaTopBody;
+
+  /// No description provided for @bookStoreShelfPanoramaTopHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'daily decisions you can trust'**
+  String get bookStoreShelfPanoramaTopHighlight;
+
+  /// No description provided for @bookStoreShelfPanoramaBottomHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Own the complete reference set'**
+  String get bookStoreShelfPanoramaBottomHeading;
+
+  /// No description provided for @bookStoreShelfPanoramaBottomBody.
+  ///
+  /// In en, this message translates to:
+  /// **'From Feng Shui and Qi Men to I Ching, Mao Shan, and Ze Ri—each book stands alone, and together they form the library serious practitioners keep on their desk.'**
+  String get bookStoreShelfPanoramaBottomBody;
+
+  /// No description provided for @bookStoreShelfPanoramaBottomHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'library serious practitioners keep'**
+  String get bookStoreShelfPanoramaBottomHighlight;
+
+  /// No description provided for @bookStorePeriod9BridgeHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue your library with Period 9'**
+  String get bookStorePeriod9BridgeHeading;
+
+  /// No description provided for @bookStorePeriod9BridgeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The Five Blessings set builds your foundation—these two volumes map the 2024–2043 Fire era with flying-star methods you can apply immediately.'**
+  String get bookStorePeriod9BridgeBody;
+
+  /// No description provided for @bookStorePeriod9BridgeHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'2024–2043 Fire era'**
+  String get bookStorePeriod9BridgeHighlight;
+
+  /// No description provided for @bookStorePeriod9EraBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Period 9 · 2024–2043'**
+  String get bookStorePeriod9EraBadge;
+
+  /// No description provided for @bookStorePeriod9SeriesKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Feng Shui · Two-Volume Set'**
+  String get bookStorePeriod9SeriesKicker;
+
+  /// No description provided for @bookStorePeriod9SeriesHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Period 9 Feng Shui Collection'**
+  String get bookStorePeriod9SeriesHeading;
 
   /// No description provided for @bookStorePricePrefix.
   ///
@@ -814,6 +1318,30 @@ abstract class AppLocalizations {
   /// **'Explore All Events'**
   String get exploreAllEvents;
 
+  /// No description provided for @eventsSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Events'**
+  String get eventsSectionTitle;
+
+  /// No description provided for @eventsSectionHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Transform insight into experience.'**
+  String get eventsSectionHeadline;
+
+  /// No description provided for @eventsSectionSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Master Elf live — workshops, revelations, and field sessions.'**
+  String get eventsSectionSubline;
+
+  /// No description provided for @earlyBirdEnds.
+  ///
+  /// In en, this message translates to:
+  /// **'Early bird'**
+  String get earlyBirdEnds;
+
   /// No description provided for @comingUpNext.
   ///
   /// In en, this message translates to:
@@ -907,7 +1435,7 @@ abstract class AppLocalizations {
   /// No description provided for @sectionKnowledgeBody.
   ///
   /// In en, this message translates to:
-  /// **'Over 44,000 followers have used this system. Success is certain when you align with the right people, right places, and right time.'**
+  /// **'Over 51,000 followers have used this system. Success is certain when you align with the right people, right places, and right time.'**
   String get sectionKnowledgeBody;
 
   /// No description provided for @sectionKnowledgeBody2.
@@ -919,7 +1447,7 @@ abstract class AppLocalizations {
   /// No description provided for @sectionKnowledgeStat.
   ///
   /// In en, this message translates to:
-  /// **'44,000+ followers'**
+  /// **'51K+ followers'**
   String get sectionKnowledgeStat;
 
   /// No description provided for @sectionMapHeading.
@@ -955,7 +1483,7 @@ abstract class AppLocalizations {
   /// No description provided for @sectionStoryPara3.
   ///
   /// In en, this message translates to:
-  /// **'Today, that method has helped 44,000 followers create better outcomes for themselves and others.'**
+  /// **'Today, that method has helped 51,000 followers create better outcomes for themselves and others.'**
   String get sectionStoryPara3;
 
   /// No description provided for @sectionStoryCtaButton.
@@ -1372,47 +1900,233 @@ abstract class AppLocalizations {
   /// **'best event for Feng Shui, Chinese Metaphysics and Astrology in Cambodia'**
   String get eventsDescriptionHighlight;
 
-  /// No description provided for @eventsWhyAttendTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Why This Is the Best Event Ever'**
-  String get eventsWhyAttendTitle;
-
-  /// No description provided for @eventsWhyAttendLead.
-  ///
-  /// In en, this message translates to:
-  /// **'This isn\'t just another seminar. It\'s the most anticipated Feng Shui and Chinese Metaphysics experience—where ancient wisdom meets real strategy and you leave ready to transform your path.'**
-  String get eventsWhyAttendLead;
-
-  /// No description provided for @eventsWhyAttend1.
-  ///
-  /// In en, this message translates to:
-  /// **'Learn from the masters—live sessions and insights you can\'t get anywhere else.'**
-  String get eventsWhyAttend1;
-
-  /// No description provided for @eventsWhyAttend2.
-  ///
-  /// In en, this message translates to:
-  /// **'Connect with practitioners and enthusiasts who share your journey.'**
-  String get eventsWhyAttend2;
-
-  /// No description provided for @eventsWhyAttend3.
-  ///
-  /// In en, this message translates to:
-  /// **'Limited seats. Secure your spot and be part of something extraordinary.'**
-  String get eventsWhyAttend3;
-
-  /// No description provided for @eventsUpcomingHeadline.
-  ///
-  /// In en, this message translates to:
-  /// **'Upcoming Events'**
-  String get eventsUpcomingHeadline;
-
   /// No description provided for @eventsUpcomingSubline.
   ///
   /// In en, this message translates to:
   /// **'Choose your event and secure your seat. We can\'t wait to see you there.'**
   String get eventsUpcomingSubline;
+
+  /// No description provided for @eventsPageHeroHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Where insight becomes experience'**
+  String get eventsPageHeroHeadline;
+
+  /// No description provided for @eventsPageHeroSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Live revelations, online archives, and the next chapter of Master Elf\'s teaching journey.'**
+  String get eventsPageHeroSubline;
+
+  /// No description provided for @eventsPageHeroHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'next chapter'**
+  String get eventsPageHeroHighlight;
+
+  /// No description provided for @eventsCompletedHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Recently Completed'**
+  String get eventsCompletedHeading;
+
+  /// No description provided for @eventsCompletedSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Moments that moved our community—captured in person and online.'**
+  String get eventsCompletedSubline;
+
+  /// No description provided for @eventsCompletedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get eventsCompletedBadge;
+
+  /// No description provided for @eventsOnlineBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get eventsOnlineBadge;
+
+  /// No description provided for @eventsUpcomingBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get eventsUpcomingBadge;
+
+  /// No description provided for @eventsUpcomingSpotlightHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Spotlight'**
+  String get eventsUpcomingSpotlightHeading;
+
+  /// No description provided for @eventsUpcomingSpotlightSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'The next gathering is already taking shape. Reserve your place early.'**
+  String get eventsUpcomingSpotlightSubline;
+
+  /// No description provided for @eventsGoat2027Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf — Strive for the Year of the Blood Goat 2027'**
+  String get eventsGoat2027Title;
+
+  /// No description provided for @eventsGoat2027Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Annual revelation for the new zodiac cycle'**
+  String get eventsGoat2027Subtitle;
+
+  /// No description provided for @eventsGoat2027Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Step into the Blood Goat year with clarity, strategy, and heaven-aligned timing.'**
+  String get eventsGoat2027Hook;
+
+  /// No description provided for @eventsGoat2027Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf\'s signature annual event returns—live teachings, Period 9 strategy, and the roadmap for thriving in the Year of the Blood Goat.'**
+  String get eventsGoat2027Description;
+
+  /// No description provided for @eventsGoat2027DescriptionHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'Year of the Blood Goat'**
+  String get eventsGoat2027DescriptionHighlight;
+
+  /// No description provided for @eventsGoat2027Date.
+  ///
+  /// In en, this message translates to:
+  /// **'February 2027 · Phnom Penh'**
+  String get eventsGoat2027Date;
+
+  /// No description provided for @eventsGoat2027Location.
+  ///
+  /// In en, this message translates to:
+  /// **'Phnom Penh'**
+  String get eventsGoat2027Location;
+
+  /// No description provided for @eventsZodiacStripLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood Goat Year begins February 2027'**
+  String get eventsZodiacStripLabel;
+
+  /// No description provided for @eventsZodiacStripPhoenix.
+  ///
+  /// In en, this message translates to:
+  /// **'Phoenix 2026'**
+  String get eventsZodiacStripPhoenix;
+
+  /// No description provided for @eventsZodiacStripGoat.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood Goat 2027'**
+  String get eventsZodiacStripGoat;
+
+  /// No description provided for @eventsPhoenixRecapHook.
+  ///
+  /// In en, this message translates to:
+  /// **'The revelation that launched a new era—witnessed live in Phnom Penh.'**
+  String get eventsPhoenixRecapHook;
+
+  /// No description provided for @eventsPhoenixRecapBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Hundreds gathered for Master Elf\'s most anticipated revelation. The Rise of Phoenix marked a turning point—renewal, transformation, and the framework for rising in Period 9.'**
+  String get eventsPhoenixRecapBody;
+
+  /// No description provided for @eventsPhoenixRecapHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'turning point'**
+  String get eventsPhoenixRecapHighlight;
+
+  /// No description provided for @eventsExploreJourney.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore the journey'**
+  String get eventsExploreJourney;
+
+  /// No description provided for @eventsHomeFeaturedUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Up Next'**
+  String get eventsHomeFeaturedUpcoming;
+
+  /// No description provided for @eventsHomeRecentCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Recently Completed'**
+  String get eventsHomeRecentCompleted;
+
+  /// No description provided for @event1Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The Master Revelation — live in Phnom Penh'**
+  String get event1Subtitle;
+
+  /// No description provided for @event1Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'The moment insight became action—Master Elf\'s defining revelation of 2026.'**
+  String get event1Hook;
+
+  /// No description provided for @event2Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Singapore edition — now available online'**
+  String get event2Subtitle;
+
+  /// No description provided for @event2Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'Feng Shui and astrology mastery, captured for replay at your pace.'**
+  String get event2Hook;
+
+  /// No description provided for @event3Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fire Horse year strategy — online archive'**
+  String get event3Subtitle;
+
+  /// No description provided for @event3Hook.
+  ///
+  /// In en, this message translates to:
+  /// **'The art of war in the Year of the Fire Horse—strategy you can revisit anytime.'**
+  String get event3Hook;
+
+  /// No description provided for @eventsWhyAttendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Why Master Elf events matter'**
+  String get eventsWhyAttendTitle;
+
+  /// No description provided for @eventsWhyAttendLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Whether you joined us in Phnom Penh or online, or you\'re preparing for the Blood Goat year ahead—these gatherings turn classical wisdom into decisions you can act on.'**
+  String get eventsWhyAttendLead;
+
+  /// No description provided for @eventsWhyAttend1.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn directly from Master Elf—live revelations and depth you won\'t find in books alone.'**
+  String get eventsWhyAttend1;
+
+  /// No description provided for @eventsWhyAttend2.
+  ///
+  /// In en, this message translates to:
+  /// **'Join a community of practitioners ready to rise with each zodiac cycle.'**
+  String get eventsWhyAttend2;
+
+  /// No description provided for @eventsWhyAttend3.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming seats are limited. Register early for the Blood Goat 2027 gathering.'**
+  String get eventsWhyAttend3;
 
   /// No description provided for @secureYourSeat.
   ///
@@ -1585,7 +2299,7 @@ abstract class AppLocalizations {
   /// No description provided for @journeyStory1.
   ///
   /// In en, this message translates to:
-  /// **'Master Elf is a recognised practitioner of Feng Shui and Chinese Metaphysics, with a following of over 44,000 and a track record of guiding individuals and businesses toward clarity and results. His path did not begin by chance—it began with a calling.'**
+  /// **'Master Elf is a recognised practitioner of Feng Shui and Chinese Metaphysics, with a following of over 51,000 and a track record of guiding individuals and businesses toward clarity and results. His path did not begin by chance—it began with a calling.'**
   String get journeyStory1;
 
   /// No description provided for @journeyStory2.
@@ -1831,8 +2545,38 @@ abstract class AppLocalizations {
   /// No description provided for @sessionDurationNote.
   ///
   /// In en, this message translates to:
-  /// **'Each session is 2 hours with a 1-hour break between sessions.'**
+  /// **'Sessions from 1 hour. Open daily 8 AM–10 PM (Cambodia time).'**
   String get sessionDurationNote;
+
+  /// No description provided for @selectDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Session duration'**
+  String get selectDuration;
+
+  /// No description provided for @durationHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h'**
+  String durationHours(int hours);
+
+  /// No description provided for @confirmSessionDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}-hour session'**
+  String confirmSessionDuration(int hours);
+
+  /// No description provided for @bookingUntilTime.
+  ///
+  /// In en, this message translates to:
+  /// **'until {time}'**
+  String bookingUntilTime(String time);
+
+  /// No description provided for @bookingContinued.
+  ///
+  /// In en, this message translates to:
+  /// **'Continued'**
+  String get bookingContinued;
 
   /// No description provided for @sessionType.
   ///
@@ -1897,7 +2641,7 @@ abstract class AppLocalizations {
   /// No description provided for @cancelBookingButton.
   ///
   /// In en, this message translates to:
-  /// **'Cancel booking'**
+  /// **'Cancel'**
   String get cancelBookingButton;
 
   /// No description provided for @cancelBookingConfirm.
@@ -1945,7 +2689,7 @@ abstract class AppLocalizations {
   /// No description provided for @markAsCompleted.
   ///
   /// In en, this message translates to:
-  /// **'Mark completed'**
+  /// **'Completed'**
   String get markAsCompleted;
 
   /// No description provided for @customTime.
@@ -2305,7 +3049,7 @@ abstract class AppLocalizations {
   /// No description provided for @event2Description.
   ///
   /// In en, this message translates to:
-  /// **'The Singapore Edition of Feng Shui & Astrology 2026 live event.'**
+  /// **'The Singapore Edition of Feng Shui & Astrology 2026—now available as an online replay.'**
   String get event2Description;
 
   /// No description provided for @event2Location.
@@ -2323,7 +3067,7 @@ abstract class AppLocalizations {
   /// No description provided for @event3Description.
   ///
   /// In en, this message translates to:
-  /// **'The Art of War In The Year of the Fire Horse'**
+  /// **'The Art of War in the Year of the Fire Horse—completed online event, available for replay.'**
   String get event3Description;
 
   /// No description provided for @event3Location.
@@ -2331,6 +3075,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Resorts World Singapore'**
   String get event3Location;
+
+  /// No description provided for @event4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Selection Masterclass'**
+  String get event4Title;
+
+  /// No description provided for @event4Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose auspicious timing for key life decisions.'**
+  String get event4Description;
+
+  /// No description provided for @event4Location.
+  ///
+  /// In en, this message translates to:
+  /// **'Phnom Penh'**
+  String get event4Location;
 
   /// No description provided for @loginSectionTitle.
   ///
@@ -2439,6 +3201,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Status'**
   String get statusColumn;
+
+  /// No description provided for @actionsColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get actionsColumn;
+
+  /// No description provided for @appointmentsListRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing {start}–{end} of {total}'**
+  String appointmentsListRange(int start, int end, int total);
+
+  /// No description provided for @appointmentsListPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {current} of {total}'**
+  String appointmentsListPage(int current, int total);
+
+  /// No description provided for @searchAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'Search appointments…'**
+  String get searchAppointments;
+
+  /// No description provided for @exportAppointmentsList.
+  ///
+  /// In en, this message translates to:
+  /// **'Export List'**
+  String get exportAppointmentsList;
+
+  /// No description provided for @noAppointmentsMatchSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'No appointments match your search.'**
+  String get noAppointmentsMatchSearch;
+
+  /// No description provided for @appointmentsListPdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointments List'**
+  String get appointmentsListPdfTitle;
+
+  /// No description provided for @appointmentsPdfExportStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointments list PDF download started.'**
+  String get appointmentsPdfExportStarted;
+
+  /// No description provided for @appointmentsPdfExportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to export appointments list.'**
+  String get appointmentsPdfExportFailed;
+
+  /// No description provided for @dashboardStatsFilteredTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Filtered total'**
+  String get dashboardStatsFilteredTotal;
+
+  /// No description provided for @switchToListToSearchExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to List view to search or export.'**
+  String get switchToListToSearchExport;
+
+  /// No description provided for @slotTimeNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected time is not available. Please choose another slot.'**
+  String get slotTimeNotAvailable;
 
   /// No description provided for @filterAll.
   ///
@@ -2961,6 +3795,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No slots available for this date.'**
   String get noSlotsAvailable;
+
+  /// No description provided for @slotsEstimateWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing estimated times — live availability could not be loaded. Please confirm with us after booking.'**
+  String get slotsEstimateWarning;
+
+  /// No description provided for @slotsFetchFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach the booking server. Times shown are estimates only — please confirm with us after booking.'**
+  String get slotsFetchFailed;
 
   /// No description provided for @poweredBy.
   ///
@@ -5289,6 +6135,1692 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Estimated Report Delivery Date'**
   String get inspectionEstimatedReportDeliveryDate;
+
+  /// No description provided for @fieldWorkSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Real Work in Action'**
+  String get fieldWorkSectionTitle;
+
+  /// No description provided for @fieldWorkSectionHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Real work. Real places. Real outcomes.'**
+  String get fieldWorkSectionHeadline;
+
+  /// No description provided for @fieldWorkSectionSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Office consultations, Mao Shan rituals, and on-site Feng Shui—documented as it happens.'**
+  String get fieldWorkSectionSubline;
+
+  /// No description provided for @fieldWorkRealmAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get fieldWorkRealmAll;
+
+  /// No description provided for @fieldWorkRealmOffice.
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get fieldWorkRealmOffice;
+
+  /// No description provided for @fieldWorkRealmRitual.
+  ///
+  /// In en, this message translates to:
+  /// **'Mao Shan Ritual'**
+  String get fieldWorkRealmRitual;
+
+  /// No description provided for @fieldWorkRealmSite.
+  ///
+  /// In en, this message translates to:
+  /// **'Site Visit'**
+  String get fieldWorkRealmSite;
+
+  /// No description provided for @fieldWorkFilterVideos.
+  ///
+  /// In en, this message translates to:
+  /// **'Videos'**
+  String get fieldWorkFilterVideos;
+
+  /// No description provided for @fieldWorkViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View all activities'**
+  String get fieldWorkViewAll;
+
+  /// No description provided for @fieldWorkBookConsultation.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a consultation'**
+  String get fieldWorkBookConsultation;
+
+  /// No description provided for @fieldWorkNav.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Work'**
+  String get fieldWorkNav;
+
+  /// No description provided for @fieldWorkPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf in Action'**
+  String get fieldWorkPageTitle;
+
+  /// No description provided for @fieldWorkPageSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Documented consultations, rituals, and Feng Shui site visits across Cambodia.'**
+  String get fieldWorkPageSubline;
+
+  /// No description provided for @fieldWorkFeaturedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured'**
+  String get fieldWorkFeaturedLabel;
+
+  /// No description provided for @fieldWorkSeeRealSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'See real sessions and site visits'**
+  String get fieldWorkSeeRealSessions;
+
+  /// No description provided for @fieldWorkSeeRealSessionsLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse field work'**
+  String get fieldWorkSeeRealSessionsLink;
+
+  /// No description provided for @fieldWorkJourneyTeaser.
+  ///
+  /// In en, this message translates to:
+  /// **'Beyond the classroom—see how we work in the field.'**
+  String get fieldWorkJourneyTeaser;
+
+  /// No description provided for @fieldWorkJourneyCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore field work'**
+  String get fieldWorkJourneyCta;
+
+  /// No description provided for @fieldWorkRelatedService.
+  ///
+  /// In en, this message translates to:
+  /// **'Book this type of service'**
+  String get fieldWorkRelatedService;
+
+  /// No description provided for @fieldWorkShareFacebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Share on Facebook'**
+  String get fieldWorkShareFacebook;
+
+  /// No description provided for @fieldWorkBackToJournal.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to field work'**
+  String get fieldWorkBackToJournal;
+
+  /// No description provided for @fieldWorkEmptyFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'No activities match this filter yet.'**
+  String get fieldWorkEmptyFilter;
+
+  /// No description provided for @fieldWorkGalleryHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo gallery'**
+  String get fieldWorkGalleryHeading;
+
+  /// No description provided for @fieldWorkPillarFengShuiTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Feng Shui site visit'**
+  String get fieldWorkPillarFengShuiTitle;
+
+  /// No description provided for @fieldWorkPillarFengShuiSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Compass readings and landform assessment on real properties.'**
+  String get fieldWorkPillarFengShuiSubtitle;
+
+  /// No description provided for @fieldWorkPillarConsultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'BaZi, Qi Men & I Ching consultations'**
+  String get fieldWorkPillarConsultTitle;
+
+  /// No description provided for @fieldWorkPillarConsultSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Office sessions—charts, strategy, and practical next steps.'**
+  String get fieldWorkPillarConsultSubtitle;
+
+  /// No description provided for @fieldWorkPillarMaoShanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mao Shan home blessing'**
+  String get fieldWorkPillarMaoShanTitle;
+
+  /// No description provided for @fieldWorkPillarMaoShanSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ritual support for peace, protection, and harmony at home.'**
+  String get fieldWorkPillarMaoShanSubtitle;
+
+  /// No description provided for @fieldWorkPillarDateSelectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Selection (择日)'**
+  String get fieldWorkPillarDateSelectionTitle;
+
+  /// No description provided for @fieldWorkPillarDateSelectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Auspicious timing for openings, signings, and milestones.'**
+  String get fieldWorkPillarDateSelectionSubtitle;
+
+  /// No description provided for @fieldWorkPillarBooksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The 5-Blessing Book Series'**
+  String get fieldWorkPillarBooksTitle;
+
+  /// No description provided for @fieldWorkPillarBooksSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Wisdom you can hold—Master Elf publications for deeper study.'**
+  String get fieldWorkPillarBooksSubtitle;
+
+  /// No description provided for @homePublicationsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'The 5-Blessing Book Series'**
+  String get homePublicationsHeading;
+
+  /// No description provided for @homePublicationsSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Elf publications — wisdom you can hold.'**
+  String get homePublicationsSubline;
+
+  /// No description provided for @homePublicationsViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View all books'**
+  String get homePublicationsViewAll;
+
+  /// No description provided for @homeCoreActivitiesHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Real Work. Real Outcomes.'**
+  String get homeCoreActivitiesHeading;
+
+  /// No description provided for @homeCoreActivitiesSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Every photo below is from an actual session—not stock imagery. See how Master Elf turns classical Chinese metaphysics into clarity, protection, and prosperity for clients on site, in office, and at the altar. Your next chapter could start here.'**
+  String get homeCoreActivitiesSubline;
+
+  /// No description provided for @fieldWorkFromEventsLink.
+  ///
+  /// In en, this message translates to:
+  /// **'See real field work'**
+  String get fieldWorkFromEventsLink;
+
+  /// No description provided for @fieldWorkVideosHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch real work in action'**
+  String get fieldWorkVideosHeading;
+
+  /// No description provided for @fieldWorkVideosSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Six moments from the field—consultations, rituals, and site visits as they happen.'**
+  String get fieldWorkVideosSubline;
+
+  /// No description provided for @fieldWorkStoriesHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Our core activities'**
+  String get fieldWorkStoriesHeading;
+
+  /// No description provided for @fieldWorkStoriesSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Real site visits, office consultations, Mao Shan rituals, and date selection—documented in photos from the field.'**
+  String get fieldWorkStoriesSubline;
+
+  /// No description provided for @fieldWorkWatchVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch'**
+  String get fieldWorkWatchVideo;
+
+  /// No description provided for @fieldWorkBackToActivities.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to activities'**
+  String get fieldWorkBackToActivities;
+
+  /// No description provided for @fieldWorkVideoSpotlight1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Feng Shui site visit — compass on site'**
+  String get fieldWorkVideoSpotlight1Title;
+
+  /// No description provided for @fieldWorkVideoSpotlight1Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'On-location readings and landform assessment for a commercial property.'**
+  String get fieldWorkVideoSpotlight1Subtitle;
+
+  /// No description provided for @fieldWorkVideoSpotlight2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Feng Shui audit — facing and sitting directions'**
+  String get fieldWorkVideoSpotlight2Title;
+
+  /// No description provided for @fieldWorkVideoSpotlight2Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording accurate directions for Flying Star analysis before interior work.'**
+  String get fieldWorkVideoSpotlight2Subtitle;
+
+  /// No description provided for @fieldWorkVideoSpotlight3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'BaZi consultation at the office'**
+  String get fieldWorkVideoSpotlight3Title;
+
+  /// No description provided for @fieldWorkVideoSpotlight3Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A one-to-one session—charts, timing, and practical next steps.'**
+  String get fieldWorkVideoSpotlight3Subtitle;
+
+  /// No description provided for @fieldWorkVideoSpotlight4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Qi Men strategy session'**
+  String get fieldWorkVideoSpotlight4Title;
+
+  /// No description provided for @fieldWorkVideoSpotlight4Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ancient timing tools applied to modern business decisions.'**
+  String get fieldWorkVideoSpotlight4Subtitle;
+
+  /// No description provided for @fieldWorkVideoSpotlight5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Mao Shan ritual — office blessing'**
+  String get fieldWorkVideoSpotlight5Title;
+
+  /// No description provided for @fieldWorkVideoSpotlight5Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ceremony to clear and align a workspace for a new business cycle.'**
+  String get fieldWorkVideoSpotlight5Subtitle;
+
+  /// No description provided for @fieldWorkVideoSpotlight6Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Selection in practice'**
+  String get fieldWorkVideoSpotlight6Title;
+
+  /// No description provided for @fieldWorkVideoSpotlight6Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choosing auspicious timing for openings, signings, and milestones.'**
+  String get fieldWorkVideoSpotlight6Subtitle;
+
+  /// No description provided for @inspectionXuanKongPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Xuan Kong Period'**
+  String get inspectionXuanKongPeriod;
+
+  /// No description provided for @inspectionPeriod7.
+  ///
+  /// In en, this message translates to:
+  /// **'Period 7 (1984–2003)'**
+  String get inspectionPeriod7;
+
+  /// No description provided for @inspectionPeriod8.
+  ///
+  /// In en, this message translates to:
+  /// **'Period 8 (2004–2023)'**
+  String get inspectionPeriod8;
+
+  /// No description provided for @inspectionPeriod9Option.
+  ///
+  /// In en, this message translates to:
+  /// **'Period 9 (2024–2043)'**
+  String get inspectionPeriod9Option;
+
+  /// No description provided for @inspectionConvertedToTrigram.
+  ///
+  /// In en, this message translates to:
+  /// **'Converted to Trigram'**
+  String get inspectionConvertedToTrigram;
+
+  /// No description provided for @inspectionHouseGua.
+  ///
+  /// In en, this message translates to:
+  /// **'House Gua'**
+  String get inspectionHouseGua;
+
+  /// No description provided for @inspectionHouseKan.
+  ///
+  /// In en, this message translates to:
+  /// **'Kan House (坎) - Sitting North'**
+  String get inspectionHouseKan;
+
+  /// No description provided for @inspectionHouseKun.
+  ///
+  /// In en, this message translates to:
+  /// **'Kun House (坤) - Sitting Southwest'**
+  String get inspectionHouseKun;
+
+  /// No description provided for @inspectionHouseZhen.
+  ///
+  /// In en, this message translates to:
+  /// **'Zhen House (震) - Sitting East'**
+  String get inspectionHouseZhen;
+
+  /// No description provided for @inspectionHouseXun.
+  ///
+  /// In en, this message translates to:
+  /// **'Xun House (巽) - Sitting Southeast'**
+  String get inspectionHouseXun;
+
+  /// No description provided for @inspectionHouseQian.
+  ///
+  /// In en, this message translates to:
+  /// **'Qian House (乾) - Sitting Northwest'**
+  String get inspectionHouseQian;
+
+  /// No description provided for @inspectionHouseDui.
+  ///
+  /// In en, this message translates to:
+  /// **'Dui House (兌) - Sitting West'**
+  String get inspectionHouseDui;
+
+  /// No description provided for @inspectionHouseGen.
+  ///
+  /// In en, this message translates to:
+  /// **'Gen House (艮) - Sitting Northeast'**
+  String get inspectionHouseGen;
+
+  /// No description provided for @inspectionHouseLi.
+  ///
+  /// In en, this message translates to:
+  /// **'Li House (離) - Sitting South'**
+  String get inspectionHouseLi;
+
+  /// No description provided for @inspectionHouseGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'House Group'**
+  String get inspectionHouseGroup;
+
+  /// No description provided for @inspectionHouseGroupEast.
+  ///
+  /// In en, this message translates to:
+  /// **'East Group (Kan, Zhen, Xun, Li)'**
+  String get inspectionHouseGroupEast;
+
+  /// No description provided for @inspectionHouseGroupWest.
+  ///
+  /// In en, this message translates to:
+  /// **'West Group (Qian, Kun, Gen, Dui)'**
+  String get inspectionHouseGroupWest;
+
+  /// No description provided for @inspectionMainEntranceSector.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Entrance - Eight Mansions sector'**
+  String get inspectionMainEntranceSector;
+
+  /// No description provided for @inspectionMainEntranceQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Entrance - Quality'**
+  String get inspectionMainEntranceQuality;
+
+  /// No description provided for @inspectionManagerOfficeSector.
+  ///
+  /// In en, this message translates to:
+  /// **'Manager/Owner Office - Sector'**
+  String get inspectionManagerOfficeSector;
+
+  /// No description provided for @inspectionManagerOfficeQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Manager/Owner Office - Quality'**
+  String get inspectionManagerOfficeQuality;
+
+  /// No description provided for @inspectionCashierSector.
+  ///
+  /// In en, this message translates to:
+  /// **'Cashier/Safe - Sector'**
+  String get inspectionCashierSector;
+
+  /// No description provided for @inspectionCashierQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Cashier/Safe - Quality'**
+  String get inspectionCashierQuality;
+
+  /// No description provided for @inspectionToiletSector.
+  ///
+  /// In en, this message translates to:
+  /// **'Toilet Location - Sector'**
+  String get inspectionToiletSector;
+
+  /// No description provided for @inspectionToiletImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Toilet Impact'**
+  String get inspectionToiletImpact;
+
+  /// No description provided for @inspectionToiletAcceptable.
+  ///
+  /// In en, this message translates to:
+  /// **'Acceptable (at unfavorable sector)'**
+  String get inspectionToiletAcceptable;
+
+  /// No description provided for @inspectionToiletPoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Poor (at favorable sector)'**
+  String get inspectionToiletPoor;
+
+  /// No description provided for @inspectionClientFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary Client/Owner - Full Name'**
+  String get inspectionClientFullName;
+
+  /// No description provided for @inspectionClientRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get inspectionClientRole;
+
+  /// No description provided for @inspectionRoleOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get inspectionRoleOwner;
+
+  /// No description provided for @inspectionRoleMainTenant.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Tenant'**
+  String get inspectionRoleMainTenant;
+
+  /// No description provided for @inspectionRoleCeo.
+  ///
+  /// In en, this message translates to:
+  /// **'CEO'**
+  String get inspectionRoleCeo;
+
+  /// No description provided for @inspectionRoleManager.
+  ///
+  /// In en, this message translates to:
+  /// **'Manager'**
+  String get inspectionRoleManager;
+
+  /// No description provided for @inspectionBirthDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Birth Date'**
+  String get inspectionBirthDate;
+
+  /// No description provided for @inspectionBirthTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Birth Time'**
+  String get inspectionBirthTime;
+
+  /// No description provided for @inspectionPlaceOfBirth.
+  ///
+  /// In en, this message translates to:
+  /// **'Place of Birth'**
+  String get inspectionPlaceOfBirth;
+
+  /// No description provided for @inspectionDayMaster.
+  ///
+  /// In en, this message translates to:
+  /// **'Day Master'**
+  String get inspectionDayMaster;
+
+  /// No description provided for @inspectionFavorableElements.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorable Elements'**
+  String get inspectionFavorableElements;
+
+  /// No description provided for @inspectionUnfavorableElements.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfavorable Elements'**
+  String get inspectionUnfavorableElements;
+
+  /// No description provided for @inspectionElementWood.
+  ///
+  /// In en, this message translates to:
+  /// **'Wood (木)'**
+  String get inspectionElementWood;
+
+  /// No description provided for @inspectionElementFire.
+  ///
+  /// In en, this message translates to:
+  /// **'Fire (火)'**
+  String get inspectionElementFire;
+
+  /// No description provided for @inspectionElementEarth.
+  ///
+  /// In en, this message translates to:
+  /// **'Earth (土)'**
+  String get inspectionElementEarth;
+
+  /// No description provided for @inspectionElementMetal.
+  ///
+  /// In en, this message translates to:
+  /// **'Metal (金)'**
+  String get inspectionElementMetal;
+
+  /// No description provided for @inspectionElementWater.
+  ///
+  /// In en, this message translates to:
+  /// **'Water (水)'**
+  String get inspectionElementWater;
+
+  /// No description provided for @inspectionPersonalGuaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Gua (Ming Gua)'**
+  String get inspectionPersonalGuaLabel;
+
+  /// No description provided for @inspectionPersonalGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Group'**
+  String get inspectionPersonalGroup;
+
+  /// No description provided for @inspectionPersonalGroupEast.
+  ///
+  /// In en, this message translates to:
+  /// **'East Group'**
+  String get inspectionPersonalGroupEast;
+
+  /// No description provided for @inspectionPersonalGroupWest.
+  ///
+  /// In en, this message translates to:
+  /// **'West Group'**
+  String get inspectionPersonalGroupWest;
+
+  /// No description provided for @inspectionShengQiDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Sheng Qi (Best) direction'**
+  String get inspectionShengQiDirection;
+
+  /// No description provided for @inspectionTianYiDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Tian Yi (Health) direction'**
+  String get inspectionTianYiDirection;
+
+  /// No description provided for @inspectionYanNianDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Yan Nian (Relationship) direction'**
+  String get inspectionYanNianDirection;
+
+  /// No description provided for @inspectionFuWeiDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Fu Wei (Stability) direction'**
+  String get inspectionFuWeiDirection;
+
+  /// No description provided for @inspectionPerson2Name.
+  ///
+  /// In en, this message translates to:
+  /// **'Person 2 - Name'**
+  String get inspectionPerson2Name;
+
+  /// No description provided for @inspectionPerson2Role.
+  ///
+  /// In en, this message translates to:
+  /// **'Person 2 - Role'**
+  String get inspectionPerson2Role;
+
+  /// No description provided for @inspectionPerson2BirthDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Person 2 - Birth Date'**
+  String get inspectionPerson2BirthDate;
+
+  /// No description provided for @inspectionPerson2BirthTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Person 2 - Birth Time'**
+  String get inspectionPerson2BirthTime;
+
+  /// No description provided for @inspectionPerson2Gua.
+  ///
+  /// In en, this message translates to:
+  /// **'Person 2 - Personal Gua'**
+  String get inspectionPerson2Gua;
+
+  /// No description provided for @inspectionPerson3Name.
+  ///
+  /// In en, this message translates to:
+  /// **'Person 3 - Name'**
+  String get inspectionPerson3Name;
+
+  /// No description provided for @inspectionPerson3Role.
+  ///
+  /// In en, this message translates to:
+  /// **'Person 3 - Role'**
+  String get inspectionPerson3Role;
+
+  /// No description provided for @inspectionPerson3BirthDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Person 3 - Birth Date'**
+  String get inspectionPerson3BirthDate;
+
+  /// No description provided for @inspectionPerson3BirthTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Person 3 - Birth Time'**
+  String get inspectionPerson3BirthTime;
+
+  /// No description provided for @inspectionPerson3Gua.
+  ///
+  /// In en, this message translates to:
+  /// **'Person 3 - Personal Gua'**
+  String get inspectionPerson3Gua;
+
+  /// No description provided for @inspectionBusinessGoals.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary Business Goals'**
+  String get inspectionBusinessGoals;
+
+  /// No description provided for @inspectionGoalWealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Wealth/profit maximization'**
+  String get inspectionGoalWealth;
+
+  /// No description provided for @inspectionGoalCustomerFlow.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer flow'**
+  String get inspectionGoalCustomerFlow;
+
+  /// No description provided for @inspectionGoalStability.
+  ///
+  /// In en, this message translates to:
+  /// **'Business stability'**
+  String get inspectionGoalStability;
+
+  /// No description provided for @inspectionGoalStaffHarmony.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff harmony'**
+  String get inspectionGoalStaffHarmony;
+
+  /// No description provided for @inspectionGoalHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Health and wellbeing'**
+  String get inspectionGoalHealth;
+
+  /// No description provided for @inspectionGoalOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get inspectionGoalOther;
+
+  /// No description provided for @inspectionSpecificConcerns.
+  ///
+  /// In en, this message translates to:
+  /// **'Specific Concerns Raised'**
+  String get inspectionSpecificConcerns;
+
+  /// No description provided for @inspectionCurrentChallenges.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Challenges'**
+  String get inspectionCurrentChallenges;
+
+  /// No description provided for @inspectionChallengeFinancial.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial difficulties'**
+  String get inspectionChallengeFinancial;
+
+  /// No description provided for @inspectionChallengeHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Health issues'**
+  String get inspectionChallengeHealth;
+
+  /// No description provided for @inspectionChallengeStaff.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff conflicts'**
+  String get inspectionChallengeStaff;
+
+  /// No description provided for @inspectionChallengeLegal.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal problems'**
+  String get inspectionChallengeLegal;
+
+  /// No description provided for @inspectionChallengeRelationship.
+  ///
+  /// In en, this message translates to:
+  /// **'Relationship issues'**
+  String get inspectionChallengeRelationship;
+
+  /// No description provided for @inspectionChallengeCustomerFlow.
+  ///
+  /// In en, this message translates to:
+  /// **'Poor customer flow'**
+  String get inspectionChallengeCustomerFlow;
+
+  /// No description provided for @inspectionHealthIssuesSpecify.
+  ///
+  /// In en, this message translates to:
+  /// **'Health issues (specify)'**
+  String get inspectionHealthIssuesSpecify;
+
+  /// No description provided for @inspectionPlannedOpeningDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned Opening Date'**
+  String get inspectionPlannedOpeningDate;
+
+  /// No description provided for @inspectionPreferredDateFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred Date Range - From'**
+  String get inspectionPreferredDateFrom;
+
+  /// No description provided for @inspectionPreferredDateTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred Date Range - To'**
+  String get inspectionPreferredDateTo;
+
+  /// No description provided for @inspectionActivitiesDateSelection.
+  ///
+  /// In en, this message translates to:
+  /// **'Important Activities Requiring Date Selection'**
+  String get inspectionActivitiesDateSelection;
+
+  /// No description provided for @inspectionActivityGrandOpening.
+  ///
+  /// In en, this message translates to:
+  /// **'Grand opening ceremony'**
+  String get inspectionActivityGrandOpening;
+
+  /// No description provided for @inspectionActivityRenovation.
+  ///
+  /// In en, this message translates to:
+  /// **'Renovation commencement'**
+  String get inspectionActivityRenovation;
+
+  /// No description provided for @inspectionActivityMovingIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Moving in/occupation'**
+  String get inspectionActivityMovingIn;
+
+  /// No description provided for @inspectionActivitySignInstall.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign installation'**
+  String get inspectionActivitySignInstall;
+
+  /// No description provided for @inspectionActivityContract.
+  ///
+  /// In en, this message translates to:
+  /// **'Contract signing'**
+  String get inspectionActivityContract;
+
+  /// No description provided for @inspectionActivityPurchases.
+  ///
+  /// In en, this message translates to:
+  /// **'Major purchases'**
+  String get inspectionActivityPurchases;
+
+  /// No description provided for @inspectionSolarTerm.
+  ///
+  /// In en, this message translates to:
+  /// **'Solar Term'**
+  String get inspectionSolarTerm;
+
+  /// No description provided for @inspectionLunarDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Lunar Date'**
+  String get inspectionLunarDate;
+
+  /// No description provided for @inspectionFavorablePalaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorable Palaces for This Date/Time'**
+  String get inspectionFavorablePalaces;
+
+  /// No description provided for @inspectionUnfavorablePalaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfavorable Palaces for This Date/Time'**
+  String get inspectionUnfavorablePalaces;
+
+  /// No description provided for @inspectionGrandOpeningDate1.
+  ///
+  /// In en, this message translates to:
+  /// **'For Grand Opening - Date option 1'**
+  String get inspectionGrandOpeningDate1;
+
+  /// No description provided for @inspectionGrandOpeningDate2.
+  ///
+  /// In en, this message translates to:
+  /// **'For Grand Opening - Date option 2'**
+  String get inspectionGrandOpeningDate2;
+
+  /// No description provided for @inspectionGrandOpeningDate3.
+  ///
+  /// In en, this message translates to:
+  /// **'For Grand Opening - Date option 3'**
+  String get inspectionGrandOpeningDate3;
+
+  /// No description provided for @inspectionRenovationDate1.
+  ///
+  /// In en, this message translates to:
+  /// **'For Renovation Start - Date option 1'**
+  String get inspectionRenovationDate1;
+
+  /// No description provided for @inspectionRenovationDate2.
+  ///
+  /// In en, this message translates to:
+  /// **'For Renovation Start - Date option 2'**
+  String get inspectionRenovationDate2;
+
+  /// No description provided for @inspectionMustAvoid.
+  ///
+  /// In en, this message translates to:
+  /// **'Must avoid'**
+  String get inspectionMustAvoid;
+
+  /// No description provided for @inspectionNumberOfMainEntrances.
+  ///
+  /// In en, this message translates to:
+  /// **'Number of Main Entrances'**
+  String get inspectionNumberOfMainEntrances;
+
+  /// No description provided for @inspectionMainDoorPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Door Position (which palace/sector)'**
+  String get inspectionMainDoorPosition;
+
+  /// No description provided for @inspectionDoorConfiguration.
+  ///
+  /// In en, this message translates to:
+  /// **'Door Configuration'**
+  String get inspectionDoorConfiguration;
+
+  /// No description provided for @inspectionDoorOpensInward.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens inward'**
+  String get inspectionDoorOpensInward;
+
+  /// No description provided for @inspectionDoorOpensOutward.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens outward'**
+  String get inspectionDoorOpensOutward;
+
+  /// No description provided for @inspectionDoorSliding.
+  ///
+  /// In en, this message translates to:
+  /// **'Sliding door'**
+  String get inspectionDoorSliding;
+
+  /// No description provided for @inspectionDoorAutomatic.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic door'**
+  String get inspectionDoorAutomatic;
+
+  /// No description provided for @inspectionEntranceIssues.
+  ///
+  /// In en, this message translates to:
+  /// **'Issues'**
+  String get inspectionEntranceIssues;
+
+  /// No description provided for @inspectionIssueBeamAboveDoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Beam directly above door'**
+  String get inspectionIssueBeamAboveDoor;
+
+  /// No description provided for @inspectionIssueThroughFlow.
+  ///
+  /// In en, this message translates to:
+  /// **'Door opens to back door (through-flow)'**
+  String get inspectionIssueThroughFlow;
+
+  /// No description provided for @inspectionIssueToStaircase.
+  ///
+  /// In en, this message translates to:
+  /// **'Door opens to staircase'**
+  String get inspectionIssueToStaircase;
+
+  /// No description provided for @inspectionIssueToToilet.
+  ///
+  /// In en, this message translates to:
+  /// **'Door opens to toilet'**
+  String get inspectionIssueToToilet;
+
+  /// No description provided for @inspectionIssueNarrowEntrance.
+  ///
+  /// In en, this message translates to:
+  /// **'Narrow entrance/cramped'**
+  String get inspectionIssueNarrowEntrance;
+
+  /// No description provided for @inspectionIssueNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No issues observed'**
+  String get inspectionIssueNone;
+
+  /// No description provided for @inspectionEntranceAssessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Assessment'**
+  String get inspectionEntranceAssessment;
+
+  /// No description provided for @inspectionEntranceFavorable.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorable entrance'**
+  String get inspectionEntranceFavorable;
+
+  /// No description provided for @inspectionEntranceAcceptable.
+  ///
+  /// In en, this message translates to:
+  /// **'Acceptable with minor adjustments'**
+  String get inspectionEntranceAcceptable;
+
+  /// No description provided for @inspectionEntranceRemedial.
+  ///
+  /// In en, this message translates to:
+  /// **'Requires remedial work'**
+  String get inspectionEntranceRemedial;
+
+  /// No description provided for @inspectionCeilingHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Ceiling Height (m)'**
+  String get inspectionCeilingHeight;
+
+  /// No description provided for @inspectionNaturalLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Natural Light'**
+  String get inspectionNaturalLight;
+
+  /// No description provided for @inspectionLightAbundant.
+  ///
+  /// In en, this message translates to:
+  /// **'Abundant (large windows)'**
+  String get inspectionLightAbundant;
+
+  /// No description provided for @inspectionLightModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get inspectionLightModerate;
+
+  /// No description provided for @inspectionLightDim.
+  ///
+  /// In en, this message translates to:
+  /// **'Dim/insufficient'**
+  String get inspectionLightDim;
+
+  /// No description provided for @inspectionAirCirculation.
+  ///
+  /// In en, this message translates to:
+  /// **'Air Circulation'**
+  String get inspectionAirCirculation;
+
+  /// No description provided for @inspectionAirGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good ventilation'**
+  String get inspectionAirGood;
+
+  /// No description provided for @inspectionAirPoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Poor/stagnant'**
+  String get inspectionAirPoor;
+
+  /// No description provided for @inspectionFloorPlanShape.
+  ///
+  /// In en, this message translates to:
+  /// **'Floor Plan Shape'**
+  String get inspectionFloorPlanShape;
+
+  /// No description provided for @inspectionShapeSquare.
+  ///
+  /// In en, this message translates to:
+  /// **'Square/rectangular (ideal)'**
+  String get inspectionShapeSquare;
+
+  /// No description provided for @inspectionShapeL.
+  ///
+  /// In en, this message translates to:
+  /// **'L-shaped'**
+  String get inspectionShapeL;
+
+  /// No description provided for @inspectionShapeIrregular.
+  ///
+  /// In en, this message translates to:
+  /// **'Irregular'**
+  String get inspectionShapeIrregular;
+
+  /// No description provided for @inspectionShapeTriangular.
+  ///
+  /// In en, this message translates to:
+  /// **'Triangular sections'**
+  String get inspectionShapeTriangular;
+
+  /// No description provided for @inspectionReceptionSector.
+  ///
+  /// In en, this message translates to:
+  /// **'Reception/Cashier - Sector'**
+  String get inspectionReceptionSector;
+
+  /// No description provided for @inspectionReceptionFlyingStar.
+  ///
+  /// In en, this message translates to:
+  /// **'Reception - Flying Star'**
+  String get inspectionReceptionFlyingStar;
+
+  /// No description provided for @inspectionReception8Mansions.
+  ///
+  /// In en, this message translates to:
+  /// **'Reception - Eight Mansions'**
+  String get inspectionReception8Mansions;
+
+  /// No description provided for @inspectionReceptionAssessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Reception - Assessment'**
+  String get inspectionReceptionAssessment;
+
+  /// No description provided for @inspectionOfficeSector.
+  ///
+  /// In en, this message translates to:
+  /// **'Office/Manager - Sector'**
+  String get inspectionOfficeSector;
+
+  /// No description provided for @inspectionOfficeFlyingStar.
+  ///
+  /// In en, this message translates to:
+  /// **'Office - Flying Star'**
+  String get inspectionOfficeFlyingStar;
+
+  /// No description provided for @inspectionOffice8Mansions.
+  ///
+  /// In en, this message translates to:
+  /// **'Office - Eight Mansions'**
+  String get inspectionOffice8Mansions;
+
+  /// No description provided for @inspectionOfficeAssessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Office - Assessment'**
+  String get inspectionOfficeAssessment;
+
+  /// No description provided for @inspectionToiletSectorInternal.
+  ///
+  /// In en, this message translates to:
+  /// **'Toilet/Bathroom - Sector'**
+  String get inspectionToiletSectorInternal;
+
+  /// No description provided for @inspectionToiletFlyingStar.
+  ///
+  /// In en, this message translates to:
+  /// **'Toilet - Flying Star'**
+  String get inspectionToiletFlyingStar;
+
+  /// No description provided for @inspectionToilet8Mansions.
+  ///
+  /// In en, this message translates to:
+  /// **'Toilet - Eight Mansions'**
+  String get inspectionToilet8Mansions;
+
+  /// No description provided for @inspectionToiletIssues.
+  ///
+  /// In en, this message translates to:
+  /// **'Toilet Issues'**
+  String get inspectionToiletIssues;
+
+  /// No description provided for @inspectionToiletAtCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'At center palace'**
+  String get inspectionToiletAtCenter;
+
+  /// No description provided for @inspectionToiletAtWealth.
+  ///
+  /// In en, this message translates to:
+  /// **'At wealth sector'**
+  String get inspectionToiletAtWealth;
+
+  /// No description provided for @inspectionToiletNoIssues.
+  ///
+  /// In en, this message translates to:
+  /// **'No issues'**
+  String get inspectionToiletNoIssues;
+
+  /// No description provided for @inspectionStaircaseSector.
+  ///
+  /// In en, this message translates to:
+  /// **'Staircase/Elevator - Sector'**
+  String get inspectionStaircaseSector;
+
+  /// No description provided for @inspectionStaircaseFlyingStar.
+  ///
+  /// In en, this message translates to:
+  /// **'Staircase - Flying Star'**
+  String get inspectionStaircaseFlyingStar;
+
+  /// No description provided for @inspectionStaircase8Mansions.
+  ///
+  /// In en, this message translates to:
+  /// **'Staircase - Eight Mansions'**
+  String get inspectionStaircase8Mansions;
+
+  /// No description provided for @inspectionStaircaseAssessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Staircase - Assessment'**
+  String get inspectionStaircaseAssessment;
+
+  /// No description provided for @inspectionRoom1Sector.
+  ///
+  /// In en, this message translates to:
+  /// **'Room 1 - Sector'**
+  String get inspectionRoom1Sector;
+
+  /// No description provided for @inspectionRoom1FlyingStar.
+  ///
+  /// In en, this message translates to:
+  /// **'Room 1 - Flying Star'**
+  String get inspectionRoom1FlyingStar;
+
+  /// No description provided for @inspectionRoom1EightMansions.
+  ///
+  /// In en, this message translates to:
+  /// **'Room 1 - Eight Mansions'**
+  String get inspectionRoom1EightMansions;
+
+  /// No description provided for @inspectionRoom2Sector.
+  ///
+  /// In en, this message translates to:
+  /// **'Room 2 - Sector'**
+  String get inspectionRoom2Sector;
+
+  /// No description provided for @inspectionRoom3Sector.
+  ///
+  /// In en, this message translates to:
+  /// **'Room 3 - Sector'**
+  String get inspectionRoom3Sector;
+
+  /// No description provided for @inspectionBestSectorMainEntrance.
+  ///
+  /// In en, this message translates to:
+  /// **'Sectors Best for - Main entrance'**
+  String get inspectionBestSectorMainEntrance;
+
+  /// No description provided for @inspectionBestSectorCashier.
+  ///
+  /// In en, this message translates to:
+  /// **'Sectors Best for - Cashier/finance'**
+  String get inspectionBestSectorCashier;
+
+  /// No description provided for @inspectionBestSectorManager.
+  ///
+  /// In en, this message translates to:
+  /// **'Sectors Best for - Manager office'**
+  String get inspectionBestSectorManager;
+
+  /// No description provided for @inspectionBestSectorStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Sectors Best for - Storage'**
+  String get inspectionBestSectorStorage;
+
+  /// No description provided for @inspectionQualityStrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong'**
+  String get inspectionQualityStrong;
+
+  /// No description provided for @inspectionQualityWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak'**
+  String get inspectionQualityWeak;
+
+  /// No description provided for @inspectionQualityConflicting.
+  ///
+  /// In en, this message translates to:
+  /// **'Conflicting'**
+  String get inspectionQualityConflicting;
+
+  /// No description provided for @inspectionPdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Site Inspection Report'**
+  String get inspectionPdfTitle;
+
+  /// No description provided for @solarTerm01.
+  ///
+  /// In en, this message translates to:
+  /// **'Lichun (立春)'**
+  String get solarTerm01;
+
+  /// No description provided for @solarTerm02.
+  ///
+  /// In en, this message translates to:
+  /// **'Yushui (雨水)'**
+  String get solarTerm02;
+
+  /// No description provided for @solarTerm03.
+  ///
+  /// In en, this message translates to:
+  /// **'Jingzhe (惊蛰)'**
+  String get solarTerm03;
+
+  /// No description provided for @solarTerm04.
+  ///
+  /// In en, this message translates to:
+  /// **'Chunfen (春分)'**
+  String get solarTerm04;
+
+  /// No description provided for @solarTerm05.
+  ///
+  /// In en, this message translates to:
+  /// **'Qingming (清明)'**
+  String get solarTerm05;
+
+  /// No description provided for @solarTerm06.
+  ///
+  /// In en, this message translates to:
+  /// **'Guyu (谷雨)'**
+  String get solarTerm06;
+
+  /// No description provided for @solarTerm07.
+  ///
+  /// In en, this message translates to:
+  /// **'Lixia (立夏)'**
+  String get solarTerm07;
+
+  /// No description provided for @solarTerm08.
+  ///
+  /// In en, this message translates to:
+  /// **'Xiaoman (小满)'**
+  String get solarTerm08;
+
+  /// No description provided for @solarTerm09.
+  ///
+  /// In en, this message translates to:
+  /// **'Mangzhong (芒种)'**
+  String get solarTerm09;
+
+  /// No description provided for @solarTerm10.
+  ///
+  /// In en, this message translates to:
+  /// **'Xiazhi (夏至)'**
+  String get solarTerm10;
+
+  /// No description provided for @solarTerm11.
+  ///
+  /// In en, this message translates to:
+  /// **'Xiaoshu (小暑)'**
+  String get solarTerm11;
+
+  /// No description provided for @solarTerm12.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashu (大暑)'**
+  String get solarTerm12;
+
+  /// No description provided for @solarTerm13.
+  ///
+  /// In en, this message translates to:
+  /// **'Liqiu (立秋)'**
+  String get solarTerm13;
+
+  /// No description provided for @solarTerm14.
+  ///
+  /// In en, this message translates to:
+  /// **'Chushu (处暑)'**
+  String get solarTerm14;
+
+  /// No description provided for @solarTerm15.
+  ///
+  /// In en, this message translates to:
+  /// **'Bailu (白露)'**
+  String get solarTerm15;
+
+  /// No description provided for @solarTerm16.
+  ///
+  /// In en, this message translates to:
+  /// **'Qiufen (秋分)'**
+  String get solarTerm16;
+
+  /// No description provided for @solarTerm17.
+  ///
+  /// In en, this message translates to:
+  /// **'Hanlu (寒露)'**
+  String get solarTerm17;
+
+  /// No description provided for @solarTerm18.
+  ///
+  /// In en, this message translates to:
+  /// **'Shuangjiang (霜降)'**
+  String get solarTerm18;
+
+  /// No description provided for @solarTerm19.
+  ///
+  /// In en, this message translates to:
+  /// **'Lidong (立冬)'**
+  String get solarTerm19;
+
+  /// No description provided for @solarTerm20.
+  ///
+  /// In en, this message translates to:
+  /// **'Xiaoxue (小雪)'**
+  String get solarTerm20;
+
+  /// No description provided for @solarTerm21.
+  ///
+  /// In en, this message translates to:
+  /// **'Daxue (大雪)'**
+  String get solarTerm21;
+
+  /// No description provided for @solarTerm22.
+  ///
+  /// In en, this message translates to:
+  /// **'Dongzhi (冬至)'**
+  String get solarTerm22;
+
+  /// No description provided for @solarTerm23.
+  ///
+  /// In en, this message translates to:
+  /// **'Xiaohan (小寒)'**
+  String get solarTerm23;
+
+  /// No description provided for @solarTerm24.
+  ///
+  /// In en, this message translates to:
+  /// **'Dahan (大寒)'**
+  String get solarTerm24;
+
+  /// No description provided for @lunarDay01.
+  ///
+  /// In en, this message translates to:
+  /// **'1st'**
+  String get lunarDay01;
+
+  /// No description provided for @lunarDay02.
+  ///
+  /// In en, this message translates to:
+  /// **'2nd'**
+  String get lunarDay02;
+
+  /// No description provided for @lunarDay03.
+  ///
+  /// In en, this message translates to:
+  /// **'3rd'**
+  String get lunarDay03;
+
+  /// No description provided for @lunarDay04.
+  ///
+  /// In en, this message translates to:
+  /// **'4th'**
+  String get lunarDay04;
+
+  /// No description provided for @lunarDay05.
+  ///
+  /// In en, this message translates to:
+  /// **'5th'**
+  String get lunarDay05;
+
+  /// No description provided for @lunarDay06.
+  ///
+  /// In en, this message translates to:
+  /// **'6th'**
+  String get lunarDay06;
+
+  /// No description provided for @lunarDay07.
+  ///
+  /// In en, this message translates to:
+  /// **'7th'**
+  String get lunarDay07;
+
+  /// No description provided for @lunarDay08.
+  ///
+  /// In en, this message translates to:
+  /// **'8th'**
+  String get lunarDay08;
+
+  /// No description provided for @lunarDay09.
+  ///
+  /// In en, this message translates to:
+  /// **'9th'**
+  String get lunarDay09;
+
+  /// No description provided for @lunarDay10.
+  ///
+  /// In en, this message translates to:
+  /// **'10th'**
+  String get lunarDay10;
+
+  /// No description provided for @lunarDay11.
+  ///
+  /// In en, this message translates to:
+  /// **'11th'**
+  String get lunarDay11;
+
+  /// No description provided for @lunarDay12.
+  ///
+  /// In en, this message translates to:
+  /// **'12th'**
+  String get lunarDay12;
+
+  /// No description provided for @lunarDay13.
+  ///
+  /// In en, this message translates to:
+  /// **'13th'**
+  String get lunarDay13;
+
+  /// No description provided for @lunarDay14.
+  ///
+  /// In en, this message translates to:
+  /// **'14th'**
+  String get lunarDay14;
+
+  /// No description provided for @lunarDay15.
+  ///
+  /// In en, this message translates to:
+  /// **'15th'**
+  String get lunarDay15;
+
+  /// No description provided for @lunarDay16.
+  ///
+  /// In en, this message translates to:
+  /// **'16th'**
+  String get lunarDay16;
+
+  /// No description provided for @lunarDay17.
+  ///
+  /// In en, this message translates to:
+  /// **'17th'**
+  String get lunarDay17;
+
+  /// No description provided for @lunarDay18.
+  ///
+  /// In en, this message translates to:
+  /// **'18th'**
+  String get lunarDay18;
+
+  /// No description provided for @lunarDay19.
+  ///
+  /// In en, this message translates to:
+  /// **'19th'**
+  String get lunarDay19;
+
+  /// No description provided for @lunarDay20.
+  ///
+  /// In en, this message translates to:
+  /// **'20th'**
+  String get lunarDay20;
+
+  /// No description provided for @lunarDay21.
+  ///
+  /// In en, this message translates to:
+  /// **'21st'**
+  String get lunarDay21;
+
+  /// No description provided for @lunarDay22.
+  ///
+  /// In en, this message translates to:
+  /// **'22nd'**
+  String get lunarDay22;
+
+  /// No description provided for @lunarDay23.
+  ///
+  /// In en, this message translates to:
+  /// **'23rd'**
+  String get lunarDay23;
+
+  /// No description provided for @lunarDay24.
+  ///
+  /// In en, this message translates to:
+  /// **'24th'**
+  String get lunarDay24;
+
+  /// No description provided for @lunarDay25.
+  ///
+  /// In en, this message translates to:
+  /// **'25th'**
+  String get lunarDay25;
+
+  /// No description provided for @lunarDay26.
+  ///
+  /// In en, this message translates to:
+  /// **'26th'**
+  String get lunarDay26;
+
+  /// No description provided for @lunarDay27.
+  ///
+  /// In en, this message translates to:
+  /// **'27th'**
+  String get lunarDay27;
+
+  /// No description provided for @lunarDay28.
+  ///
+  /// In en, this message translates to:
+  /// **'28th'**
+  String get lunarDay28;
+
+  /// No description provided for @lunarDay29.
+  ///
+  /// In en, this message translates to:
+  /// **'29th'**
+  String get lunarDay29;
+
+  /// No description provided for @lunarDay30.
+  ///
+  /// In en, this message translates to:
+  /// **'30th'**
+  String get lunarDay30;
+
+  /// No description provided for @flyingStar1.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 1'**
+  String get flyingStar1;
+
+  /// No description provided for @flyingStar2.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 2'**
+  String get flyingStar2;
+
+  /// No description provided for @flyingStar3.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 3'**
+  String get flyingStar3;
+
+  /// No description provided for @flyingStar4.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 4'**
+  String get flyingStar4;
+
+  /// No description provided for @flyingStar5.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 5'**
+  String get flyingStar5;
+
+  /// No description provided for @flyingStar6.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 6'**
+  String get flyingStar6;
+
+  /// No description provided for @flyingStar7.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 7'**
+  String get flyingStar7;
+
+  /// No description provided for @flyingStar8.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 8'**
+  String get flyingStar8;
+
+  /// No description provided for @flyingStar9.
+  ///
+  /// In en, this message translates to:
+  /// **'Star 9'**
+  String get flyingStar9;
 }
 
 class _AppLocalizationsDelegate

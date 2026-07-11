@@ -28,9 +28,17 @@ service cloud.firestore {
       allow read, update, delete: if false;
     }
 
-    // Site inspections: authenticated users can read and write.
+    // Site inspections: each inspector can only access their own records.
     match /site_inspections/{docId} {
-      allow read, write: if request.auth != null;
+      allow read: if request.auth != null
+                  && resource.data.inspectorEmail.lower() == request.auth.token.email.lower();
+      allow create: if request.auth != null
+                   && request.resource.data.inspectorEmail.lower() == request.auth.token.email.lower();
+      allow update: if request.auth != null
+                   && resource.data.inspectorEmail.lower() == request.auth.token.email.lower()
+                   && request.resource.data.inspectorEmail.lower() == request.auth.token.email.lower();
+      allow delete: if request.auth != null
+                   && resource.data.inspectorEmail.lower() == request.auth.token.email.lower();
     }
   }
 }

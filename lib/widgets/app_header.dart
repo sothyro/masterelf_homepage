@@ -173,8 +173,8 @@ class _DesktopHeader extends StatelessWidget {
   /// only the last matching one is active so at most one menu is highlighted.
   static const _dropdownPaths = [
     ['/about', '/journey', '/academy'],
-    ['/apps'],  // Apps & Store
-    ['/events'],  // Events (Events Calendar, Media & Posts)
+    ['/apps', '/books', '/talisman'],  // Apps & Store
+    ['/events', '/field-work'],  // Events (Events Calendar, Field Work, Media & Posts)
   ];
 
   /// Sentinel value for Events dropdown: "Media & Posts" runs a callback instead of navigating.
@@ -212,9 +212,8 @@ class _DesktopHeader extends StatelessWidget {
         label: l10n.appsAndStore,
         items: [
           _NavItem(l10n.masterElfSystem, '/apps#master-elf', LucideIcons.cpu),
-          _NavItem(l10n.period9MobileApp, '/apps#period9', LucideIcons.smartphone),
-          _NavItem(l10n.bookStoreNav, '/apps#books', LucideIcons.bookOpen),
-          _NavItem(l10n.talismanStore, '/apps#talisman', LucideIcons.shoppingBag),
+          _NavItem(l10n.bookStoreNav, '/books', LucideIcons.bookOpen),
+          _NavItem(l10n.talismanStore, '/talisman', LucideIcons.shoppingBag),
         ],
         isActive: activeDropdownIndex == 1,
       ),
@@ -222,6 +221,7 @@ class _DesktopHeader extends StatelessWidget {
         label: l10n.events,
         items: [
           _NavItem(l10n.eventsCalendar, '/events', LucideIcons.calendarDays),
+          _NavItem(l10n.fieldWorkNav, '/field-work', LucideIcons.camera),
           _NavItem(l10n.mediaAndPosts, _kMediaPostsAction, LucideIcons.fileText),
         ],
         isActive: activeDropdownIndex == 2,
@@ -568,106 +568,6 @@ class _DropdownItem extends StatelessWidget {
           ),
           if (isActive) const Icon(LucideIcons.check, size: 16, color: AppColors.accent),
         ],
-      ),
-    );
-  }
-}
-
-class _LocaleSwitcher extends StatelessWidget {
-  const _LocaleSwitcher({required this.notifier});
-
-  final LocaleNotifier notifier;
-
-  static const _locales = [
-    ('en', 'EN'),
-    ('km', 'KM'),
-    ('zh', 'ZH'),
-  ];
-
-  static const _itemHeight = 44.0;
-
-  Future<void> _showLocaleMenu(BuildContext context, RenderBox button) async {
-    final code = notifier.locale.languageCode;
-    final offset = button.localToGlobal(Offset.zero);
-    final size = MediaQuery.sizeOf(context);
-    final selected = await showMenu<String>(
-      context: context,
-      position: RelativeRect.fromLTRB(
-        offset.dx,
-        offset.dy + button.size.height + 6,
-        size.width - offset.dx,
-        size.height - offset.dy - button.size.height - 6,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: const BorderSide(color: _MenuColors.barBorder, width: 1.5),
-      ),
-      color: AppColors.overlayDark.withValues(alpha: 0.92),
-      elevation: 12,
-      items: _locales
-          .map((e) => PopupMenuItem<String>(
-                value: e.$1,
-                height: _itemHeight,
-                padding: EdgeInsets.zero,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      Icon(
-                        LucideIcons.languages,
-                        size: 18,
-                        color: code == e.$1 ? AppColors.accent : Colors.white70,
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        e.$2,
-                        style: TextStyle(
-                          color: code == e.$1 ? AppColors.accent : Colors.white,
-                          fontWeight: code == e.$1 ? FontWeight.w600 : FontWeight.w500,
-                          fontSize: 14,
-                        ),
-                      ),
-                      if (code == e.$1) ...[
-                        const Spacer(),
-                        const Icon(LucideIcons.check, size: 16, color: AppColors.accent),
-                      ],
-                    ],
-                  ),
-                ),
-              ))
-          .toList(),
-    );
-    if (selected != null) notifier.setLocaleFromCode(selected);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final code = notifier.locale.languageCode;
-    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
-    return Builder(
-      builder: (context) => InkWell(
-        onTap: () {
-          final box = context.findRenderObject() as RenderBox?;
-          if (box != null) _showLocaleMenu(context, box);
-        },
-        borderRadius: BorderRadius.circular(8),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: isMobile ? 14 : 6,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(LucideIcons.languages, size: 16, color: _MenuColors.linkText),
-              const SizedBox(width: 4),
-              Text(
-                code.toUpperCase(),
-                style: const TextStyle(color: _MenuColors.linkText, fontSize: 12),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

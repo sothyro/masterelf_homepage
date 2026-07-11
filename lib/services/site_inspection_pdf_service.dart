@@ -4,6 +4,8 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import 'pdf_fonts.dart';
+
 /// Maps form field keys to display labels for PDF export.
 const Map<String, String> _fieldLabels = {
   'inspectorName': 'Inspector Name',
@@ -51,14 +53,22 @@ String _formatValue(dynamic value) {
   return value.toString().trim();
 }
 
-String _getLabel(String key) {
-  final label = _fieldLabels[key];
+String _getLabel(String key, Map<String, String>? fieldLabels) {
+  final label = fieldLabels?[key] ?? _fieldLabels[key];
   if (label != null) return label;
   return key.replaceAllMapped(RegExp(r'([A-Z])'), (m) => ' ${m.group(1)}').trim();
 }
 
 /// Generates a PDF document from site inspection form data.
-Future<Uint8List> generateSiteInspectionPdf(Map<String, dynamic> formData) async {
+Future<Uint8List> generateSiteInspectionPdf(
+  Map<String, dynamic> formData, {
+  Map<String, String>? fieldLabels,
+  String reportTitle = 'FENG SHUI GEOMANCY SITE INSPECTION FORM',
+  String reportSubtitle = 'Commercial Housing Complex Assessment',
+}) async {
+  await PdfExportFonts.ensureLoaded();
+  final theme = PdfExportFonts.appointmentListTheme();
+
   final pdf = pw.Document();
   final filledEntries = formData.entries
       .where((e) => e.key != 'createdAt' && e.key != 'updatedAt' && e.value != null && _formatValue(e.value).isNotEmpty)
@@ -68,6 +78,7 @@ Future<Uint8List> generateSiteInspectionPdf(Map<String, dynamic> formData) async
     pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
       margin: const pw.EdgeInsets.all(32),
+      theme: theme,
       build: (context) => [
         pw.Header(
           level: 0,
@@ -75,13 +86,13 @@ Future<Uint8List> generateSiteInspectionPdf(Map<String, dynamic> formData) async
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
               pw.Text(
-                'FENG SHUI GEOMANCY SITE INSPECTION FORM',
-                style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold),
+                reportTitle,
+                style: PdfExportFonts.textStyle(fontSize: 18, fontWeight: pw.FontWeight.bold),
               ),
               pw.SizedBox(height: 4),
               pw.Text(
-                'Commercial Housing Complex Assessment',
-                style: pw.TextStyle(fontSize: 12, color: PdfColors.grey700),
+                reportSubtitle,
+                style: PdfExportFonts.textStyle(fontSize: 12, color: PdfColors.grey700),
               ),
               pw.Divider(thickness: 2, color: PdfColors.amber),
             ],
@@ -89,7 +100,7 @@ Future<Uint8List> generateSiteInspectionPdf(Map<String, dynamic> formData) async
         ),
         pw.SizedBox(height: 16),
         ...filledEntries.map((e) {
-          final label = _getLabel(e.key);
+          final label = _getLabel(e.key, fieldLabels);
           final value = _formatValue(e.value);
           if (value.isEmpty) return pw.SizedBox.shrink();
           return pw.Padding(
@@ -101,13 +112,13 @@ Future<Uint8List> generateSiteInspectionPdf(Map<String, dynamic> formData) async
                   width: 180,
                   child: pw.Text(
                     label,
-                    style: pw.TextStyle(fontSize: 9, color: PdfColors.grey800),
+                    style: PdfExportFonts.textStyle(fontSize: 9, color: PdfColors.grey800),
                   ),
                 ),
                 pw.Expanded(
                   child: pw.Text(
                     value,
-                    style: const pw.TextStyle(fontSize: 10),
+                    style: PdfExportFonts.textStyle(fontSize: 10),
                     maxLines: 5,
                     overflow: pw.TextOverflow.clip,
                   ),
@@ -121,7 +132,7 @@ Future<Uint8List> generateSiteInspectionPdf(Map<String, dynamic> formData) async
         pw.Center(
           child: pw.Text(
             '— End of Inspection Form —',
-            style: pw.TextStyle(fontSize: 9, color: PdfColors.grey600),
+            style: PdfExportFonts.textStyle(fontSize: 9, color: PdfColors.grey600),
           ),
         ),
       ],

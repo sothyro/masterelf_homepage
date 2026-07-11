@@ -558,12 +558,12 @@ const List<_ZodiacForecast> _zodiacForecasts = [
       _StarInfo(khmerName: 'ថាងហ្វូ', chineseName: '唐符', englishTranslation: 'Imperial Note'),
     ],
     auspiciousPredictions:
-        'វេលាល្អសម្រាប់រៀបចំជិវិតថ្មី លំនៅឋានថ្មី\nទទួលឡានថ្មី បើកមុខរបរថ្មី!\nបោះចោលបញ្ហាចាស់\nចោលទំនាក់ទំនងToxic\nវេលាដល់ពេលគេទទួលស្គាល់\nនឹងមានសង្គមរាប់រក\nឡើងឋានៈ មានអំណាច និងល្បីល្បាញ។',
+        'វេលាល្អសម្រាប់រៀបចំជិវិតថ្មី លំនៅឋានថ្មី\nទទួលឡានថ្មី បើកមុខរបរថ្មី!\nបោះចោលបញ្ហាចាស់\nចោលទំនាក់ទំនងអាប់អួរ\nវេលាដល់ពេលគេទទួលស្គាល់\nនឹងមានសង្គមរាប់រក\nឡើងឋានៈ មានអំណាច និងល្បីល្បាញ។',
     inauspiciousStars: [
       _StarInfo(khmerName: 'ស៊ុយ ប៉', chineseName: '歲破', englishTranslation: 'Year Breaker'),
       _StarInfo(khmerName: 'តាហាវ', chineseName: '大耗', englishTranslation: 'Major Waste'),
       _StarInfo(khmerName: 'ធានគូ', chineseName: '天哭', englishTranslation: 'Heavenly Tears'),
-      _StarInfo(khmerName: 'Zai Zha', chineseName: '災殺', englishTranslation: 'Accident'),
+      _StarInfo(khmerName: 'ហ្សៃ ចា', chineseName: '災殺', englishTranslation: 'Accident'),
     ],
     inauspiciousWarnings:
         'ឆ្នាំនេះកណ្តុរនៅចំមុខ ថាយស៊ួយ ហត់នឿយបន្តិចហើយ ឆាប់ស្រ្តេស ឆាប់បាក់កំលាំង។\nប្រយ័ត្នប្រយែងលុយកាក់.\nមានគ្រោះថ្នាក់ ឈឺច្រើន និងងាយមានក្តីក្តាំ',
@@ -575,16 +575,16 @@ const List<_ZodiacForecast> _zodiacForecasts = [
     assetPath:
         'assets/c__Users_sothy_AppData_Roaming_Cursor_User_workspaceStorage_867b90d3f467249f0f4d0b1da278e5de_images_image-c153ef55-42d8-4686-a191-331bb939a520.png',
     auspiciousStars: [
-      _StarInfo(khmerName: 'Long De', chineseName: '龍德', englishTranslation: 'Dragon Virtue'),
-      _StarInfo(khmerName: 'Zi Wei', chineseName: '紫微', englishTranslation: 'Purple Star'),
-      _StarInfo(khmerName: 'Guo Ying', chineseName: '國印', englishTranslation: 'Imperial Seal'),
+      _StarInfo(khmerName: 'លុង ដេ', chineseName: '龍德', englishTranslation: 'Dragon Virtue'),
+      _StarInfo(khmerName: 'ជឺ វ៉ី', chineseName: '紫微', englishTranslation: 'Purple Star'),
+      _StarInfo(khmerName: 'ក្វូ យិង', chineseName: '國印', englishTranslation: 'Imperial Seal'),
     ],
     auspiciousPredictions:
         'មានអំណាច ឡើងបុណ្យស័ក្តិ កិត្តិយស និងល្បីល្បាញ\nមានគេជួយជ្រោមជ្រែងទាន់ពេលវេលាល្អ\nឡើងលាភកើនលុយ និងសម្បូរកម្មវិធីសប្បាយៗ\nបុណ្យពីជាតិមុន នឹងជួយជ្រោមជ្រែងពីលើមេឃ',
     inauspiciousStars: [
-      _StarInfo(khmerName: 'Bao Bai', chineseName: '暴敗', englishTranslation: 'Sudden Decline'),
-      _StarInfo(khmerName: 'Tian Er', chineseName: '天厄', englishTranslation: 'Heavenly Misfortune'),
-      _StarInfo(khmerName: 'Tian Sha', chineseName: '天殺', englishTranslation: 'Heavenly Sha'),
+      _StarInfo(khmerName: 'ប៉ាវ បៃ', chineseName: '暴敗', englishTranslation: 'Sudden Decline'),
+      _StarInfo(khmerName: 'ទៀន អ៊ឹរ', chineseName: '天厄', englishTranslation: 'Heavenly Misfortune'),
+      _StarInfo(khmerName: 'ទៀន សា', chineseName: '天殺', englishTranslation: 'Heavenly Sha'),
     ],
     inauspiciousWarnings:
         'គេនិយាយមួលបង្កាច់ បង្ខូចឈ្មោះ អាចមានក្តីក្តាំផ្លូវច្បាប់ មានជំលោះ ត្រូវចេះទប់អារម្មណ៍ បាត់របស់ភ្លាមៗ ឈឺធ្ងន់ភ្លាមៗ ប្រយ័ត្នមិត្តភ័ក្តិឯងបោកប្រាស់!',
@@ -596,16 +596,16 @@ const List<_ZodiacForecast> _zodiacForecasts = [
     assetPath:
         'assets/c__Users_sothy_AppData_Roaming_Cursor_User_workspaceStorage_867b90d3f467249f0f4d0b1da278e5de_images_image-b5b363d6-eb1c-4c95-86b9-5db0efb2eed0.png',
     auspiciousStars: [
-      _StarInfo(khmerName: 'San He', chineseName: '三合', englishTranslation: 'Three Harmony'),
-      _StarInfo(khmerName: 'Xue Tang', chineseName: '學堂', englishTranslation: 'Study Hall'),
+      _StarInfo(khmerName: 'សាន ហេ', chineseName: '三合', englishTranslation: 'Three Harmony'),
+      _StarInfo(khmerName: 'ស្វេ តាង', chineseName: '學堂', englishTranslation: 'Study Hall'),
     ],
     auspiciousPredictions:
         'យល់ពីជីវិតនិងស្ថានការណ៍ជ្រៅជ្រះ និងគេទទួលស្កាល់ជាងមុន\nឆ្នាំនេះបើរៀនជំនាញថ្មីនឹងបានលាភ បើប្រលងនឹងជាប់\nធ្វើការនឹងបានទទួលដំណែងថ្មី រឺឡើងប្រាក់ខែ រឺលុយកាក់\nលាភច្រើនឆ្នាំនេះ បើឧស្សាហ៍នឹងចាប់បានច្រើន',
     inauspiciousStars: [
-      _StarInfo(khmerName: 'Bai Hu', chineseName: '白虎', englishTranslation: 'White Tiger'),
-      _StarInfo(khmerName: 'Fei Lian', chineseName: '飛廉', englishTranslation: 'Flying Insect'),
-      _StarInfo(khmerName: 'Da Sha', chineseName: '大殺', englishTranslation: 'Major Sha'),
-      _StarInfo(khmerName: 'Zhi Bei', chineseName: '指背', englishTranslation: 'Back Pointing'),
+      _StarInfo(khmerName: 'បៃ ហូ', chineseName: '白虎', englishTranslation: 'White Tiger'),
+      _StarInfo(khmerName: 'ហ្វី លៀន', chineseName: '飛廉', englishTranslation: 'Flying Insect'),
+      _StarInfo(khmerName: 'ដា សា', chineseName: '大殺', englishTranslation: 'Major Sha'),
+      _StarInfo(khmerName: 'ជី ប៉ី', chineseName: '指背', englishTranslation: 'Back Pointing'),
     ],
     inauspiciousWarnings:
         'គេនិយាយមួលបង្កាច់ បង្ខូចឈ្មោះ អាចមានក្តីក្តាំផ្លូវច្បាប់\nមានជំលោះ ត្រូវចេះទប់អារម្មណ៍\nចេះតែចង់នៅម្នាក់ឯង មានជំងឺសល់ពីឆ្នាំចាស់\nគ្រោះផ្លូវឆ្ងាយ មិត្តជិតស្និតនឹងក្បត់អ្នក ចូរប្រយ័ត្ន',
@@ -617,18 +617,18 @@ const List<_ZodiacForecast> _zodiacForecasts = [
     assetPath:
         'assets/c__Users_sothy_AppData_Roaming_Cursor_User_workspaceStorage_867b90d3f467249f0f4d0b1da278e5de_images_image-fb1c91fd-56dd-41c7-8756-9b679409a7b5.png',
     auspiciousStars: [
-      _StarInfo(khmerName: 'Tian De', chineseName: '天德', englishTranslation: 'Heavenly Virtue'),
-      _StarInfo(khmerName: 'Fu De', chineseName: '福德', englishTranslation: 'Fortune Virtue'),
-      _StarInfo(khmerName: 'Fu Xing', chineseName: '福星', englishTranslation: 'Good fortune'),
-      _StarInfo(khmerName: 'Tian Xi', chineseName: '天喜', englishTranslation: 'Heavenly Happiness'),
+      _StarInfo(khmerName: 'ទៀន ដេ', chineseName: '天德', englishTranslation: 'Heavenly Virtue'),
+      _StarInfo(khmerName: 'ហ្វូ ដេ', chineseName: '福德', englishTranslation: 'Fortune Virtue'),
+      _StarInfo(khmerName: 'ហ្វូ ស៊ីង', chineseName: '福星', englishTranslation: 'Good fortune'),
+      _StarInfo(khmerName: 'ទៀន ស៊ី', chineseName: '天喜', englishTranslation: 'Heavenly Happiness'),
     ],
     auspiciousPredictions:
         'សុភមង្គល ស្ងប់សុខ និងទទួលពរជ័យពីឋានសួគ៌\nសុខភាពប្រសើជាឆ្នាំមុន និងមានគេជួយជ្រោមជ្រែងបើកផ្លូវ\nរីកចម្រើន ហេងថ្កុំថ្កើង និងទទួលបានលាភពីរបររកស៊ីការងារ',
     inauspiciousStars: [
-      _StarInfo(khmerName: 'Pi Ma', chineseName: '披麻', englishTranslation: 'Jute Cover'),
-      _StarInfo(khmerName: 'Juan She', chineseName: '卷舌', englishTranslation: 'Twisting Tongue'),
-      _StarInfo(khmerName: 'Jiao Sha', chineseName: '絞殺', englishTranslation: 'Strangling Sha'),
-      _StarInfo(khmerName: 'Xian Chi', chineseName: '咸池', englishTranslation: 'Bathing Hall'),
+      _StarInfo(khmerName: 'ពី ម៉ា', chineseName: '披麻', englishTranslation: 'Jute Cover'),
+      _StarInfo(khmerName: 'ជួន សេ', chineseName: '卷舌', englishTranslation: 'Twisting Tongue'),
+      _StarInfo(khmerName: 'ជៀវ សា', chineseName: '絞殺', englishTranslation: 'Strangling Sha'),
+      _StarInfo(khmerName: 'សៀន ឈី', chineseName: '咸池', englishTranslation: 'Bathing Hall'),
     ],
     inauspiciousWarnings:
         'គេច្រណែន មួលបង្កាច់ក្រោយខ្នង ក្តីក្តាំអាចនឹងមានរឺមិនទាន់ចប់\nប្រយ័ត្នគូស្នេហ៍មិនស្មោះត្រង់ រឺនាំទុក្ខពីក្រៅមក\nគ្រួសារនឹងមានអ្នកឈឺ មើលមិនទាន់ឈឺធ្ងន់\nនិងប្រយ័ត្នដំណើរជិតឆ្ងាយ',
@@ -640,17 +640,17 @@ const List<_ZodiacForecast> _zodiacForecasts = [
     assetPath:
         'assets/c__Users_sothy_AppData_Roaming_Cursor_User_workspaceStorage_867b90d3f467249f0f4d0b1da278e5de_images_image-1ef25318-a273-44da-9c0c-127816445c49.png',
     auspiciousStars: [
-      _StarInfo(khmerName: 'Tian Jie', chineseName: '天解', englishTranslation: 'Heavenly Relief'),
-      _StarInfo(khmerName: 'Jie Shen', chineseName: '解神', englishTranslation: 'Resolving God'),
-      _StarInfo(khmerName: 'Ba Zuo', chineseName: '八座', englishTranslation: 'Eight Seats'),
+      _StarInfo(khmerName: 'ទៀន ជៀ', chineseName: '天解', englishTranslation: 'Heavenly Relief'),
+      _StarInfo(khmerName: 'ជៀ សឹន', chineseName: '解神', englishTranslation: 'Resolving God'),
+      _StarInfo(khmerName: 'បា សួច', chineseName: '八座', englishTranslation: 'Eight Seats'),
     ],
     auspiciousPredictions:
         'ដំណោះស្រាយនឹងមាន ឋាមពលពិសេសក្នុងខ្លួននឹងកើនឡើង\nឡើងប្រាក់ខែ និយាយគេស្តាប់\nនឹងឡើងឋានៈ អស្សនៈ៨ទិស នឹងមានគេកោតក្រែង\nក្តីក្តាំឈ្នះគេ រត់ការការងាររកស៊ីនឹងបានសម្រេច',
     inauspiciousStars: [
-      _StarInfo(khmerName: 'Tian Gou', chineseName: '天狗', englishTranslation: 'Heavenly Dog'),
-      _StarInfo(khmerName: 'Diao Ke', chineseName: '弔客', englishTranslation: 'Sadness Star'),
-      _StarInfo(khmerName: 'Xue Ren', chineseName: '血刃', englishTranslation: 'Bloody Blade'),
-      _StarInfo(khmerName: 'Fu Chen', chineseName: '浮沈', englishTranslation: 'Float and sink'),
+      _StarInfo(khmerName: 'ទៀន កូ', chineseName: '天狗', englishTranslation: 'Heavenly Dog'),
+      _StarInfo(khmerName: 'ឌៀវ ខេ', chineseName: '弔客', englishTranslation: 'Sadness Star'),
+      _StarInfo(khmerName: 'ស្វេ ស៊ិន', chineseName: '血刃', englishTranslation: 'Bloody Blade'),
+      _StarInfo(khmerName: 'ហ្វូ ចឹន', chineseName: '浮沈', englishTranslation: 'Float and sink'),
     ],
     inauspiciousWarnings:
         'នឹងជួបគ្រោះថ្នាក់ និងជំលោះ\nជំលោះការងារ និងជំលោះដៃគូរ\nចិត្តត្រជាក់ៗ របស់បានដល់ដៃអាចរបូត កុំប្រហែស\nបញ្ហាសុខភាព និងគ្រោះថ្នាក់',
@@ -662,15 +662,15 @@ const List<_ZodiacForecast> _zodiacForecasts = [
     assetPath:
         'assets/c__Users_sothy_AppData_Roaming_Cursor_User_workspaceStorage_867b90d3f467249f0f4d0b1da278e5de_images_image-da8d1953-7356-4601-990f-2237bcfebf0c.png',
     auspiciousStars: [
-      _StarInfo(khmerName: 'Lu Xun', chineseName: '祿勲', englishTranslation: 'Prosperity Medal'),
+      _StarInfo(khmerName: 'លូ ស៊ុន', chineseName: '祿勲', englishTranslation: 'Prosperity Medal'),
     ],
     auspiciousPredictions:
         'នឹងត្រូវបានគេទទួលស្គាល់ មេកើយទុកចិត្ត\nនឹងផ្តល់រង្វាន់ នឹងបានឡើងឋានៈ ឡើងលាភ\nឡើងលុយ ឡើងប្រាក់ខែ\nមានមិត្តភ័ក្តិជួយទំនុកបម្រុងជ្រោមជ្រែង។',
     inauspiciousStars: [
-      _StarInfo(khmerName: 'Mo Yue', chineseName: '驀越', englishTranslation: 'Fast Changes'),
-      _StarInfo(khmerName: 'Bing Fu', chineseName: '病符', englishTranslation: 'Disease Note'),
-      _StarInfo(khmerName: 'Po Sui', chineseName: '破碎', englishTranslation: 'Broken Pieces'),
-      _StarInfo(khmerName: 'Wang Shen', chineseName: '亡神', englishTranslation: 'Clouded Spirit'),
+      _StarInfo(khmerName: 'ម៉ូ យ៉ូ', chineseName: '驀越', englishTranslation: 'Fast Changes'),
+      _StarInfo(khmerName: 'ប៊ីង ហ្វូ', chineseName: '病符', englishTranslation: 'Disease Note'),
+      _StarInfo(khmerName: 'ប៉ូ សួយ', chineseName: '破碎', englishTranslation: 'Broken Pieces'),
+      _StarInfo(khmerName: 'វ៉ាង សឹន', chineseName: '亡神', englishTranslation: 'Clouded Spirit'),
     ],
     inauspiciousWarnings:
         'មានរឿងច្រើនកើតនៅផ្ទះ ត្រូវចេះបត់បែន\nនឹងមានជំងឺចាស់រើវិញ អាចលែងលះគូរស្នេហ៍\nបាត់ទ្រព្យ នៅឲ្យឆ្ងាយពីមនុស្សអវិជ្ជមាន\nនិងគ្រោះខែ',
@@ -682,17 +682,17 @@ const List<_ZodiacForecast> _zodiacForecasts = [
     assetPath:
         'assets/c__Users_sothy_AppData_Roaming_Cursor_User_workspaceStorage_867b90d3f467249f0f4d0b1da278e5de_images_image-4143623c-8082-44e3-a0b4-5eef11aba0df.png',
     auspiciousStars: [
-      _StarInfo(khmerName: 'Sui Jia', chineseName: '歲駕', englishTranslation: 'Yearly Governing'),
-      _StarInfo(khmerName: 'Jiang Xing', chineseName: '將星', englishTranslation: 'General Star'),
-      _StarInfo(khmerName: 'Jin Gui', chineseName: '金匱', englishTranslation: 'Golden Cabinet'),
+      _StarInfo(khmerName: 'សួយ ជៀ', chineseName: '歲駕', englishTranslation: 'Yearly Governing'),
+      _StarInfo(khmerName: 'ជៀង ស៊ីង', chineseName: '將星', englishTranslation: 'General Star'),
+      _StarInfo(khmerName: 'ជីន ក្វី', chineseName: '金匱', englishTranslation: 'Golden Cabinet'),
     ],
     auspiciousPredictions:
         'គ្រែស្នែងទេវតា ព្រះរាជាស្រលាញ់ពេញបេះដូង\nនឹងបានធ្វើដំណើរជោគជ័យ ប្តូរកន្លែងក៏បានលាភ\nបានតំណែង ឡើងឋានៈ ផ្លាស់ប្តូខ្សែជីវិតថ្មី\nបញ្ជាគេបាន មានអំណាច គេស្តាប់បង្គាប់\nមានគេហែហមទំនុកបំរុង\nទ្រព្យសន្សំនឹងកើនឡើង បើយកមកវិនិយាគ នឹងហេង មិនខាតបង់',
     inauspiciousStars: [
-      _StarInfo(khmerName: 'Tai Sui', chineseName: '太歲', englishTranslation: 'Yearly God'),
-      _StarInfo(khmerName: 'Jian Feng', chineseName: '劍鋒', englishTranslation: 'Sword Tip'),
-      _StarInfo(khmerName: 'Fu Shi', chineseName: '伏屍', englishTranslation: 'Corpse'),
-      _StarInfo(khmerName: 'Sui Xing', chineseName: '歲刑', englishTranslation: 'Yearly Confinement'),
+      _StarInfo(khmerName: 'តាយ សួយ', chineseName: '太歲', englishTranslation: 'Yearly God'),
+      _StarInfo(khmerName: 'ជៀន ហ្វេង', chineseName: '劍鋒', englishTranslation: 'Sword Tip'),
+      _StarInfo(khmerName: 'ហ្វូ ស៊ី', chineseName: '伏屍', englishTranslation: 'Corpse'),
+      _StarInfo(khmerName: 'សួយ ស៊ីង', chineseName: '歲刑', englishTranslation: 'Yearly Confinement'),
     ],
     inauspiciousWarnings:
         'ទេវតាកាន់ឆ្នាំគ្រងតំណែង ហត់នឿយ សម្ពាធច្រើន\nងាយឆេវឆាវ គិតច្រើនជ្រុល គេងមិនលក់\nអាចនឹងមានឈាមចេញពីខ្លួនច្រើនប្រយ័ត្នអស់បុណ្យ\nតែតារាលាភទាំង៣ នឹងជួយកាត់ឆុងឲ្យ\nលេខខ្មោចគេកប់ចោល\nជំងឺផ្លូវចិត្តធ្ងន់ ព្រោះទូលរែករឿងគ្រួសារតែឯង\nចាក់ច្រវ៉ាក់ចងជើងខ្លួនឯងកន្លែងដដែល',
@@ -704,17 +704,17 @@ const List<_ZodiacForecast> _zodiacForecasts = [
     assetPath:
         'assets/c__Users_sothy_AppData_Roaming_Cursor_User_workspaceStorage_867b90d3f467249f0f4d0b1da278e5de_images_image-9ca4fe62-5061-443d-b3a0-c3de2bade4c1.png',
     auspiciousStars: [
-      _StarInfo(khmerName: 'Tai Yang', chineseName: '太陽', englishTranslation: 'The Sun'),
-      _StarInfo(khmerName: 'Sui He', chineseName: '歲合', englishTranslation: 'Yearly Harmony'),
-      _StarInfo(khmerName: 'Ban An', chineseName: '板鞍', englishTranslation: 'Horse Saddle'),
+      _StarInfo(khmerName: 'តាយ យ៉ាង', chineseName: '太陽', englishTranslation: 'The Sun'),
+      _StarInfo(khmerName: 'សួយ ហេ', chineseName: '歲合', englishTranslation: 'Yearly Harmony'),
+      _StarInfo(khmerName: 'បាន អាន', chineseName: '板鞍', englishTranslation: 'Horse Saddle'),
     ],
     auspiciousPredictions:
-        'ពន្លឺព្រះអាទិត្យភ្លឺត្រចះត្រចង់ នឹងមានអ្នកមានបុណ្យជួយជ្រោមជ្រែងបានលាភបានជ័យ ដំណោះស្រាយអ្វីក៏មានច្រកចេញ។ ល្អណាស់! សុខដុមរមនាឆ្នាំថ្មី ឋាមពលQiវិជ្ជមានខ្ពស់ណាស់ គ្រោះទៅជាលាភ លាភទៅជាស្តុកស្តម្ភ ជីវិតឡើងមួយថ្នាក់',
+        'ពន្លឺព្រះអាទិត្យភ្លឺត្រចះត្រចង់ នឹងមានអ្នកមានបុណ្យជួយជ្រោមជ្រែងបានលាភបានជ័យ ដំណោះស្រាយអ្វីក៏មានច្រកចេញ។ ល្អណាស់! សុខដុមរមនាឆ្នាំថ្មី ឋាមពលឈី (Qi) វិជ្ជមានខ្ពស់ណាស់ គ្រោះទៅជាលាភ លាភទៅជាស្តុកស្តម្ភ ជីវិតឡើងមួយថ្នាក់',
     inauspiciousStars: [
-      _StarInfo(khmerName: 'Tian Kong', chineseName: '天空', englishTranslation: 'Sky Emptiness'),
-      _StarInfo(khmerName: 'Hui Chi', chineseName: '晦气', englishTranslation: 'Obstacle Star'),
-      _StarInfo(khmerName: 'Drinking jiǔ sè shā', chineseName: '酒色煞', englishTranslation: 'Negative Sha'),
-      _StarInfo(khmerName: 'Liu Xia', chineseName: 'Liu Xia', englishTranslation: 'Liu Xia'),
+      _StarInfo(khmerName: 'ទៀន កុង', chineseName: '天空', englishTranslation: 'Sky Emptiness'),
+      _StarInfo(khmerName: 'ហ៊ូយ ឈី', chineseName: '晦气', englishTranslation: 'Obstacle Star'),
+      _StarInfo(khmerName: 'ច្រិត ជីវ៉ូ សេ សា', chineseName: '酒色煞', englishTranslation: 'Negative Sha'),
+      _StarInfo(khmerName: 'លៀវ សៀ', chineseName: 'Liu Xia', englishTranslation: 'Liu Xia'),
     ],
     inauspiciousWarnings:
         'ផ្លូវចិត្តធំដូចផ្ទៃមេឃ តែទទេស្អាត ងាយនឹងប្រើចិត្តខុស បំណងដែលហួសព្រំដែន នឹងមិនបានផល ឧបសគ្គនឹងកើតមានពេលចិត្តមិនស្រស់ស្រាយ មនុស្សចាំកេងចំណេញមានច្រើនឆ្នាំនេះ ត្រូវចំណាយពេលបង្រៀនចិត្ត រំសាយអារម្មណ៍ ងាយនឹងយកស្រា យកល្បែងបាំងមុខ នឹងមានឈាមចេញពីខ្លួនបើមិនប្រយ័ត្ន កំរិតវះកាត់ រឺសន្លប់ច្រើនថ្ងៃ',
@@ -726,17 +726,17 @@ const List<_ZodiacForecast> _zodiacForecasts = [
     assetPath:
         'assets/c__Users_sothy_AppData_Roaming_Cursor_User_workspaceStorage_867b90d3f467249f0f4d0b1da278e5de_images_image-7935edc2-8fde-4c15-a869-7abf5456fd5d.png',
     auspiciousStars: [
-      _StarInfo(khmerName: 'Sui Dian', chineseName: '歳殿', englishTranslation: 'Yearly Palace'),
-      _StarInfo(khmerName: 'Wen Chang', chineseName: '文昌', englishTranslation: 'Intelligence Star'),
-      _StarInfo(khmerName: 'Yi Ma', chineseName: '驛馬', englishTranslation: 'Traveling Horse'),
+      _StarInfo(khmerName: 'សួយ ឌៀន', chineseName: '歳殿', englishTranslation: 'Yearly Palace'),
+      _StarInfo(khmerName: 'វ៉ិន ចាង', chineseName: '文昌', englishTranslation: 'Intelligence Star'),
+      _StarInfo(khmerName: 'អ៊ី ម៉ា', chineseName: '驛馬', englishTranslation: 'Traveling Horse'),
     ],
     auspiciousPredictions:
         'តារាបង្ហាញផ្លូវ អាចនឹងមានរៀបចំណងអាពាហ៍ពិពាហ៍ រឺចាប់ដៃគូរជីវិត តារាបញ្ញាញាណនៅរក្សា បើប្រលងជានិស្សិតរឺមន្ត្រីរាជការ នឹងបានដុចបំំណង តារានេះងាយឲ្យអ្នកប្រលងជាប់។ ចុះកុងត្រាមិនងាយចាញ់បោកគេ។ មានទំនោនឹងប្តុរកន្លែងការងារ រឺផ្ទះសម្បែក រឺចំណាកស្រុក។ ធ្វើដំណើរច្រើន។',
     inauspiciousStars: [
-      _StarInfo(khmerName: 'Sang Men', chineseName: '喪門', englishTranslation: 'Funeral Gate'),
-      _StarInfo(khmerName: 'Di San', chineseName: '地喪', englishTranslation: 'Earth Funeral'),
-      _StarInfo(khmerName: 'Gu Chen', chineseName: '孤辰', englishTranslation: 'Lonely Spirit'),
-      _StarInfo(khmerName: 'Gu Xu', chineseName: '孤虚', englishTranslation: 'Lonely Emptiness'),
+      _StarInfo(khmerName: 'សាង ម៉ិន', chineseName: '喪門', englishTranslation: 'Funeral Gate'),
+      _StarInfo(khmerName: 'ឌី សាន', chineseName: '地喪', englishTranslation: 'Earth Funeral'),
+      _StarInfo(khmerName: 'ហ្គូ ចឹន', chineseName: '孤辰', englishTranslation: 'Lonely Spirit'),
+      _StarInfo(khmerName: 'ហ្គូ ស៊ូ', chineseName: '孤虚', englishTranslation: 'Lonely Emptiness'),
     ],
     inauspiciousWarnings:
         'សាលដំកល់សព ងាយបាត់សមាជិកគ្រួសារ រឺអ្នកធ្លាប់ស្គាល់ កើតទុក្ខក្រៀមក្រំដោយសារដៃគូរមិនបានដូចចិត្ត។ បើឈឺ គឺជំងឺកាច គួរទៅពិនិត្យព្យាបាលក្នុងឆ្នាំនេះ មានគូមិនយល់ចិត្ត ចង់នៅម្នាក់ឯង សើចនៅមុខ យំក្នុងចិត្ត គេឃើញចំនុចខ្សោយ ចូរប្រយ័ត្ន',
@@ -748,16 +748,16 @@ const List<_ZodiacForecast> _zodiacForecasts = [
     assetPath:
         'assets/c__Users_sothy_AppData_Roaming_Cursor_User_workspaceStorage_867b90d3f467249f0f4d0b1da278e5de_images_image-cf86f726-f42b-4a95-8a90-611423d81d1a.png',
     auspiciousStars: [
-      _StarInfo(khmerName: 'Tai Yin', chineseName: '太陰', englishTranslation: 'The Moon'),
-      _StarInfo(khmerName: 'Hong Luan', chineseName: '紅鸞', englishTranslation: 'Romance Star'),
-      _StarInfo(khmerName: 'Tian Yi', chineseName: '天乙', englishTranslation: 'Noble Support'),
+      _StarInfo(khmerName: 'តាយ យិន', chineseName: '太陰', englishTranslation: 'The Moon'),
+      _StarInfo(khmerName: 'ហុង លួន', chineseName: '紅鸞', englishTranslation: 'Romance Star'),
+      _StarInfo(khmerName: 'ទៀន អ៊ី', chineseName: '天乙', englishTranslation: 'Noble Support'),
     ],
     auspiciousPredictions:
         'សម្រប់ផូរផង់ត្រលប់មកវិញ មានង៉ូវហេង នឹងជួបគូរ ធាតុអ៊ីនខ្លាំងគួជាទីស្រលាញ់របស់មនុស្សទាំងឡាយ មានដំណឹងល្អ គេសារភាពស្រលាញ់ នឹងមានអំណោយដោយមិនដឹងខ្លួន គូរឆ្នាំនេះបើយកគ្នាគឺត្រូវ! មយូរ៉ាជួបនាគ។ មានអ្នកធំជួយជ្រោមជ្រែង ពឹងគេបាន។ លុយមិនគ្រប់ មានគេជួបបន្ថែម។',
     inauspiciousStars: [
-      _StarInfo(khmerName: 'Gou Jiao', chineseName: '勾紋', englishTranslation: 'Entaglement'),
-      _StarInfo(khmerName: 'Guan Suo', chineseName: '貫索', englishTranslation: 'Rope Tying'),
-      _StarInfo(khmerName: 'Zu Bao', chineseName: '卒暴', englishTranslation: 'Sudden Disease'),
+      _StarInfo(khmerName: 'កូ ជៀវ', chineseName: '勾紋', englishTranslation: 'Entaglement'),
+      _StarInfo(khmerName: 'ក្វាន សួច', chineseName: '貫索', englishTranslation: 'Rope Tying'),
+      _StarInfo(khmerName: 'ហ្សូ ប៉ាវ', chineseName: '卒暴', englishTranslation: 'Sudden Disease'),
     ],
     inauspiciousWarnings:
         'ប្រយ័ត្នមានរឿងសាហាយស្មន់ លួចលាក់ គេចមិនផុត នឹងធ្លាយចេញ។ ខូចកិត្តយស។ ធ្លាយពីអ្នកជិតស្និត និងដៃគូរខាងក្រៅ។ គេនិយាយដើម នាំបញ្ហាចូលផ្ទះ បំណុលដោះមិនទាន់អស់ទេ រឿងចូលគ្រប់ច្រក ពេលមានរឿងមួយ គួរណាស់កុំបន្ថែមរឿង',
@@ -769,16 +769,16 @@ const List<_ZodiacForecast> _zodiacForecasts = [
     assetPath:
         'assets/c__Users_sothy_AppData_Roaming_Cursor_User_workspaceStorage_867b90d3f467249f0f4d0b1da278e5de_images_image-bb8a90d2-01d2-4854-a072-f53bceed0865.png',
     auspiciousStars: [
-      _StarInfo(khmerName: 'San He', chineseName: '三合', englishTranslation: 'Three Harmony'),
-      _StarInfo(khmerName: 'Di Jie', chineseName: '地解', englishTranslation: 'Earthly Resolve'),
-      _StarInfo(khmerName: 'Hua Gai', chineseName: '華蓋', englishTranslation: 'Luxury Cover'),
+      _StarInfo(khmerName: 'សាន ហេ', chineseName: '三合', englishTranslation: 'Three Harmony'),
+      _StarInfo(khmerName: 'ឌី ជៀ', chineseName: '地解', englishTranslation: 'Earthly Resolve'),
+      _StarInfo(khmerName: 'ហួ កៃ', chineseName: '華蓋', englishTranslation: 'Luxury Cover'),
     ],
     auspiciousPredictions:
         'មានមិនល្អជួយជ្រោមជ្រែង ចៅហ្វាយនាយជឿជាក់ រកស៊ីឈ្នះគេ។ បើចង់ជួបជុំជាមួយអ្នកណា និយាយនឹងគេបាន ដំណោះស្រាយបំណុល រឿងការងារ ក្តីក្តាំ ធ្វើឆ្នាំនេះនឹងបានចប់',
     inauspiciousStars: [
-      _StarInfo(khmerName: 'Wu Gui', chineseName: '五鬼', englishTranslation: 'Five Ghosts'),
-      _StarInfo(khmerName: 'Guan Fu', chineseName: '官符', englishTranslation: 'Legal Notice'),
-      _StarInfo(khmerName: 'Pi Tou', chineseName: '披頭', englishTranslation: 'Scruffy Hair'),
+      _StarInfo(khmerName: 'វូ ក្វី', chineseName: '五鬼', englishTranslation: 'Five Ghosts'),
+      _StarInfo(khmerName: 'ក្វាន ហ្វូ', chineseName: '官符', englishTranslation: 'Legal Notice'),
+      _StarInfo(khmerName: 'ពី ទូ', chineseName: '披頭', englishTranslation: 'Scruffy Hair'),
     ],
     inauspiciousWarnings:
         'មនុស្សល្អិតល្អោចនាំរឿងឥតបានការក្លាយជារឿងធំ តែបើចេះប្រើខ្មោចអោយបាយស៊ី នឹងបានផ្ទុះលាភ ជំលោះកន្លែងការងារ រកស៊ី អ្នកចូលហ៊ុន ប្រយ័ត្ន សោកសៅ បាត់ដំណឹង លាហើយមិនងាកក្រោយ បើបាត់របស់ពិបាករកឃើញ មនុស្សនៅនឹងមុខលាជារៀងរហូត លែងលះពិបាកយកគ្នា។',
@@ -790,15 +790,15 @@ const List<_ZodiacForecast> _zodiacForecasts = [
     assetPath:
         'assets/c__Users_sothy_AppData_Roaming_Cursor_User_workspaceStorage_867b90d3f467249f0f4d0b1da278e5de_images_image-364ac169-f1bb-4ed0-84a9-ec5d58dd6dec.png',
     auspiciousStars: [
-      _StarInfo(khmerName: 'Yue De', chineseName: '月德', englishTranslation: 'Monthly Virtue'),
-      _StarInfo(khmerName: 'Yu Tang', chineseName: '玉堂', englishTranslation: 'Jade Hall'),
+      _StarInfo(khmerName: 'យ៉ូ ដេ', chineseName: '月德', englishTranslation: 'Monthly Virtue'),
+      _StarInfo(khmerName: 'យូ តាង', chineseName: '玉堂', englishTranslation: 'Jade Hall'),
     ],
     auspiciousPredictions:
         'កិច្ចខំប្រឹងប្រែងជាច្រើនឆ្នាំនឹងបានគេទទួលស្គាល់ ដល់ពេលអោបយកលាភ និងសមិទ្ធិផល។ លុយកាក់នឹងមានបានច្រើនឡើងវិញឆ្នាំនេះ បើប្រលងនឹងជាប់ នឹងបានតាំងស៊ប់ អ្នកធំ អ្នកស្រលាញ់ នឹងជ្រោមជ្រែង',
     inauspiciousStars: [
-      _StarInfo(khmerName: 'Xiao Hao', chineseName: '小耗', englishTranslation: 'Small Waste'),
-      _StarInfo(khmerName: 'Si Fu', chineseName: '死符', englishTranslation: 'Death Note'),
-      _StarInfo(khmerName: 'You Yi', chineseName: '遊奕', englishTranslation: 'Aimless Wander'),
+      _StarInfo(khmerName: 'សៀវ ហាវ', chineseName: '小耗', englishTranslation: 'Small Waste'),
+      _StarInfo(khmerName: 'ស៊ី ហ្វូ', chineseName: '死符', englishTranslation: 'Death Note'),
+      _StarInfo(khmerName: 'យូ អ៊ី', chineseName: '遊奕', englishTranslation: 'Aimless Wander'),
     ],
     inauspiciousWarnings:
         'បាត់របស់លុយកាក់ ចាញ់បោកគេ បាត់មនុស្សចាស់ក្នុងផ្ទះ បាត់សមាជិកដែលធ្លាប់ស្រលាញ់ ជំងឺបៀតបៀនខ្លួន រឺនឹងឆ្លង ពិបាកព្យាបាល អ្នកក្លាហានឯកោ នឹងប្តូរការងារ ពិបាកមុនស្រណុកក្រោយ',

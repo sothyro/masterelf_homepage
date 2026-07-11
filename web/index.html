@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A0A0C">
   <meta name="description" content="Master Elf Feng Shui – Master your timing, environment, and decisions with a proven system rooted in Chinese Metaphysics. Consultations, courses, and events in Cambodia and beyond.">
   <meta name="keywords" content="Feng Shui, BaZi, Qi Men, Chinese Metaphysics, Master Elf, Cambodia, consultation">
 
@@ -42,8 +43,16 @@
   <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-functions-compat.js"></script>
+  <!-- Pre-Flutter splash: dark brand background + logo (matches AppColors.backgroundDark).
+       Keep web/logomono.png in sync with assets/icons/logomono.png. -->
+  <style>
+    html, body { margin: 0; height: 100%; background: #0A0A0C; }
+    #splash { display: flex; align-items: center; justify-content: center; height: 100vh; background: #0A0A0C; }
+    #splash img { width: min(160px, 40vw); height: auto; }
+  </style>
 </head>
 <body>
+  <div id="splash"><img src="logomono.png" alt="Master Elf Feng Shui"></div>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

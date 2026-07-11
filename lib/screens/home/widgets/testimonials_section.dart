@@ -147,8 +147,22 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   ];
 
   static const double _cardGap = 20;
-  static const double _cardMaxWidth = 340;
+  /// Fixed card width — preserved across breakpoints; page count grows with window width.
+  static const double _cardWidth = 340;
   static const double _cardsHeight = 510;
+  static const double _sectionHorizontalPadding = 24;
+
+  /// How many fixed-width cards fit in [availableWidth] (content area minus padding).
+  /// Cards never exceed [availableWidth] (mobile may shrink below [_cardWidth]).
+  static int _cardsPerPageForAvailableWidth(double availableWidth) {
+    final cardW = math.min(_cardWidth, availableWidth);
+    final n = ((availableWidth + _cardGap) / (cardW + _cardGap)).floor();
+    return math.max(1, n);
+  }
+
+  static double _cardWidthForAvailable(double availableWidth) =>
+      math.min(_cardWidth, availableWidth);
+
   /// Extra vertical space so hover scale (1.02) is not clipped.
   static const double _cardsVerticalPadding = 24;
   static const Duration _fadeDuration = Duration(milliseconds: 400);
@@ -162,6 +176,7 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   int _currentPage = 0;
   int? _pageReadyForFlip;
   int _flipScheduleId = 0;
+  int? _lastCardsPerPage;
 
   @override
   void initState() {
@@ -169,8 +184,8 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
     _shuffledItems = List<TestimonialItem>.from(_placeholders)..shuffle(math.Random());
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      final w = MediaQuery.sizeOf(context).width;
-      final cardsPerPage = Breakpoints.isMobile(w) ? 1 : 3;
+      final available = MediaQuery.sizeOf(context).width - 2 * _sectionHorizontalPadding;
+      final cardsPerPage = _cardsPerPageForAvailableWidth(available);
       Future<void>.delayed(const Duration(milliseconds: 200), () {
         if (mounted) {
           setState(() => _pageReadyForFlip = 0);
@@ -208,6 +223,27 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final available = MediaQuery.sizeOf(context).width - 2 * _sectionHorizontalPadding;
+    final cardsPerPage = _cardsPerPageForAvailableWidth(available);
+    if (_lastCardsPerPage != null && _lastCardsPerPage != cardsPerPage) {
+      _currentPage = 0;
+      _pageReadyForFlip = null;
+      _flipScheduleId++;
+      if (_pageController.hasClients) {
+        _pageController.jumpToPage(0);
+      }
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        setState(() => _pageReadyForFlip = 0);
+        _startAutoLoop(cardsPerPage);
+      });
+    }
+    _lastCardsPerPage = cardsPerPage;
+  }
+
+  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
@@ -233,7 +269,9 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = Breakpoints.isMobile(width);
-    final cardsPerPage = isMobile ? 1 : 3;
+    final availableWidth = width - 2 * _sectionHorizontalPadding;
+    final cardsPerPage = _cardsPerPageForAvailableWidth(availableWidth);
+    final cardWidth = _cardWidthForAvailable(availableWidth);
     final textTheme = Theme.of(context).textTheme;
 
     final headingFontSize = isMobile ? 24.0 : 28.0;
@@ -347,7 +385,10 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 56, horizontal: 24),
+      padding: const EdgeInsets.symmetric(
+        vertical: 56,
+        horizontal: _sectionHorizontalPadding,
+      ),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -360,65 +401,62 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
           stops: [0.0, 0.45, 1.0],
         ),
       ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1100),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              headerContent,
-              const SizedBox(height: 40),
-              SizedBox(
-                height: _cardsHeight + 2 * _cardsVerticalPadding,
-                child: PageView.builder(
-                  controller: _pageController,
-                  onPageChanged: (p) {
-                    setState(() => _currentPage = p);
-                    _scheduleFadeAfterTransition(p);
-                  },
-                  itemCount: (_shuffledItems.length / cardsPerPage).ceil(),
-                  itemBuilder: (context, pageIndex) {
-                    final start = pageIndex * cardsPerPage;
-                    final end = math.min(start + cardsPerPage, _shuffledItems.length);
-                    final isVisible = _pageReadyForFlip != null && pageIndex == _pageReadyForFlip;
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        for (var i = start; i < end; i++) ...[
-                          if (i > start) const SizedBox(width: _cardGap),
-                          Expanded(
-                            child: Center(
-                              child: ConstrainedBox(
-                                constraints: const BoxConstraints(maxWidth: _cardMaxWidth),
-                                child: SizedBox(
-                                  height: _cardsHeight,
-                                  child: _FadeTestimonialCard(
-                                    visible: isVisible,
-                                    delay: Duration(milliseconds: 50 * (i - start)),
-                                    duration: _fadeDuration,
-                                    child: _TestimonialCard(
-                                      quote: _shuffledItems[i].quote,
-                                      name: _shuffledItems[i].name,
-                                      location: _shuffledItems[i].location,
-                                      imageIndex: i,
-                                      imagePath: _shuffledItems[i].imagePath,
-                                      isBlank: _shuffledItems[i].isBlank,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          headerContent,
+          const SizedBox(height: 40),
+          SizedBox(
+            height: _cardsHeight + 2 * _cardsVerticalPadding,
+            width: double.infinity,
+            child: PageView.builder(
+              controller: _pageController,
+              onPageChanged: (p) {
+                setState(() => _currentPage = p);
+                _scheduleFadeAfterTransition(p);
+              },
+              itemCount: (_shuffledItems.length / cardsPerPage).ceil(),
+              itemBuilder: (context, pageIndex) {
+                final start = pageIndex * cardsPerPage;
+                final end = math.min(start + cardsPerPage, _shuffledItems.length);
+                final count = end - start;
+                final isVisible = _pageReadyForFlip != null && pageIndex == _pageReadyForFlip;
+                // Full pages: distribute leftover space as gaps so the row spans the viewport.
+                // Partial last page: keep the normal gap and pack from the start.
+                final useSpaceBetween = count > 1 && count == cardsPerPage;
+                return Row(
+                  mainAxisAlignment: useSpaceBetween
+                      ? MainAxisAlignment.spaceBetween
+                      : MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var i = start; i < end; i++) ...[
+                      if (!useSpaceBetween && i > start)
+                        const SizedBox(width: _cardGap),
+                      SizedBox(
+                        width: cardWidth,
+                        height: _cardsHeight,
+                        child: _FadeTestimonialCard(
+                          visible: isVisible,
+                          delay: Duration(milliseconds: 50 * (i - start)),
+                          duration: _fadeDuration,
+                          child: _TestimonialCard(
+                            quote: _shuffledItems[i].quote,
+                            name: _shuffledItems[i].name,
+                            location: _shuffledItems[i].location,
+                            imageIndex: i,
+                            imagePath: _shuffledItems[i].imagePath,
+                            isBlank: _shuffledItems[i].isBlank,
                           ),
-                        ],
-                      ],
-                    );
-                  },
-                ),
-              ),
-            ],
+                        ),
+                      ),
+                    ],
+                  ],
+                );
+              },
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

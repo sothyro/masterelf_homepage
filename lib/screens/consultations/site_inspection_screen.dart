@@ -1,9 +1,8 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../utils/inspection_form_constants.dart';
+import '../../utils/inspection_form_l10n_extension.dart';
 import '../../utils/twenty_four_mountains.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -17,6 +16,7 @@ import '../../theme/app_theme.dart';
 import '../../widgets/login_dialog.dart';
 import '../../utils/breakpoints.dart';
 import '../../widgets/glass_container.dart';
+import '../../widgets/page_content_inset.dart';
 
 /// Feng Shui Geomancy Site Inspection Form - Commercial Housing Complex Assessment.
 /// Structure cloned from assets/Forms/Feng shui inspection form.txt
@@ -103,12 +103,18 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
             _formData[e.key] = List<String>.from(v.map((x) => x.toString()));
           } else if (v is String && _isDateString(v)) {
             final dt = _parseDate(v);
-            if (dt != null) _formData[e.key] = dt;
-            else _formData[e.key] = v;
+            if (dt != null) {
+              _formData[e.key] = dt;
+            } else {
+              _formData[e.key] = v;
+            }
           } else if (v is String && _isTimeString(v)) {
             final t = _parseTime(v);
-            if (t != null) _formData[e.key] = t;
-            else _formData[e.key] = v;
+            if (t != null) {
+              _formData[e.key] = t;
+            } else {
+              _formData[e.key] = v;
+            }
           } else {
             _formData[e.key] = v;
           }
@@ -269,7 +275,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: DropdownButtonFormField<String>(
-        value: k24Mountains.contains(effective) ? effective : k24Mountains.first,
+        initialValue: k24Mountains.contains(effective) ? effective : k24Mountains.first,
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -332,7 +338,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: DropdownButtonFormField<String?>(
-        value: value,
+        initialValue: value,
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -563,7 +569,12 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
       }
       if (isFinalStep) {
         try {
-          final pdfBytes = await generateSiteInspectionPdf(data);
+          final pdfBytes = await generateSiteInspectionPdf(
+            data,
+            fieldLabels: l10n.buildInspectionPdfFieldLabels(),
+            reportTitle: l10n.inspectionFormTitle,
+            reportSubtitle: l10n.inspectionFormSubtitle,
+          );
           final raw = (data['projectName'] as String?)?.trim() ?? '';
           final projectName = raw
               .replaceAll(RegExp(r'\s+'), '-')
@@ -644,34 +655,64 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FilledButton(
-                    onPressed: () => showLoginDialog(
-                      context,
-                      successActions: [
-                        (label: l10n.inspectionNewInspection, route: '/consultations/site-inspection'),
-                        (label: l10n.goToDashboard, route: '/consultations/inspection-dashboard'),
-                      ],
+              if (isNarrow)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    FilledButton(
+                      onPressed: () => showLoginDialog(
+                        context,
+                        successActions: [
+                          (label: l10n.inspectionNewInspection, route: '/consultations/site-inspection'),
+                          (label: l10n.goToDashboard, route: '/consultations/inspection-dashboard'),
+                        ],
+                      ),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: AppColors.accent,
+                        foregroundColor: AppColors.onAccent,
+                      ),
+                      child: Text(l10n.loginButton),
                     ),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppColors.accent,
-                      foregroundColor: AppColors.onAccent,
+                    const SizedBox(height: 12),
+                    OutlinedButton(
+                      onPressed: () => context.go('/consultations'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.accent,
+                        side: const BorderSide(color: AppColors.accent),
+                      ),
+                      child: Text(l10n.consultations),
                     ),
-                    child: Text(l10n.loginButton),
-                  ),
-                  const SizedBox(width: 12),
-                  OutlinedButton(
-                    onPressed: () => context.go('/consultations'),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.accent,
-                      side: const BorderSide(color: AppColors.accent),
+                  ],
+                )
+              else
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FilledButton(
+                      onPressed: () => showLoginDialog(
+                        context,
+                        successActions: [
+                          (label: l10n.inspectionNewInspection, route: '/consultations/site-inspection'),
+                          (label: l10n.goToDashboard, route: '/consultations/inspection-dashboard'),
+                        ],
+                      ),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: AppColors.accent,
+                        foregroundColor: AppColors.onAccent,
+                      ),
+                      child: Text(l10n.loginButton),
                     ),
-                    child: Text(l10n.consultations),
-                  ),
-                ],
-              ),
+                    const SizedBox(width: 12),
+                    OutlinedButton(
+                      onPressed: () => context.go('/consultations'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.accent,
+                        side: const BorderSide(color: AppColors.accent),
+                      ),
+                      child: Text(l10n.consultations),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),
@@ -712,12 +753,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
       color: AppColors.backgroundDark,
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(
-            top: 168,
-            bottom: 48,
-            left: isNarrow ? 16 : 24,
-            right: isNarrow ? 16 : 24,
-          ),
+          padding: pageContentPadding(context, bottom: 48),
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 700),
@@ -807,64 +843,128 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
                       ),
                     ],
                     const SizedBox(height: 24),
-                    Row(
-                      children: [
-                        TextButton.icon(
-                          onPressed: _step > 0 ? _prevStep : null,
-                          icon: const Icon(LucideIcons.chevronLeft, size: 18),
-                          label: Text(l10n.back),
-                          style: TextButton.styleFrom(foregroundColor: AppColors.accent),
-                        ),
-                        const Spacer(),
-                        OutlinedButton.icon(
-                          onPressed: _saving
-                              ? null
-                              : () => _saveInspection(auth, isFinalStep: false),
-                          icon: _saving
-                              ? const SizedBox(
-                                  width: 18,
-                                  height: 18,
-                                  child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accent),
-                                )
-                              : const Icon(LucideIcons.save, size: 18),
-                          label: Text(_saving ? l10n.inspectionSaving : l10n.inspectionSaveProgress),
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: AppColors.accent,
-                            side: const BorderSide(color: AppColors.accent),
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        if (_step < _totalSteps - 1)
-                          FilledButton.icon(
-                            onPressed: _nextStep,
-                            icon: const Icon(LucideIcons.chevronRight, size: 18),
-                            label: Text(l10n.next),
-                            style: FilledButton.styleFrom(
-                              backgroundColor: AppColors.accent,
-                              foregroundColor: AppColors.onAccent,
-                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                    if (isNarrow)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: TextButton.icon(
+                              onPressed: _step > 0 ? _prevStep : null,
+                              icon: const Icon(LucideIcons.chevronLeft, size: 18),
+                              label: Text(l10n.back),
+                              style: TextButton.styleFrom(foregroundColor: AppColors.accent),
                             ),
-                          )
-                        else
-                          FilledButton.icon(
-                            onPressed: _saving ? null : () => _saveInspection(auth, isFinalStep: true),
+                          ),
+                          const SizedBox(height: 12),
+                          OutlinedButton.icon(
+                            onPressed: _saving
+                                ? null
+                                : () => _saveInspection(auth, isFinalStep: false),
                             icon: _saving
                                 ? const SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.onAccent),
+                                    width: 18,
+                                    height: 18,
+                                    child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accent),
                                   )
-                                : const Icon(LucideIcons.save, size: 20),
-                            label: Text(_saving ? l10n.inspectionSaving : l10n.inspectionSave),
-                            style: FilledButton.styleFrom(
-                              backgroundColor: AppColors.accent,
-                              foregroundColor: AppColors.onAccent,
-                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                                : const Icon(LucideIcons.save, size: 18),
+                            label: Text(_saving ? l10n.inspectionSaving : l10n.inspectionSaveProgress),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: AppColors.accent,
+                              side: const BorderSide(color: AppColors.accent),
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                             ),
                           ),
-                      ],
-                    ),
+                          const SizedBox(height: 12),
+                          if (_step < _totalSteps - 1)
+                            FilledButton.icon(
+                              onPressed: _nextStep,
+                              icon: const Icon(LucideIcons.chevronRight, size: 18),
+                              label: Text(l10n.next),
+                              style: FilledButton.styleFrom(
+                                backgroundColor: AppColors.accent,
+                                foregroundColor: AppColors.onAccent,
+                                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                              ),
+                            )
+                          else
+                            FilledButton.icon(
+                              onPressed: _saving ? null : () => _saveInspection(auth, isFinalStep: true),
+                              icon: _saving
+                                  ? const SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.onAccent),
+                                    )
+                                  : const Icon(LucideIcons.save, size: 20),
+                              label: Text(_saving ? l10n.inspectionSaving : l10n.inspectionSave),
+                              style: FilledButton.styleFrom(
+                                backgroundColor: AppColors.accent,
+                                foregroundColor: AppColors.onAccent,
+                                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                              ),
+                            ),
+                        ],
+                      )
+                    else
+                      Row(
+                        children: [
+                          TextButton.icon(
+                            onPressed: _step > 0 ? _prevStep : null,
+                            icon: const Icon(LucideIcons.chevronLeft, size: 18),
+                            label: Text(l10n.back),
+                            style: TextButton.styleFrom(foregroundColor: AppColors.accent),
+                          ),
+                          const Spacer(),
+                          OutlinedButton.icon(
+                            onPressed: _saving
+                                ? null
+                                : () => _saveInspection(auth, isFinalStep: false),
+                            icon: _saving
+                                ? const SizedBox(
+                                    width: 18,
+                                    height: 18,
+                                    child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accent),
+                                  )
+                                : const Icon(LucideIcons.save, size: 18),
+                            label: Text(_saving ? l10n.inspectionSaving : l10n.inspectionSaveProgress),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: AppColors.accent,
+                              side: const BorderSide(color: AppColors.accent),
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          if (_step < _totalSteps - 1)
+                            FilledButton.icon(
+                              onPressed: _nextStep,
+                              icon: const Icon(LucideIcons.chevronRight, size: 18),
+                              label: Text(l10n.next),
+                              style: FilledButton.styleFrom(
+                                backgroundColor: AppColors.accent,
+                                foregroundColor: AppColors.onAccent,
+                                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                              ),
+                            )
+                          else
+                            FilledButton.icon(
+                              onPressed: _saving ? null : () => _saveInspection(auth, isFinalStep: true),
+                              icon: _saving
+                                  ? const SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.onAccent),
+                                    )
+                                  : const Icon(LucideIcons.save, size: 20),
+                              label: Text(_saving ? l10n.inspectionSaving : l10n.inspectionSave),
+                              style: FilledButton.styleFrom(
+                                backgroundColor: AppColors.accent,
+                                foregroundColor: AppColors.onAccent,
+                                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                              ),
+                            ),
+                        ],
+                      ),
                   ],
                 ),
               ),
@@ -1388,9 +1488,7 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildDropdownField('buildingCompletionYear', l10n.inspectionBuildingCompletionYear, kYears),
-        _buildRadioGroup('xuanKongPeriod', 'Xuan Kong Period', [
-          'Period 7 (1984–2003)', 'Period 8 (2004–2023)', 'Period 9 (2024–2043)',
-        ]),
+        _buildRadioGroup('xuanKongPeriod', l10n.inspectionXuanKongPeriod, l10n.inspectionXuanKongPeriods),
         _buildDegreeField('facingDirectionDegrees', l10n.inspectionFacingDirectionDegrees),
         _build24MountainsField('facing24MountainPosition', l10n.inspection24MountainPosition, 'facingDirectionDegrees'),
         _buildDropdownField('star9Location', l10n.inspectionStar9Location, sectors),
@@ -1412,21 +1510,17 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildDegreeField('facingDirectionForGua', l10n.inspectionFacingDirectionDegrees),
-        _buildDropdownField('convertedToTrigram', 'Converted to Trigram', _trigrams(l10n)),
-        _buildRadioGroup('houseGua', 'House Gua', [
-          'Kan House (坎) - Sitting North', 'Kun House (坤) - Sitting Southwest', 'Zhen House (震) - Sitting East',
-          'Xun House (巽) - Sitting Southeast', 'Qian House (乾) - Sitting Northwest', 'Dui House (兌) - Sitting West',
-          'Gen House (艮) - Sitting Northeast', 'Li House (離) - Sitting South',
-        ]),
-        _buildRadioGroup('houseGroup', 'House Group', ['East Group (Kan, Zhen, Xun, Li)', 'West Group (Qian, Kun, Gen, Dui)']),
-        _buildDropdownField('mainEntranceSector', 'Main Entrance - Eight Mansions sector', sectors),
-        _buildRadioGroup('mainEntranceQuality', 'Main Entrance - Quality', [l10n.inspectionFavorable, l10n.inspectionUnfavorable]),
-        _buildDropdownField('managerOfficeSector', 'Manager/Owner Office - Sector', sectors),
-        _buildRadioGroup('managerOfficeQuality', 'Manager/Owner Office - Quality', [l10n.inspectionFavorable, l10n.inspectionUnfavorable]),
-        _buildDropdownField('cashierSector', 'Cashier/Safe - Sector', sectors),
-        _buildRadioGroup('cashierQuality', 'Cashier/Safe - Quality', [l10n.inspectionFavorable, l10n.inspectionUnfavorable]),
-        _buildDropdownField('toiletSector', 'Toilet Location - Sector', sectors),
-        _buildRadioGroup('toiletImpact', 'Toilet Impact', ['Acceptable (at unfavorable sector)', 'Poor (at favorable sector)']),
+        _buildDropdownField('convertedToTrigram', l10n.inspectionConvertedToTrigram, _trigrams(l10n)),
+        _buildRadioGroup('houseGua', l10n.inspectionHouseGua, l10n.inspectionHouseGuaOptions),
+        _buildRadioGroup('houseGroup', l10n.inspectionHouseGroup, l10n.inspectionHouseGroups),
+        _buildDropdownField('mainEntranceSector', l10n.inspectionMainEntranceSector, sectors),
+        _buildRadioGroup('mainEntranceQuality', l10n.inspectionMainEntranceQuality, [l10n.inspectionFavorable, l10n.inspectionUnfavorable]),
+        _buildDropdownField('managerOfficeSector', l10n.inspectionManagerOfficeSector, sectors),
+        _buildRadioGroup('managerOfficeQuality', l10n.inspectionManagerOfficeQuality, [l10n.inspectionFavorable, l10n.inspectionUnfavorable]),
+        _buildDropdownField('cashierSector', l10n.inspectionCashierSector, sectors),
+        _buildRadioGroup('cashierQuality', l10n.inspectionCashierQuality, [l10n.inspectionFavorable, l10n.inspectionUnfavorable]),
+        _buildDropdownField('toiletSector', l10n.inspectionToiletSector, sectors),
+        _buildRadioGroup('toiletImpact', l10n.inspectionToiletImpact, l10n.inspectionToiletImpactOptions),
       ],
     );
   }
@@ -1438,38 +1532,34 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildTextField('clientFullName', 'Primary Client/Owner - Full Name'),
-        _buildRadioGroup('clientRole', 'Role', ['Owner', 'Main Tenant', 'CEO', 'Manager']),
-        _buildDateField('clientBirthDate', 'Birth Date'),
-        _buildTimeField('clientBirthTime', 'Birth Time'),
-        _buildTextField('clientPlaceOfBirth', 'Place of Birth'),
-        _buildTextField('dayMaster', 'Day Master'),
-        _buildCheckboxGroup('favorableElements', 'Favorable Elements', ['Wood (木)', 'Fire (火)', 'Earth (土)', 'Metal (金)', 'Water (水)']),
-        _buildCheckboxGroup('unfavorableElements', 'Unfavorable Elements', ['Wood (木)', 'Fire (火)', 'Earth (土)', 'Metal (金)', 'Water (水)']),
-        _buildRadioGroup('personalGua', 'Personal Gua (Ming Gua)', personalGua),
-        _buildRadioGroup('personalGroup', 'Personal Group', ['East Group', 'West Group']),
-        _buildDropdownField('shengQiDirection', 'Sheng Qi (Best) direction', directions),
-        _buildDropdownField('tianYiDirection', 'Tian Yi (Health) direction', directions),
-        _buildDropdownField('yanNianDirection', 'Yan Nian (Relationship) direction', directions),
-        _buildDropdownField('fuWeiDirection', 'Fu Wei (Stability) direction', directions),
-        _buildTextField('person2Name', 'Person 2 - Name'),
-        _buildTextField('person2Role', 'Person 2 - Role'),
-        _buildDateField('person2BirthDate', 'Person 2 - Birth Date'),
-        _buildTimeField('person2BirthTime', 'Person 2 - Birth Time'),
-        _buildDropdownField('person2Gua', 'Person 2 - Personal Gua', personalGua),
-        _buildTextField('person3Name', 'Person 3 - Name'),
-        _buildTextField('person3Role', 'Person 3 - Role'),
-        _buildDateField('person3BirthDate', 'Person 3 - Birth Date'),
-        _buildTimeField('person3BirthTime', 'Person 3 - Birth Time'),
-        _buildDropdownField('person3Gua', 'Person 3 - Personal Gua', personalGua),
-        _buildCheckboxGroup('businessGoals', 'Primary Business Goals', [
-          'Wealth/profit maximization', 'Customer flow', 'Business stability', 'Staff harmony', 'Health and wellbeing', 'Other',
-        ]),
-        _buildTextField('specificConcerns', 'Specific Concerns Raised', maxLines: 3),
-        _buildCheckboxGroup('currentChallenges', 'Current Challenges', [
-          'Financial difficulties', 'Health issues', 'Staff conflicts', 'Legal problems', 'Relationship issues', 'Poor customer flow', 'Other',
-        ]),
-        _buildTextField('healthIssuesSpecify', 'Health issues (specify)'),
+        _buildTextField('clientFullName', l10n.inspectionClientFullName),
+        _buildRadioGroup('clientRole', l10n.inspectionClientRole, l10n.inspectionClientRoles),
+        _buildDateField('clientBirthDate', l10n.inspectionBirthDate),
+        _buildTimeField('clientBirthTime', l10n.inspectionBirthTime),
+        _buildTextField('clientPlaceOfBirth', l10n.inspectionPlaceOfBirth),
+        _buildTextField('dayMaster', l10n.inspectionDayMaster),
+        _buildCheckboxGroup('favorableElements', l10n.inspectionFavorableElements, l10n.inspectionFiveElements),
+        _buildCheckboxGroup('unfavorableElements', l10n.inspectionUnfavorableElements, l10n.inspectionFiveElements),
+        _buildRadioGroup('personalGua', l10n.inspectionPersonalGuaLabel, personalGua),
+        _buildRadioGroup('personalGroup', l10n.inspectionPersonalGroup, l10n.inspectionPersonalGroups),
+        _buildDropdownField('shengQiDirection', l10n.inspectionShengQiDirection, directions),
+        _buildDropdownField('tianYiDirection', l10n.inspectionTianYiDirection, directions),
+        _buildDropdownField('yanNianDirection', l10n.inspectionYanNianDirection, directions),
+        _buildDropdownField('fuWeiDirection', l10n.inspectionFuWeiDirection, directions),
+        _buildTextField('person2Name', l10n.inspectionPerson2Name),
+        _buildTextField('person2Role', l10n.inspectionPerson2Role),
+        _buildDateField('person2BirthDate', l10n.inspectionPerson2BirthDate),
+        _buildTimeField('person2BirthTime', l10n.inspectionPerson2BirthTime),
+        _buildDropdownField('person2Gua', l10n.inspectionPerson2Gua, personalGua),
+        _buildTextField('person3Name', l10n.inspectionPerson3Name),
+        _buildTextField('person3Role', l10n.inspectionPerson3Role),
+        _buildDateField('person3BirthDate', l10n.inspectionPerson3BirthDate),
+        _buildTimeField('person3BirthTime', l10n.inspectionPerson3BirthTime),
+        _buildDropdownField('person3Gua', l10n.inspectionPerson3Gua, personalGua),
+        _buildCheckboxGroup('businessGoals', l10n.inspectionBusinessGoals, l10n.inspectionBusinessGoalOptions),
+        _buildTextField('specificConcerns', l10n.inspectionSpecificConcerns, maxLines: 3),
+        _buildCheckboxGroup('currentChallenges', l10n.inspectionCurrentChallenges, l10n.inspectionChallengeOptions),
+        _buildTextField('healthIssuesSpecify', l10n.inspectionHealthIssuesSpecify),
       ],
     );
   }
@@ -1479,25 +1569,22 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildDateField('plannedOpeningDate', 'Planned Opening Date'),
-        _buildDateField('preferredDateRangeFrom', 'Preferred Date Range - From'),
-        _buildDateField('preferredDateRangeTo', 'Preferred Date Range - To'),
-        _buildCheckboxGroup('activitiesForDateSelection', 'Important Activities Requiring Date Selection', [
-          'Grand opening ceremony', 'Renovation commencement', 'Moving in/occupation', 'Sign installation',
-          'Contract signing', 'Major purchases', 'Other',
-        ]),
-        _buildDropdownField('solarTerm', 'Solar Term', kSolarTerms),
-        _buildDropdownField('lunarDate', 'Lunar Date', kLunarDates),
-        _buildTextField('favorablePalaces', 'Favorable Palaces for This Date/Time', maxLines: 2),
-        _buildTextField('unfavorablePalaces', 'Unfavorable Palaces for This Date/Time', maxLines: 2),
-        _buildDateField('grandOpeningDate1', 'For Grand Opening - Date option 1'),
-        _buildDateField('grandOpeningDate2', 'For Grand Opening - Date option 2'),
-        _buildDateField('grandOpeningDate3', 'For Grand Opening - Date option 3'),
-        _buildDateField('renovationDate1', 'For Renovation Start - Date option 1'),
-        _buildDateField('renovationDate2', 'For Renovation Start - Date option 2'),
+        _buildDateField('plannedOpeningDate', l10n.inspectionPlannedOpeningDate),
+        _buildDateField('preferredDateRangeFrom', l10n.inspectionPreferredDateFrom),
+        _buildDateField('preferredDateRangeTo', l10n.inspectionPreferredDateTo),
+        _buildCheckboxGroup('activitiesForDateSelection', l10n.inspectionActivitiesDateSelection, l10n.inspectionDateSelectionActivities),
+        _buildDropdownField('solarTerm', l10n.inspectionSolarTerm, l10n.inspectionSolarTerms),
+        _buildDropdownField('lunarDate', l10n.inspectionLunarDate, l10n.inspectionLunarDates),
+        _buildTextField('favorablePalaces', l10n.inspectionFavorablePalaces, maxLines: 2),
+        _buildTextField('unfavorablePalaces', l10n.inspectionUnfavorablePalaces, maxLines: 2),
+        _buildDateField('grandOpeningDate1', l10n.inspectionGrandOpeningDate1),
+        _buildDateField('grandOpeningDate2', l10n.inspectionGrandOpeningDate2),
+        _buildDateField('grandOpeningDate3', l10n.inspectionGrandOpeningDate3),
+        _buildDateField('renovationDate1', l10n.inspectionRenovationDate1),
+        _buildDateField('renovationDate2', l10n.inspectionRenovationDate2),
         _buildDropdownField('avoidOwnerZodiac', l10n.inspectionAvoidOwnerZodiac, _chineseZodiac(l10n)),
         _buildDropdownField('avoidPartnerZodiac', l10n.inspectionAvoidPartnerZodiac, _chineseZodiac(l10n)),
-        _buildTextField('mustAvoid', 'Must avoid'),
+        _buildTextField('mustAvoid', l10n.inspectionMustAvoid),
       ],
     );
   }
@@ -1509,60 +1596,51 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildTextField('numberOfMainEntrances', 'Number of Main Entrances'),
-        _buildDropdownField('mainDoorPosition', 'Main Door Position (which palace/sector)', sectors),
-        _buildRadioGroup('doorConfiguration', 'Door Configuration', [
-          'Opens inward', 'Opens outward', 'Sliding door', 'Automatic door',
-        ]),
-        _buildCheckboxGroup('entranceIssues', 'Issues', [
-          'Beam directly above door', 'Door opens to back door (through-flow)', 'Door opens to staircase',
-          'Door opens to toilet', 'Narrow entrance/cramped', 'No issues observed',
-        ]),
-        _buildRadioGroup('entranceAssessment', 'Assessment', [
-          'Favorable entrance', 'Acceptable with minor adjustments', 'Requires remedial work',
-        ]),
-        _buildDimensionField('ceilingHeight', 'Ceiling Height (m)'),
-        _buildRadioGroup('naturalLight', 'Natural Light', ['Abundant (large windows)', 'Moderate', 'Dim/insufficient']),
-        _buildRadioGroup('airCirculation', 'Air Circulation', ['Good ventilation', 'Moderate', 'Poor/stagnant']),
-        _buildRadioGroup('floorPlanShape', 'Floor Plan Shape', [
-          'Square/rectangular (ideal)', 'L-shaped', 'Irregular', 'Triangular sections',
-        ]),
-        _buildDropdownField('receptionSector', 'Reception/Cashier - Sector', sectors),
-        _buildDropdownField('receptionFlyingStar', 'Reception - Flying Star', kFlyingStars),
-        _buildDropdownField('reception8Mansions', 'Reception - Eight Mansions', sectors),
-        _buildRadioGroup('receptionAssessment', 'Reception - Assessment', ['Favorable', 'Neutral', 'Unfavorable']),
-        _buildDropdownField('officeSector', 'Office/Manager - Sector', sectors),
-        _buildDropdownField('officeFlyingStar', 'Office - Flying Star', kFlyingStars),
-        _buildDropdownField('office8Mansions', 'Office - Eight Mansions', sectors),
-        _buildRadioGroup('officeAssessment', 'Office - Assessment', ['Favorable', 'Neutral', 'Unfavorable']),
-        _buildDropdownField('toiletSectorInternal', 'Toilet/Bathroom - Sector', sectors),
-        _buildDropdownField('toiletFlyingStar', 'Toilet - Flying Star', kFlyingStars),
-        _buildDropdownField('toilet8Mansions', 'Toilet - Eight Mansions', sectors),
-        _buildCheckboxGroup('toiletIssues', 'Toilet Issues', ['At center palace', 'At wealth sector', 'No issues']),
-        _buildDropdownField('staircaseSector', 'Staircase/Elevator - Sector', sectors),
-        _buildDropdownField('staircaseFlyingStar', 'Staircase - Flying Star', kFlyingStars),
-        _buildDropdownField('staircase8Mansions', 'Staircase - Eight Mansions', sectors),
-        _buildRadioGroup('staircaseAssessment', 'Staircase - Assessment', ['Favorable', 'Neutral', 'Unfavorable']),
+        _buildTextField('numberOfMainEntrances', l10n.inspectionNumberOfMainEntrances),
+        _buildDropdownField('mainDoorPosition', l10n.inspectionMainDoorPosition, sectors),
+        _buildRadioGroup('doorConfiguration', l10n.inspectionDoorConfiguration, l10n.inspectionDoorConfigurations),
+        _buildCheckboxGroup('entranceIssues', l10n.inspectionEntranceIssues, l10n.inspectionEntranceIssueOptions),
+        _buildRadioGroup('entranceAssessment', l10n.inspectionEntranceAssessment, l10n.inspectionEntranceAssessments),
+        _buildDimensionField('ceilingHeight', l10n.inspectionCeilingHeight),
+        _buildRadioGroup('naturalLight', l10n.inspectionNaturalLight, l10n.inspectionNaturalLightOptions),
+        _buildRadioGroup('airCirculation', l10n.inspectionAirCirculation, l10n.inspectionAirCirculationOptions),
+        _buildRadioGroup('floorPlanShape', l10n.inspectionFloorPlanShape, l10n.inspectionFloorPlanShapes),
+        _buildDropdownField('receptionSector', l10n.inspectionReceptionSector, sectors),
+        _buildDropdownField('receptionFlyingStar', l10n.inspectionReceptionFlyingStar, l10n.inspectionFlyingStars),
+        _buildDropdownField('reception8Mansions', l10n.inspectionReception8Mansions, sectors),
+        _buildRadioGroup('receptionAssessment', l10n.inspectionReceptionAssessment, l10n.inspectionFavorableNeutralUnfavorable),
+        _buildDropdownField('officeSector', l10n.inspectionOfficeSector, sectors),
+        _buildDropdownField('officeFlyingStar', l10n.inspectionOfficeFlyingStar, l10n.inspectionFlyingStars),
+        _buildDropdownField('office8Mansions', l10n.inspectionOffice8Mansions, sectors),
+        _buildRadioGroup('officeAssessment', l10n.inspectionOfficeAssessment, l10n.inspectionFavorableNeutralUnfavorable),
+        _buildDropdownField('toiletSectorInternal', l10n.inspectionToiletSectorInternal, sectors),
+        _buildDropdownField('toiletFlyingStar', l10n.inspectionToiletFlyingStar, l10n.inspectionFlyingStars),
+        _buildDropdownField('toilet8Mansions', l10n.inspectionToilet8Mansions, sectors),
+        _buildCheckboxGroup('toiletIssues', l10n.inspectionToiletIssues, l10n.inspectionToiletIssueOptions),
+        _buildDropdownField('staircaseSector', l10n.inspectionStaircaseSector, sectors),
+        _buildDropdownField('staircaseFlyingStar', l10n.inspectionStaircaseFlyingStar, l10n.inspectionFlyingStars),
+        _buildDropdownField('staircase8Mansions', l10n.inspectionStaircase8Mansions, sectors),
+        _buildRadioGroup('staircaseAssessment', l10n.inspectionStaircaseAssessment, l10n.inspectionFavorableNeutralUnfavorable),
         _buildCheckboxGroup('internalShaQi', 'Internal Sha Qi', [
           'Exposed beams over critical areas', 'Sharp corners pointing at seating areas', 'Long narrow corridor (arrow sha)',
           'Mirror facing main door', 'Toilet door visible from main entrance', 'Staircase directly facing main door', 'Back door aligned with front door',
         ]),
         _buildTextField('internalShaQiNotes', 'Notes'),
         _buildTextField('room1Function', 'Room 1 - Function'),
-        _buildDropdownField('room1Sector', 'Room 1 - Sector', sectors),
+        _buildDropdownField('room1Sector', l10n.inspectionRoom1Sector, sectors),
         _buildTextField('room1Dimensions', 'Room 1 - Dimensions (m × m)'),
         _buildDropdownField('room1DoorDirection', l10n.inspectionRoom1DoorDirection, directions),
         _buildDropdownField('room1WindowDirection', l10n.inspectionRoom1WindowDirection, directions),
         _buildTextField('room1CeilingFeatures', 'Room 1 - Ceiling features'),
-        _buildDropdownField('room1FlyingStar', 'Room 1 - Flying Star', kFlyingStars),
-        _buildDropdownField('room1EightMansions', 'Room 1 - Eight Mansions', sectors),
+        _buildDropdownField('room1FlyingStar', l10n.inspectionRoom1FlyingStar, l10n.inspectionFlyingStars),
+        _buildDropdownField('room1EightMansions', l10n.inspectionRoom1EightMansions, sectors),
         _buildTextField('room1Issues', 'Room 1 - Issues'),
         _buildTextField('room2Function', 'Room 2 - Function'),
-        _buildDropdownField('room2Sector', 'Room 2 - Sector', sectors),
+        _buildDropdownField('room2Sector', l10n.inspectionRoom2Sector, sectors),
         _buildTextField('room2Dimensions', 'Room 2 - Dimensions'),
         _buildTextField('room2Issues', 'Room 2 - Issues'),
         _buildTextField('room3Function', 'Room 3 - Function'),
-        _buildDropdownField('room3Sector', 'Room 3 - Sector', sectors),
+        _buildDropdownField('room3Sector', l10n.inspectionRoom3Sector, sectors),
         _buildTextField('room3Dimensions', 'Room 3 - Dimensions'),
         _buildTextField('room3Issues', 'Room 3 - Issues'),
         _buildTextField('numberOfColumns', 'Number of columns'),
@@ -1640,12 +1718,12 @@ class _SiteInspectionScreenState extends State<SiteInspectionScreen> {
           'Retail shop', 'Restaurant/café', 'Office/professional services', 'Showroom',
           'Healthcare/beauty', 'Education/training', 'Other',
         ]),
-        _buildDropdownField('bestSectorMainEntrance', 'Sectors Best for - Main entrance', sectors),
-        _buildDropdownField('bestSectorCashier', 'Sectors Best for - Cashier/finance', sectors),
-        _buildDropdownField('bestSectorManager', 'Sectors Best for - Manager office', sectors),
-        _buildDropdownField('bestSectorStorage', 'Sectors Best for - Storage', sectors),
+        _buildDropdownField('bestSectorMainEntrance', l10n.inspectionBestSectorMainEntrance, sectors),
+        _buildDropdownField('bestSectorCashier', l10n.inspectionBestSectorCashier, sectors),
+        _buildDropdownField('bestSectorManager', l10n.inspectionBestSectorManager, sectors),
+        _buildDropdownField('bestSectorStorage', l10n.inspectionBestSectorStorage, sectors),
         _buildTextField('baziSpaceCompatibility', 'Bazi-Space Compatibility', maxLines: 2),
-        _buildRadioGroup('elementSupport', 'House/sector element support', ['Strong', 'Moderate', 'Weak', 'Conflicting']),
+        _buildRadioGroup('elementSupport', 'House/sector element support', l10n.inspectionElementSupportOptions),
         _buildTextField('priorityRanking', 'Priority Ranking for This Project', maxLines: 3),
       ],
     );

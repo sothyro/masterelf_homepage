@@ -176,25 +176,51 @@ DateTime? _parseStartTime(String date, String time) {
   }
 }
 
+List<String> get defaultAvailableSlots => generateHourlySlotLabels();
+
+/// Result of fetching available appointment slots for a date.
+class SlotAvailability {
+  const SlotAvailability({
+    required this.slots,
+    required this.fromServer,
+    this.fetchFailed = false,
+  });
+
+  final List<String> slots;
+  /// True when slots came from the Cloud Function; false when using local defaults.
+  final bool fromServer;
+  /// True when Firebase is enabled but the callable failed (fallback slots in use).
+  final bool fetchFailed;
+}
+
 /// Fetches available slot start times (HH:mm) for the given date.
 /// Uses Cloud Function when Firebase is enabled; otherwise returns default slots.
-Future<List<String>> getAvailableSlots(String date) async {
+Future<SlotAvailability> getAvailableSlots(
+  String date, {
+  int durationMinutes = defaultSessionDurationMinutes,
+}) async {
   if (isFirebaseEnabled) {
     try {
       final result = await FirebaseFunctions.instance
           .httpsCallable('getAvailableSlots')
-          .call({'date': date});
+          .call({'date': date, 'durationMinutes': durationMinutes});
       final data = result.data as Map<String, dynamic>?;
       final list = data?['slots'] as List<dynamic>?;
       if (list != null) {
-        return list.map((e) => e.toString()).toList();
+        return SlotAvailability(
+          slots: list.map((e) => e.toString()).toList(),
+          fromServer: true,
+        );
       }
-    } catch (e) {
-      // Fallback to default slots on error
+    } catch (_) {
+      return SlotAvailability(
+        slots: defaultAvailableSlots,
+        fromServer: false,
+        fetchFailed: true,
+      );
     }
   }
-  // Default slots: 2h session, 1h break, 09:00–21:00 (21:00 special: 1h or 2h to 23:00)
-  return ['09:00', '12:00', '15:00', '18:00', '21:00'];
+  return SlotAvailability(slots: defaultAvailableSlots, fromServer: false);
 }
 
 /// Fetches bookings for the given phone number (via callable).
@@ -277,4 +303,17 @@ Future<void> updateAppointment(String appointmentId, String date, String time) a
     'date': date,
     'time': time,
   });
+}
+
+/// Lightweight health check for booking backend (Firestore + Functions).
+Future<Map<String, dynamic>> bookingHealthCheck() async {
+  if (!isFirebaseEnabled) return {'ok': false, 'firestore': false};
+  final result = await FirebaseFunctions.instance
+      .httpsCallable('bookingHealthCheck')
+      .call();
+  final data = result.data;
+  if (data is Map) {
+    return Map<String, dynamic>.from(data);
+  }
+  return {'ok': false};
 }

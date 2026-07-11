@@ -8,6 +8,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
 import '../../../widgets/academy_card.dart';
+import 'publications_strip.dart';
 
 /// Dark section with split heading/body and academy cards.
 class AcademiesSection extends StatelessWidget {
@@ -138,6 +139,8 @@ class AcademiesSection extends StatelessWidget {
                     );
                   },
                 ),
+                const SizedBox(height: 56),
+                const PublicationsStrip(),
               ],
             ),
           ),

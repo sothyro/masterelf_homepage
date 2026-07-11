@@ -15,7 +15,14 @@ import '../screens/consultations/inspection_dashboard_screen.dart';
 import '../screens/consultations/site_inspection_screen.dart';
 import '../screens/academy/academy_screen.dart';
 import '../screens/journey/journey_screen.dart';
+import '../screens/field_work/field_work_screen.dart';
+import '../screens/field_work/field_work_detail_screen.dart';
+import '../screens/field_work/activity_video_detail_screen.dart';
 import '../screens/apps/apps_screen.dart';
+import '../screens/books/book_store_screen.dart';
+import '../screens/talisman/talisman_store_screen.dart';
+import '../config/field_work_content.dart';
+import '../config/store_routes.dart';
 import '../providers/auth_provider.dart';
 import '../l10n/app_localizations.dart';
 
@@ -29,12 +36,15 @@ const Set<String> _knownPaths = {
   '/journey',
   '/events',
   '/apps',
+  '/books',
+  '/talisman',
   '/academy',
   '/contact',
   '/consultations',
   '/consultations/dashboard',
   '/consultations/inspection-dashboard',
   '/consultations/site-inspection',
+  '/field-work',
   '/not-found',
 };
 
@@ -83,6 +93,13 @@ GoRouter createAppRouter({
       }
 
       if (normalized == '/' || _knownPaths.contains(normalized)) {
+        if (normalized == '/apps' && uri.fragment.isNotEmpty) {
+          final redirect = redirectLegacyAppsFragment(uri.fragment);
+          if (redirect != null) {
+            final query = uri.hasQuery ? '?${uri.query}' : '';
+            return redirect + query;
+          }
+        }
         if (normalized == '/consultations/dashboard' ||
             normalized == '/consultations/inspection-dashboard' ||
             normalized == '/consultations/site-inspection') {
@@ -97,6 +114,10 @@ GoRouter createAppRouter({
         if (!auth.isLoggedIn) return '/consultations';
         return null;
       }
+      if (normalized.startsWith('/field-work/') &&
+          normalized.length > '/field-work/'.length) {
+        return null;
+      }
       return '/not-found';
     },
     routes: [
@@ -108,6 +129,8 @@ GoRouter createAppRouter({
           GoRoute(path: '/journey', builder: (_, __) => const JourneyScreen()),
           GoRoute(path: '/events', builder: (_, __) => const EventsScreen()),
           GoRoute(path: '/apps', builder: (_, __) => const AppsScreen()),
+          GoRoute(path: '/books', builder: (_, __) => const BookStoreScreen()),
+          GoRoute(path: '/talisman', builder: (_, __) => const TalismanStoreScreen()),
           GoRoute(path: '/academy', builder: (_, __) => const AcademyScreen()),
           GoRoute(path: '/contact', builder: (_, __) => const ContactScreen()),
           GoRoute(
@@ -127,6 +150,42 @@ GoRouter createAppRouter({
                 builder: (_, state) {
                   final id = state.pathParameters['id'] ?? '';
                   return SiteInspectionScreen(inspectionId: id.isNotEmpty ? id : null);
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            path: '/field-work',
+            builder: (_, state) {
+              final realm = FieldWorkRealm.fromQuery(state.uri.queryParameters['realm']);
+              final videosOnly = state.uri.queryParameters['filter'] == 'videos';
+              return FieldWorkScreen(
+                initialRealm: realm,
+                initialVideosOnly: videosOnly,
+              );
+            },
+            routes: [
+              GoRoute(
+                path: 'video/:slug',
+                builder: (context, state) {
+                  final slug = state.pathParameters['slug'] ?? '';
+                  final l10n = AppLocalizations.of(context)!;
+                  final video = getLocalizedActivityVideoBySlug(slug, l10n);
+                  if (video == null) {
+                    return const _NotFoundScreen();
+                  }
+                  return ActivityVideoDetailScreen(video: video);
+                },
+              ),
+              GoRoute(
+                path: ':slug',
+                builder: (_, state) {
+                  final slug = state.pathParameters['slug'] ?? '';
+                  final post = getFieldWorkPostBySlug(slug);
+                  if (post == null) {
+                    return const _NotFoundScreen();
+                  }
+                  return FieldWorkDetailScreen(post: post);
                 },
               ),
             ],

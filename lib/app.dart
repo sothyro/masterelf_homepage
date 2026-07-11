@@ -6,7 +6,6 @@ import 'l10n/app_localizations.dart';
 import 'services/connectivity_service.dart';
 import 'theme/app_theme.dart';
 import 'providers/locale_provider.dart';
-import 'providers/auth_provider.dart';
 
 class MasterElfApp extends StatefulWidget {
   const MasterElfApp({super.key});

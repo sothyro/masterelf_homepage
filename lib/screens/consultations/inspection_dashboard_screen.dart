@@ -12,6 +12,7 @@ import '../../utils/breakpoints.dart';
 import '../../widgets/glass_container.dart';
 import '../../widgets/login_dialog.dart';
 import '../../widgets/logo_with_shape_shadow.dart';
+import '../../widgets/page_content_inset.dart';
 
 /// Inspection Dashboard: lists existing inspections with Master Elf logo and name.
 /// User can select an inspection to edit/continue, or start a new one.
@@ -75,73 +76,116 @@ class _InspectionDashboardScreenState extends State<InspectionDashboardScreen> {
       color: AppColors.backgroundDark,
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(
-            top: 168,
-            bottom: 48,
-            left: isNarrow ? 16 : 24,
-            right: isNarrow ? 16 : 24,
-          ),
+          padding: pageContentPadding(context, bottom: 48),
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 900),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
+                  if (isNarrow)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               l10n.inspectionDashboardTitle,
-                              style: (isNarrow
-                                      ? Theme.of(context).textTheme.headlineSmall
-                                      : Theme.of(context).textTheme.headlineMedium)
-                                  ?.copyWith(
-                                color: AppColors.onPrimary,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                    color: AppColors.onPrimary,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               l10n.inspectionDashboardSubtitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
+                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     color: AppColors.onSurfaceVariantDark,
                                   ),
                             ),
                           ],
                         ),
-                      ),
-                      Wrap(
-                        spacing: 12,
-                        runSpacing: 8,
-                        children: [
-                          TextButton.icon(
-                            onPressed: () => context.go('/consultations'),
-                            icon: const Icon(LucideIcons.arrowLeft),
-                            label: Text(l10n.back),
-                            style: TextButton.styleFrom(
-                              foregroundColor: AppColors.accent,
+                        const SizedBox(height: 16),
+                        Wrap(
+                          spacing: 12,
+                          runSpacing: 8,
+                          children: [
+                            TextButton.icon(
+                              onPressed: () => context.go('/consultations'),
+                              icon: const Icon(LucideIcons.arrowLeft),
+                              label: Text(l10n.back),
+                              style: TextButton.styleFrom(
+                                foregroundColor: AppColors.accent,
+                              ),
                             ),
-                          ),
-                          FilledButton.icon(
-                            onPressed: () =>
-                                context.go('/consultations/site-inspection'),
-                            icon: const Icon(LucideIcons.plus, size: 18),
-                            label: Text(l10n.inspectionNewInspection),
-                            style: FilledButton.styleFrom(
-                              backgroundColor: AppColors.accent,
-                              foregroundColor: AppColors.onAccent,
+                            FilledButton.icon(
+                              onPressed: () =>
+                                  context.go('/consultations/site-inspection'),
+                              icon: const Icon(LucideIcons.plus, size: 18),
+                              label: Text(l10n.inspectionNewInspection),
+                              style: FilledButton.styleFrom(
+                                backgroundColor: AppColors.accent,
+                                foregroundColor: AppColors.onAccent,
+                              ),
                             ),
+                          ],
+                        ),
+                      ],
+                    )
+                  else
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                l10n.inspectionDashboardTitle,
+                                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                      color: AppColors.onPrimary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                l10n.inspectionDashboardSubtitle,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      color: AppColors.onSurfaceVariantDark,
+                                    ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        Wrap(
+                          spacing: 12,
+                          runSpacing: 8,
+                          children: [
+                            TextButton.icon(
+                              onPressed: () => context.go('/consultations'),
+                              icon: const Icon(LucideIcons.arrowLeft),
+                              label: Text(l10n.back),
+                              style: TextButton.styleFrom(
+                                foregroundColor: AppColors.accent,
+                              ),
+                            ),
+                            FilledButton.icon(
+                              onPressed: () =>
+                                  context.go('/consultations/site-inspection'),
+                              icon: const Icon(LucideIcons.plus, size: 18),
+                              label: Text(l10n.inspectionNewInspection),
+                              style: FilledButton.styleFrom(
+                                backgroundColor: AppColors.accent,
+                                foregroundColor: AppColors.onAccent,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   const SizedBox(height: 32),
                   if (_error != null) _buildError(context, l10n),
                   if (_loading) _buildLoading(context, l10n),

@@ -3,10 +3,13 @@ import 'package:lucide_icons/lucide_icons.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../l10n/app_localizations.dart';
-import '../../models/appointment.dart' show AdminAppointmentRecord, defaultSessionDurationMinutes, sessionTypeOnline, sessionTypeVisit;
+import '../../models/appointment.dart' show AdminAppointmentRecord, defaultSessionDurationMinutes, durationHoursLabel, generateHourlySlotLabels, selectableDurationsMinutes, sessionTypeOnline, sessionTypeVisit;
 import '../../theme/app_theme.dart';
+import '../../utils/appointment_slot_utils.dart';
 import '../../utils/breakpoints.dart';
-import '../../services/appointment_booking_service.dart' show submitAppointmentBooking;
+import '../../widgets/khmer_aware_text.dart';
+import '../../services/appointment_booking_service.dart' show getAvailableSlots, submitAppointmentBooking;
+import '../../services/error_service.dart' show AppError;
 
 /// Consultation option for booking.
 class _ConsultationOption {
@@ -21,8 +24,7 @@ class _ConsultationOption {
   final String method;
 }
 
-/// Default time slots (2h session, 1h break): 09:00, 12:00, 15:00, 18:00, 21:00 (special: 1h or 2h to 23:00)
-const List<String> _timeSlots = ['09:00', '12:00', '15:00', '18:00', '21:00'];
+final List<String> _timeSlots = generateHourlySlotLabels();
 
 List<String> _slotsForDay(List<AdminAppointmentRecord> appointments, DateTime day) {
   final dateStr = '${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}';
@@ -33,21 +35,6 @@ List<String> _slotsForDay(List<AdminAppointmentRecord> appointments, DateTime da
       .toList();
   final all = [..._timeSlots, ...customTimes]..sort();
   return all;
-}
-
-bool _appointmentMatchesSlot(AdminAppointmentRecord a, DateTime day, String slot) {
-  if (a.status == 'cancelled') return false;
-  final dateStr = '${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}';
-  if (a.date != dateStr) return false;
-  return a.time == slot;
-}
-
-List<AdminAppointmentRecord> _appointmentsForSlot(
-  List<AdminAppointmentRecord> all,
-  DateTime day,
-  String slot,
-) {
-  return all.where((a) => _appointmentMatchesSlot(a, day, slot)).toList();
 }
 
 class DashboardCalendar extends StatelessWidget {
@@ -81,8 +68,6 @@ class DashboardCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = Breakpoints.isNarrow(width);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -99,7 +84,7 @@ class DashboardCalendar extends StatelessWidget {
             lastDay: DateTime.now().add(const Duration(days: 365)),
             focusedDay: focusedDay,
             selectedDayPredicate: (day) => _isSameDay(selectedDay, day),
-            calendarFormat: isNarrow ? CalendarFormat.month : CalendarFormat.month,
+            calendarFormat: CalendarFormat.month,
             eventLoader: (day) {
               final dateStr = '${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}';
               return appointments
@@ -191,10 +176,15 @@ class DashboardCalendar extends StatelessWidget {
             ),
             child: Column(
               children: _slotsForDay(appointments, selectedDay).map((slot) {
-                final slotAppointments = _appointmentsForSlot(appointments, selectedDay, slot);
+                final starting =
+                    startingAppointmentsForSlot(appointments, selectedDay, slot);
+                final continuations =
+                    continuationAppointmentsForSlot(appointments, selectedDay, slot);
                 return _TimeSlotRow(
                   slot: slot,
-                  appointments: slotAppointments,
+                  day: selectedDay,
+                  startingAppointments: starting,
+                  continuationAppointments: continuations,
                   l10n: l10n,
                   updatingId: updatingId,
                   onSlotTap: () => onCreateBooking(selectedDay, slot),
@@ -217,7 +207,9 @@ class DashboardCalendar extends StatelessWidget {
 class _TimeSlotRow extends StatelessWidget {
   const _TimeSlotRow({
     required this.slot,
-    required this.appointments,
+    required this.day,
+    required this.startingAppointments,
+    required this.continuationAppointments,
     required this.l10n,
     this.updatingId,
     required this.onSlotTap,
@@ -227,7 +219,9 @@ class _TimeSlotRow extends StatelessWidget {
   });
 
   final String slot;
-  final List<AdminAppointmentRecord> appointments;
+  final DateTime day;
+  final List<AdminAppointmentRecord> startingAppointments;
+  final List<AdminAppointmentRecord> continuationAppointments;
   final AppLocalizations l10n;
   final String? updatingId;
   final VoidCallback onSlotTap;
@@ -237,7 +231,8 @@ class _TimeSlotRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasAppointments = appointments.isNotEmpty;
+    final isOccupied =
+        startingAppointments.isNotEmpty || continuationAppointments.isNotEmpty;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -260,21 +255,39 @@ class _TimeSlotRow extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: hasAppointments
-                ? Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
+            child: isOccupied
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      ...appointments.map((a) => _CalendarAppointmentChip(
-                        record: a,
-                        l10n: l10n,
-                        isUpdating: updatingId == a.id,
-                        onTap: () => onAppointmentTap(a),
-                        onConfirm: () => onUpdateStatus(a.id, 'confirmed'),
-                        onComplete: onComplete != null ? () => onComplete!(a.id) : null,
-                        onCancel: () => onUpdateStatus(a.id, 'cancelled'),
-                      )),
-                      _AddSlotChip(onTap: onSlotTap),
+                      ...startingAppointments.map(
+                        (a) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: _CalendarAppointmentChip(
+                            record: a,
+                            day: day,
+                            slot: slot,
+                            l10n: l10n,
+                            isUpdating: updatingId == a.id,
+                            onTap: () => onAppointmentTap(a),
+                            onConfirm: () => onUpdateStatus(a.id, 'confirmed'),
+                            onComplete:
+                                onComplete != null ? () => onComplete!(a.id) : null,
+                            onCancel: () => onUpdateStatus(a.id, 'cancelled'),
+                          ),
+                        ),
+                      ),
+                      ...continuationAppointments.map(
+                        (a) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: _ContinuedAppointmentBlock(
+                            record: a,
+                            day: day,
+                            slot: slot,
+                            l10n: l10n,
+                            onTap: () => onAppointmentTap(a),
+                          ),
+                        ),
+                      ),
                     ],
                   )
                 : _AddSlotChip(onTap: onSlotTap),
@@ -285,9 +298,96 @@ class _TimeSlotRow extends StatelessWidget {
   }
 }
 
+class _ContinuedAppointmentBlock extends StatelessWidget {
+  const _ContinuedAppointmentBlock({
+    required this.record,
+    required this.day,
+    required this.slot,
+    required this.l10n,
+    required this.onTap,
+  });
+
+  final AdminAppointmentRecord record;
+  final DateTime day;
+  final String slot;
+  final AppLocalizations l10n;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final position = spanPosition(record, day, slot);
+    final isCancelled = record.status == 'cancelled';
+    final isCompleted = record.status == 'completed';
+    final completedColor = const Color(0xFF1B5E20);
+    final accentColor =
+        isCancelled ? AppColors.error : isCompleted ? completedColor : AppColors.accent;
+    final endLabel = formatTimeLabel(appointmentEnd(record));
+    final showEndLabel = position == SpanPosition.end;
+
+    BorderRadius borderRadius;
+    switch (position) {
+      case SpanPosition.end:
+        borderRadius = const BorderRadius.only(
+          bottomLeft: Radius.circular(8),
+          bottomRight: Radius.circular(8),
+        );
+      case SpanPosition.middle:
+        borderRadius = BorderRadius.zero;
+      case SpanPosition.start:
+      case SpanPosition.none:
+        borderRadius = BorderRadius.circular(8);
+    }
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: isCancelled ? null : onTap,
+        borderRadius: borderRadius,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          decoration: BoxDecoration(
+            color: accentColor.withValues(alpha: 0.12),
+            borderRadius: borderRadius,
+            border: Border(
+              left: BorderSide(color: accentColor.withValues(alpha: 0.7), width: 3),
+              right: BorderSide(color: accentColor.withValues(alpha: 0.35)),
+              top: position == SpanPosition.middle || position == SpanPosition.end
+                  ? BorderSide.none
+                  : BorderSide(color: accentColor.withValues(alpha: 0.35)),
+              bottom: position == SpanPosition.middle || position == SpanPosition.start
+                  ? BorderSide.none
+                  : BorderSide(color: accentColor.withValues(alpha: 0.35)),
+            ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: KhmerAwareText(
+                  showEndLabel
+                      ? '${record.name} · ${l10n.bookingUntilTime(endLabel)}'
+                      : l10n.bookingContinued,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.onSurfaceVariantDark,
+                        fontStyle: FontStyle.italic,
+                      ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _CalendarAppointmentChip extends StatelessWidget {
   const _CalendarAppointmentChip({
     required this.record,
+    required this.day,
+    required this.slot,
     required this.l10n,
     required this.isUpdating,
     required this.onTap,
@@ -297,6 +397,8 @@ class _CalendarAppointmentChip extends StatelessWidget {
   });
 
   final AdminAppointmentRecord record;
+  final DateTime day;
+  final String slot;
   final AppLocalizations l10n;
   final bool isUpdating;
   final VoidCallback onTap;
@@ -317,22 +419,47 @@ class _CalendarAppointmentChip extends StatelessWidget {
     final isCompleted = record.status == 'completed';
 
     final completedColor = const Color(0xFF1B5E20);
+    final durationHours = durationHoursLabel(effectiveDurationMinutes(record));
+    final endLabel = formatTimeLabel(appointmentEnd(record));
+    final durationLine =
+        '${l10n.durationHours(durationHours)} · ${l10n.bookingUntilTime(endLabel)}';
+    final spansMultipleHours = effectiveDurationMinutes(record) > 60;
+    final borderColor = isCancelled
+        ? AppColors.error.withValues(alpha: 0.5)
+        : isCompleted
+            ? completedColor.withValues(alpha: 0.5)
+            : AppColors.accent.withValues(alpha: 0.5);
+    final fillColor = isCancelled
+        ? AppColors.error.withValues(alpha: 0.15)
+        : isCompleted
+            ? completedColor.withValues(alpha: 0.2)
+            : AppColors.accent.withValues(alpha: 0.2);
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: isCancelled ? null : onTap,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: spansMultipleHours
+            ? const BorderRadius.only(
+                topLeft: Radius.circular(8),
+                topRight: Radius.circular(8),
+              )
+            : BorderRadius.circular(8),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           decoration: BoxDecoration(
-            color: isCancelled
-                ? AppColors.error.withValues(alpha: 0.15)
-                : isCompleted
-                    ? completedColor.withValues(alpha: 0.2)
-                    : AppColors.accent.withValues(alpha: 0.2),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: isCancelled ? AppColors.error.withValues(alpha: 0.5) : isCompleted ? completedColor.withValues(alpha: 0.5) : AppColors.accent.withValues(alpha: 0.5),
+            color: fillColor,
+            borderRadius: spansMultipleHours
+                ? const BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
+                  )
+                : BorderRadius.circular(8),
+            border: Border(
+              left: BorderSide(color: borderColor),
+              right: BorderSide(color: borderColor),
+              top: BorderSide(color: borderColor),
+              bottom: spansMultipleHours ? BorderSide.none : BorderSide(color: borderColor),
             ),
           ),
           child: Column(
@@ -342,7 +469,7 @@ class _CalendarAppointmentChip extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
+                  KhmerAwareText(
                     record.name,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: AppColors.onPrimary,
@@ -366,6 +493,14 @@ class _CalendarAppointmentChip extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                durationLine,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.onSurfaceVariantDark,
+                      fontWeight: FontWeight.w500,
+                    ),
               ),
               const SizedBox(height: 4),
               Text(
@@ -477,6 +612,7 @@ Future<void> showCreateBookingDialog(
   String selectedTime = initialTime;
   int selectedServiceIndex = 0;
   String selectedSessionType = sessionTypeVisit;
+  int selectedDurationMinutes = defaultSessionDurationMinutes;
   bool submitting = false;
   String? error;
 
@@ -583,6 +719,31 @@ Future<void> showCreateBookingDialog(
                   ),
                   const SizedBox(height: 16),
                   Text(
+                    l10n.selectDuration,
+                    style: TextStyle(color: AppColors.onSurfaceVariantDark, fontSize: 12),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: selectableDurationsMinutes.map((minutes) {
+                      final selected = selectedDurationMinutes == minutes;
+                      final hours = durationHoursLabel(minutes);
+                      return ChoiceChip(
+                        label: Text(l10n.durationHours(hours)),
+                        selected: selected,
+                        onSelected: (v) {
+                          if (v) setState(() => selectedDurationMinutes = minutes);
+                        },
+                        selectedColor: AppColors.accent.withValues(alpha: 0.3),
+                        side: BorderSide(
+                          color: selected ? AppColors.accent : AppColors.borderDark,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
                     l10n.selectDateAndTime,
                     style: TextStyle(color: AppColors.onSurfaceVariantDark, fontSize: 12),
                   ),
@@ -654,8 +815,8 @@ Future<void> showCreateBookingDialog(
                                 onChanged: (v) async {
                                   if (v == '__custom__') {
                                     final initial = selectedTime.isNotEmpty
-                                        ? (int.tryParse(selectedTime.split(':')[0]) ?? 9) * 60 + (int.tryParse(selectedTime.split(':').length > 1 ? selectedTime.split(':')[1] : '0') ?? 0)
-                                        : 9 * 60;
+                                        ? (int.tryParse(selectedTime.split(':')[0]) ?? 8) * 60 + (int.tryParse(selectedTime.split(':').length > 1 ? selectedTime.split(':')[1] : '0') ?? 0)
+                                        : 8 * 60;
                                     final t = await showTimePicker(
                                       context: context,
                                       initialTime: TimeOfDay(hour: initial ~/ 60, minute: initial % 60),
@@ -687,8 +848,8 @@ Future<void> showCreateBookingDialog(
                               child: IconButton(
                                 onPressed: () async {
                                   final initial = selectedTime.isNotEmpty
-                                      ? (int.tryParse(selectedTime.split(':')[0]) ?? 9) * 60 + (int.tryParse(selectedTime.split(':').length > 1 ? selectedTime.split(':')[1] : '0') ?? 0)
-                                      : 9 * 60;
+                                      ? (int.tryParse(selectedTime.split(':')[0]) ?? 8) * 60 + (int.tryParse(selectedTime.split(':').length > 1 ? selectedTime.split(':')[1] : '0') ?? 0)
+                                      : 8 * 60;
                                   final t = await showTimePicker(
                                     context: context,
                                     initialTime: TimeOfDay(hour: initial ~/ 60, minute: initial % 60),
@@ -764,6 +925,18 @@ Future<void> showCreateBookingDialog(
                 });
                 final dateStr = '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}';
                 try {
+                  final availability = await getAvailableSlots(
+                    dateStr,
+                    durationMinutes: selectedDurationMinutes,
+                  );
+                  if (!availability.slots.contains(selectedTime)) {
+                    if (!context.mounted) return;
+                    setState(() {
+                      error = l10n.slotTimeNotAvailable;
+                      submitting = false;
+                    });
+                    return;
+                  }
                   final note = noteController.text.trim();
                   final result = await submitAppointmentBooking(
                     name: name,
@@ -774,7 +947,7 @@ Future<void> showCreateBookingDialog(
                     time: selectedTime,
                     sessionType: selectedSessionType,
                     notes: note.isEmpty ? null : note,
-                    durationMinutes: defaultSessionDurationMinutes,
+                    durationMinutes: selectedDurationMinutes,
                     createdByAdmin: true,
                   );
                   if (!context.mounted) return;
@@ -793,7 +966,7 @@ Future<void> showCreateBookingDialog(
                 } catch (e) {
                   if (!context.mounted) return;
                   setState(() {
-                    error = e.toString();
+                    error = AppError.fromException(e, l10n: l10n).userMessage;
                     submitting = false;
                   });
                 }

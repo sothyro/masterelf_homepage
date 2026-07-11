@@ -1,6 +1,14 @@
-/// Default session duration and break (used for slot generation).
-const int defaultSessionDurationMinutes = 120;
-const int defaultBreakAfterMinutes = 60;
+export '../config/booking_config.dart'
+    show
+        defaultBreakAfterMinutes,
+        defaultSessionDurationMinutes,
+        minSessionDurationMinutes,
+        maxSessionDurationMinutes,
+        businessOpenHour,
+        businessCloseHour,
+        selectableDurationsMinutes,
+        generateHourlySlotLabels,
+        durationHoursLabel;
 
 /// Session type: ONLINE or VISIT.
 const String sessionTypeOnline = 'ONLINE';
@@ -57,6 +65,8 @@ class AdminAppointmentRecord extends AppointmentRecord {
     this.phone = '',
     this.createdAtIso,
     this.notes = '',
+    this.durationMinutes,
+    this.endTimeIso,
     this.smsStatus,
     this.smsErrorReason,
     this.smsErrorBody,
@@ -66,6 +76,8 @@ class AdminAppointmentRecord extends AppointmentRecord {
   final String phone;
   final String? createdAtIso;
   final String notes;
+  final int? durationMinutes;
+  final String? endTimeIso;
   /// SMS status from Cloud Function: sent, failed, skipped, error.
   final String? smsStatus;
   /// Reason when SMS failed or skipped (e.g. invalid_phone, config, api_error).
@@ -87,6 +99,8 @@ class AdminAppointmentRecord extends AppointmentRecord {
       phone: map['phone'] as String? ?? '',
       createdAtIso: map['createdAt'] as String?,
       notes: map['notes'] as String? ?? '',
+      durationMinutes: map['durationMinutes'] as int?,
+      endTimeIso: map['endTime'] as String?,
       smsStatus: map['smsStatus'] as String?,
       smsErrorReason: map['smsErrorReason'] as String?,
       smsErrorBody: map['smsErrorBody'] as String?,

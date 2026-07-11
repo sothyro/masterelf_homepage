@@ -73,18 +73,18 @@ class AppDrawer extends StatelessWidget {
                       onTap: () => _go(context, '/apps#master-elf'),
                     ),
                     _DrawerTile(
-                      label: l10n.period9MobileApp,
-                      path: '/apps#period9',
+                      label: l10n.bookStoreNav,
+                      path: '/books',
                       current: current,
-                      icon: LucideIcons.smartphone,
-                      onTap: () => _go(context, '/apps#period9'),
+                      icon: LucideIcons.bookOpen,
+                      onTap: () => _go(context, '/books'),
                     ),
                     _DrawerTile(
                       label: l10n.talismanStore,
-                      path: '/apps#talisman',
+                      path: '/talisman',
                       current: current,
                       icon: LucideIcons.shoppingBag,
-                      onTap: () => _go(context, '/apps#talisman'),
+                      onTap: () => _go(context, '/talisman'),
                     ),
                     _SectionLabel(label: l10n.events),
                     _DrawerTile(
@@ -93,6 +93,13 @@ class AppDrawer extends StatelessWidget {
                       current: current,
                       icon: LucideIcons.calendarDays,
                       onTap: () => _go(context, '/events'),
+                    ),
+                    _DrawerTile(
+                      label: l10n.fieldWorkNav,
+                      path: '/field-work',
+                      current: current,
+                      icon: LucideIcons.camera,
+                      onTap: () => _go(context, '/field-work'),
                     ),
                     _DrawerTile(
                       label: l10n.mediaAndPosts,

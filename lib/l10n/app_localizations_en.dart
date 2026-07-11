@@ -167,46 +167,342 @@ class AppLocalizationsEn extends AppLocalizations {
   String get period9SpotlightTaglineHighlight => 'pocket';
 
   @override
-  String get talismanStoreSpotlightTagline => 'Wear your protection.';
+  String get talismanStoreSpotlightTagline =>
+      'Heaven\'s blessings. Protection you can carry.';
 
   @override
-  String get talismanStoreSpotlightTaglineHighlight => 'protection';
+  String get talismanStoreSpotlightTaglineHighlight => 'carry';
+
+  @override
+  String get talismanStoreIntroHeading => 'Sacred charms, chosen with devotion';
+
+  @override
+  String get talismanStoreIntroBody =>
+      'Each talisman carries the intention of classical blessing rites—made to guard, attract, and restore balance when life feels unsettled.';
+
+  @override
+  String get talismanStoreIntroHighlight => 'guard, attract, and restore';
+
+  @override
+  String get talismanStoreCollectionHeading => 'Nine Sacred Charms';
+
+  @override
+  String get talismanStoreCollectionIntro =>
+      'Nine intentions, one calling—to walk under heaven\'s favour when you need a sign most.';
+
+  @override
+  String get talismanStoreCollectionIntroHighlight => 'heaven\'s favour';
+
+  @override
+  String get talismanStoreTrustHeading => 'Faith you can hold close';
+
+  @override
+  String get talismanStoreTrustBody =>
+      'Hand-selected remedies. Time-honoured blessings. Spiritually prepared—not mass-made trinkets.';
+
+  @override
+  String get talismanStoreClosingHeading =>
+      'Seeking a blessing for something specific?';
+
+  @override
+  String get talismanStoreClosingBody =>
+      'Tell us what you carry—worries at home, on the road, or in the heart—and we\'ll guide you to the charm that fits.';
+
+  @override
+  String get talismanStoreClosingCta => 'Book a consultation';
+
+  @override
+  String get talismanProduct1Subtitle => 'Guardian charm for daily wear';
+
+  @override
+  String get talismanProduct1Hook =>
+      'Shield against harm—carry heaven\'s guard wherever you go.';
+
+  @override
+  String get talismanProduct2Subtitle => 'Fortune-attracting talisman';
+
+  @override
+  String get talismanProduct2Hook =>
+      'Open the path to abundance; invite prosperity with every step.';
+
+  @override
+  String get talismanProduct3Subtitle => 'Vitality and wellbeing blessing';
+
+  @override
+  String get talismanProduct3Hook =>
+      'Nurture body and spirit—a sacred reminder that wellness is divine.';
+
+  @override
+  String get talismanProduct4Subtitle => 'Bond-deepening blessing charm';
+
+  @override
+  String get talismanProduct4Hook =>
+      'Soften conflict, deepen connection—for hearts meant to stay together.';
+
+  @override
+  String get talismanProduct5Subtitle => 'Path-aligning fortune charm';
+
+  @override
+  String get talismanProduct5Hook =>
+      'Align effort with opportunity; walk your career under decisive fortune.';
+
+  @override
+  String get talismanProduct6Subtitle => 'Rest-for-the-soul amulet';
+
+  @override
+  String get talismanProduct6Hook =>
+      'Quiet the restless mind; rest in blessings that never leave you.';
+
+  @override
+  String get talismanProduct7Subtitle => 'Journey guardian talisman';
+
+  @override
+  String get talismanProduct7Hook =>
+      'Travel under protection—return home as you departed, safe and whole.';
+
+  @override
+  String get talismanProduct8Subtitle => 'Dwelling-sealing prosperity charm';
+
+  @override
+  String get talismanProduct8Hook =>
+      'Seal your home with peace; let every room welcome good fortune.';
+
+  @override
+  String get talismanProduct9Subtitle => 'Clarity for life\'s crossroads';
+
+  @override
+  String get talismanProduct9Hook =>
+      'Clear sight for hard choices—guidance when the way ahead feels clouded.';
 
   @override
   String get bookStoreSectionHeading => 'Master Elf Book Store';
 
   @override
   String get bookStoreSectionTagline =>
-      'Wisdom you can hold. Knowledge that lasts.';
+      'Ancient systems. Clear guidance you can use today.';
 
   @override
-  String get bookStoreSectionTaglineHighlight => 'Wisdom';
+  String get bookStoreSectionTaglineHighlight => 'use today';
 
   @override
   String get bookStoreSectionMarketing =>
-      'Dive deeper into Period 9 Feng Shui and Chinese metaphysics with our curated books. Perfect for practitioners and enthusiasts—order now and transform your understanding.';
+      'Master Elf\'s curated library—written for homes, businesses, and life decisions. Pick one volume or build your full foundation.';
 
   @override
-  String get bookStoreSectionMarketingHighlight =>
-      'transform your understanding';
+  String get bookStoreSectionMarketingHighlight => 'build your full foundation';
 
   @override
-  String get bookStoreBook1Title => 'Period 9 Feng Shui — Volume 1';
+  String get bookStoreIntroHeading => 'Books that earn a place on your desk';
 
   @override
-  String get bookStoreBook1Subtitle => 'Foundations & Flying Stars';
+  String get bookStoreIntroBody =>
+      'Classical Chinese metaphysics, explained in plain language. Each volume is practical enough to open tonight and wise enough to revisit for years.';
+
+  @override
+  String get bookStoreIntroHighlight => 'revisit for years';
+
+  @override
+  String get bookStoreBlessingSeriesIntro =>
+      'Five classical disciplines, one complete path—from space and strategy to timing and protection.';
+
+  @override
+  String get bookStoreBlessingSeriesIntroHighlight => 'one complete path';
+
+  @override
+  String get bookStorePeriod9SeriesIntro =>
+      'Period 9 changes the map. These volumes show what shifted and how to apply it.';
+
+  @override
+  String get bookStorePeriod9SeriesIntroHighlight => 'how to apply it';
+
+  @override
+  String get bookStoreTrustHeading => 'Built for real decisions';
+
+  @override
+  String get bookStoreTrustBody =>
+      'Practical chapters. Real case logic. Wisdom you can trust—not museum theory.';
+
+  @override
+  String bookStoreBundleSaveLabel(String amount) {
+    return 'Save $amount vs buying separately';
+  }
+
+  @override
+  String get bookStoreClosingHeading => 'Not sure where to start?';
+
+  @override
+  String get bookStoreClosingBody =>
+      'Tell us your goal—home, business, or timing—and we\'ll point you to the right volume.';
+
+  @override
+  String get bookStoreClosingCta => 'Book a consultation';
+
+  @override
+  String get bookStoreBook1Hook =>
+      'Shape your space for flow, wealth, and calm at home.';
+
+  @override
+  String get bookStoreBook2Hook =>
+      'Choose better timing for business, travel, and big decisions.';
+
+  @override
+  String get bookStoreBook3Hook =>
+      'Read change clearly—then act with confidence.';
+
+  @override
+  String get bookStoreBook4Hook =>
+      'Blessings and protection rituals, explained step by step.';
+
+  @override
+  String get bookStoreBook5Hook =>
+      'Pick auspicious dates for moves, weddings, and launches.';
+
+  @override
+  String get bookStoreBlessingBundleHook =>
+      'Five disciplines, one trusted set—the library Master Elf recommends.';
+
+  @override
+  String get bookStorePeriod9Book1Hook =>
+      'Master Period 9 foundations before you renovate or move.';
+
+  @override
+  String get bookStorePeriod9Book2Hook =>
+      'Advanced flying-star methods for serious students and practitioners.';
+
+  @override
+  String get bookStoreBook1Title => 'Modern Feng Shui';
+
+  @override
+  String get bookStoreBook1Subtitle =>
+      'The Living Science of Space, Flow & Prosperity';
 
   @override
   String get bookStoreBook1Price => '24.99';
 
   @override
-  String get bookStoreBook2Title => 'Period 9 Feng Shui — Volume 2';
+  String get bookStoreBook2Title => 'Applied Qi Men Dun Jia';
 
   @override
-  String get bookStoreBook2Subtitle => 'Advanced Applications';
+  String get bookStoreBook2Subtitle =>
+      'The Hidden Science of Strategy, Timing & Victory';
 
   @override
   String get bookStoreBook2Price => '24.99';
+
+  @override
+  String get bookStoreBook3Title => 'Strategic I Ching';
+
+  @override
+  String get bookStoreBook3Subtitle =>
+      'The Ancient Wisdom of Choice, Change & Clarity';
+
+  @override
+  String get bookStoreBook3Price => '24.99';
+
+  @override
+  String get bookStoreBook4Title => 'The Mao Shan Way';
+
+  @override
+  String get bookStoreBook4Subtitle =>
+      'The Secret Rituals of Blessing, Spirit & Protection';
+
+  @override
+  String get bookStoreBook4Price => '24.99';
+
+  @override
+  String get bookStoreBook5Title => 'Ze Ri';
+
+  @override
+  String get bookStoreBook5Subtitle =>
+      'The Sacred Art of Timing for Power, Hope & Destiny';
+
+  @override
+  String get bookStoreBook5Price => '24.99';
+
+  @override
+  String get bookStoreBlessingBundleTitle => 'Complete 5-Blessing Bundle';
+
+  @override
+  String get bookStoreBlessingBundleSubtitle =>
+      'All five volumes — save when you buy the full set';
+
+  @override
+  String get bookStoreBlessingBundlePrice => '99.99';
+
+  @override
+  String get bookStoreBlessingBundleOriginalPrice => '124.95';
+
+  @override
+  String get bookStoreBundleBadge => 'Bundle';
+
+  @override
+  String get bookStoreAddBundleToCart => 'Add Bundle to Cart';
+
+  @override
+  String get bookStorePeriod9Book1Title => 'Period 9 Feng Shui — Volume 1';
+
+  @override
+  String get bookStorePeriod9Book1Subtitle => 'Foundations & Flying Stars';
+
+  @override
+  String get bookStorePeriod9Book1Price => '24.99';
+
+  @override
+  String get bookStorePeriod9Book2Title => 'Period 9 Feng Shui — Volume 2';
+
+  @override
+  String get bookStorePeriod9Book2Subtitle => 'Advanced Applications';
+
+  @override
+  String get bookStorePeriod9Book2Price => '24.99';
+
+  @override
+  String get bookStoreBlessingSeriesHeading => 'The 5-Blessing Book Series';
+
+  @override
+  String get bookStoreShelfPanoramaTopHeading =>
+      'Introducing The Five Blessings Series';
+
+  @override
+  String get bookStoreShelfPanoramaTopBody =>
+      'A definitive library from Master Hong Chhay Heng—five volumes that turn classical metaphysics into daily decisions you can trust.';
+
+  @override
+  String get bookStoreShelfPanoramaTopHighlight =>
+      'daily decisions you can trust';
+
+  @override
+  String get bookStoreShelfPanoramaBottomHeading =>
+      'Own the complete reference set';
+
+  @override
+  String get bookStoreShelfPanoramaBottomBody =>
+      'From Feng Shui and Qi Men to I Ching, Mao Shan, and Ze Ri—each book stands alone, and together they form the library serious practitioners keep on their desk.';
+
+  @override
+  String get bookStoreShelfPanoramaBottomHighlight =>
+      'library serious practitioners keep';
+
+  @override
+  String get bookStorePeriod9BridgeHeading =>
+      'Continue your library with Period 9';
+
+  @override
+  String get bookStorePeriod9BridgeBody =>
+      'The Five Blessings set builds your foundation—these two volumes map the 2024–2043 Fire era with flying-star methods you can apply immediately.';
+
+  @override
+  String get bookStorePeriod9BridgeHighlight => '2024–2043 Fire era';
+
+  @override
+  String get bookStorePeriod9EraBadge => 'Period 9 · 2024–2043';
+
+  @override
+  String get bookStorePeriod9SeriesKicker =>
+      'Advanced Feng Shui · Two-Volume Set';
+
+  @override
+  String get bookStorePeriod9SeriesHeading => 'Period 9 Feng Shui Collection';
 
   @override
   String get bookStorePricePrefix => '\$';
@@ -384,6 +680,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exploreAllEvents => 'Explore All Events';
 
   @override
+  String get eventsSectionTitle => 'Events';
+
+  @override
+  String get eventsSectionHeadline => 'Transform insight into experience.';
+
+  @override
+  String get eventsSectionSubline =>
+      'Join Master Elf live — workshops, revelations, and field sessions.';
+
+  @override
+  String get earlyBirdEnds => 'Early bird';
+
+  @override
   String get comingUpNext => 'Coming Up Next';
 
   @override
@@ -434,14 +743,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sectionKnowledgeBody =>
-      'Over 44,000 followers have used this system. Success is certain when you align with the right people, right places, and right time.';
+      'Over 51,000 followers have used this system. Success is certain when you align with the right people, right places, and right time.';
 
   @override
   String get sectionKnowledgeBody2 =>
       'Success doesn\'t come from working harder. It comes from making the right moves, at the right time, with the right system.';
 
   @override
-  String get sectionKnowledgeStat => '44,000+ followers';
+  String get sectionKnowledgeStat => '51K+ followers';
 
   @override
   String get sectionMapHeading =>
@@ -464,7 +773,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sectionStoryPara3 =>
-      'Today, that method has helped 44,000 followers create better outcomes for themselves and others.';
+      'Today, that method has helped 51,000 followers create better outcomes for themselves and others.';
 
   @override
   String get sectionStoryCtaButton => 'Master Elf\'s Endeavor';
@@ -706,30 +1015,135 @@ class AppLocalizationsEn extends AppLocalizations {
       'best event for Feng Shui, Chinese Metaphysics and Astrology in Cambodia';
 
   @override
-  String get eventsWhyAttendTitle => 'Why This Is the Best Event Ever';
+  String get eventsUpcomingSubline =>
+      'Choose your event and secure your seat. We can\'t wait to see you there.';
+
+  @override
+  String get eventsPageHeroHeadline => 'Where insight becomes experience';
+
+  @override
+  String get eventsPageHeroSubline =>
+      'Live revelations, online archives, and the next chapter of Master Elf\'s teaching journey.';
+
+  @override
+  String get eventsPageHeroHighlight => 'next chapter';
+
+  @override
+  String get eventsCompletedHeading => 'Recently Completed';
+
+  @override
+  String get eventsCompletedSubline =>
+      'Moments that moved our community—captured in person and online.';
+
+  @override
+  String get eventsCompletedBadge => 'Completed';
+
+  @override
+  String get eventsOnlineBadge => 'Online';
+
+  @override
+  String get eventsUpcomingBadge => 'Upcoming';
+
+  @override
+  String get eventsUpcomingSpotlightHeading => 'Upcoming Spotlight';
+
+  @override
+  String get eventsUpcomingSpotlightSubline =>
+      'The next gathering is already taking shape. Reserve your place early.';
+
+  @override
+  String get eventsGoat2027Title =>
+      'Master Elf — Strive for the Year of the Blood Goat 2027';
+
+  @override
+  String get eventsGoat2027Subtitle =>
+      'Annual revelation for the new zodiac cycle';
+
+  @override
+  String get eventsGoat2027Hook =>
+      'Step into the Blood Goat year with clarity, strategy, and heaven-aligned timing.';
+
+  @override
+  String get eventsGoat2027Description =>
+      'Master Elf\'s signature annual event returns—live teachings, Period 9 strategy, and the roadmap for thriving in the Year of the Blood Goat.';
+
+  @override
+  String get eventsGoat2027DescriptionHighlight => 'Year of the Blood Goat';
+
+  @override
+  String get eventsGoat2027Date => 'February 2027 · Phnom Penh';
+
+  @override
+  String get eventsGoat2027Location => 'Phnom Penh';
+
+  @override
+  String get eventsZodiacStripLabel => 'Blood Goat Year begins February 2027';
+
+  @override
+  String get eventsZodiacStripPhoenix => 'Phoenix 2026';
+
+  @override
+  String get eventsZodiacStripGoat => 'Blood Goat 2027';
+
+  @override
+  String get eventsPhoenixRecapHook =>
+      'The revelation that launched a new era—witnessed live in Phnom Penh.';
+
+  @override
+  String get eventsPhoenixRecapBody =>
+      'Hundreds gathered for Master Elf\'s most anticipated revelation. The Rise of Phoenix marked a turning point—renewal, transformation, and the framework for rising in Period 9.';
+
+  @override
+  String get eventsPhoenixRecapHighlight => 'turning point';
+
+  @override
+  String get eventsExploreJourney => 'Explore the journey';
+
+  @override
+  String get eventsHomeFeaturedUpcoming => 'Coming Up Next';
+
+  @override
+  String get eventsHomeRecentCompleted => 'Recently Completed';
+
+  @override
+  String get event1Subtitle => 'The Master Revelation — live in Phnom Penh';
+
+  @override
+  String get event1Hook =>
+      'The moment insight became action—Master Elf\'s defining revelation of 2026.';
+
+  @override
+  String get event2Subtitle => 'Singapore edition — now available online';
+
+  @override
+  String get event2Hook =>
+      'Feng Shui and astrology mastery, captured for replay at your pace.';
+
+  @override
+  String get event3Subtitle => 'Fire Horse year strategy — online archive';
+
+  @override
+  String get event3Hook =>
+      'The art of war in the Year of the Fire Horse—strategy you can revisit anytime.';
+
+  @override
+  String get eventsWhyAttendTitle => 'Why Master Elf events matter';
 
   @override
   String get eventsWhyAttendLead =>
-      'This isn\'t just another seminar. It\'s the most anticipated Feng Shui and Chinese Metaphysics experience—where ancient wisdom meets real strategy and you leave ready to transform your path.';
+      'Whether you joined us in Phnom Penh or online, or you\'re preparing for the Blood Goat year ahead—these gatherings turn classical wisdom into decisions you can act on.';
 
   @override
   String get eventsWhyAttend1 =>
-      'Learn from the masters—live sessions and insights you can\'t get anywhere else.';
+      'Learn directly from Master Elf—live revelations and depth you won\'t find in books alone.';
 
   @override
   String get eventsWhyAttend2 =>
-      'Connect with practitioners and enthusiasts who share your journey.';
+      'Join a community of practitioners ready to rise with each zodiac cycle.';
 
   @override
   String get eventsWhyAttend3 =>
-      'Limited seats. Secure your spot and be part of something extraordinary.';
-
-  @override
-  String get eventsUpcomingHeadline => 'Upcoming Events';
-
-  @override
-  String get eventsUpcomingSubline =>
-      'Choose your event and secure your seat. We can\'t wait to see you there.';
+      'Upcoming seats are limited. Register early for the Blood Goat 2027 gathering.';
 
   @override
   String get secureYourSeat => 'Book your seat';
@@ -821,7 +1235,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get journeyStory1 =>
-      'Master Elf is a recognised practitioner of Feng Shui and Chinese Metaphysics, with a following of over 44,000 and a track record of guiding individuals and businesses toward clarity and results. His path did not begin by chance—it began with a calling.';
+      'Master Elf is a recognised practitioner of Feng Shui and Chinese Metaphysics, with a following of over 51,000 and a track record of guiding individuals and businesses toward clarity and results. His path did not begin by chance—it began with a calling.';
 
   @override
   String get journeyStory2 =>
@@ -962,7 +1376,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sessionDurationNote =>
-      'Each session is 2 hours with a 1-hour break between sessions.';
+      'Sessions from 1 hour. Open daily 8 AM–10 PM (Cambodia time).';
+
+  @override
+  String get selectDuration => 'Session duration';
+
+  @override
+  String durationHours(int hours) {
+    return '${hours}h';
+  }
+
+  @override
+  String confirmSessionDuration(int hours) {
+    return '$hours-hour session';
+  }
+
+  @override
+  String bookingUntilTime(String time) {
+    return 'until $time';
+  }
+
+  @override
+  String get bookingContinued => 'Continued';
 
   @override
   String get sessionType => 'Session type';
@@ -996,7 +1431,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noBookingsFound => 'No bookings found for this number.';
 
   @override
-  String get cancelBookingButton => 'Cancel booking';
+  String get cancelBookingButton => 'Cancel';
 
   @override
   String get cancelBookingConfirm => 'Cancel this booking?';
@@ -1020,7 +1455,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusCompleted => 'Completed';
 
   @override
-  String get markAsCompleted => 'Mark completed';
+  String get markAsCompleted => 'Completed';
 
   @override
   String get customTime => 'Custom time…';
@@ -1215,7 +1650,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get event2Description =>
-      'The Singapore Edition of Feng Shui & Astrology 2026 live event.';
+      'The Singapore Edition of Feng Shui & Astrology 2026—now available as an online replay.';
 
   @override
   String get event2Location => 'Resorts World Sentosa, Singapore';
@@ -1225,10 +1660,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get event3Description =>
-      'The Art of War In The Year of the Fire Horse';
+      'The Art of War in the Year of the Fire Horse—completed online event, available for replay.';
 
   @override
   String get event3Location => 'Resorts World Singapore';
+
+  @override
+  String get event4Title => 'Date Selection Masterclass';
+
+  @override
+  String get event4Description =>
+      'Choose auspicious timing for key life decisions.';
+
+  @override
+  String get event4Location => 'Phnom Penh';
 
   @override
   String get loginSectionTitle => 'Staff / Admin Login';
@@ -1284,6 +1729,50 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statusColumn => 'Status';
+
+  @override
+  String get actionsColumn => 'Actions';
+
+  @override
+  String appointmentsListRange(int start, int end, int total) {
+    return 'Showing $start–$end of $total';
+  }
+
+  @override
+  String appointmentsListPage(int current, int total) {
+    return 'Page $current of $total';
+  }
+
+  @override
+  String get searchAppointments => 'Search appointments…';
+
+  @override
+  String get exportAppointmentsList => 'Export List';
+
+  @override
+  String get noAppointmentsMatchSearch => 'No appointments match your search.';
+
+  @override
+  String get appointmentsListPdfTitle => 'Appointments List';
+
+  @override
+  String get appointmentsPdfExportStarted =>
+      'Appointments list PDF download started.';
+
+  @override
+  String get appointmentsPdfExportFailed =>
+      'Failed to export appointments list.';
+
+  @override
+  String get dashboardStatsFilteredTotal => 'Filtered total';
+
+  @override
+  String get switchToListToSearchExport =>
+      'Switch to List view to search or export.';
+
+  @override
+  String get slotTimeNotAvailable =>
+      'Selected time is not available. Please choose another slot.';
 
   @override
   String get filterAll => 'All';
@@ -1562,6 +2051,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noSlotsAvailable => 'No slots available for this date.';
+
+  @override
+  String get slotsEstimateWarning =>
+      'Showing estimated times — live availability could not be loaded. Please confirm with us after booking.';
+
+  @override
+  String get slotsFetchFailed =>
+      'Could not reach the booking server. Times shown are estimates only — please confirm with us after booking.';
 
   @override
   String get poweredBy => 'Powered by Stonechat Communications';
@@ -2762,4 +3259,881 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get inspectionEstimatedReportDeliveryDate =>
       'Estimated Report Delivery Date';
+
+  @override
+  String get fieldWorkSectionTitle => 'Real Work in Action';
+
+  @override
+  String get fieldWorkSectionHeadline =>
+      'Real work. Real places. Real outcomes.';
+
+  @override
+  String get fieldWorkSectionSubline =>
+      'Office consultations, Mao Shan rituals, and on-site Feng Shui—documented as it happens.';
+
+  @override
+  String get fieldWorkRealmAll => 'All';
+
+  @override
+  String get fieldWorkRealmOffice => 'Office';
+
+  @override
+  String get fieldWorkRealmRitual => 'Mao Shan Ritual';
+
+  @override
+  String get fieldWorkRealmSite => 'Site Visit';
+
+  @override
+  String get fieldWorkFilterVideos => 'Videos';
+
+  @override
+  String get fieldWorkViewAll => 'View all activities';
+
+  @override
+  String get fieldWorkBookConsultation => 'Book a consultation';
+
+  @override
+  String get fieldWorkNav => 'Field Work';
+
+  @override
+  String get fieldWorkPageTitle => 'Master Elf in Action';
+
+  @override
+  String get fieldWorkPageSubline =>
+      'Documented consultations, rituals, and Feng Shui site visits across Cambodia.';
+
+  @override
+  String get fieldWorkFeaturedLabel => 'Featured';
+
+  @override
+  String get fieldWorkSeeRealSessions => 'See real sessions and site visits';
+
+  @override
+  String get fieldWorkSeeRealSessionsLink => 'Browse field work';
+
+  @override
+  String get fieldWorkJourneyTeaser =>
+      'Beyond the classroom—see how we work in the field.';
+
+  @override
+  String get fieldWorkJourneyCta => 'Explore field work';
+
+  @override
+  String get fieldWorkRelatedService => 'Book this type of service';
+
+  @override
+  String get fieldWorkShareFacebook => 'Share on Facebook';
+
+  @override
+  String get fieldWorkBackToJournal => 'Back to field work';
+
+  @override
+  String get fieldWorkEmptyFilter => 'No activities match this filter yet.';
+
+  @override
+  String get fieldWorkGalleryHeading => 'Photo gallery';
+
+  @override
+  String get fieldWorkPillarFengShuiTitle => 'Feng Shui site visit';
+
+  @override
+  String get fieldWorkPillarFengShuiSubtitle =>
+      'Compass readings and landform assessment on real properties.';
+
+  @override
+  String get fieldWorkPillarConsultTitle =>
+      'BaZi, Qi Men & I Ching consultations';
+
+  @override
+  String get fieldWorkPillarConsultSubtitle =>
+      'Office sessions—charts, strategy, and practical next steps.';
+
+  @override
+  String get fieldWorkPillarMaoShanTitle => 'Mao Shan home blessing';
+
+  @override
+  String get fieldWorkPillarMaoShanSubtitle =>
+      'Ritual support for peace, protection, and harmony at home.';
+
+  @override
+  String get fieldWorkPillarDateSelectionTitle => 'Date Selection (择日)';
+
+  @override
+  String get fieldWorkPillarDateSelectionSubtitle =>
+      'Auspicious timing for openings, signings, and milestones.';
+
+  @override
+  String get fieldWorkPillarBooksTitle => 'The 5-Blessing Book Series';
+
+  @override
+  String get fieldWorkPillarBooksSubtitle =>
+      'Wisdom you can hold—Master Elf publications for deeper study.';
+
+  @override
+  String get homePublicationsHeading => 'The 5-Blessing Book Series';
+
+  @override
+  String get homePublicationsSubline =>
+      'Master Elf publications — wisdom you can hold.';
+
+  @override
+  String get homePublicationsViewAll => 'View all books';
+
+  @override
+  String get homeCoreActivitiesHeading => 'Real Work. Real Outcomes.';
+
+  @override
+  String get homeCoreActivitiesSubline =>
+      'Every photo below is from an actual session—not stock imagery. See how Master Elf turns classical Chinese metaphysics into clarity, protection, and prosperity for clients on site, in office, and at the altar. Your next chapter could start here.';
+
+  @override
+  String get fieldWorkFromEventsLink => 'See real field work';
+
+  @override
+  String get fieldWorkVideosHeading => 'Watch real work in action';
+
+  @override
+  String get fieldWorkVideosSubline =>
+      'Six moments from the field—consultations, rituals, and site visits as they happen.';
+
+  @override
+  String get fieldWorkStoriesHeading => 'Our core activities';
+
+  @override
+  String get fieldWorkStoriesSubline =>
+      'Real site visits, office consultations, Mao Shan rituals, and date selection—documented in photos from the field.';
+
+  @override
+  String get fieldWorkWatchVideo => 'Watch';
+
+  @override
+  String get fieldWorkBackToActivities => 'Back to activities';
+
+  @override
+  String get fieldWorkVideoSpotlight1Title =>
+      'Feng Shui site visit — compass on site';
+
+  @override
+  String get fieldWorkVideoSpotlight1Subtitle =>
+      'On-location readings and landform assessment for a commercial property.';
+
+  @override
+  String get fieldWorkVideoSpotlight2Title =>
+      'Feng Shui audit — facing and sitting directions';
+
+  @override
+  String get fieldWorkVideoSpotlight2Subtitle =>
+      'Recording accurate directions for Flying Star analysis before interior work.';
+
+  @override
+  String get fieldWorkVideoSpotlight3Title => 'BaZi consultation at the office';
+
+  @override
+  String get fieldWorkVideoSpotlight3Subtitle =>
+      'A one-to-one session—charts, timing, and practical next steps.';
+
+  @override
+  String get fieldWorkVideoSpotlight4Title => 'Qi Men strategy session';
+
+  @override
+  String get fieldWorkVideoSpotlight4Subtitle =>
+      'Ancient timing tools applied to modern business decisions.';
+
+  @override
+  String get fieldWorkVideoSpotlight5Title =>
+      'Mao Shan ritual — office blessing';
+
+  @override
+  String get fieldWorkVideoSpotlight5Subtitle =>
+      'Ceremony to clear and align a workspace for a new business cycle.';
+
+  @override
+  String get fieldWorkVideoSpotlight6Title => 'Date Selection in practice';
+
+  @override
+  String get fieldWorkVideoSpotlight6Subtitle =>
+      'Choosing auspicious timing for openings, signings, and milestones.';
+
+  @override
+  String get inspectionXuanKongPeriod => 'Xuan Kong Period';
+
+  @override
+  String get inspectionPeriod7 => 'Period 7 (1984–2003)';
+
+  @override
+  String get inspectionPeriod8 => 'Period 8 (2004–2023)';
+
+  @override
+  String get inspectionPeriod9Option => 'Period 9 (2024–2043)';
+
+  @override
+  String get inspectionConvertedToTrigram => 'Converted to Trigram';
+
+  @override
+  String get inspectionHouseGua => 'House Gua';
+
+  @override
+  String get inspectionHouseKan => 'Kan House (坎) - Sitting North';
+
+  @override
+  String get inspectionHouseKun => 'Kun House (坤) - Sitting Southwest';
+
+  @override
+  String get inspectionHouseZhen => 'Zhen House (震) - Sitting East';
+
+  @override
+  String get inspectionHouseXun => 'Xun House (巽) - Sitting Southeast';
+
+  @override
+  String get inspectionHouseQian => 'Qian House (乾) - Sitting Northwest';
+
+  @override
+  String get inspectionHouseDui => 'Dui House (兌) - Sitting West';
+
+  @override
+  String get inspectionHouseGen => 'Gen House (艮) - Sitting Northeast';
+
+  @override
+  String get inspectionHouseLi => 'Li House (離) - Sitting South';
+
+  @override
+  String get inspectionHouseGroup => 'House Group';
+
+  @override
+  String get inspectionHouseGroupEast => 'East Group (Kan, Zhen, Xun, Li)';
+
+  @override
+  String get inspectionHouseGroupWest => 'West Group (Qian, Kun, Gen, Dui)';
+
+  @override
+  String get inspectionMainEntranceSector =>
+      'Main Entrance - Eight Mansions sector';
+
+  @override
+  String get inspectionMainEntranceQuality => 'Main Entrance - Quality';
+
+  @override
+  String get inspectionManagerOfficeSector => 'Manager/Owner Office - Sector';
+
+  @override
+  String get inspectionManagerOfficeQuality => 'Manager/Owner Office - Quality';
+
+  @override
+  String get inspectionCashierSector => 'Cashier/Safe - Sector';
+
+  @override
+  String get inspectionCashierQuality => 'Cashier/Safe - Quality';
+
+  @override
+  String get inspectionToiletSector => 'Toilet Location - Sector';
+
+  @override
+  String get inspectionToiletImpact => 'Toilet Impact';
+
+  @override
+  String get inspectionToiletAcceptable => 'Acceptable (at unfavorable sector)';
+
+  @override
+  String get inspectionToiletPoor => 'Poor (at favorable sector)';
+
+  @override
+  String get inspectionClientFullName => 'Primary Client/Owner - Full Name';
+
+  @override
+  String get inspectionClientRole => 'Role';
+
+  @override
+  String get inspectionRoleOwner => 'Owner';
+
+  @override
+  String get inspectionRoleMainTenant => 'Main Tenant';
+
+  @override
+  String get inspectionRoleCeo => 'CEO';
+
+  @override
+  String get inspectionRoleManager => 'Manager';
+
+  @override
+  String get inspectionBirthDate => 'Birth Date';
+
+  @override
+  String get inspectionBirthTime => 'Birth Time';
+
+  @override
+  String get inspectionPlaceOfBirth => 'Place of Birth';
+
+  @override
+  String get inspectionDayMaster => 'Day Master';
+
+  @override
+  String get inspectionFavorableElements => 'Favorable Elements';
+
+  @override
+  String get inspectionUnfavorableElements => 'Unfavorable Elements';
+
+  @override
+  String get inspectionElementWood => 'Wood (木)';
+
+  @override
+  String get inspectionElementFire => 'Fire (火)';
+
+  @override
+  String get inspectionElementEarth => 'Earth (土)';
+
+  @override
+  String get inspectionElementMetal => 'Metal (金)';
+
+  @override
+  String get inspectionElementWater => 'Water (水)';
+
+  @override
+  String get inspectionPersonalGuaLabel => 'Personal Gua (Ming Gua)';
+
+  @override
+  String get inspectionPersonalGroup => 'Personal Group';
+
+  @override
+  String get inspectionPersonalGroupEast => 'East Group';
+
+  @override
+  String get inspectionPersonalGroupWest => 'West Group';
+
+  @override
+  String get inspectionShengQiDirection => 'Sheng Qi (Best) direction';
+
+  @override
+  String get inspectionTianYiDirection => 'Tian Yi (Health) direction';
+
+  @override
+  String get inspectionYanNianDirection => 'Yan Nian (Relationship) direction';
+
+  @override
+  String get inspectionFuWeiDirection => 'Fu Wei (Stability) direction';
+
+  @override
+  String get inspectionPerson2Name => 'Person 2 - Name';
+
+  @override
+  String get inspectionPerson2Role => 'Person 2 - Role';
+
+  @override
+  String get inspectionPerson2BirthDate => 'Person 2 - Birth Date';
+
+  @override
+  String get inspectionPerson2BirthTime => 'Person 2 - Birth Time';
+
+  @override
+  String get inspectionPerson2Gua => 'Person 2 - Personal Gua';
+
+  @override
+  String get inspectionPerson3Name => 'Person 3 - Name';
+
+  @override
+  String get inspectionPerson3Role => 'Person 3 - Role';
+
+  @override
+  String get inspectionPerson3BirthDate => 'Person 3 - Birth Date';
+
+  @override
+  String get inspectionPerson3BirthTime => 'Person 3 - Birth Time';
+
+  @override
+  String get inspectionPerson3Gua => 'Person 3 - Personal Gua';
+
+  @override
+  String get inspectionBusinessGoals => 'Primary Business Goals';
+
+  @override
+  String get inspectionGoalWealth => 'Wealth/profit maximization';
+
+  @override
+  String get inspectionGoalCustomerFlow => 'Customer flow';
+
+  @override
+  String get inspectionGoalStability => 'Business stability';
+
+  @override
+  String get inspectionGoalStaffHarmony => 'Staff harmony';
+
+  @override
+  String get inspectionGoalHealth => 'Health and wellbeing';
+
+  @override
+  String get inspectionGoalOther => 'Other';
+
+  @override
+  String get inspectionSpecificConcerns => 'Specific Concerns Raised';
+
+  @override
+  String get inspectionCurrentChallenges => 'Current Challenges';
+
+  @override
+  String get inspectionChallengeFinancial => 'Financial difficulties';
+
+  @override
+  String get inspectionChallengeHealth => 'Health issues';
+
+  @override
+  String get inspectionChallengeStaff => 'Staff conflicts';
+
+  @override
+  String get inspectionChallengeLegal => 'Legal problems';
+
+  @override
+  String get inspectionChallengeRelationship => 'Relationship issues';
+
+  @override
+  String get inspectionChallengeCustomerFlow => 'Poor customer flow';
+
+  @override
+  String get inspectionHealthIssuesSpecify => 'Health issues (specify)';
+
+  @override
+  String get inspectionPlannedOpeningDate => 'Planned Opening Date';
+
+  @override
+  String get inspectionPreferredDateFrom => 'Preferred Date Range - From';
+
+  @override
+  String get inspectionPreferredDateTo => 'Preferred Date Range - To';
+
+  @override
+  String get inspectionActivitiesDateSelection =>
+      'Important Activities Requiring Date Selection';
+
+  @override
+  String get inspectionActivityGrandOpening => 'Grand opening ceremony';
+
+  @override
+  String get inspectionActivityRenovation => 'Renovation commencement';
+
+  @override
+  String get inspectionActivityMovingIn => 'Moving in/occupation';
+
+  @override
+  String get inspectionActivitySignInstall => 'Sign installation';
+
+  @override
+  String get inspectionActivityContract => 'Contract signing';
+
+  @override
+  String get inspectionActivityPurchases => 'Major purchases';
+
+  @override
+  String get inspectionSolarTerm => 'Solar Term';
+
+  @override
+  String get inspectionLunarDate => 'Lunar Date';
+
+  @override
+  String get inspectionFavorablePalaces =>
+      'Favorable Palaces for This Date/Time';
+
+  @override
+  String get inspectionUnfavorablePalaces =>
+      'Unfavorable Palaces for This Date/Time';
+
+  @override
+  String get inspectionGrandOpeningDate1 => 'For Grand Opening - Date option 1';
+
+  @override
+  String get inspectionGrandOpeningDate2 => 'For Grand Opening - Date option 2';
+
+  @override
+  String get inspectionGrandOpeningDate3 => 'For Grand Opening - Date option 3';
+
+  @override
+  String get inspectionRenovationDate1 =>
+      'For Renovation Start - Date option 1';
+
+  @override
+  String get inspectionRenovationDate2 =>
+      'For Renovation Start - Date option 2';
+
+  @override
+  String get inspectionMustAvoid => 'Must avoid';
+
+  @override
+  String get inspectionNumberOfMainEntrances => 'Number of Main Entrances';
+
+  @override
+  String get inspectionMainDoorPosition =>
+      'Main Door Position (which palace/sector)';
+
+  @override
+  String get inspectionDoorConfiguration => 'Door Configuration';
+
+  @override
+  String get inspectionDoorOpensInward => 'Opens inward';
+
+  @override
+  String get inspectionDoorOpensOutward => 'Opens outward';
+
+  @override
+  String get inspectionDoorSliding => 'Sliding door';
+
+  @override
+  String get inspectionDoorAutomatic => 'Automatic door';
+
+  @override
+  String get inspectionEntranceIssues => 'Issues';
+
+  @override
+  String get inspectionIssueBeamAboveDoor => 'Beam directly above door';
+
+  @override
+  String get inspectionIssueThroughFlow =>
+      'Door opens to back door (through-flow)';
+
+  @override
+  String get inspectionIssueToStaircase => 'Door opens to staircase';
+
+  @override
+  String get inspectionIssueToToilet => 'Door opens to toilet';
+
+  @override
+  String get inspectionIssueNarrowEntrance => 'Narrow entrance/cramped';
+
+  @override
+  String get inspectionIssueNone => 'No issues observed';
+
+  @override
+  String get inspectionEntranceAssessment => 'Assessment';
+
+  @override
+  String get inspectionEntranceFavorable => 'Favorable entrance';
+
+  @override
+  String get inspectionEntranceAcceptable =>
+      'Acceptable with minor adjustments';
+
+  @override
+  String get inspectionEntranceRemedial => 'Requires remedial work';
+
+  @override
+  String get inspectionCeilingHeight => 'Ceiling Height (m)';
+
+  @override
+  String get inspectionNaturalLight => 'Natural Light';
+
+  @override
+  String get inspectionLightAbundant => 'Abundant (large windows)';
+
+  @override
+  String get inspectionLightModerate => 'Moderate';
+
+  @override
+  String get inspectionLightDim => 'Dim/insufficient';
+
+  @override
+  String get inspectionAirCirculation => 'Air Circulation';
+
+  @override
+  String get inspectionAirGood => 'Good ventilation';
+
+  @override
+  String get inspectionAirPoor => 'Poor/stagnant';
+
+  @override
+  String get inspectionFloorPlanShape => 'Floor Plan Shape';
+
+  @override
+  String get inspectionShapeSquare => 'Square/rectangular (ideal)';
+
+  @override
+  String get inspectionShapeL => 'L-shaped';
+
+  @override
+  String get inspectionShapeIrregular => 'Irregular';
+
+  @override
+  String get inspectionShapeTriangular => 'Triangular sections';
+
+  @override
+  String get inspectionReceptionSector => 'Reception/Cashier - Sector';
+
+  @override
+  String get inspectionReceptionFlyingStar => 'Reception - Flying Star';
+
+  @override
+  String get inspectionReception8Mansions => 'Reception - Eight Mansions';
+
+  @override
+  String get inspectionReceptionAssessment => 'Reception - Assessment';
+
+  @override
+  String get inspectionOfficeSector => 'Office/Manager - Sector';
+
+  @override
+  String get inspectionOfficeFlyingStar => 'Office - Flying Star';
+
+  @override
+  String get inspectionOffice8Mansions => 'Office - Eight Mansions';
+
+  @override
+  String get inspectionOfficeAssessment => 'Office - Assessment';
+
+  @override
+  String get inspectionToiletSectorInternal => 'Toilet/Bathroom - Sector';
+
+  @override
+  String get inspectionToiletFlyingStar => 'Toilet - Flying Star';
+
+  @override
+  String get inspectionToilet8Mansions => 'Toilet - Eight Mansions';
+
+  @override
+  String get inspectionToiletIssues => 'Toilet Issues';
+
+  @override
+  String get inspectionToiletAtCenter => 'At center palace';
+
+  @override
+  String get inspectionToiletAtWealth => 'At wealth sector';
+
+  @override
+  String get inspectionToiletNoIssues => 'No issues';
+
+  @override
+  String get inspectionStaircaseSector => 'Staircase/Elevator - Sector';
+
+  @override
+  String get inspectionStaircaseFlyingStar => 'Staircase - Flying Star';
+
+  @override
+  String get inspectionStaircase8Mansions => 'Staircase - Eight Mansions';
+
+  @override
+  String get inspectionStaircaseAssessment => 'Staircase - Assessment';
+
+  @override
+  String get inspectionRoom1Sector => 'Room 1 - Sector';
+
+  @override
+  String get inspectionRoom1FlyingStar => 'Room 1 - Flying Star';
+
+  @override
+  String get inspectionRoom1EightMansions => 'Room 1 - Eight Mansions';
+
+  @override
+  String get inspectionRoom2Sector => 'Room 2 - Sector';
+
+  @override
+  String get inspectionRoom3Sector => 'Room 3 - Sector';
+
+  @override
+  String get inspectionBestSectorMainEntrance =>
+      'Sectors Best for - Main entrance';
+
+  @override
+  String get inspectionBestSectorCashier =>
+      'Sectors Best for - Cashier/finance';
+
+  @override
+  String get inspectionBestSectorManager => 'Sectors Best for - Manager office';
+
+  @override
+  String get inspectionBestSectorStorage => 'Sectors Best for - Storage';
+
+  @override
+  String get inspectionQualityStrong => 'Strong';
+
+  @override
+  String get inspectionQualityWeak => 'Weak';
+
+  @override
+  String get inspectionQualityConflicting => 'Conflicting';
+
+  @override
+  String get inspectionPdfTitle => 'Site Inspection Report';
+
+  @override
+  String get solarTerm01 => 'Lichun (立春)';
+
+  @override
+  String get solarTerm02 => 'Yushui (雨水)';
+
+  @override
+  String get solarTerm03 => 'Jingzhe (惊蛰)';
+
+  @override
+  String get solarTerm04 => 'Chunfen (春分)';
+
+  @override
+  String get solarTerm05 => 'Qingming (清明)';
+
+  @override
+  String get solarTerm06 => 'Guyu (谷雨)';
+
+  @override
+  String get solarTerm07 => 'Lixia (立夏)';
+
+  @override
+  String get solarTerm08 => 'Xiaoman (小满)';
+
+  @override
+  String get solarTerm09 => 'Mangzhong (芒种)';
+
+  @override
+  String get solarTerm10 => 'Xiazhi (夏至)';
+
+  @override
+  String get solarTerm11 => 'Xiaoshu (小暑)';
+
+  @override
+  String get solarTerm12 => 'Dashu (大暑)';
+
+  @override
+  String get solarTerm13 => 'Liqiu (立秋)';
+
+  @override
+  String get solarTerm14 => 'Chushu (处暑)';
+
+  @override
+  String get solarTerm15 => 'Bailu (白露)';
+
+  @override
+  String get solarTerm16 => 'Qiufen (秋分)';
+
+  @override
+  String get solarTerm17 => 'Hanlu (寒露)';
+
+  @override
+  String get solarTerm18 => 'Shuangjiang (霜降)';
+
+  @override
+  String get solarTerm19 => 'Lidong (立冬)';
+
+  @override
+  String get solarTerm20 => 'Xiaoxue (小雪)';
+
+  @override
+  String get solarTerm21 => 'Daxue (大雪)';
+
+  @override
+  String get solarTerm22 => 'Dongzhi (冬至)';
+
+  @override
+  String get solarTerm23 => 'Xiaohan (小寒)';
+
+  @override
+  String get solarTerm24 => 'Dahan (大寒)';
+
+  @override
+  String get lunarDay01 => '1st';
+
+  @override
+  String get lunarDay02 => '2nd';
+
+  @override
+  String get lunarDay03 => '3rd';
+
+  @override
+  String get lunarDay04 => '4th';
+
+  @override
+  String get lunarDay05 => '5th';
+
+  @override
+  String get lunarDay06 => '6th';
+
+  @override
+  String get lunarDay07 => '7th';
+
+  @override
+  String get lunarDay08 => '8th';
+
+  @override
+  String get lunarDay09 => '9th';
+
+  @override
+  String get lunarDay10 => '10th';
+
+  @override
+  String get lunarDay11 => '11th';
+
+  @override
+  String get lunarDay12 => '12th';
+
+  @override
+  String get lunarDay13 => '13th';
+
+  @override
+  String get lunarDay14 => '14th';
+
+  @override
+  String get lunarDay15 => '15th';
+
+  @override
+  String get lunarDay16 => '16th';
+
+  @override
+  String get lunarDay17 => '17th';
+
+  @override
+  String get lunarDay18 => '18th';
+
+  @override
+  String get lunarDay19 => '19th';
+
+  @override
+  String get lunarDay20 => '20th';
+
+  @override
+  String get lunarDay21 => '21st';
+
+  @override
+  String get lunarDay22 => '22nd';
+
+  @override
+  String get lunarDay23 => '23rd';
+
+  @override
+  String get lunarDay24 => '24th';
+
+  @override
+  String get lunarDay25 => '25th';
+
+  @override
+  String get lunarDay26 => '26th';
+
+  @override
+  String get lunarDay27 => '27th';
+
+  @override
+  String get lunarDay28 => '28th';
+
+  @override
+  String get lunarDay29 => '29th';
+
+  @override
+  String get lunarDay30 => '30th';
+
+  @override
+  String get flyingStar1 => 'Star 1';
+
+  @override
+  String get flyingStar2 => 'Star 2';
+
+  @override
+  String get flyingStar3 => 'Star 3';
+
+  @override
+  String get flyingStar4 => 'Star 4';
+
+  @override
+  String get flyingStar5 => 'Star 5';
+
+  @override
+  String get flyingStar6 => 'Star 6';
+
+  @override
+  String get flyingStar7 => 'Star 7';
+
+  @override
+  String get flyingStar8 => 'Star 8';
+
+  @override
+  String get flyingStar9 => 'Star 9';
 }

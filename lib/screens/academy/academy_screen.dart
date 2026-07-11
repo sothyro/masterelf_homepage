@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../config/app_content.dart';
@@ -16,7 +15,8 @@ class AcademyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = Breakpoints.isMobile(width);
+    final isMobile = Breakpoints.isMobile(width);
+    final isTablet = Breakpoints.isTabletOnly(width);
 
     final isDesktop = Breakpoints.isDesktop(width);
 
@@ -30,8 +30,8 @@ class AcademyScreen extends StatelessWidget {
           _AcademyHero(isDesktop: isDesktop, l10n: l10n),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: isNarrow ? 16 : 32,
-              vertical: isNarrow ? 32 : 40,
+              horizontal: isMobile ? 16 : 32,
+              vertical: isMobile ? 32 : 40,
             ),
             child: Center(
               child: ConstrainedBox(
@@ -49,7 +49,7 @@ class AcademyScreen extends StatelessWidget {
                           ),
                     ),
                     const SizedBox(height: 40),
-                    if (isNarrow) ...[
+                    if (isMobile) ...[
                       _AcademyDisciplineCard(
                         imageAsset: AppContent.assetAcademyQiMen,
                         icon: LucideIcons.compass,
@@ -111,7 +111,106 @@ class AcademyScreen extends StatelessWidget {
                         topics: l10n.academyMaoShanTopics,
                         onExplore: () => context.push('/consultations'),
                       ),
-                    ] else
+                    ] else if (isTablet)
+                      Column(
+                        children: [
+                          IntrinsicHeight(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  child: _AcademyDisciplineCard(
+                                    imageAsset: AppContent.assetAcademyQiMen,
+                                    icon: LucideIcons.compass,
+                                    title: l10n.academyQiMen,
+                                    description: l10n.academyQiMenDesc,
+                                    about: l10n.academyQiMenAbout,
+                                    topics: l10n.academyQiMenTopics,
+                                    onExplore: () => context.push('/consultations'),
+                                    imageAlignment: Alignment.center,
+                                  ),
+                                ),
+                                const SizedBox(width: 24),
+                                Expanded(
+                                  child: _AcademyDisciplineCard(
+                                    imageAsset: AppContent.assetBaziHarmony,
+                                    icon: LucideIcons.user,
+                                    title: l10n.academyBaZi,
+                                    description: l10n.academyBaZiDesc,
+                                    about: l10n.academyBaZiAbout,
+                                    topics: l10n.academyBaZiTopics,
+                                    onExplore: () => context.push('/consultations'),
+                                    imageAlignment: Alignment.center,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          IntrinsicHeight(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  child: _AcademyDisciplineCard(
+                                    imageAsset: AppContent.assetAcademyFengShui,
+                                    icon: LucideIcons.home,
+                                    title: l10n.academyFengShui,
+                                    description: l10n.academyFengShuiDesc,
+                                    about: l10n.academyFengShuiAbout,
+                                    topics: l10n.academyFengShuiTopics,
+                                    onExplore: () => context.push('/consultations'),
+                                  ),
+                                ),
+                                const SizedBox(width: 24),
+                                Expanded(
+                                  child: _AcademyDisciplineCard(
+                                    imageAsset: AppContent.assetEventCard,
+                                    icon: LucideIcons.calendarDays,
+                                    title: l10n.academyDateSelection,
+                                    description: l10n.academyDateSelectionDesc,
+                                    about: l10n.academyDateSelectionAbout,
+                                    topics: l10n.academyDateSelectionTopics,
+                                    onExplore: () => context.push('/consultations'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          IntrinsicHeight(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  child: _AcademyDisciplineCard(
+                                    imageAsset: AppContent.assetAppsHero,
+                                    icon: LucideIcons.bookOpen,
+                                    title: l10n.academyIChing,
+                                    description: l10n.academyIChingDesc,
+                                    about: l10n.academyIChingAbout,
+                                    topics: l10n.academyIChingTopics,
+                                    onExplore: () => context.push('/consultations'),
+                                  ),
+                                ),
+                                const SizedBox(width: 24),
+                                Expanded(
+                                  child: _AcademyDisciplineCard(
+                                    imageAsset: AppContent.assetEventMain,
+                                    icon: LucideIcons.mountain,
+                                    title: l10n.academyMaoShan,
+                                    description: l10n.academyMaoShanDesc,
+                                    about: l10n.academyMaoShanAbout,
+                                    topics: l10n.academyMaoShanTopics,
+                                    onExplore: () => context.push('/consultations'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    else
                       Column(
                         children: [
                           IntrinsicHeight(
@@ -205,10 +304,24 @@ class AcademyScreen extends StatelessWidget {
                       ),
                     const SizedBox(height: 56),
                     _buildMethodologySection(context, l10n),
-                    const SizedBox(height: 48),
-                    const TestimonialsSection(),
-                    const SizedBox(height: 48),
-                    _buildMarketingCta(context, l10n, isNarrow),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const TestimonialsSection(),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 16 : 32,
+              vertical: isMobile ? 32 : 40,
+            ),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1100),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _buildMarketingCta(context, l10n, isMobile),
                     const SizedBox(height: 48),
                   ],
                 ),
@@ -234,6 +347,7 @@ class AcademyScreen extends StatelessWidget {
   /// Methodology block: heading, body, stat, and Book Consultation CTA. Placed below the cards.
   static Widget _buildMethodologySection(BuildContext context, AppLocalizations l10n) {
     final isNarrow = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
+    final stackActions = isNarrow || Breakpoints.isTabletOnly(MediaQuery.sizeOf(context).width);
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(isNarrow ? 24 : 32),
@@ -271,7 +385,7 @@ class AcademyScreen extends StatelessWidget {
                 ),
           ),
           const SizedBox(height: 20),
-          if (isNarrow)
+          if (stackActions)
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -357,6 +471,8 @@ class AcademyScreen extends StatelessWidget {
 
   /// Bottom marketing CTA: primary Book Consultation, secondary Contact for courses.
   static Widget _buildMarketingCta(BuildContext context, AppLocalizations l10n, bool isNarrow) {
+    final width = MediaQuery.sizeOf(context).width;
+    final stackActions = isNarrow || Breakpoints.isTabletOnly(width);
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(isNarrow ? 24 : 32),
@@ -386,7 +502,7 @@ class AcademyScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           SizedBox(height: isNarrow ? 20 : 24),
-          if (isNarrow)
+          if (stackActions)
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -507,7 +623,7 @@ class _AcademyHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
-    final isNarrow = width < 600;
+    final isNarrow = Breakpoints.isSmall(width);
     // Desktop: match Journey hero (720px, endeavour.jpg, vertical gradient)
     if (isDesktop) {
       return SizedBox(
@@ -591,7 +707,7 @@ class _AcademyHero extends StatelessWidget {
       );
     }
     // Mobile/tablet: keep original design with overlay CTA
-    final height = width < 600 ? 320.0 : 420.0;
+    final height = Breakpoints.isSmall(width) ? 320.0 : 420.0;
 
     return SizedBox(
       width: double.infinity,
@@ -685,6 +801,7 @@ class _AcademyDisciplineCardState extends State<_AcademyDisciplineCard> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
     final shadow = _isHovered ? AppShadows.cardHover : AppShadows.card;
     final borderColor =
         _isHovered ? AppColors.borderLight.withValues(alpha: 0.5) : AppColors.borderDark;
@@ -720,11 +837,13 @@ class _AcademyDisciplineCardState extends State<_AcademyDisciplineCard> {
                       ClipRRect(
                         borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
                         child: AspectRatio(
-                          aspectRatio: 16 / 9,
+                          aspectRatio: isMobile ? 1 : 16 / 9,
                           child: Image.asset(
                             widget.imageAsset,
                             fit: BoxFit.cover,
-                            alignment: widget.imageAlignment ?? Alignment.topCenter,
+                            alignment: isMobile
+                                ? Alignment.center
+                                : (widget.imageAlignment ?? Alignment.topCenter),
                             errorBuilder: (_, __, ___) => Container(
                               color: AppColors.accent.withValues(alpha: 0.15),
                               child: Icon(widget.icon, size: 48, color: AppColors.accent),
@@ -753,6 +872,69 @@ class _AcademyDisciplineCardState extends State<_AcademyDisciplineCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        if (isMobile) ...[
+                          Text(
+                            widget.title,
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.onPrimary,
+                                ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            widget.description,
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: AppColors.accentLight.withValues(alpha: 0.9),
+                                  height: 1.4,
+                                  fontSize: 13,
+                                ),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            widget.about,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  height: 1.5,
+                                  color: AppColors.onSurfaceVariantDark,
+                                  fontSize: 12,
+                                ),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(LucideIcons.sparkles, size: 12, color: AppColors.accent),
+                              const SizedBox(width: 4),
+                              Expanded(
+                                child: Text(
+                                  widget.topics,
+                                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                        color: AppColors.onSurfaceVariantDark,
+                                        height: 1.35,
+                                        fontSize: 11,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                l10n.exploreCourses,
+                                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                                      color: AppColors.accent,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                              const Icon(Icons.arrow_forward, size: 16, color: AppColors.accent),
+                            ],
+                          ),
+                        ] else ...[
                         SizedBox(
                           height: 26,
                           child: Align(
@@ -836,6 +1018,7 @@ class _AcademyDisciplineCardState extends State<_AcademyDisciplineCard> {
                             ],
                           ),
                         ),
+                        ],
                       ],
                     ),
                   ),

@@ -18,10 +18,11 @@ void main() async {
   usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   final initialLocation = getInitialRouterLocation();
-  // Initialize Firebase before app starts so AuthProvider and other Firebase services work.
-  await _initFirebase();
-  // Initialize services
-  await ErrorLoggingService.initialize();
+  // Initialize Firebase and logging in parallel before app starts.
+  await Future.wait([
+    _initFirebase(),
+    ErrorLoggingService.initialize(),
+  ]);
   ConnectivityService.initialize();
   // Create providers and router at top level so URL routing works on mobile
   // (paste/refresh preserves the correct page instead of redirecting to home).
@@ -64,12 +65,21 @@ class _HeroVideoBootstrapState extends State<HeroVideoBootstrap> {
       setState(() => _progress = progress);
       if (progress >= 1.0 && !_ready) {
         _ready = true;
-        // Show immediately at 100% — no artificial delay (best practice: minimize time to content)
         if (mounted) {
           setState(() => _transitioning = true);
         }
       }
-    }).catchError((_) {
+    }).timeout(
+      const Duration(seconds: 10),
+      onTimeout: () {
+        if (!mounted) return;
+        setState(() {
+          _progress = 1.0;
+          _ready = true;
+          _transitioning = true;
+        });
+      },
+    ).catchError((_) {
       if (mounted) {
         setState(() {
           _progress = 1.0;
