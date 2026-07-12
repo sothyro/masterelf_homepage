@@ -4,6 +4,7 @@ import '../../config/app_content.dart';
 import '../../config/field_work_content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
+import '../../utils/app_asset_preloader.dart';
 import '../../utils/breakpoints.dart';
 import '../home/widgets/featured_in_consultation_band.dart';
 import '../home/widgets/field_work_chinese_design.dart';
@@ -12,7 +13,7 @@ import 'widgets/activity_spotlight_section.dart';
 import 'widgets/activity_stories_section.dart';
 
 /// Activities hub: hero, 6 video spotlights, four core activities.
-class FieldWorkScreen extends StatelessWidget {
+class FieldWorkScreen extends StatefulWidget {
   const FieldWorkScreen({
     super.key,
     this.initialRealm,
@@ -21,6 +22,22 @@ class FieldWorkScreen extends StatelessWidget {
 
   final FieldWorkRealm? initialRealm;
   final bool initialVideosOnly;
+
+  @override
+  State<FieldWorkScreen> createState() => _FieldWorkScreenState();
+}
+
+class _FieldWorkScreenState extends State<FieldWorkScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      AppAssetPreloader.preloadFieldWorkSpotlightVideos(
+        MediaQuery.sizeOf(context).width,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

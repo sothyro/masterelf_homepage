@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../config/store_routes.dart';
 
 /// Exposes the [AppShell] scroll controller so pages can scroll to anchored sections.
 class AppShellScrollScope extends InheritedWidget {
@@ -44,4 +47,24 @@ void ensureShellSectionVisible(
       alignment: alignment,
     );
   });
+}
+
+/// Jumps the shell scroll view back to the top (e.g. when opening a store page).
+void resetShellScrollToTop(BuildContext context) {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (!context.mounted) return;
+    final controller = AppShellScrollScope.scrollControllerOf(context);
+    if (controller != null && controller.hasClients) {
+      controller.jumpTo(0);
+    }
+  });
+}
+
+/// Navigates within the shell and resets scroll unless [location] is a deep link.
+void goShellRoute(BuildContext context, String location) {
+  final uri = Uri.parse('http://local${location.startsWith('/') ? location : '/$location'}');
+  context.go(location);
+  if (!routeRequestsSectionScroll(uri)) {
+    resetShellScrollToTop(context);
+  }
 }

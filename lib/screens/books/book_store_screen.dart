@@ -42,15 +42,11 @@ class _BookStoreScreenState extends State<BookStoreScreen> {
 
   void _scrollToTargetIfNeeded() {
     final fragment = GoRouterState.of(context).uri.fragment;
-    if (fragment.isEmpty) return;
+    if (fragment.isEmpty || fragment == kBookStoreSectionFragment) return;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      final key = switch (fragment) {
-        kBookStoreSectionFragment => _keyBooks,
-        _ when _bookScrollKeys.containsKey(fragment) => _bookScrollKeys[fragment],
-        _ => null,
-      };
+      final key = _bookScrollKeys[fragment];
       if (key != null) {
         ensureShellSectionVisible(context, key);
       }

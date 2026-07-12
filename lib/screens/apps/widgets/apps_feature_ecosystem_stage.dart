@@ -26,10 +26,12 @@ class AppsFeatureEcosystemStage extends StatelessWidget {
       children: [
         _PlatformBand(label: platformsLabel),
         const SizedBox(height: 28),
-        ChineseDeviceEcosystemStage(
-          asset: asset,
-          heroVideoAsset: heroVideoAsset,
-          onTap: () => showAppsFullscreenImage(context, asset),
+        RepaintBoundary(
+          child: ChineseDeviceEcosystemStage(
+            asset: asset,
+            heroVideoAsset: heroVideoAsset,
+            onTap: () => showAppsFullscreenImage(context, asset),
+          ),
         ),
       ],
     );
@@ -50,30 +52,36 @@ class _PlatformBand extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Expanded(child: _GoldRule(towardCenter: true)),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
+            Flexible(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: constraints.maxWidth < 360 ? 8 : 16,
                 ),
-                decoration: BoxDecoration(
-                  color: FieldWorkChinesePalette.inkWash.withValues(
-                    alpha: 0.72,
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: constraints.maxWidth < 360 ? 10 : 16,
+                    vertical: 8,
                   ),
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(
-                    color: AppColors.accent.withValues(alpha: 0.45),
+                  decoration: BoxDecoration(
+                    color: FieldWorkChinesePalette.inkWash.withValues(
+                      alpha: 0.72,
+                    ),
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(
+                      color: AppColors.accent.withValues(alpha: 0.45),
+                    ),
                   ),
-                ),
-                child: Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: AppColors.accent,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1,
+                  child: Text(
+                    label,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: AppColors.accent,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: constraints.maxWidth < 360 ? 0.4 : 1,
+                      fontSize: constraints.maxWidth < 360 ? 11 : null,
+                    ),
                   ),
                 ),
               ),

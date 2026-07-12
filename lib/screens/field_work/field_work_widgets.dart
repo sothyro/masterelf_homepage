@@ -8,6 +8,7 @@ import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/breakpoints.dart';
 import '../../utils/launcher_utils.dart';
+import '../../utils/mobile_web_performance.dart';
 import '../../widgets/glass_container.dart';
 import '../home/widgets/field_work_chinese_design.dart';
 
@@ -659,24 +660,34 @@ class _FieldWorkShowcaseCardState extends State<FieldWorkShowcaseCard> {
   static const double _titleBlockHeight = 44;
   static const double _subtitleBlockHeight = 40;
 
-  Widget _buildChinesePortraitCard(FieldWorkShowcasePillar pillar, String languageCode) {
+  Widget _coverImage(String asset, double layoutWidth, FieldWorkShowcasePillar pillar) {
+    return Image.asset(
+      asset,
+      fit: BoxFit.cover,
+      cacheWidth: MobileWebPerformance.devicePixelCacheWidth(context, layoutWidth),
+      filterQuality: MobileWebPerformance.imageFilterQuality(context),
+      errorBuilder: (_, __, ___) => ColoredBox(
+        color: pillar.accentColor.withValues(alpha: 0.15),
+        child: Icon(
+          pillar.icon,
+          size: 48,
+          color: pillar.accentColor,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChinesePortraitCard(
+    FieldWorkShowcasePillar pillar,
+    String languageCode,
+    double layoutWidth,
+  ) {
     return AspectRatio(
       aspectRatio: _imageAspectRatio,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            pillar.coverImage,
-            fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) => ColoredBox(
-              color: pillar.accentColor.withValues(alpha: 0.15),
-              child: Icon(
-                pillar.icon,
-                size: 48,
-                color: pillar.accentColor,
-              ),
-            ),
-          ),
+          _coverImage(pillar.coverImage, layoutWidth, pillar),
           DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -815,6 +826,7 @@ class _FieldWorkShowcaseCardState extends State<FieldWorkShowcaseCard> {
   Widget build(BuildContext context) {
     final pillar = widget.pillar;
     final languageCode = Localizations.localeOf(context).languageCode;
+    final layoutWidth = MediaQuery.sizeOf(context).width;
     final chinese = widget.modernChineseStyle;
     final shadow = _isHovered ? AppShadows.cardHover : AppShadows.card;
     final borderColor = chinese
@@ -904,7 +916,7 @@ class _FieldWorkShowcaseCardState extends State<FieldWorkShowcaseCard> {
           child: chinese
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(radius - 1),
-                  child: _buildChinesePortraitCard(pillar, languageCode),
+                  child: _buildChinesePortraitCard(pillar, languageCode, layoutWidth),
                 )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -919,18 +931,7 @@ class _FieldWorkShowcaseCardState extends State<FieldWorkShowcaseCard> {
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
-                            Image.asset(
-                              pillar.coverImage,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => ColoredBox(
-                                color: pillar.accentColor.withValues(alpha: 0.15),
-                                child: Icon(
-                                  pillar.icon,
-                                  size: 48,
-                                  color: pillar.accentColor,
-                                ),
-                              ),
-                            ),
+                            _coverImage(pillar.coverImage, layoutWidth, pillar),
                             DecoratedBox(
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(

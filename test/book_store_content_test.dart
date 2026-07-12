@@ -32,7 +32,7 @@ void main() {
     expect(bookStoreRouteForId('book-3'), '/books#book-3');
     expect(isBookStoreDeepLinkFragment('book-5'), isTrue);
     expect(isBookStoreDeepLinkFragment('period9-2'), isTrue);
-    expect(isBookStoreDeepLinkFragment('books'), isTrue);
+    expect(isBookStoreDeepLinkFragment('books'), isFalse);
     expect(isBookStoreDeepLinkFragment('talisman'), isFalse);
   });
 

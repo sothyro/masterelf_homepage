@@ -7,6 +7,7 @@ import '../config/app_content.dart';
 import '../l10n/app_localizations.dart';
 
 import '../theme/app_theme.dart';
+import '../utils/mobile_web_performance.dart';
 
 
 
@@ -196,7 +197,12 @@ class _AcademyCardState extends State<AcademyCard> {
 
                       alignment: widget.imageAlignment,
 
-                      filterQuality: FilterQuality.high,
+                      cacheWidth: MobileWebPerformance.devicePixelCacheWidth(
+                        context,
+                        MediaQuery.sizeOf(context).width,
+                      ),
+
+                      filterQuality: MobileWebPerformance.imageFilterQuality(context),
 
                       gaplessPlayback: true,
 

@@ -80,6 +80,59 @@ void main() {
     await disposeFeaturedIn(tester);
   });
 
+  testWidgets('FeaturedInSection uses marquee on mobile width', (tester) async {
+    await pumpFeaturedIn(tester, width: 375);
+    expect(
+      find.byKey(const ValueKey<String>('featured-in-marquee')),
+      findsOneWidget,
+    );
+    await disposeFeaturedIn(tester);
+  });
+
+  testWidgets('FeaturedInSection uses static row when animations disabled', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(375, 900));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.dark(),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: MediaQuery(
+          data: const MediaQueryData(
+            size: Size(375, 900),
+            disableAnimations: true,
+          ),
+          child: Scaffold(
+            backgroundColor: AppColors.backgroundDark,
+            body: Center(
+              child: SizedBox(
+                width: 375,
+                child: Builder(
+                  builder: (context) {
+                    return FeaturedInSection(
+                      l10n: AppLocalizations.of(context)!,
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pump();
+    expect(
+      find.byKey(const ValueKey<String>('featured-in-marquee')),
+      findsNothing,
+    );
+    expect(find.byType(SingleChildScrollView), findsOneWidget);
+    await disposeFeaturedIn(tester);
+  });
+
   testWidgets('featuredLogoSize scales responsively', (tester) async {
     expect(featuredLogoSize(1280), 256);
     expect(featuredLogoSize(900), 200);

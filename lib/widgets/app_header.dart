@@ -8,6 +8,7 @@ import '../theme/app_theme.dart';
 import '../providers/locale_provider.dart';
 import '../config/app_content.dart';
 import '../utils/breakpoints.dart';
+import 'app_shell_scroll_scope.dart';
 import 'glass_container.dart';
 import 'logo_with_shape_shadow.dart';
 import 'media_posts_popup.dart';
@@ -213,7 +214,7 @@ class _DesktopHeader extends StatelessWidget {
       _NavDropdown(
         label: l10n.appsAndStore,
         items: [
-          _NavItem(l10n.masterElfSystem, '/apps#master-elf', LucideIcons.cpu),
+          _NavItem(l10n.masterElfSystem, '/apps', LucideIcons.cpu),
           _NavItem(l10n.bookStoreNav, '/books', LucideIcons.bookOpen),
           _NavItem(l10n.talismanStore, '/talisman', LucideIcons.shoppingBag),
         ],
@@ -360,7 +361,7 @@ class _NavLink extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: TextButton(
-        onPressed: () => context.go(path),
+        onPressed: () => goShellRoute(context, path),
         style: TextButton.styleFrom(
           foregroundColor: _MenuColors.linkText,
           padding: EdgeInsets.symmetric(
@@ -470,7 +471,7 @@ class _NavDropdown extends StatelessWidget {
       if (actionValue != null && selected == actionValue && onAction != null) {
         onAction!(context);
       } else {
-        context.go(selected);
+        goShellRoute(context, selected);
       }
     }
   }

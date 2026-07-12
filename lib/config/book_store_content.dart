@@ -20,10 +20,10 @@ const List<String> kPeriod9BookIds = [
   'period9-2',
 ];
 
-/// Whether [fragment] should trigger scroll-to-book behavior (incl. on mobile).
+/// Whether [fragment] should trigger scroll-to-book behavior (specific book only).
 bool isBookStoreDeepLinkFragment(String fragment) {
-  return fragment == kBookStoreSectionFragment ||
-      kBlessingBookIds.contains(fragment) ||
+  if (fragment.isEmpty || fragment == kBookStoreSectionFragment) return false;
+  return kBlessingBookIds.contains(fragment) ||
       fragment == kBlessingBundleId ||
       kPeriod9BookIds.contains(fragment);
 }

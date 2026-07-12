@@ -18,8 +18,25 @@ echo "=== Getting dependencies ==="
 flutter pub get
 
 echo ""
+echo "=== Verifying web hero videos ==="
+dart run tool/verify_web_videos.dart
+
+echo ""
 echo "=== Building web ==="
 flutter build web
+
+# Web uses static files under web/videos/; strip duplicate Flutter asset bundle copies.
+bundled_hero_video="build/web/assets/assets/videos/videobackground720.mp4"
+if [[ -f "$bundled_hero_video" ]]; then
+  rm -f "$bundled_hero_video"
+  echo "Removed duplicate bundled hero video from build/web/assets/"
+fi
+
+bundled_activities="build/web/assets/assets/videos/activities"
+if [[ -d "$bundled_activities" ]]; then
+  rm -rf "$bundled_activities"
+  echo "Removed duplicate bundled activity videos from build/web/assets/"
+fi
 
 # Copy .htaccess to build output (required for Apache/LiteSpeed hosting - SPA routing + www redirect)
 if [[ -f web/.htaccess ]]; then

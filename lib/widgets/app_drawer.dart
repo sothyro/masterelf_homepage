@@ -8,6 +8,7 @@ import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
 import '../providers/locale_provider.dart';
 import '../utils/breakpoints.dart';
+import 'app_shell_scroll_scope.dart';
 import 'glass_container.dart';
 import 'logo_with_shape_shadow.dart';
 import 'media_posts_popup.dart';
@@ -67,10 +68,10 @@ class AppDrawer extends StatelessWidget {
                     _SectionLabel(label: l10n.appsAndStore),
                     _DrawerTile(
                       label: l10n.masterElfSystem,
-                      path: '/apps#master-elf',
+                      path: '/apps',
                       current: current,
                       icon: LucideIcons.cpu,
-                      onTap: () => _go(context, '/apps#master-elf'),
+                      onTap: () => _go(context, '/apps'),
                     ),
                     _DrawerTile(
                       label: l10n.bookStoreNav,
@@ -145,7 +146,7 @@ class AppDrawer extends StatelessWidget {
 
   void _go(BuildContext context, String path) {
     Navigator.of(context).pop();
-    context.go(path);
+    goShellRoute(context, path);
   }
 }
 

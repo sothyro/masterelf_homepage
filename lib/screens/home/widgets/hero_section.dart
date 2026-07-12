@@ -1,13 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../config/app_content.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../services/hero_video_platform.dart';
 import '../../../utils/launcher_utils.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/mobile_web_performance.dart';
 
 class HeroSection extends StatefulWidget {
   const HeroSection({super.key});
@@ -16,71 +20,78 @@ class HeroSection extends StatefulWidget {
   State<HeroSection> createState() => _HeroSectionState();
 }
 
-class _HeroSectionState extends State<HeroSection> {
-  VideoPlayerController? _controller;
+class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
   bool _videoReady = false;
-  bool _videoError = false;
-  void Function()? _loopListener;
+  bool _videoFailed = false;
+  bool _inViewport = true;
+  bool _appActive = true;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _videoReady = HeroVideoPlatform.isReady;
+    _videoFailed = HeroVideoPlatform.failed;
+    HeroVideoPlatform.addReadyListener(_onVideoReady);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) _initVideo();
+      if (mounted) unawaited(_startVideo());
     });
   }
 
-  Future<void> _initVideo() async {
+  void _onVideoReady() {
     if (!mounted) return;
-    try {
-      // Use .asset() on all platforms; video_player_web resolves assets correctly.
-      final VideoPlayerController c = VideoPlayerController.asset(
-        AppContent.assetHeroVideo,
-        videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-      );
+    setState(() {
+      _videoReady = HeroVideoPlatform.isReady;
+      _videoFailed = HeroVideoPlatform.failed;
+    });
+    _syncPlayback();
+  }
 
-      await c.initialize();
-      if (!mounted) {
-        c.dispose();
-        return;
-      }
-      c.setLooping(true);
-      c.setVolume(0);
-      // Fallback loop: when position reaches end, seek to start and play (reliable on web where setLooping can fail).
-      void listener() {
-        final duration = c.value.duration;
-        if (!c.value.isPlaying || duration.inMilliseconds <= 0) return;
-        final pos = c.value.position.inMilliseconds;
-        final end = duration.inMilliseconds - 200;
-        if (pos >= end) {
-          c.seekTo(Duration.zero);
-          c.play();
-        }
-      }
-      _loopListener = listener;
-      c.addListener(_loopListener!);
-      await c.play();
-      if (!mounted) {
-        c.removeListener(_loopListener!);
-        c.dispose();
-        return;
-      }
-      setState(() {
-        _controller = c;
-        _videoReady = true;
-      });
-    } catch (_) {
-      if (mounted) setState(() => _videoError = true);
+  Future<void> _startVideo() async {
+    if (!mounted) return;
+    final width = MediaQuery.sizeOf(context).width;
+    await HeroVideoPlatform.prewarm(layoutWidth: width);
+    if (!mounted) return;
+    setState(() {
+      _videoReady = HeroVideoPlatform.isReady;
+      _videoFailed = HeroVideoPlatform.failed;
+    });
+    _syncPlayback();
+  }
+
+  void _syncPlayback() {
+    if (!_videoReady || _videoFailed) return;
+    if (_inViewport && _appActive) {
+      unawaited(HeroVideoPlatform.resume());
+    } else {
+      unawaited(HeroVideoPlatform.pause());
     }
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final active = state == AppLifecycleState.resumed;
+    if (active == _appActive) return;
+    _appActive = active;
+    _syncPlayback();
+  }
+
+  void _onVisibilityChanged(VisibilityInfo info) {
+    if (!mounted) return;
+    final visible = info.visibleFraction > 0.05;
+    if (visible == _inViewport) return;
+    _inViewport = visible;
+    _syncPlayback();
+  }
+
+  @override
   void dispose() {
-    final c = _controller;
-    if (c != null && _loopListener != null) {
-      c.removeListener(_loopListener!);
-    }
-    _controller?.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    HeroVideoPlatform.removeReadyListener(_onVideoReady);
+    VisibilityDetectorController.instance.forget(
+      const ValueKey<String>('home-hero-section'),
+    );
+    unawaited(HeroVideoPlatform.pause());
     super.dispose();
   }
 
@@ -234,6 +245,8 @@ class _HeroSectionState extends State<HeroSection> {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = Breakpoints.isMobile(width);
+    final showPoster = !_videoReady || _videoFailed;
+    final videoLayer = HeroVideoPlatform.buildVideoLayer();
     final minHeight = Breakpoints.isSmall(width)
         ? 480.0
         : (Breakpoints.isDesktop(width) ? 1000.0 : 500.0);
@@ -245,97 +258,95 @@ class _HeroSectionState extends State<HeroSection> {
     final crossAlign = isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start;
     final textAlign = isMobile ? TextAlign.center : TextAlign.left;
     final wrapAlign = isMobile ? WrapAlignment.center : WrapAlignment.start;
+    final heroCacheWidth = MobileWebPerformance.devicePixelCacheWidth(context, width);
 
-    return RepaintBoundary(
-      child: SizedBox(
-        width: double.infinity,
-        height: height,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            // 1) Gradient background
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.backgroundDark,
-                    AppColors.surfaceDark,
-                    AppColors.primary.withValues(alpha: 0.95),
-                  ],
+    return VisibilityDetector(
+      key: const ValueKey<String>('home-hero-section'),
+      onVisibilityChanged: _onVisibilityChanged,
+      child: RepaintBoundary(
+        child: SizedBox(
+          width: double.infinity,
+          height: height,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.backgroundDark,
+                      AppColors.surfaceDark,
+                      AppColors.primary.withValues(alpha: 0.95),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            // 2) Static hero image while video loads (or on error)
-            if (!_videoReady || _videoError)
-              Positioned.fill(
+              AnimatedOpacity(
+                opacity: showPoster ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 500),
                 child: Image.asset(
                   AppContent.assetHeroBackground,
                   fit: BoxFit.cover,
+                  cacheWidth: heroCacheWidth,
+                  filterQuality: MobileWebPerformance.imageFilterQuality(context),
                 ),
               ),
-            // 3) Video when ready — use cover to fill the section on wide screens (same as hero image)
-            if (_videoReady && _controller != null && _controller!.value.isInitialized)
-              Positioned.fill(
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: SizedBox(
-                    width: _controller!.value.size.width,
-                    height: _controller!.value.size.height,
-                    child: VideoPlayer(_controller!),
+              if (videoLayer != null)
+                AnimatedOpacity(
+                  opacity: _videoReady && !_videoFailed ? 1.0 : 0.0,
+                  duration: const Duration(milliseconds: 500),
+                  child: videoLayer,
+                ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.primary.withValues(alpha: 0.45),
+                      AppColors.primary.withValues(alpha: 0.7),
+                    ],
                   ),
                 ),
               ),
-            // 4) Overlay for text contrast
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.primary.withValues(alpha: 0.45),
-                    AppColors.primary.withValues(alpha: 0.7),
-                  ],
-                ),
-              ),
-            ),
-            // 5) Content
-            LayoutBuilder(
-              builder: (context, constraints) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                    left: horizontalPadding,
-                    right: horizontalPadding,
-                    top: topInset + verticalPadding,
-                    bottom: isMobile ? 16.0 : verticalPadding,
-                  ),
-                  child: Align(
-                    alignment: contentAlignment,
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: isMobile ? Alignment.bottomCenter : Alignment.centerLeft,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: 900,
-                          maxHeight: constraints.maxHeight,
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: crossAlign,
-                          children: [
-                            ..._heroHeadlinesAndSubline(context, l10n, textAlign, width),
-                            SizedBox(height: isMobile ? 24 : 36),
-                            ..._heroCtaButtons(context, l10n, width, wrapAlign),
-                          ],
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      left: horizontalPadding,
+                      right: horizontalPadding,
+                      top: topInset + verticalPadding,
+                      bottom: isMobile ? 16.0 : verticalPadding,
+                    ),
+                    child: Align(
+                      alignment: contentAlignment,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: isMobile ? Alignment.bottomCenter : Alignment.centerLeft,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: 900,
+                            maxHeight: constraints.maxHeight,
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: crossAlign,
+                            children: [
+                              ..._heroHeadlinesAndSubline(context, l10n, textAlign, width),
+                              SizedBox(height: isMobile ? 24 : 36),
+                              ..._heroCtaButtons(context, l10n, width, wrapAlign),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
-            ),
-          ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

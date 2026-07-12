@@ -5,6 +5,7 @@ import '../../config/apps_showcase_content.dart';
 import '../../config/store_routes.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
+import '../../utils/app_asset_preloader.dart';
 import '../../utils/breakpoints.dart';
 import '../../widgets/app_shell_scroll_scope.dart';
 import '../store/widgets/section_anchor.dart';
@@ -12,6 +13,7 @@ import '../store/widgets/store_content_container.dart';
 import '../store/widgets/store_page_hero.dart';
 import 'widgets/apps_chapter_header.dart';
 import 'widgets/apps_chinese_page_shell.dart';
+import 'widgets/apps_deferred_section.dart';
 import 'widgets/apps_feature_gallery.dart';
 import 'widgets/apps_hero_medallion.dart';
 import 'widgets/apps_master_elf_system_intro.dart';
@@ -31,6 +33,12 @@ class _AppsScreenState extends State<AppsScreen> {
   final GlobalKey _keyPeriod9 = GlobalKey();
 
   @override
+  void initState() {
+    super.initState();
+    AppAssetPreloader.preloadAppsPageAssets();
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _scrollToSectionIfNeeded();
@@ -38,17 +46,11 @@ class _AppsScreenState extends State<AppsScreen> {
 
   void _scrollToSectionIfNeeded() {
     final fragment = GoRouterState.of(context).uri.fragment;
-    if (fragment.isEmpty) return;
+    if (fragment != kAppsPeriod9Fragment) return;
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      final key = switch (fragment) {
-        kAppsMasterElfFragment => _keyMasterElf,
-        kAppsPeriod9Fragment => _keyPeriod9,
-        _ => null,
-      };
-      if (key != null) {
-        ensureShellSectionVisible(context, key);
-      }
+      ensureShellSectionVisible(context, _keyPeriod9);
     });
   }
 
@@ -58,6 +60,8 @@ class _AppsScreenState extends State<AppsScreen> {
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = Breakpoints.isMobile(width);
     final groups = buildAppsShowcaseGroups(l10n);
+    final fragment = GoRouterState.of(context).uri.fragment;
+    final eagerPeriod9 = fragment == kAppsPeriod9Fragment;
 
     return Material(
       color: AppColors.backgroundDark,
@@ -71,6 +75,7 @@ class _AppsScreenState extends State<AppsScreen> {
             titleContent: const AppsHeroMedallion(),
             heroHeightNarrow: 477,
             heroHeightWide: 477,
+            backgroundCacheWidth: width > 0 ? (width * MediaQuery.devicePixelRatioOf(context)).round().clamp(320, 1200) : null,
           ),
           AppsChinesePageShell(
             child: StoreContentContainer(
@@ -100,7 +105,12 @@ class _AppsScreenState extends State<AppsScreen> {
                   const SizedBox(height: 32),
                   SectionAnchor(
                     key: _keyPeriod9,
-                    child: AppsPeriod9Section(l10n: l10n),
+                    child: AppsDeferredSection(
+                      sectionKey: 'period9',
+                      placeholderHeight: isMobile ? 720 : 880,
+                      eager: eagerPeriod9,
+                      child: AppsPeriod9Section(l10n: l10n),
+                    ),
                   ),
                   SizedBox(height: isMobile ? 48 : 56),
                   const ChineseMountingBar(),
@@ -113,10 +123,14 @@ class _AppsScreenState extends State<AppsScreen> {
                     sealCharacter: '卦',
                   ),
                   const SizedBox(height: 32),
-                  AppsFeatureGallery(
-                    groups: groups,
-                    overviewPlatformsLabel: l10n.appsGroupOverviewPlatforms,
-                    excludeGroupIds: const {'overview'},
+                  AppsDeferredSection(
+                    sectionKey: 'feature-atlas',
+                    placeholderHeight: isMobile ? 900 : 1100,
+                    child: AppsFeatureGallery(
+                      groups: groups,
+                      overviewPlatformsLabel: l10n.appsGroupOverviewPlatforms,
+                      excludeGroupIds: const {'overview'},
+                    ),
                   ),
                   const SizedBox(height: 32),
                 ],

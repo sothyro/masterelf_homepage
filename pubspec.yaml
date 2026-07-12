@@ -43,6 +43,7 @@ dependencies:
   provider: ^6.1.2
   url_launcher: ^6.2.5
   video_player: ^2.9.2
+  web: ^1.1.0
   visibility_detector: ^0.4.0+2
   http: ^1.2.2
   firebase_core: ^3.8.1

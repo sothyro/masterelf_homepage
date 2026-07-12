@@ -9,6 +9,7 @@ import '../../../config/book_store_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/mobile_web_performance.dart';
 
 /// Homepage 5-Blessing book showcase (under Academies) — portrait 4:5 cards.
 class PublicationsStrip extends StatelessWidget {
@@ -94,7 +95,8 @@ class _BooksMobileCarousel extends StatefulWidget {
 }
 
 class _BooksMobileCarouselState extends State<_BooksMobileCarousel> {
-  static const _cycleDuration = Duration(seconds: 2);
+  static const _cycleDurationDesktop = Duration(seconds: 2);
+  static const _cycleDurationMobileWeb = Duration(seconds: 4);
   static const _transitionDuration = Duration(milliseconds: 400);
 
   int _index = 0;
@@ -108,8 +110,11 @@ class _BooksMobileCarouselState extends State<_BooksMobileCarousel> {
 
   void _startTimer() {
     _timer?.cancel();
-    if (widget.books.length <= 1) return;
-    _timer = Timer.periodic(_cycleDuration, (_) {
+    if (widget.books.length <= 1 || !mounted) return;
+    final cycle = MobileWebPerformance.isMobileWeb(context)
+        ? _cycleDurationMobileWeb
+        : _cycleDurationDesktop;
+    _timer = Timer.periodic(cycle, (_) {
       if (!mounted || !_inViewport) return;
       setState(() => _index = (_index + 1) % widget.books.length);
     });
@@ -134,6 +139,9 @@ class _BooksMobileCarouselState extends State<_BooksMobileCarousel> {
   @override
   void dispose() {
     _stopTimer();
+    VisibilityDetectorController.instance.forget(
+      const ValueKey<String>('books-mobile-carousel'),
+    );
     super.dispose();
   }
 
@@ -295,6 +303,7 @@ class _PortraitBookCardState extends State<_PortraitBookCard> {
   @override
   Widget build(BuildContext context) {
     final item = widget.item;
+    final cardWidth = MediaQuery.sizeOf(context).width;
 
     final textBlock = Padding(
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 16),
@@ -373,6 +382,11 @@ class _PortraitBookCardState extends State<_PortraitBookCard> {
                       Image.asset(
                         item.coverAsset,
                         fit: BoxFit.cover,
+                        cacheWidth: MobileWebPerformance.devicePixelCacheWidth(
+                          context,
+                          cardWidth,
+                        ),
+                        filterQuality: MobileWebPerformance.imageFilterQuality(context),
                         errorBuilder: (_, __, ___) => ColoredBox(
                           color: AppColors.borderDark,
                           child: Icon(

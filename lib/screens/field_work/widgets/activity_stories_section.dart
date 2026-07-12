@@ -9,6 +9,7 @@ import '../../../config/field_work_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/mobile_web_performance.dart';
 import '../field_work_widgets.dart';
 
 const double _activityMobileCardAspect = 4 / 5;
@@ -156,6 +157,10 @@ class _ActivityStoriesSectionState extends State<ActivityStoriesSection> {
 
   @override
   void dispose() {
+    _autoLoopGeneration++;
+    VisibilityDetectorController.instance.forget(
+      const ValueKey<String>('activity-stories-section'),
+    );
     _pageController.dispose();
     super.dispose();
   }
@@ -608,6 +613,7 @@ class _ActivityStoryCardState extends State<_ActivityStoryCard> {
 
   Widget _buildImageBlock(FieldWorkShowcasePillar pillar) {
     final imageFit = widget.isMobile ? BoxFit.contain : BoxFit.cover;
+    final layoutWidth = MediaQuery.sizeOf(context).width;
 
     return ColoredBox(
       color: AppColors.borderDark.withValues(alpha: 0.35),
@@ -618,6 +624,11 @@ class _ActivityStoryCardState extends State<_ActivityStoryCard> {
             pillar.coverImage,
             fit: imageFit,
             alignment: Alignment.center,
+            cacheWidth: MobileWebPerformance.devicePixelCacheWidth(
+              context,
+              layoutWidth,
+            ),
+            filterQuality: MobileWebPerformance.imageFilterQuality(context),
             errorBuilder: (_, __, ___) => ColoredBox(
               color: AppColors.borderDark,
               child: Icon(

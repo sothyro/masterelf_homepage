@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+import '../../../services/activity_video_platform.dart';
 import '../../../theme/app_theme.dart';
 import 'activity_video_playback_hub.dart';
 
@@ -34,10 +37,15 @@ class ActivityVideoPlayer extends StatefulWidget {
 
 class _ActivityVideoPlayerState extends State<ActivityVideoPlayer>
     implements ActivityVideoPlaybackDelegate {
+  static const _maxInitAttempts = 3;
+
   VideoPlayerController? _controller;
   bool _initialized = false;
   bool _failed = false;
   bool _muted = true;
+  int _initGeneration = 0;
+  int _initAttempts = 0;
+  Future<void>? _initFuture;
   void Function()? _loopListener;
   _VideoPlaybackDelegateBinding? _hubBinding;
   final _playerKey = GlobalKey();
@@ -50,12 +58,13 @@ class _ActivityVideoPlayerState extends State<ActivityVideoPlayer>
       _playbackHub = ActivityVideoPlaybackScope.maybeOf(context);
     }
   }
+
   @override
   void initState() {
     super.initState();
     if (widget.autoPlay) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) playMuted();
+        if (mounted) playMuted(retryAfterFailure: true);
       });
     }
     if (widget.playbackId != null && widget.autoplayWhenVisible) {
@@ -75,20 +84,63 @@ class _ActivityVideoPlayerState extends State<ActivityVideoPlayer>
 
   @override
   void dispose() {
+    _initGeneration++;
+    _initFuture = null;
     _hubBinding?.detach();
+    if (widget.playbackId != null && widget.autoplayWhenVisible) {
+      VisibilityDetectorController.instance.forget(
+        Key('activity-video-${widget.playbackId}'),
+      );
+    }
+    _disposeController();
+    super.dispose();
+  }
+
+  void _disposeController() {
     final c = _controller;
     if (c != null && _loopListener != null) {
       c.removeListener(_loopListener!);
     }
+    _loopListener = null;
     _controller?.dispose();
-    super.dispose();
+    _controller = null;
+    _initialized = false;
+  }
+
+  void _resetFailureForRetry() {
+    _failed = false;
+    _initAttempts = 0;
   }
 
   @override
-  Future<void> playMuted() => _ensurePlaying(muted: true);
+  Future<void> playMuted({bool retryAfterFailure = false}) async {
+    if (_failed && !retryAfterFailure) return;
+
+    if (_failed) {
+      _resetFailureForRetry();
+    }
+
+    if (_initialized && _controller != null) {
+      await _startPlayback(muted: true);
+      return;
+    }
+
+    if (_initFuture != null) {
+      await _initFuture;
+      if (_initialized) {
+        await _startPlayback(muted: true);
+      }
+      return;
+    }
+
+    await _ensurePlaying(muted: true);
+  }
 
   @override
   Future<void> pause() async {
+    _initGeneration++;
+    _initFuture = null;
+
     final c = _controller;
     if (c != null && c.value.isPlaying) {
       await c.pause();
@@ -97,7 +149,6 @@ class _ActivityVideoPlayerState extends State<ActivityVideoPlayer>
   }
 
   Future<void> _onUserPlayTap() async {
-    if (_failed) return;
     if (widget.autoplayWhenVisible) {
       _scrollIntoViewIfNeeded();
     }
@@ -114,46 +165,89 @@ class _ActivityVideoPlayerState extends State<ActivityVideoPlayer>
       if (mounted) setState(() {});
       return;
     }
-    await _ensurePlaying(muted: true);
+    await playMuted(retryAfterFailure: true);
   }
 
   Future<void> _ensurePlaying({required bool muted}) async {
-    if (_failed) return;
+    final initialized = await _initializeController();
+    if (!initialized || !mounted) return;
+    await _startPlayback(muted: muted);
+  }
 
-    if (!_initialized) {
-      try {
-        final c = VideoPlayerController.asset(
-          widget.videoAsset,
-          videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-        );
-        await c.initialize();
-        if (!mounted) {
-          c.dispose();
-          return;
-        }
-        c.setLooping(true);
-        void listener() {
-          final duration = c.value.duration;
-          if (!c.value.isPlaying || duration.inMilliseconds <= 0) return;
-          final pos = c.value.position.inMilliseconds;
-          final end = duration.inMilliseconds - 200;
-          if (pos >= end) {
-            c.seekTo(Duration.zero);
-            c.play();
-          }
-        }
-        _loopListener = listener;
-        c.addListener(_loopListener!);
-        _controller = c;
-        _initialized = true;
-      } catch (_) {
-        if (mounted) setState(() => _failed = true);
-        return;
-      }
+  Future<bool> _initializeController() async {
+    if (_initialized && _controller != null) return true;
+
+    final existing = _initFuture;
+    if (existing != null) {
+      await existing;
+      return _initialized;
     }
 
+    final generation = ++_initGeneration;
+    final init = _loadController(generation);
+    _initFuture = init;
+    try {
+      await init;
+    } finally {
+      if (identical(_initFuture, init)) {
+        _initFuture = null;
+      }
+    }
+    return _initialized;
+  }
+
+  Future<void> _loadController(int generation) async {
+    VideoPlayerController? pending;
+    try {
+      final layoutWidth = MediaQuery.sizeOf(context).width;
+      pending = ActivityVideoPlatform.createController(
+        videoAsset: widget.videoAsset,
+        layoutWidth: layoutWidth,
+      );
+      await pending.initialize();
+
+      if (!mounted || generation != _initGeneration) {
+        await pending.dispose();
+        return;
+      }
+
+      await pending.setLooping(true);
+      _controller = pending;
+      pending = null;
+      void listener() {
+        final c = _controller;
+        if (c == null) return;
+        final duration = c.value.duration;
+        if (!c.value.isPlaying || duration.inMilliseconds <= 0) return;
+        final pos = c.value.position.inMilliseconds;
+        final end = duration.inMilliseconds - 200;
+        if (pos >= end) {
+          c.seekTo(Duration.zero);
+          c.play();
+        }
+      }
+
+      _loopListener = listener;
+      _controller!.addListener(_loopListener!);
+      _initialized = true;
+      _initAttempts = 0;
+      if (mounted) setState(() {});
+    } catch (_) {
+      await pending?.dispose();
+      if (!mounted || generation != _initGeneration) return;
+
+      _initAttempts++;
+      if (_initAttempts >= _maxInitAttempts) {
+        setState(() => _failed = true);
+      } else if (mounted) {
+        setState(() {});
+      }
+    }
+  }
+
+  Future<void> _startPlayback({required bool muted}) async {
     final c = _controller;
-    if (c == null) return;
+    if (c == null || !_initialized) return;
 
     _muted = muted;
     await c.setVolume(muted ? 0 : 1);
@@ -171,7 +265,8 @@ class _ActivityVideoPlayerState extends State<ActivityVideoPlayer>
     if (mounted) setState(() => _muted = next);
   }
 
-  bool get _isPlaying => _initialized && _controller != null && _controller!.value.isPlaying;
+  bool get _isPlaying =>
+      _initialized && _controller != null && _controller!.value.isPlaying;
 
   void _scrollIntoViewIfNeeded() {
     final ctx = _playerKey.currentContext;
@@ -255,22 +350,34 @@ class _ActivityVideoPlayerState extends State<ActivityVideoPlayer>
               ),
             if (_failed)
               Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      LucideIcons.videoOff,
-                      color: AppColors.onSurfaceVariantDark,
-                      size: 32,
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: _onUserPlayTap,
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Video coming soon',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            LucideIcons.videoOff,
                             color: AppColors.onSurfaceVariantDark,
+                            size: 32,
                           ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Tap to retry video',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: AppColors.onSurfaceVariantDark,
+                                ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             if (_initialized && _controller != null)

@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,12 +16,14 @@ class Yuk9MetaphysicsOrbits extends StatelessWidget {
     required this.hovered,
     required this.behind,
     this.extentScale = 1.27,
+    this.reduceEffects = false,
   });
 
   final double progress;
   final bool hovered;
   final bool behind;
   final double extentScale;
+  final bool reduceEffects;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +33,7 @@ class Yuk9MetaphysicsOrbits extends StatelessWidget {
         hovered: hovered,
         behind: behind,
         extentScale: extentScale,
+        reduceEffects: reduceEffects,
       ),
     );
   }
@@ -58,6 +62,36 @@ const _loShuNumbers = <List<int>>[
 const _loShuChineseNumerals = ['一', '二', '三', '四', '五', '六', '七', '八', '九'];
 const _flyingStarPath = [5, 6, 1, 8, 3, 4, 9, 2, 7];
 
+/// Cached glyph painters for orbital characters (avoids per-frame layout).
+final Map<String, TextPainter> _orbitTextPainterCache = {};
+
+TextPainter _cachedOrbitTextPainter({
+  required String character,
+  required double fontSize,
+  required Color color,
+  FontWeight fontWeight = FontWeight.w600,
+  List<Shadow>? shadows,
+}) {
+  final shadowKey = shadows?.map((s) => s.blurRadius).join(',') ?? '';
+  final key = '$character|$fontSize|${color.toARGB32()}|$fontWeight|$shadowKey';
+  return _orbitTextPainterCache.putIfAbsent(key, () {
+    final painter = TextPainter(
+      text: TextSpan(
+        text: character,
+        style: GoogleFonts.notoSerifSc(
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          color: color,
+          height: 1,
+          shadows: shadows,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    return painter;
+  });
+}
+
 /// BaZi ten Heavenly Stems (天干).
 const _heavenlyStems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
 
@@ -80,12 +114,14 @@ class _Yuk9MetaphysicsOrbitsPainter extends CustomPainter {
     required this.hovered,
     required this.behind,
     required this.extentScale,
+    this.reduceEffects = false,
   });
 
   final double progress;
   final bool hovered;
   final bool behind;
   final double extentScale;
+  final bool reduceEffects;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -400,24 +436,18 @@ class _Yuk9MetaphysicsOrbitsPainter extends CustomPainter {
     int number,
     double opacity,
   ) {
-    final textPainter = TextPainter(
-      text: TextSpan(
-        text: _loShuChineseNumerals[number - 1],
-        style: TextStyle(
-          fontSize: 10.5,
-          fontWeight: FontWeight.w700,
-          color: AppColors.accent.withValues(alpha: opacity),
-          height: 1,
-          shadows: [
-            Shadow(
-              color: AppColors.accentGlow.withValues(alpha: opacity * 0.4),
-              blurRadius: 5,
-            ),
-          ],
+    final textPainter = _cachedOrbitTextPainter(
+      character: _loShuChineseNumerals[number - 1],
+      fontSize: 10.5,
+      fontWeight: FontWeight.w700,
+      color: AppColors.accent.withValues(alpha: opacity),
+      shadows: [
+        Shadow(
+          color: AppColors.accentGlow.withValues(alpha: opacity * 0.4),
+          blurRadius: 5,
         ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
+      ],
+    );
     textPainter.paint(
       canvas,
       center - Offset(textPainter.width / 2, textPainter.height / 2),
@@ -793,7 +823,7 @@ class _Yuk9MetaphysicsOrbitsPainter extends CustomPainter {
     required Offset outward,
     bool showHalo = false,
   }) {
-    if (showHalo) {
+    if (showHalo && !reduceEffects) {
       canvas.drawCircle(
         center,
         fontSize * 0.85,
@@ -808,24 +838,18 @@ class _Yuk9MetaphysicsOrbitsPainter extends CustomPainter {
     canvas.translate(center.dx, center.dy);
     canvas.rotate(angle + math.pi / 2);
 
-    final textPainter = TextPainter(
-      text: TextSpan(
-        text: character,
-        style: GoogleFonts.notoSerifSc(
-          fontSize: fontSize,
-          fontWeight: FontWeight.w600,
-          color: accent.withValues(alpha: opacity),
-          height: 1,
-          shadows: [
-            Shadow(
-              color: AppColors.accentGlow.withValues(alpha: opacity * 0.35),
-              blurRadius: 6,
-            ),
-          ],
+    final textPainter = _cachedOrbitTextPainter(
+      character: character,
+      fontSize: fontSize,
+      fontWeight: FontWeight.w600,
+      color: accent.withValues(alpha: opacity),
+      shadows: [
+        Shadow(
+          color: AppColors.accentGlow.withValues(alpha: opacity * 0.35),
+          blurRadius: 6,
         ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
+      ],
+    );
     textPainter.paint(
       canvas,
       Offset(-textPainter.width / 2, -textPainter.height / 2),
@@ -883,6 +907,7 @@ class _Yuk9MetaphysicsOrbitsPainter extends CustomPainter {
     return oldDelegate.progress != progress ||
         oldDelegate.hovered != hovered ||
         oldDelegate.behind != behind ||
-        oldDelegate.extentScale != extentScale;
+        oldDelegate.extentScale != extentScale ||
+        oldDelegate.reduceEffects != reduceEffects;
   }
 }

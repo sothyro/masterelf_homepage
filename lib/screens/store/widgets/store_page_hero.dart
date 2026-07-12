@@ -18,6 +18,7 @@ class StorePageHero extends StatelessWidget {
     this.backgroundAsset = AppContent.assetContactHero,
     this.heroHeightNarrow = 780,
     this.heroHeightWide = 720,
+    this.backgroundCacheWidth,
   });
 
   final String title;
@@ -29,6 +30,7 @@ class StorePageHero extends StatelessWidget {
   final String backgroundAsset;
   final double heroHeightNarrow;
   final double heroHeightWide;
+  final int? backgroundCacheWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +70,7 @@ class StorePageHero extends StatelessWidget {
           width: double.infinity,
           child: _HeroBackground(
             backgroundAsset: backgroundAsset,
+            backgroundCacheWidth: backgroundCacheWidth,
             child: Align(
               alignment: const Alignment(0, 0.12),
               child: Padding(
@@ -90,6 +93,7 @@ class StorePageHero extends StatelessWidget {
         constraints: BoxConstraints(minHeight: minHeight),
         child: _HeroBackground(
           backgroundAsset: backgroundAsset,
+          backgroundCacheWidth: backgroundCacheWidth,
           child: Align(
             alignment: const Alignment(0, 0.12),
             child: Padding(
@@ -109,9 +113,10 @@ class StorePageHero extends StatelessWidget {
     // Expand vertically to fit spotlight / CTA card (Apps page).
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: minHeight),
-      child: _HeroBackground(
-        backgroundAsset: backgroundAsset,
-        child: Padding(
+        child: _HeroBackground(
+          backgroundAsset: backgroundAsset,
+          backgroundCacheWidth: backgroundCacheWidth,
+          child: Padding(
           padding: EdgeInsets.fromLTRB(
             horizontalPadding,
             topPadding,
@@ -142,10 +147,12 @@ class _HeroBackground extends StatelessWidget {
   const _HeroBackground({
     required this.child,
     required this.backgroundAsset,
+    this.backgroundCacheWidth,
   });
 
   final Widget child;
   final String backgroundAsset;
+  final int? backgroundCacheWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +164,7 @@ class _HeroBackground extends StatelessWidget {
           child: Image.asset(
             backgroundAsset,
             fit: BoxFit.cover,
+            cacheWidth: backgroundCacheWidth,
             errorBuilder: (_, __, ___) => const ColoredBox(color: AppColors.backgroundDark),
           ),
         ),

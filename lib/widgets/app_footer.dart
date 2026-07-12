@@ -8,6 +8,7 @@ import '../screens/legal/legal_content.dart';
 import '../utils/launcher_utils.dart';
 import '../theme/app_theme.dart';
 import '../utils/breakpoints.dart';
+import 'app_shell_scroll_scope.dart';
 import 'legal_popup.dart';
 
 class AppFooter extends StatelessWidget {
@@ -148,7 +149,7 @@ class AppFooter extends StatelessWidget {
           child: _LinkColumn(
             title: l10n.appsAndStore,
             links: [
-              _LinkItem(l10n.masterElfSystem, '/apps#master-elf'),
+              _LinkItem(l10n.masterElfSystem, '/apps'),
               _LinkItem(l10n.bookStoreNav, '/books'),
               _LinkItem(l10n.talismanStore, '/talisman'),
               _LinkItem(l10n.academyPageTitle, '/academy'),
@@ -196,7 +197,7 @@ class AppFooter extends StatelessWidget {
         _LinkColumn(
           title: l10n.appsAndStore,
           links: [
-            _LinkItem(l10n.masterElfSystem, '/apps#master-elf'),
+            _LinkItem(l10n.masterElfSystem, '/apps'),
             _LinkItem(l10n.bookStoreNav, '/books'),
             _LinkItem(l10n.talismanStore, '/talisman'),
             _LinkItem(l10n.academyPageTitle, '/academy'),
@@ -358,7 +359,7 @@ class _LinkColumn extends StatelessWidget {
           (e) => Padding(
             padding: EdgeInsets.only(bottom: compact ? 0 : 8),
             child: InkWell(
-              onTap: () => context.go(e.path),
+              onTap: () => goShellRoute(context, e.path),
               borderRadius: BorderRadius.circular(4),
               child: Padding(
                 padding: EdgeInsets.symmetric(

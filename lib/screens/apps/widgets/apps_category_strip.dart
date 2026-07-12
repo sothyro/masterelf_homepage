@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../l10n/app_localizations.dart';
-import '../../../theme/app_theme.dart';
+import '../../../l10n/app_localizations.dart';import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../widgets/app_shell_scroll_scope.dart';
 import '../../home/widgets/field_work_chinese_design.dart';
 
 /// Gold-outline seal pill category strip for the Apps page.
@@ -16,7 +15,7 @@ class AppsCategoryStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final isNarrow = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
     final items = [
-      (l10n.marketplaceCategoryDigital, '/apps#master-elf'),
+      (l10n.marketplaceCategoryDigital, '/apps'),
       (l10n.marketplaceCategoryBooks, '/books'),
       (l10n.marketplaceCategoryTalismans, '/talisman'),
     ];
@@ -31,7 +30,7 @@ class AppsCategoryStrip extends StatelessWidget {
             side: BorderSide(color: AppColors.accent.withValues(alpha: 0.55)),
           ),
           child: InkWell(
-            onTap: () => context.go(e.$2),
+            onTap: () => goShellRoute(context, e.$2),
             customBorder: const StadiumBorder(),
             child: Padding(
               padding: EdgeInsets.symmetric(

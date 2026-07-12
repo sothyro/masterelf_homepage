@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:masterelf_homepage/app_bootstrap.dart';
 import 'package:masterelf_homepage/l10n/app_localizations.dart';
 import 'package:masterelf_homepage/screens/home/home_screen.dart';
 import 'package:masterelf_homepage/screens/home/widgets/academies_section.dart';
@@ -17,6 +18,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 void main() {
   setUp(() {
     VisibilityDetectorController.instance.updateInterval = Duration.zero;
+    HomeReadiness.reset();
   });
 
   tearDown(() {
@@ -62,17 +64,8 @@ void main() {
     drainExceptions(tester);
   }
 
-  /// Progressive reveal: 100ms start + 220ms per section (8 total).
-  Future<void> pumpUntilAllSectionsLoaded(WidgetTester tester) async {
-    for (var i = 0; i < 12; i++) {
-      await tester.pump(const Duration(milliseconds: 250));
-    }
-    VisibilityDetectorController.instance.notifyNow();
-    await tester.pump();
-    drainExceptions(tester);
-  }
-
-  void expectAllBelowFoldSectionsPresent() {
+  void expectAllSectionsPresent() {
+    expect(find.byType(HeroSection), findsOneWidget);
     expect(find.byType(EventsSection), findsOneWidget);
     expect(find.byType(AcademiesSection), findsOneWidget);
     expect(find.byType(ConsultationsSection), findsOneWidget);
@@ -83,69 +76,28 @@ void main() {
     expect(find.byType(CtaSection), findsOneWidget);
   }
 
-  testWidgets('HomeScreen has no Optimising view overlay at mobile width', (tester) async {
+  testWidgets('HomeScreen mounts all sections immediately at mobile width', (tester) async {
     await pumpHomeScreen(tester, width: 375);
-    await pumpUntilAllSectionsLoaded(tester);
 
     expect(find.textContaining('Optimising view'), findsNothing);
-    expect(find.byType(HeroSection), findsOneWidget);
-    expect(find.byType(EventsSection), findsOneWidget);
+    expectAllSectionsPresent();
   });
 
-  testWidgets('HomeScreen has no Optimising view overlay at desktop width', (tester) async {
+  testWidgets('HomeScreen mounts all sections immediately at desktop width', (tester) async {
     await pumpHomeScreen(tester, width: 1280);
-    await pumpUntilAllSectionsLoaded(tester);
 
     expect(find.textContaining('Optimising view'), findsNothing);
-    expect(find.byType(HeroSection), findsOneWidget);
-    expect(find.byType(EventsSection), findsOneWidget);
+    expectAllSectionsPresent();
   });
 
-  testWidgets('HomeScreen mounts above-fold sections immediately', (tester) async {
-    await pumpHomeScreen(tester, width: 1280, height: 900);
+  testWidgets('HomeScreen signals HomeReadiness after mount and paint settle', (tester) async {
+    await pumpHomeScreen(tester, width: 1280, height: 1000);
 
-    expect(find.byType(EventsSection), findsOneWidget);
-    for (var i = 0; i < 3; i++) {
-      await tester.pump(const Duration(milliseconds: 250));
-    }
-    drainExceptions(tester);
-    expect(find.byType(AcademiesSection), findsOneWidget);
-    expect(find.byType(ConsultationsSection), findsOneWidget);
-
-    await pumpUntilAllSectionsLoaded(tester);
-  });
-
-  testWidgets('HomeScreen prefetch chain mounts consultations without scroll', (tester) async {
-    await pumpHomeScreen(tester, width: 1280, height: 3200);
-
-    for (var i = 0; i < 3; i++) {
-      await tester.pump(const Duration(milliseconds: 250));
-    }
-    VisibilityDetectorController.instance.notifyNow();
+    // markAllSectionsMounted waits two extra frames before completing.
+    await tester.pump();
     await tester.pump();
     drainExceptions(tester);
 
-    expect(find.byType(ConsultationsSection), findsOneWidget);
-
-    await pumpUntilAllSectionsLoaded(tester);
-  });
-
-  testWidgets('HomeScreen mounts all sections after fallback timer', (tester) async {
-    await pumpHomeScreen(tester, width: 1280, height: 1000);
-
-    await pumpUntilAllSectionsLoaded(tester);
-
-    expect(find.textContaining('Optimising view'), findsNothing);
-    expectAllBelowFoldSectionsPresent();
-  });
-
-  testWidgets('HomeScreen mounts remaining sections on scroll', (tester) async {
-    await pumpHomeScreen(tester, width: 1280, height: 1000);
-
-    await tester.drag(find.byType(Scrollable).first, const Offset(0, -4000));
-    await pumpUntilAllSectionsLoaded(tester);
-
-    expect(find.textContaining('Optimising view'), findsNothing);
-    expectAllBelowFoldSectionsPresent();
+    expect(HomeReadiness.isReady, isTrue);
   });
 }

@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '../theme/app_theme.dart';
 
@@ -112,15 +113,35 @@ class MajesticOrbitalCardFrame extends StatefulWidget {
 class _MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
     with SingleTickerProviderStateMixin {
   bool _hovered = false;
+  bool _inViewport = true;
   late final AnimationController _cycleController;
+  late final Key _visibilityKey;
 
   @override
   void initState() {
     super.initState();
+    _visibilityKey = ValueKey<String>(
+      'majestic-orbital-${identityHashCode(this)}',
+    );
     _cycleController = AnimationController(
       vsync: this,
       duration: widget.cycleDuration,
-    )..repeat();
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && _inViewport) _cycleController.repeat();
+    });
+  }
+
+  void _onVisibilityChanged(VisibilityInfo info) {
+    if (!mounted) return;
+    final visible = info.visibleFraction > 0.08;
+    if (visible == _inViewport) return;
+    _inViewport = visible;
+    if (visible) {
+      if (!_cycleController.isAnimating) _cycleController.repeat();
+    } else {
+      _cycleController.stop();
+    }
   }
 
   @override
@@ -133,6 +154,7 @@ class _MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
 
   @override
   void dispose() {
+    VisibilityDetectorController.instance.forget(_visibilityKey);
     _cycleController.dispose();
     super.dispose();
   }
@@ -245,13 +267,24 @@ class _MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
     );
 
     if (widget.hovered != null) {
-      return frame;
+      return VisibilityDetector(
+        key: _visibilityKey,
+        onVisibilityChanged: _onVisibilityChanged,
+        child: TickerMode(enabled: _inViewport, child: frame),
+      );
     }
 
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: frame,
+    return VisibilityDetector(
+      key: _visibilityKey,
+      onVisibilityChanged: _onVisibilityChanged,
+      child: TickerMode(
+        enabled: _inViewport,
+        child: MouseRegion(
+          onEnter: (_) => setState(() => _hovered = true),
+          onExit: (_) => setState(() => _hovered = false),
+          child: frame,
+        ),
+      ),
     );
   }
 }

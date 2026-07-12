@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../config/apps_showcase_content.dart';
 import '../../../utils/breakpoints.dart';
+import 'apps_feature_carousel_stage.dart';
 import 'apps_feature_ecosystem_stage.dart';
-import 'apps_feature_spotlight_card.dart';
-import 'apps_feature_strip.dart';
 
 /// Renders [AppsFeatureGroup]s for the Apps page (full atlas or filtered subset).
 class AppsFeatureGallery extends StatelessWidget {
@@ -43,102 +42,31 @@ class AppsFeatureGallery extends StatelessWidget {
       builder: (context, constraints) {
         final width = constraints.maxWidth;
         final isMobile = width < Breakpoints.mobile;
-        final isDesktop = Breakpoints.isDesktop(width);
-        final singleGroups = visibleGroups
-            .where((g) => g.layout == AppsGroupLayout.single)
+        final ecosystemGroups = visibleGroups
+            .where((g) => g.layout == AppsGroupLayout.ecosystem)
+            .toList();
+        final moduleGroups = visibleGroups
+            .where((g) => g.layout != AppsGroupLayout.ecosystem)
             .toList();
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            for (final group in visibleGroups) ...[
-              if (group.layout == AppsGroupLayout.ecosystem) ...[
-                AppsFeatureEcosystemStage(
-                  platformsLabel: overviewPlatformsLabel,
-                  asset: group.assets.first,
-                  heroVideoAsset: group.heroVideoAsset,
-                ),
+            for (final group in ecosystemGroups) ...[
+              AppsFeatureEcosystemStage(
+                platformsLabel: overviewPlatformsLabel,
+                asset: group.assets.first,
+                heroVideoAsset: group.heroVideoAsset,
+              ),
+              if (moduleGroups.isNotEmpty)
                 SizedBox(height: isMobile ? 36 : 48),
-              ] else if (group.layout == AppsGroupLayout.strip ||
-                  group.layout == AppsGroupLayout.triptych) ...[
-                AppsFeatureStrip(
-                  title: group.title,
-                  benefit: group.benefit,
-                  assets: group.assets,
-                  deviceType: group.preferredDevice,
-                  layout: group.layout,
-                ),
-                SizedBox(height: isMobile ? 36 : 48),
-              ],
             ],
-            if (singleGroups.isNotEmpty) ...[
-              if (isDesktop)
-                _SingleSpotlightGrid(groups: singleGroups)
-              else
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    for (var i = 0; i < singleGroups.length; i++) ...[
-                      AppsFeatureSpotlightCard(
-                        title: singleGroups[i].title,
-                        benefit: singleGroups[i].benefit,
-                        asset: singleGroups[i].assets.first,
-                        deviceType: singleGroups[i].preferredDevice,
-                      ),
-                      if (i < singleGroups.length - 1)
-                        SizedBox(height: isMobile ? 32 : 40),
-                    ],
-                  ],
-                ),
-            ],
+            if (moduleGroups.isNotEmpty)
+              AppsFeatureCarouselStage(modules: moduleGroups),
           ],
         );
       },
-    );
-  }
-}
-
-class _SingleSpotlightGrid extends StatelessWidget {
-  const _SingleSpotlightGrid({required this.groups});
-
-  final List<AppsFeatureGroup> groups;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        for (var i = 0; i < groups.length; i += 2) ...[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: AppsFeatureSpotlightCard(
-                  title: groups[i].title,
-                  benefit: groups[i].benefit,
-                  asset: groups[i].assets.first,
-                  deviceType: groups[i].preferredDevice,
-                ),
-              ),
-              if (i + 1 < groups.length) ...[
-                const SizedBox(width: 24),
-                Expanded(
-                  child: AppsFeatureSpotlightCard(
-                    title: groups[i + 1].title,
-                    benefit: groups[i + 1].benefit,
-                    asset: groups[i + 1].assets.first,
-                    deviceType: groups[i + 1].preferredDevice,
-                  ),
-                ),
-              ],
-            ],
-          ),
-          if (i + 2 < groups.length) const SizedBox(height: 40),
-        ],
-      ],
     );
   }
 }

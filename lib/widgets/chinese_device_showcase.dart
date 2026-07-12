@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:video_player/video_player.dart';
 
 import '../screens/home/widgets/field_work_chinese_design.dart';
 import '../theme/app_theme.dart';
 import '../utils/breakpoints.dart';
+import '../utils/mobile_web_performance.dart';
 
 /// Device frames used to present the Master Elf web application.
 enum ChineseDeviceType { desktop, tablet, browser }
@@ -370,26 +375,40 @@ class _DeviceScreen extends StatelessWidget {
           length: cornerLength,
           inset: 5,
           strokeWidth: 1,
-          child: videoAsset != null
-              ? _DeviceVideoScreen(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final cacheWidth = MobileWebPerformance.mockupPixelCacheWidth(
+                context,
+                constraints.maxWidth,
+              );
+              final filterQuality =
+                  MobileWebPerformance.mockupFilterQuality(context);
+
+              if (videoAsset != null) {
+                return _DeviceVideoScreen(
                   videoAsset: videoAsset!,
                   posterAsset: asset,
                   fit: fit,
-                )
-              : Image.asset(
-                  asset,
-                  fit: fit,
-                  filterQuality: FilterQuality.high,
-                  errorBuilder: (_, __, ___) => Center(
-                    child: Icon(
-                      LucideIcons.monitor,
-                      size: 42,
-                      color: AppColors.onSurfaceVariantDark.withValues(
-                        alpha: 0.5,
-                      ),
+                );
+              }
+
+              return Image.asset(
+                asset,
+                fit: fit,
+                cacheWidth: cacheWidth,
+                filterQuality: filterQuality,
+                errorBuilder: (_, __, ___) => Center(
+                  child: Icon(
+                    LucideIcons.monitor,
+                    size: 42,
+                    color: AppColors.onSurfaceVariantDark.withValues(
+                      alpha: 0.5,
                     ),
                   ),
                 ),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -415,45 +434,69 @@ class _DeviceVideoScreenState extends State<_DeviceVideoScreen> {
   bool _muted = true;
   VideoPlayerController? _videoController;
   bool _videoReady = false;
-  void Function()? _loopListener;
+  bool _inViewport = false;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) _initVideo();
+  bool _shouldPlayVideo(BuildContext context) {
+    if (MobileWebPerformance.isMobileWeb(context)) return _inViewport;
+    return _inViewport;
+  }
+
+  bool _visibilityThresholdMet(VisibilityInfo info, BuildContext context) {
+    final threshold = MobileWebPerformance.isMobileWeb(context) ? 0.25 : 0.12;
+    return info.visibleFraction > threshold;
+  }
+
+  void _onVisibilityChanged(VisibilityInfo info) {
+    if (!mounted) return;
+    final visible = _visibilityThresholdMet(info, context);
+    if (visible == _inViewport) return;
+    _inViewport = visible;
+    if (_shouldPlayVideo(context)) {
+      _scheduleVideoInit();
+    } else {
+      _disposeVideo();
+    }
+  }
+
+  void _scheduleVideoInit() {
+    if (!mounted || !_shouldPlayVideo(context) || _videoController != null) {
+      return;
+    }
+    void startInit() {
+      if (!mounted || !_shouldPlayVideo(context) || _videoController != null) {
+        return;
+      }
+      unawaited(_initVideo());
+    }
+
+    SchedulerBinding.instance.scheduleFrameCallback((_) {
+      if (!mounted) return;
+      if (MobileWebPerformance.isMobileWeb(context)) {
+        Future<void>.delayed(const Duration(milliseconds: 300), startInit);
+      } else {
+        startInit();
+      }
     });
   }
 
   Future<void> _initVideo() async {
+    if (!mounted || !_shouldPlayVideo(context) || _videoController != null) {
+      return;
+    }
     try {
       final controller = VideoPlayerController.asset(
         widget.videoAsset,
         videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
       );
       await controller.initialize();
-      if (!mounted) {
+      if (!mounted || !_shouldPlayVideo(context)) {
         controller.dispose();
         return;
       }
-      controller.setLooping(true);
-      controller.setVolume(_muted ? 0 : 1);
-      void listener() {
-        final duration = controller.value.duration;
-        if (duration.inMilliseconds <= 0) return;
-        final pos = controller.value.position.inMilliseconds;
-        final end = duration.inMilliseconds - 200;
-        if (pos >= end) {
-          controller.seekTo(Duration.zero);
-          controller.play();
-        }
-      }
-
-      _loopListener = listener;
-      controller.addListener(_loopListener!);
+      await controller.setLooping(true);
+      await controller.setVolume(_muted ? 0 : 1);
       await controller.play();
-      if (!mounted) {
-        controller.removeListener(_loopListener!);
+      if (!mounted || !_shouldPlayVideo(context)) {
         controller.dispose();
         return;
       }
@@ -466,6 +509,12 @@ class _DeviceVideoScreenState extends State<_DeviceVideoScreen> {
     }
   }
 
+  void _disposeVideo() {
+    _videoController?.dispose();
+    _videoController = null;
+    _videoReady = false;
+  }
+
   void _toggleMute() {
     if (_videoController == null) return;
     setState(() {
@@ -476,11 +525,10 @@ class _DeviceVideoScreenState extends State<_DeviceVideoScreen> {
 
   @override
   void dispose() {
-    final c = _videoController;
-    if (c != null && _loopListener != null) {
-      c.removeListener(_loopListener!);
-    }
-    _videoController?.dispose();
+    VisibilityDetectorController.instance.forget(
+      ValueKey<String>('device-video-${widget.videoAsset}'),
+    );
+    _disposeVideo();
     super.dispose();
   }
 
@@ -491,25 +539,42 @@ class _DeviceVideoScreenState extends State<_DeviceVideoScreen> {
         _videoController != null &&
         _videoController!.value.isInitialized;
 
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        ColoredBox(
-          color: AppColors.surfaceElevatedDark,
-          child: ready
-              ? FittedBox(
-                  fit: widget.fit,
-                  alignment: Alignment.center,
-                  child: SizedBox(
-                    width: _videoController!.value.size.width,
-                    height: _videoController!.value.size.height,
-                    child: VideoPlayer(_videoController!),
-                  ),
-                )
-              : Image.asset(
+    return VisibilityDetector(
+      key: ValueKey<String>('device-video-${widget.videoAsset}'),
+      onVisibilityChanged: _onVisibilityChanged,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          ColoredBox(
+            color: AppColors.surfaceElevatedDark,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final cacheWidth = MobileWebPerformance.mockupPixelCacheWidth(
+                  context,
+                  constraints.maxWidth,
+                );
+                final filterQuality =
+                    MobileWebPerformance.mockupFilterQuality(context);
+
+                if (ready) {
+                  return RepaintBoundary(
+                    child: FittedBox(
+                      fit: widget.fit,
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: _videoController!.value.size.width,
+                        height: _videoController!.value.size.height,
+                        child: VideoPlayer(_videoController!),
+                      ),
+                    ),
+                  );
+                }
+
+                return Image.asset(
                   widget.posterAsset,
                   fit: widget.fit,
-                  filterQuality: FilterQuality.high,
+                  cacheWidth: cacheWidth,
+                  filterQuality: filterQuality,
                   errorBuilder: (_, __, ___) => Center(
                     child: Icon(
                       LucideIcons.monitorPlay,
@@ -517,29 +582,33 @@ class _DeviceVideoScreenState extends State<_DeviceVideoScreen> {
                       color: AppColors.accent.withValues(alpha: 0.6),
                     ),
                   ),
-                ),
-        ),
-        Positioned(
-          top: 6,
-          right: 6,
-          child: Material(
-            color: Colors.black.withValues(alpha: 0.45),
-            borderRadius: BorderRadius.circular(20),
-            child: InkWell(
-              onTap: _toggleMute,
-              borderRadius: BorderRadius.circular(20),
-              child: Padding(
-                padding: const EdgeInsets.all(6),
-                child: Icon(
-                  _muted ? LucideIcons.volumeX : LucideIcons.volume2,
-                  size: 16,
-                  color: AppColors.onPrimary,
+                );
+              },
+            ),
+          ),
+          if (ready)
+            Positioned(
+              top: 6,
+              right: 6,
+              child: Material(
+                color: Colors.black.withValues(alpha: 0.45),
+                borderRadius: BorderRadius.circular(20),
+                child: InkWell(
+                  onTap: _toggleMute,
+                  borderRadius: BorderRadius.circular(20),
+                  child: Padding(
+                    padding: const EdgeInsets.all(6),
+                    child: Icon(
+                      _muted ? LucideIcons.volumeX : LucideIcons.volume2,
+                      size: 16,
+                      color: AppColors.onPrimary,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -586,6 +655,61 @@ class ChineseDeviceShowcase extends StatelessWidget {
   }
 }
 
+/// Cross-platform cluster with independent screenshots per device frame.
+class ChineseDeviceClusterStage extends StatelessWidget {
+  const ChineseDeviceClusterStage({
+    super.key,
+    required this.desktopAsset,
+    required this.tabletAsset,
+    required this.browserAsset,
+    this.onTap,
+    this.transitionDuration = const Duration(milliseconds: 400),
+  });
+
+  final String desktopAsset;
+  final String tabletAsset;
+  final String browserAsset;
+  final VoidCallback? onTap;
+  final Duration transitionDuration;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        if (width < Breakpoints.mobile) {
+          return _MobileCluster(
+            desktopAsset: desktopAsset,
+            tabletAsset: tabletAsset,
+            browserAsset: browserAsset,
+            width: width,
+            onTap: onTap,
+            transitionDuration: transitionDuration,
+          );
+        }
+        if (width < Breakpoints.tablet) {
+          return _TabletCluster(
+            desktopAsset: desktopAsset,
+            tabletAsset: tabletAsset,
+            browserAsset: browserAsset,
+            width: width,
+            onTap: onTap,
+            transitionDuration: transitionDuration,
+          );
+        }
+        return _DesktopCluster(
+          desktopAsset: desktopAsset,
+          tabletAsset: tabletAsset,
+          browserAsset: browserAsset,
+          width: width,
+          onTap: onTap,
+          transitionDuration: transitionDuration,
+        );
+      },
+    );
+  }
+}
+
 /// Cross-platform hero with desktop, browser, and tablet presentations.
 class ChineseDeviceEcosystemStage extends StatelessWidget {
   const ChineseDeviceEcosystemStage({
@@ -601,34 +725,72 @@ class ChineseDeviceEcosystemStage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final width = constraints.maxWidth;
-        if (width < Breakpoints.mobile) {
-          return _MobileEcosystem(
+    if (heroVideoAsset != null) {
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          final width = constraints.maxWidth;
+          if (width < Breakpoints.mobile) {
+            return _MobileEcosystem(
+              asset: asset,
+              heroVideoAsset: heroVideoAsset,
+              width: width,
+              onTap: onTap,
+            );
+          }
+          if (width < Breakpoints.tablet) {
+            return _TabletEcosystem(
+              asset: asset,
+              heroVideoAsset: heroVideoAsset,
+              width: width,
+              onTap: onTap,
+            );
+          }
+          return _DesktopEcosystem(
             asset: asset,
             heroVideoAsset: heroVideoAsset,
             width: width,
             onTap: onTap,
           );
-        }
-        if (width < Breakpoints.tablet) {
-          return _TabletEcosystem(
-            asset: asset,
-            heroVideoAsset: heroVideoAsset,
-            width: width,
-            onTap: onTap,
-          );
-        }
-        return _DesktopEcosystem(
-          asset: asset,
-          heroVideoAsset: heroVideoAsset,
-          width: width,
-          onTap: onTap,
-        );
-      },
+        },
+      );
+    }
+    return ChineseDeviceClusterStage(
+      desktopAsset: asset,
+      tabletAsset: asset,
+      browserAsset: asset,
+      onTap: onTap,
     );
   }
+}
+
+Widget _switchingDeviceFrame({
+  required String asset,
+  required ChineseDeviceType type,
+  required double width,
+  required Duration transitionDuration,
+  VoidCallback? onTap,
+  String? videoAsset,
+  double elevation = 3,
+}) {
+  return ClipRect(
+    child: AnimatedSwitcher(
+      duration: transitionDuration,
+      switchInCurve: Curves.easeOut,
+      switchOutCurve: Curves.easeIn,
+      transitionBuilder: (child, animation) {
+        return FadeTransition(opacity: animation, child: child);
+      },
+      child: ChineseDeviceFrame(
+        key: ValueKey<String>(asset),
+        asset: asset,
+        videoAsset: videoAsset,
+        type: type,
+        width: width,
+        onTap: onTap,
+        elevation: elevation,
+      ),
+    ),
+  );
 }
 
 ChineseDeviceFrame _ecosystemDesktopFrame({
@@ -664,36 +826,16 @@ class _MobileEcosystem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final desktopWidth = (width * 0.9).clamp(260, 420).toDouble();
-    final secondaryWidth = (width * 0.72).clamp(220, 340).toDouble();
     return Stack(
       alignment: Alignment.center,
       children: [
         const Positioned.fill(child: _DeviceInkGlow()),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _ecosystemDesktopFrame(
-              asset: asset,
-              heroVideoAsset: heroVideoAsset,
-              width: desktopWidth,
-              onTap: onTap,
-              elevation: 6,
-            ),
-            const SizedBox(height: 18),
-            ChineseDeviceFrame(
-              asset: asset,
-              type: ChineseDeviceType.tablet,
-              width: secondaryWidth,
-              onTap: onTap,
-            ),
-            const SizedBox(height: 18),
-            ChineseDeviceFrame(
-              asset: asset,
-              type: ChineseDeviceType.browser,
-              width: secondaryWidth,
-              onTap: onTap,
-            ),
-          ],
+        _ecosystemDesktopFrame(
+          asset: asset,
+          heroVideoAsset: heroVideoAsset,
+          width: desktopWidth,
+          onTap: onTap,
+          elevation: 6,
         ),
       ],
     );
@@ -752,6 +894,188 @@ class _TabletEcosystem extends StatelessWidget {
               ],
             ),
           ],
+        ),
+      ],
+    );
+  }
+}
+
+class _DesktopCluster extends StatelessWidget {
+  const _DesktopCluster({
+    required this.desktopAsset,
+    required this.tabletAsset,
+    required this.browserAsset,
+    required this.width,
+    this.onTap,
+    this.transitionDuration = const Duration(milliseconds: 400),
+  });
+
+  final String desktopAsset;
+  final String tabletAsset;
+  final String browserAsset;
+  final double width;
+  final VoidCallback? onTap;
+  final Duration transitionDuration;
+
+  @override
+  Widget build(BuildContext context) {
+    final desktopWidth = (width * 0.47).clamp(470, 580).toDouble();
+    final sideWidth = (width * 0.29).clamp(285, 355).toDouble();
+    final stageHeight =
+        ChineseDeviceFrame.heightForWidth(
+          ChineseDeviceType.desktop,
+          desktopWidth,
+        ) +
+        24;
+
+    return SizedBox(
+      height: stageHeight,
+      child: Stack(
+        alignment: Alignment.center,
+        clipBehavior: Clip.none,
+        children: [
+          const Positioned.fill(child: _DeviceInkGlow()),
+          Positioned(
+            left: 0,
+            top: stageHeight * 0.18,
+            child: Transform.rotate(
+              angle: -0.035,
+              child: _switchingDeviceFrame(
+                asset: browserAsset,
+                type: ChineseDeviceType.browser,
+                width: sideWidth,
+                transitionDuration: transitionDuration,
+                onTap: onTap,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            top: stageHeight * 0.2,
+            child: Transform.rotate(
+              angle: 0.035,
+              child: _switchingDeviceFrame(
+                asset: tabletAsset,
+                type: ChineseDeviceType.tablet,
+                width: sideWidth,
+                transitionDuration: transitionDuration,
+                onTap: onTap,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            child: _switchingDeviceFrame(
+              asset: desktopAsset,
+              type: ChineseDeviceType.desktop,
+              width: desktopWidth,
+              transitionDuration: transitionDuration,
+              onTap: onTap,
+              elevation: 8,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TabletCluster extends StatelessWidget {
+  const _TabletCluster({
+    required this.desktopAsset,
+    required this.tabletAsset,
+    required this.browserAsset,
+    required this.width,
+    this.onTap,
+    this.transitionDuration = const Duration(milliseconds: 400),
+  });
+
+  final String desktopAsset;
+  final String tabletAsset;
+  final String browserAsset;
+  final double width;
+  final VoidCallback? onTap;
+  final Duration transitionDuration;
+
+  @override
+  Widget build(BuildContext context) {
+    final desktopWidth = (width * 0.72).clamp(420, 560).toDouble();
+    final secondaryWidth = (width * 0.39).clamp(250, 320).toDouble();
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        const Positioned.fill(child: _DeviceInkGlow()),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _switchingDeviceFrame(
+              asset: desktopAsset,
+              type: ChineseDeviceType.desktop,
+              width: desktopWidth,
+              transitionDuration: transitionDuration,
+              onTap: onTap,
+              elevation: 6,
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _switchingDeviceFrame(
+                  asset: browserAsset,
+                  type: ChineseDeviceType.browser,
+                  width: secondaryWidth,
+                  transitionDuration: transitionDuration,
+                  onTap: onTap,
+                ),
+                const SizedBox(width: 20),
+                _switchingDeviceFrame(
+                  asset: tabletAsset,
+                  type: ChineseDeviceType.tablet,
+                  width: secondaryWidth,
+                  transitionDuration: transitionDuration,
+                  onTap: onTap,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _MobileCluster extends StatelessWidget {
+  const _MobileCluster({
+    required this.desktopAsset,
+    required this.tabletAsset,
+    required this.browserAsset,
+    required this.width,
+    this.onTap,
+    this.transitionDuration = const Duration(milliseconds: 400),
+  });
+
+  final String desktopAsset;
+  final String tabletAsset;
+  final String browserAsset;
+  final double width;
+  final VoidCallback? onTap;
+  final Duration transitionDuration;
+
+  @override
+  Widget build(BuildContext context) {
+    final desktopWidth = (width * 0.9).clamp(260, 420).toDouble();
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        const Positioned.fill(child: _DeviceInkGlow()),
+        _switchingDeviceFrame(
+          asset: desktopAsset,
+          type: ChineseDeviceType.desktop,
+          width: desktopWidth,
+          transitionDuration: transitionDuration,
+          onTap: onTap,
+          elevation: 6,
         ),
       ],
     );

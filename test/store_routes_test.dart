@@ -18,4 +18,18 @@ void main() {
     expect(redirectLegacyAppsFragment('period9'), isNull);
     expect(redirectLegacyAppsFragment(''), isNull);
   });
+
+  test('routeRequestsSectionScroll only for explicit deep links', () {
+    expect(routeRequestsSectionScroll(Uri.parse('http://local/apps')), isFalse);
+    expect(routeRequestsSectionScroll(Uri.parse('http://local/apps#master-elf')), isFalse);
+    expect(routeRequestsSectionScroll(Uri.parse('http://local/apps#period9')), isTrue);
+    expect(routeRequestsSectionScroll(Uri.parse('http://local/books')), isFalse);
+    expect(routeRequestsSectionScroll(Uri.parse('http://local/books#books')), isFalse);
+    expect(routeRequestsSectionScroll(Uri.parse('http://local/books#book-3')), isTrue);
+    expect(routeRequestsSectionScroll(Uri.parse('http://local/talisman')), isFalse);
+    expect(routeRequestsSectionScroll(Uri.parse('http://local/consultations')), isFalse);
+    expect(routeRequestsSectionScroll(Uri.parse('http://local/consultations?service=bazi')), isTrue);
+    expect(routeRequestsSectionScroll(Uri.parse('http://local/events')), isFalse);
+    expect(routeRequestsSectionScroll(Uri.parse('http://local/journey')), isFalse);
+  });
 }

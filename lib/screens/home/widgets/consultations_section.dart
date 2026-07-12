@@ -7,6 +7,7 @@ import '../../../config/app_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/mobile_web_performance.dart';
 
 class ConsultationsSection extends StatelessWidget {
   const ConsultationsSection({super.key});
@@ -88,6 +89,11 @@ class ConsultationsSection extends StatelessWidget {
           child: Image.asset(
             AppContent.assetBackgroundDirection,
             fit: BoxFit.cover,
+            cacheWidth: MobileWebPerformance.devicePixelCacheWidth(
+              context,
+              MediaQuery.sizeOf(context).width,
+            ),
+            filterQuality: MobileWebPerformance.imageFilterQuality(context),
             errorBuilder: (_, __, ___) => Container(
               color: AppColors.surfaceDark,
               child: const Center(

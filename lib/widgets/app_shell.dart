@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../config/store_routes.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
@@ -40,11 +42,35 @@ class _AppShellState extends State<AppShell> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _showBackToTop = false;
   bool _menuVisible = true;
+  String _routeLocation = '';
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final uri = GoRouterState.of(context).uri;
+    final location = uri.path +
+        (uri.hasQuery ? '?${uri.query}' : '') +
+        (uri.fragment.isNotEmpty ? '#${uri.fragment}' : '');
+    if (location != _routeLocation) {
+      _routeLocation = location;
+      if (!routeRequestsSectionScroll(uri)) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (_scrollController.hasClients) {
+            _scrollController.jumpTo(0);
+          }
+          setState(() {
+            _menuVisible = true;
+            _showBackToTop = false;
+          });
+        });
+      }
+    }
   }
 
   @override

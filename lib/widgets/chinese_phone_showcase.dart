@@ -4,6 +4,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../screens/home/widgets/field_work_chinese_design.dart';
 import '../theme/app_theme.dart';
 import '../utils/breakpoints.dart';
+import '../utils/mobile_web_performance.dart';
 
 /// A single screenshot inside a gold-trimmed Chinese phone bezel.
 ///
@@ -92,7 +93,11 @@ class _ChinesePhoneFrameState extends State<ChinesePhoneFrame> {
               fit: widget.fit,
               width: double.infinity,
               height: double.infinity,
-              filterQuality: FilterQuality.high,
+              cacheWidth: MobileWebPerformance.mockupPixelCacheWidth(
+                context,
+                widget.width,
+              ),
+              filterQuality: MobileWebPerformance.mockupFilterQuality(context),
               errorBuilder: (_, __, ___) => Center(
                 child: Icon(
                   LucideIcons.smartphone,

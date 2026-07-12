@@ -64,6 +64,10 @@ class AppContent {
       'assets/images/backgrounddirection.jpg';
   static const String assetHeroVideo = 'assets/videos/videobackground720.mp4';
 
+  /// Static web hero videos (served from [web/videos/], not the asset bundle).
+  static const String webHeroVideo720 = 'videos/videobackground720.mp4';
+  static const String webHeroVideo480 = 'videos/videobackground480.mp4';
+
   /// Apps page: Master Elf System section video.
   static const String assetAppPageVideo = 'assets/videos/appads.mp4';
   static const String assetEventCard = 'assets/images/event.jpg';
@@ -151,6 +155,29 @@ class AppContent {
   static const String assetActivityVideo04 = 'assets/videos/activities/4.mp4';
   static const String assetActivityVideo05 = 'assets/videos/activities/5.mp4';
   static const String assetActivityVideo06 = 'assets/videos/activities/6.mp4';
+
+  /// Web static path for mobile activity video [n] (480p portrait).
+  static String webActivityVideo480(int n) => 'videos/activities/$n.mp4';
+
+  /// Web static path for desktop/tablet activity video [n] (720p portrait).
+  static String webActivityVideo720(int n) => 'videos/activities/$n-720.mp4';
+
+  /// Parses `assets/videos/activities/N.mp4` → N.
+  static int? activityIndexFromAsset(String assetPath) {
+    final match = RegExp(r'activities/(\d+)\.mp4$').firstMatch(assetPath);
+    if (match == null) return null;
+    return int.tryParse(match.group(1)!);
+  }
+
+  /// All six field-work spotlight video asset paths.
+  static List<String> get activityVideoAssets => [
+    assetActivityVideo01,
+    assetActivityVideo02,
+    assetActivityVideo03,
+    assetActivityVideo04,
+    assetActivityVideo05,
+    assetActivityVideo06,
+  ];
   static const String assetBetterOption = 'assets/images/betteroption.jpg';
 
   /// BaZi Harmony card image on main page (Academies section).
@@ -198,7 +225,17 @@ class AppContent {
 
   /// All Master Elf app showcase images (for preloader).
   static List<String> get appShowcaseImageAssets => [
+    ...appShowcaseAboveFoldAssets,
+    ...appShowcaseDeferredAssets,
+  ];
+
+  /// Above-fold apps page screenshots (overview ecosystem poster).
+  static List<String> get appShowcaseAboveFoldAssets => [
     assetAppMainMenu,
+  ];
+
+  /// Below-fold / carousel apps page screenshots — deferred preload.
+  static List<String> get appShowcaseDeferredAssets => [
     assetAppBazi01,
     assetAppBazi02,
     assetAppBazi03,

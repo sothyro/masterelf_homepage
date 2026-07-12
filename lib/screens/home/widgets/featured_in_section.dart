@@ -57,6 +57,7 @@ class FeaturedInSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final metrics = FeaturedInLayoutMetrics(MediaQuery.sizeOf(context).width);
+    final disableAnimations = MediaQuery.disableAnimationsOf(context);
 
     final header = Text(
       l10n.featuredIn,
@@ -84,8 +85,46 @@ class FeaturedInSection extends StatelessWidget {
       children: [
         Center(child: header),
         SizedBox(height: metrics.headerGap),
-        _FeaturedInMarquee(logoSize: metrics.logoSize),
+        disableAnimations
+            ? _FeaturedInStaticRow(logoSize: metrics.logoSize)
+            : _FeaturedInMarquee(logoSize: metrics.logoSize),
       ],
+    );
+  }
+}
+
+/// Static logo row when the user prefers reduced motion.
+class _FeaturedInStaticRow extends StatelessWidget {
+  const _FeaturedInStaticRow({required this.logoSize});
+
+  final double logoSize;
+
+  @override
+  Widget build(BuildContext context) {
+    final cacheWidth =
+        (logoSize * MediaQuery.devicePixelRatioOf(context)).round();
+    return SizedBox(
+      width: double.infinity,
+      height: logoSize,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
+        child: Row(
+          children: [
+            for (final assetPath in AppContent.featuredPressLogos)
+              Padding(
+                padding: const EdgeInsets.only(right: 24),
+                child: _FeaturedLogoFrame(
+                  assetPath: assetPath,
+                  size: logoSize,
+                  cacheWidth: cacheWidth,
+                ),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -69,8 +69,54 @@ flutter analyze
   - `widgets/` – shared UI (header, footer, shell, dialogs)  
   - `services/` – e.g. appointment booking API  
 - `assets/` – images, icons, video  
+  - `assets/videos/videobackground720.mp4` – homepage hero video for **native** builds (Android/iOS/desktop app); optimized ~2.75 MB.  
 - `web/` – `index.html`, PWA manifest, favicon  
-  - `web/videos/` – hero video for web (e.g. `videobackground720.mp4`); copy from `assets/videos/` if missing so the release build serves it as a static file.  
+  - `web/videos/videobackground720.mp4` – hero video for **desktop/tablet web** (≥768px); served as a static file at `/videos/...` (~2.75 MB).  
+  - `web/videos/videobackground480.mp4` – hero video for **mobile web** (<768px); served at `/videos/...` (~1.5 MB).  
+
+When updating the hero video, re-encode both web variants from the source in `assets/videos/`:
+
+```bash
+# Re-encode 720p (native + web desktop)
+ffmpeg -y -i assets/videos/videobackground720.mp4 -an -vf scale=-2:720 \
+  -c:v libx264 -preset slow -crf 28 -movflags +faststart web/videos/videobackground720.mp4
+cp web/videos/videobackground720.mp4 assets/videos/videobackground720.mp4
+
+# Encode 480p (web mobile)
+ffmpeg -y -i assets/videos/videobackground720.mp4 -an -vf scale=-2:480 \
+  -c:v libx264 -preset slow -crf 28 -movflags +faststart web/videos/videobackground480.mp4
+
+# Re-encode apps overview demo (in-place)
+ffmpeg -y -i assets/videos/appads.mp4 -an -vf scale=-2:720 \
+  -c:v libx264 -preset slow -crf 28 -movflags +faststart assets/videos/appads.mp4
+```
+
+**Field-work activity spotlight videos** (six clips, 9:16, **with AAC audio**):
+
+```bash
+# Windows
+.\tool\encode_activity_videos.ps1
+
+# macOS / Linux
+./tool/encode_activity_videos.sh
+```
+
+Manual per-file commands (replace `N` with 1–6):
+
+```bash
+# 720p native + web desktop (from source backup)
+ffmpeg -y -i tool/activity_video_sources/N.mp4 -vf scale=-2:720 \
+  -c:v libx264 -preset slow -crf 28 -c:a aac -b:a 128k -ac 2 \
+  -movflags +faststart assets/videos/activities/N.mp4
+cp assets/videos/activities/N.mp4 web/videos/activities/N-720.mp4
+
+# 480p web mobile
+ffmpeg -y -i tool/activity_video_sources/N.mp4 -vf scale=-2:480 \
+  -c:v libx264 -preset slow -crf 28 -c:a aac -b:a 96k -ac 2 \
+  -movflags +faststart web/videos/activities/N.mp4
+```
+
+Before a web release, run `dart run tool/verify_web_videos.dart` (also run automatically by `scripts/build_web_release.ps1` / `.sh`). Web builds strip duplicate hero and activity MP4s from the Flutter asset bundle so only the static `/videos/` files are served.
 
 ## Configuration
 

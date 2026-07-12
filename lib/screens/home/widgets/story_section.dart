@@ -8,6 +8,7 @@ import '../../../config/app_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/mobile_web_performance.dart';
 
 class StorySection extends StatelessWidget {
   const StorySection({super.key});
@@ -151,16 +152,21 @@ class StorySection extends StatelessWidget {
       ),
     );
 
-    // Desktop: centered story block. Mobile: image full height behind text (stacked), with light scrim for readability.
-    final mobileStoryHeight = math.max(520.0, width * 1.1);
+    // Desktop: centered story block. Mobile: portrait behind text with a face-safe
+    // zone so copy never rises into the head/throat area (varies by DPR + text scale).
+    final mobileStoryHeight = math.max(
+      math.max(720.0, width * 1.78),
+      width * 0.92 + 480,
+    );
+    final mobileFaceClearance = width * 0.92;
     final storyContent = isMobile
         ? Padding(
             padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: mobileStoryHeight),
               child: Stack(
+                clipBehavior: Clip.hardEdge,
                 children: [
-                  // Give Stack a size so positioned children have a layout (Stack with only positioned children otherwise has zero size).
                   SizedBox(width: double.infinity, height: mobileStoryHeight),
                   Positioned.fill(
                     child: ClipRRect(
@@ -168,6 +174,12 @@ class StorySection extends StatelessWidget {
                       child: Image.asset(
                         AppContent.assetStoryBackground,
                         fit: BoxFit.cover,
+                        alignment: const Alignment(0, -0.95),
+                        cacheWidth: MobileWebPerformance.devicePixelCacheWidth(
+                          context,
+                          width,
+                        ),
+                        filterQuality: MobileWebPerformance.imageFilterQuality(context),
                       ),
                     ),
                   ),
@@ -182,6 +194,7 @@ class StorySection extends StatelessWidget {
                             Colors.black.withValues(alpha: 0.2),
                             Colors.black.withValues(alpha: 0.55),
                           ],
+                          stops: const [0.0, 0.72],
                         ),
                       ),
                     ),
@@ -189,10 +202,14 @@ class StorySection extends StatelessWidget {
                   Positioned(
                     left: 0,
                     right: 0,
+                    top: mobileFaceClearance,
                     bottom: 0,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 24, 12, 24),
-                      child: storyBlock,
+                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 24),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: storyBlock,
+                      ),
                     ),
                   ),
                 ],
@@ -278,6 +295,11 @@ class StorySection extends StatelessWidget {
                       AppContent.assetStoryBackground,
                       fit: BoxFit.contain,
                       alignment: Alignment.bottomCenter,
+                      cacheWidth: MobileWebPerformance.devicePixelCacheWidth(
+                        context,
+                        math.min(800, width * 0.55),
+                      ),
+                      filterQuality: MobileWebPerformance.imageFilterQuality(context),
                     ),
                   ),
                 ),

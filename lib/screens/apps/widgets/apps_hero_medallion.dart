@@ -1,11 +1,13 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../config/app_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/mobile_web_performance.dart';
 import '../../../widgets/majestic_orbital_card_frame.dart';
 import '../../home/widgets/field_work_chinese_design.dart';
 import 'apps_yuk9_brand.dart';
@@ -15,36 +17,7 @@ import 'apps_yuk9_metaphysics_orbits.dart';
 class AppsHeroMedallion extends StatefulWidget {
   const AppsHeroMedallion({super.key});
 
-  @override
-  State<AppsHeroMedallion> createState() => _AppsHeroMedallionState();
-}
-
-class _AppsHeroMedallionState extends State<AppsHeroMedallion>
-    with SingleTickerProviderStateMixin {
-  bool _hovered = false;
-  late final AnimationController _cycle;
-
-  static const _orbitExtentScale = 1.27;
-  static const _idleWobbleStrength = 0.62;
-  static const _hoverWobbleStrength = 1.0;
-  static const _idleWobbleSpeed = 0.82;
-
-  @override
-  void initState() {
-    super.initState();
-    _cycle = AnimationController(
-      vsync: this,
-      duration: kMajesticOrbitalCycleDuration,
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _cycle.dispose();
-    super.dispose();
-  }
-
-  static double _coreSizeForWidth(double width) {
+  static double coreSizeForWidth(double width) {
     if (width < Breakpoints.mobile) {
       return (width * 0.56).clamp(220.0, 268.0);
     }
@@ -54,14 +27,109 @@ class _AppsHeroMedallionState extends State<AppsHeroMedallion>
     return (width * 0.28).clamp(310.0, 360.0);
   }
 
-  static double _orbitPad(bool isNarrow) => 57.0;
+  static double orbitPad(bool isNarrow) => 57.0;
+
+  @override
+  State<AppsHeroMedallion> createState() => _AppsHeroMedallionState();
+}
+
+class _AppsHeroMedallionState extends State<AppsHeroMedallion>
+    with SingleTickerProviderStateMixin {
+  bool _hovered = false;
+  bool _inViewport = true;
+  bool _orbitAnimationEnabled = false;
+  bool _orbitAnimationScheduled = false;
+  late final AnimationController _cycle;
+
+  static const _orbitExtentScale = 1.27;
+  static const _idleWobbleStrength = 0.62;
+  static const _hoverWobbleStrength = 1.0;
+  static const _idleWobbleSpeed = 0.82;
+
+  bool _permanentlyStatic(BuildContext context) {
+    final mq = MediaQuery.maybeOf(context);
+    return mq != null && mq.disableAnimations;
+  }
+
+  bool _showStaticMedallion(BuildContext context) {
+    if (_permanentlyStatic(context)) return true;
+    return MobileWebPerformance.isMobileWeb(context) && !_orbitAnimationEnabled;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _cycle = AnimationController(
+      vsync: this,
+      duration: kMajesticOrbitalCycleDuration,
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && _inViewport && _orbitAnimationEnabled) _cycle.repeat();
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_permanentlyStatic(context)) return;
+
+    if (!MobileWebPerformance.isMobileWeb(context)) {
+      if (!_orbitAnimationEnabled) {
+        _orbitAnimationEnabled = true;
+        if (_inViewport && !_cycle.isAnimating) _cycle.repeat();
+      }
+      return;
+    }
+
+    if (_orbitAnimationScheduled || _orbitAnimationEnabled) return;
+    _orbitAnimationScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future<void>.delayed(MobileWebPerformance.heroMedallionAnimationDefer(), () {
+        if (!mounted || _orbitAnimationEnabled) return;
+        setState(() => _orbitAnimationEnabled = true);
+        if (_inViewport && !_cycle.isAnimating) _cycle.repeat();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    VisibilityDetectorController.instance.forget(
+      const ValueKey<String>('apps-hero-medallion'),
+    );
+    _cycle.dispose();
+    super.dispose();
+  }
+
+  void _onVisibilityChanged(VisibilityInfo info) {
+    if (!mounted) return;
+    final visible = info.visibleFraction > 0.08;
+    if (visible == _inViewport) return;
+    _inViewport = visible;
+    if (visible) {
+      if (!_cycle.isAnimating) _cycle.repeat();
+    } else {
+      _cycle.stop();
+    }
+  }
+
+  static double _orbitPad(bool isNarrow) => AppsHeroMedallion.orbitPad(isNarrow);
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
+    if (_showStaticMedallion(context)) {
+      return _StaticAppsHeroMedallion(hovered: _hovered);
+    }
+
+    return VisibilityDetector(
+      key: const ValueKey<String>('apps-hero-medallion'),
+      onVisibilityChanged: _onVisibilityChanged,
+      child: TickerMode(
+        enabled: _inViewport,
+        child: LayoutBuilder(
       builder: (context, constraints) {
         final isNarrow = constraints.maxWidth < Breakpoints.mobile;
-        final core = _coreSizeForWidth(constraints.maxWidth);
+        final core = AppsHeroMedallion.coreSizeForWidth(constraints.maxWidth);
         final pad = _orbitPad(isNarrow);
         final stage = core + pad * 2;
         final l10n = AppLocalizations.of(context)!;
@@ -130,6 +198,7 @@ class _AppsHeroMedallionState extends State<AppsHeroMedallion>
                               hovered: _hovered,
                               behind: true,
                               extentScale: _orbitExtentScale,
+                              reduceEffects: MobileWebPerformance.isMobileWeb(context),
                             ),
                           ),
                         ),
@@ -159,12 +228,64 @@ class _AppsHeroMedallionState extends State<AppsHeroMedallion>
                               hovered: _hovered,
                               behind: false,
                               extentScale: _orbitExtentScale,
+                              reduceEffects: MobileWebPerformance.isMobileWeb(context),
                             ),
                           ),
                         ),
                       ],
                     );
                   },
+                ),
+              ),
+            ),
+            SizedBox(height: isNarrow ? 20 : 26),
+            MasterElfYuk9ProBrandTitle(
+              systemName: l10n.masterElfSystem,
+              subtitle: l10n.appsHeroBrandSubtitle,
+              isNarrow: isNarrow,
+            ),
+          ],
+        );
+      },
+    ),
+      ),
+    );
+  }
+}
+
+/// Lightweight hero placeholder — same stage size as animated version, no orbits yet.
+class _StaticAppsHeroMedallion extends StatelessWidget {
+  const _StaticAppsHeroMedallion({required this.hovered});
+
+  final bool hovered;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isNarrow = constraints.maxWidth < Breakpoints.mobile;
+        final core = AppsHeroMedallion.coreSizeForWidth(constraints.maxWidth);
+        final pad = AppsHeroMedallion.orbitPad(isNarrow);
+        final stage = core + pad * 2;
+        final l10n = AppLocalizations.of(context)!;
+        final cornerRadius = core * 0.145;
+        final encroach = core * 0.045;
+        final frameBand = core * 0.065;
+
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: stage,
+              height: stage,
+              child: Center(
+                child: _Yuk9MedallionCore(
+                  size: core,
+                  cornerRadius: cornerRadius,
+                  encroach: encroach,
+                  frameBand: frameBand,
+                  hovered: hovered,
+                  qiPulse: 0,
                 ),
               ),
             ),
@@ -200,6 +321,9 @@ class _Yuk9MedallionCore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cacheWidth = MobileWebPerformance.devicePixelCacheWidth(context, size);
+    final filterQuality = MobileWebPerformance.imageFilterQuality(context);
+
     return SizedBox(
       width: size,
       height: size,
@@ -251,7 +375,8 @@ class _Yuk9MedallionCore extends StatelessWidget {
               child: Image.asset(
                 AppContent.assetYuk9Icon,
                 fit: BoxFit.contain,
-                filterQuality: FilterQuality.high,
+                cacheWidth: cacheWidth,
+                filterQuality: filterQuality,
                 errorBuilder: (_, __, ___) => Icon(
                   Icons.image_not_supported_outlined,
                   size: size * 0.2,

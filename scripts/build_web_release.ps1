@@ -20,12 +20,32 @@ flutter clean
 Write-Host "`n=== Getting dependencies ===" -ForegroundColor Cyan
 flutter pub get
 
+Write-Host "`n=== Verifying web hero videos ===" -ForegroundColor Cyan
+dart run tool/verify_web_videos.dart
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Web hero video verification failed." -ForegroundColor Red
+    exit 1
+}
+
 Write-Host "`n=== Building web ===" -ForegroundColor Cyan
 flutter build web
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Build failed." -ForegroundColor Red
     exit 1
+}
+
+# Web uses static files under web/videos/; strip duplicate Flutter asset bundle copies.
+$bundledHeroVideo = Join-Path $projectRoot "build\web\assets\assets\videos\videobackground720.mp4"
+if (Test-Path $bundledHeroVideo) {
+    Remove-Item $bundledHeroVideo -Force
+    Write-Host "Removed duplicate bundled hero video from build/web/assets/" -ForegroundColor Green
+}
+
+$bundledActivities = Join-Path $projectRoot "build\web\assets\assets\videos\activities"
+if (Test-Path $bundledActivities) {
+    Remove-Item $bundledActivities -Recurse -Force
+    Write-Host "Removed duplicate bundled activity videos from build/web/assets/" -ForegroundColor Green
 }
 
 # Copy .htaccess to build output (required for Apache/LiteSpeed hosting - SPA routing + www redirect)

@@ -5,8 +5,8 @@ import '../config/app_content.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
 
-/// Full-screen loading view shown until above-fold homepage assets are ready.
-/// Hero video loads in the hero section after the app is visible.
+/// Full-screen loading view shown until above-fold assets, fonts, the
+/// pre-warmed hero video, and the fully painted homepage are all ready.
 class HeroLoadingScreen extends StatefulWidget {
   const HeroLoadingScreen({super.key, this.progress = 0.0});
 
@@ -73,8 +73,9 @@ class _HeroLoadingScreenState extends State<HeroLoadingScreen>
   }
 
   String _messageForProgress(double progress, AppLocalizations l10n) {
-    if (progress < 0.25) return l10n.loadingExperience;
-    if (progress < 0.92) return l10n.loadingOptimising;
+    if (progress < 0.20) return l10n.loadingExperience;
+    // 0.20–0.75: images + fonts; 0.75+: hero video prewarm + homepage render.
+    if (progress < 0.75) return l10n.loadingOptimising;
     return l10n.loadingAlmostThere;
   }
 
