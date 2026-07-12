@@ -47,3 +47,6 @@ app.*.map.json
 # Node.js / Cloud Functions
 functions/node_modules/
 functions/scripts/.plasgate-*
+
+# Local ffmpeg source backups (not shipped; re-encode from tool/encode_activity_videos.*)
+tool/activity_video_sources/
