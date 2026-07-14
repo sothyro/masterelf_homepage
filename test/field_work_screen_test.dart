@@ -51,9 +51,9 @@ void main() {
     expect(find.text('Watch real work in action'), findsOneWidget);
     expect(find.byType(ActivityStoriesSection), findsOneWidget);
     expect(find.text('Our core activities'), findsOneWidget);
-    expect(find.text('Feng Shui site visit'), findsOneWidget);
-    expect(find.text('BaZi, Qi Men & I Ching consultations'), findsOneWidget);
-    expect(find.text('Mao Shan home blessing'), findsOneWidget);
+    expect(find.text('Unlock Your Property\'s Qi'), findsOneWidget);
+    expect(find.text('Clarity for Life\'s Biggest Calls'), findsOneWidget);
+    expect(find.text('Protection You Can Feel at Home'), findsOneWidget);
     expect(find.byIcon(LucideIcons.chevronLeft), findsWidgets);
     expect(find.byIcon(LucideIcons.chevronRight), findsWidgets);
     expect(find.textContaining('documented in photos'), findsOneWidget);

@@ -129,6 +129,34 @@ class AppContent {
   static const String assetTestimonial16 = 'assets/images/testimonials/16.jpg';
   static const String assetTestimonial17 = 'assets/images/testimonials/17.jpg';
   static const String assetTestimonial18 = 'assets/images/testimonials/18.jpg';
+  static const String assetTestimonialHena =
+      'assets/images/testimonials/hena.png';
+  static const String assetTestimonialSokha =
+      'assets/images/testimonials/sokha.png';
+  static const String assetTestimonialPisey =
+      'assets/images/testimonials/pisey.png';
+  static const String assetTestimonialAiichen =
+      'assets/images/testimonials/aiichen.png';
+  static const String assetTestimonialHengyang =
+      'assets/images/testimonials/hengyang.png';
+  static const String assetTestimonialChanra =
+      'assets/images/testimonials/chanra.png';
+  static const String assetTestimonialDeth =
+      'assets/images/testimonials/deth.png';
+  static const String assetTestimonialLinger =
+      'assets/images/testimonials/linger.png';
+  static const String assetTestimonialOunnpovv =
+      'assets/images/testimonials/ounnpovv.png';
+  static const String assetTestimonialMuysorng =
+      'assets/images/testimonials/muysorng.png';
+  static const String assetTestimonialSokunna =
+      'assets/images/testimonials/sokunna.png';
+  static const String assetTestimonialSaly =
+      'assets/images/testimonials/saly.png';
+  static const String assetTestimonialRina =
+      'assets/images/testimonials/rina.png';
+  static const String assetTestimonialChung =
+      'assets/images/testimonials/chung.png';
   static const String assetAcademy = 'assets/images/apps.jpg';
 
   /// Consultation / appointments page (Smart Move cards).

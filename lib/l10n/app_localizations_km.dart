@@ -3398,33 +3398,33 @@ class AppLocalizationsKm extends AppLocalizations {
   String get fieldWorkGalleryHeading => 'វិចិត្រសាលរូបថត';
 
   @override
-  String get fieldWorkPillarFengShuiTitle => 'ទស្សនាវាលហុងស៊ុយ (Feng Shui)';
+  String get fieldWorkPillarFengShuiTitle => 'បើកថាមពលអចលនទ្រព្យរបស់អ្នក';
 
   @override
   String get fieldWorkPillarFengShuiSubtitle =>
-      'ការអានខ្យុង និងវាយតម្លៃរូបរាងដីនៅអចលនទ្រព្យពិត។';
+      'លូផាន រូបរាងដី និងយុគទី ៩ នៅទីតាំងពិត—មុនចុះហត្ថលេខា សាងសង់ ឬបើកដំណើរ។';
 
   @override
-  String get fieldWorkPillarConsultTitle => 'ការពិគ្រោះប៉ាជឺ ឈីមិន និងអីជឹង';
+  String get fieldWorkPillarConsultTitle =>
+      'ភាពច្បាស់សម្រាប់ការសម្រេចចិត្តសំខាន់';
 
   @override
   String get fieldWorkPillarConsultSubtitle =>
-      'វគ្គនៅការិយាល័យ—ក្រាប យុទ្ធសាស្ត្រ និងជំហានបន្ទាប់ជាក់ស្តែង។';
+      'ប៉ាជឺ ឈីមិនទុនជា និងអ៊ីជីង—ក្រាបក្លាយជាពេលវេលា និងជំហានអនុវត្តបាន។';
 
   @override
-  String get fieldWorkPillarMaoShanTitle => 'ពិធីពរផ្ទះម៉ៅសាន (Mao Shan)';
+  String get fieldWorkPillarMaoShanTitle => 'ការការពារដែលមានអារម្មណ៍នៅផ្ទះ';
 
   @override
   String get fieldWorkPillarMaoShanSubtitle =>
-      'ពិធីគាំទ្រសន្តិភាព ការពារ និងភាពព្រមព្រៀងនៅផ្ទះ។';
+      'ពិធីម៉ៅសានពិត ការពារលំហ សម្រាកថាមពល និងស្តារសុខដម។';
 
   @override
-  String get fieldWorkPillarDateSelectionTitle =>
-      'ការជ្រើសថ្ងៃ (择日 / Date Selection)';
+  String get fieldWorkPillarDateSelectionTitle => 'ជ្រើសថ្ងៃដែលវាសនាអំណោយផល';
 
   @override
   String get fieldWorkPillarDateSelectionSubtitle =>
-      'ពេលវេលាហេងសម្រាប់បើកដំណើរ ចុះហត្ថលេខា និងព្រឹត្តិការណ៍សំខាន់។';
+      '择日សម្រាប់បើកដំណើរ កិច្ចសន្យា និងព្រឹត្តិការណ៍—ដើម្បីឱ្យការខិតខំទៅថ្ងៃត្រឹមត្រូវ។';
 
   @override
   String get fieldWorkPillarBooksTitle => 'ស៊េរីសៀវភៅ ៥-ពរ';
@@ -3449,6 +3449,31 @@ class AppLocalizationsKm extends AppLocalizations {
   @override
   String get homeCoreActivitiesSubline =>
       'រូបថតខាងក្រោមមកពីវដ្តពិត—មិនមែនរូបស្តុកទេ។ មើលរបៀប Master Elf ប្តូររូបវិទ្យាចិនបុរាណទៅជាភាពច្បាស់ ការការពារ និងភាពរុងរឿងសម្រាប់អតិថិជននៅវាល ការិយាល័យ និងព្រះវិញ្ញាណ។ ជំពូករបស់អ្នកបន្ទាប់អាចចាប់ផ្តើមនៅទីនេះ។';
+
+  @override
+  String get homeTestimonialsPart1 => 'សម្លេង ';
+
+  @override
+  String get homeTestimonialsPart2 => 'ពី\n';
+
+  @override
+  String get homeTestimonialsPart3 => 'សមរភព';
+
+  @override
+  String get homeTestimonialsPart4 => '។';
+
+  @override
+  String get homeTestimonialsHeading => 'សម្លេងពីសមរភព។';
+
+  @override
+  String get homeTestimonialsSub1 =>
+      'ដោយពាក្យរបស់ពួកគេផ្ទាល់—អតិថិជន និងសិស្សដែលបានជួបលោកគ្រូ ចូលរួមព្រឹត្តិការណ៍ និងតាមដានការងារ។';
+
+  @override
+  String get homeTestimonialsSub2 => 'ពីភ្នំពេញ សៀមរាប និងទូទាំងប្រទេស។';
+
+  @override
+  String get homeTestimonialsClientBadge => 'សម្លេងអតិថិជន';
 
   @override
   String get fieldWorkFromEventsLink => 'មើលការងារពិត';

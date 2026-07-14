@@ -1,33 +1,21 @@
-import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../config/app_content.dart';
+import '../../../config/testimonials_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/mobile_web_performance.dart';
+import 'field_work_chinese_design.dart';
 
-/// Placeholder testimonial (from INFORMATION_NEEDED §8.5).
-class TestimonialItem {
-  const TestimonialItem({
-    required this.quote,
-    required this.name,
-    required this.location,
-    this.imagePath,
-  });
+const double _testimonialMobileCardAspect = 4 / 5;
+const double _testimonialMobileTextSectionHeight = 124;
 
-  final String quote;
-  final String name;
-  final String location;
-  /// Optional image path. If null, falls back to alternating profile/participant.
-  final String? imagePath;
-
-  bool get isBlank => quote == '—' && name == '—' && location == '—';
-}
-
+/// Homepage client-voice carousel with activity-card spacing and Chinese shell.
 class TestimonialsSection extends StatefulWidget {
   const TestimonialsSection({super.key});
 
@@ -36,245 +24,127 @@ class TestimonialsSection extends StatefulWidget {
 }
 
 class _TestimonialsSectionState extends State<TestimonialsSection> {
-  static final _placeholders = [
-    const TestimonialItem(
-      quote: 'កូនសិស្ស មានកត្តិយសណាស់ បានចូលរួម កម្មវិធី ម្សិលមិញ 🙏🩵\nសង្ឃឹមថា បានស្គាល់លោកគ្រូ ប្អូន នឹងបាន កែប្រែ វាសនា 🙏',
-      name: 'Panha Leakhena',
-      location: 'Phnom Penh',
-      imagePath: AppContent.assetTestimonialPanhaLeakhena,
-    ),
-    const TestimonialItem(
-      quote: 'អរគុណ លោកគ្រូ សិស្សនៅខាងពេជនិល ទៅចូលរួមកម្មពីធី លោកគ្រូដែលកាលយប់31 អរគុណ លោកគ្រូ 🙏🏻🙏🏻🙏🏻',
-      name: 'Moon Pichnil',
-      location: 'Preah Sihanouk',
-      imagePath: AppContent.assetTestimonialMoon,
-    ),
-    const TestimonialItem(
-      quote: 'សូមគោរពអរគុណលោកគ្រូ ដែលចែកកាដូរពិសេសដល់ទៅពីរមុខក្នុងថ្ងៃជួបជុំ 🙏🙏🙏💙',
-      name: 'Sereyrath Aumrith',
-      location: 'International',
-      imagePath: AppContent.assetTestimonialRithy,
-    ),
-    const TestimonialItem(
-      quote: 'អរគុណលោកគ្រូ បើកមុខឲ្យខ្ញុំលក់ដីដាច់! ខ្ញុំលែងលំបាកហើយ',
-      name: 'Sieng Vanna',
-      location: 'Kandal',
-      imagePath: AppContent.assetTestimonialVanna,
-    ),
-    const TestimonialItem(
-      quote: 'Caishen🙏🙏🙏❤️',
-      name: 'Phum Thida',
-      location: 'N/A',
-      imagePath: AppContent.assetTestimonialThida,
-    ),
-    const TestimonialItem(
-      quote: '🙏🙏🙏❤️Master Elf',
-      name: 'Zeii Tey',
-      location: 'N/A',
-      imagePath: AppContent.assetTestimonialZeiitey,
-    ),
-    const TestimonialItem(
-      quote: 'Yes sure master. អរគុណលោកគ្រូណាស់. Always by my side 🙏🏻🙏🏻🙏🏻. Am so Lucky to know you master is the big gift in my life 🙏🏻🙏🏻🙏🏻🙏🏻💸💰💵🎁🎉',
-      name: 'Ya Nara',
-      location: 'Takhmao, Cambodia',
-      imagePath: AppContent.assetTestimonial7,
-    ),
-    const TestimonialItem(
-      quote: 'ពេលបានអានសំណេរលោកគ្រូរួចធូរចិត្តច្រើន លោកគ្រូពិតជាពូកែខ្លាំងមែនទែន តាមដានតាំងពីដើមដល់ឥឡូវ',
-      name: 'Phart Sanit',
-      location: 'Siem Reap, Cambodia',
-      imagePath: AppContent.assetTestimonial8,
-    ),
-    const TestimonialItem(
-      quote: 'តាមដានគាត់ច្បាស់ៗម៉ង',
-      name: 'Ah Pich',
-      location: 'Poipet, Cambodia',
-      imagePath: AppContent.assetTestimonial9,
-    ),
-    const TestimonialItem(
-      quote: 'អោយតែឃើញផុសលោកគ្រូភាពតានតឹងបាត់អស់អរគុណលោកគ្រូ',
-      name: 'Sreylin Khan',
-      location: 'Siem Reap, Cambodia',
-      imagePath: AppContent.assetTestimonial10,
-    ),
-    const TestimonialItem(
-      quote: 'ចាំតែអានការវិភាគរបស់លោកគ្រូ អានលើកណាក៏ជក់ចិត្តដែរ',
-      name: 'Juary Mith',
-      location: 'Phnom Penh, Cambodia',
-      imagePath: AppContent.assetTestimonial11,
-    ),
-    const TestimonialItem(
-      quote: 'I love you I like to read ពេលលោកគ្រូមិះមានអារម្មណ៍កក់ក្ដៅ',
-      name: 'Veth Raksmey',
-      location: 'Phnom Penh, Cambodia',
-      imagePath: AppContent.assetTestimonial12,
-    ),
-    const TestimonialItem(
-      quote: 'តាមដានលោកគ្រូហុដស៊ុយហើយក្លាយជាការពិតទាំអស់សប្បាយចិត្ត',
-      name: 'Taa',
-      location: 'Phnom Penh, Cambodia',
-      imagePath: AppContent.assetTestimonial13,
-    ),
-    const TestimonialItem(
-      quote: 'តាមដានលោកគ្រូគ្រប់ផុសមិះមិនដែលខុសទេ',
-      name: 'Da Na',
-      location: 'Phnom Penh, Cambodia',
-      imagePath: AppContent.assetTestimonial14,
-    ),
-    const TestimonialItem(
-      quote: 'ខ្ញុំជឿជាក់លើលោកគ្រូ លោកគ្រូមិះក់មិនដែលខុសទេ',
-      name: 'Mo Ly',
-      location: 'Phnom Penh, Cambodia',
-      imagePath: AppContent.assetTestimonial15,
-    ),
-    const TestimonialItem(
-      quote: 'ខ្ញុំតាមដានផុសលោកគ្រូរហូតពិតជាឆុតមែន',
-      name: 'Mey In',
-      location: 'Siem Reap, Cambodia',
-      imagePath: AppContent.assetTestimonial16,
-    ),
-    const TestimonialItem(
-      quote: 'Master Elf និយាយបាន១ថ្ងៃផ្ទុះពេញfb',
-      name: 'Chantrea Smile',
-      location: 'Tbong khmoum, Cambodia',
-      imagePath: AppContent.assetTestimonial17,
-    ),
-    const TestimonialItem(
-      quote: 'Thank you Master, for sharing the most powerful Qi Men Dun Jia strategy.',
-      name: 'Suon Mardy',
-      location: 'Phnom Penh, Cambodia',
-      imagePath: AppContent.assetTestimonial18,
-    ),
-  ];
-
   static const double _cardGap = 20;
-  /// Fixed card width — preserved across breakpoints; page count grows with window width.
-  static const double _cardWidth = 340;
+  static const double _cardMaxWidth = 340;
   static const double _cardsHeight = 510;
-  static const double _sectionHorizontalPadding = 24;
-
-  /// How many fixed-width cards fit in [availableWidth] (content area minus padding).
-  /// Cards never exceed [availableWidth] (mobile may shrink below [_cardWidth]).
-  static int _cardsPerPageForAvailableWidth(double availableWidth) {
-    final cardW = math.min(_cardWidth, availableWidth);
-    final n = ((availableWidth + _cardGap) / (cardW + _cardGap)).floor();
-    return math.max(1, n);
-  }
-
-  static double _cardWidthForAvailable(double availableWidth) =>
-      math.min(_cardWidth, availableWidth);
-
-  static double _cardHeightForAvailable(double availableWidth) =>
-      math.min(_cardsHeight, availableWidth * 1.35);
-
-  /// Extra vertical space so hover scale (1.02) is not clipped.
   static const double _cardsVerticalPadding = 24;
-  static const Duration _fadeDuration = Duration(milliseconds: 400);
-  static const Duration _pageDisplayDuration = Duration(seconds: 6);
-  static const Duration _pageTransitionDuration = Duration(milliseconds: 500);
+  static const double _stripHorizontalInset = 24;
+  static const double _headerMaxWidth = 1100;
+  static const Duration _fadeDurationDesktop = Duration(milliseconds: 400);
+  static const Duration _fadeDurationMobile = Duration(milliseconds: 250);
+  static const Duration _pageDisplayDurationDesktop = Duration(seconds: 6);
+  static const Duration _pageDisplayDurationMobile = Duration(seconds: 3);
+  static const Duration _pageTransitionDurationDesktop =
+      Duration(milliseconds: 500);
+  static const Duration _pageTransitionDurationMobile =
+      Duration(milliseconds: 280);
 
-  /// Shuffled copy of [_placeholders] so order is random on each load (desktop and mobile).
+  static bool _isMobileWidth(double width) => Breakpoints.isMobile(width);
+
+  static Duration _fadeDurationFor(double width) =>
+      _isMobileWidth(width) ? _fadeDurationMobile : _fadeDurationDesktop;
+
+  static Duration _pageDisplayDurationFor(double width) =>
+      _isMobileWidth(width)
+          ? _pageDisplayDurationMobile
+          : _pageDisplayDurationDesktop;
+
+  static Duration _pageTransitionDurationFor(double width) =>
+      _isMobileWidth(width)
+          ? _pageTransitionDurationMobile
+          : _pageTransitionDurationDesktop;
+
   late final List<TestimonialItem> _shuffledItems;
-
   final PageController _pageController = PageController();
   int _currentPage = 0;
   int? _pageReadyForFlip;
   int _flipScheduleId = 0;
-  int? _lastCardsPerPage;
-  Timer? _initialRevealTimer;
-  Timer? _autoLoopTimer;
-  Timer? _fadeAfterTransitionTimer;
+  int? _cardsPerPageSnapshot;
+  bool _inViewport = false;
+  int _autoLoopGeneration = 0;
 
   @override
   void initState() {
     super.initState();
-    _shuffledItems = List<TestimonialItem>.from(_placeholders)..shuffle(math.Random());
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      final available = MediaQuery.sizeOf(context).width - 2 * _sectionHorizontalPadding;
-      final cardsPerPage = _cardsPerPageForAvailableWidth(available);
-      _initialRevealTimer?.cancel();
-      _initialRevealTimer = Timer(const Duration(milliseconds: 200), () {
-        if (mounted) {
-          setState(() => _pageReadyForFlip = 0);
-          _startAutoLoop(cardsPerPage);
-        }
-      });
-    });
+    _shuffledItems = List<TestimonialItem>.from(buildCuratedTestimonials())
+      ..shuffle(math.Random());
+  }
+
+  static double _cardHeightForWidth(double viewportWidth) {
+    if (!Breakpoints.isMobile(viewportWidth)) return _cardsHeight;
+    final cardWidth = viewportWidth - _stripHorizontalInset * 2;
+    final imageHeight = cardWidth / _testimonialMobileCardAspect;
+    return imageHeight + _testimonialMobileTextSectionHeight + 2;
+  }
+
+  static int _cardsPerPageForWidth(double viewportWidth) {
+    if (Breakpoints.isMobile(viewportWidth)) return 1;
+    final innerWidth = viewportWidth - _stripHorizontalInset * 2;
+    return math.max(
+      1,
+      ((innerWidth + _cardGap) / (_cardMaxWidth + _cardGap)).floor(),
+    );
+  }
+
+  void _onVisibilityChanged(VisibilityInfo info) {
+    final visible = info.visibleFraction > 0;
+    if (visible == _inViewport) return;
+    _inViewport = visible;
+    if (visible) {
+      if (_pageReadyForFlip == null && mounted) {
+        setState(() => _pageReadyForFlip = 0);
+      }
+      _startAutoLoop();
+    } else {
+      _autoLoopGeneration++;
+    }
   }
 
   void _scheduleFadeAfterTransition(int page) {
     final id = ++_flipScheduleId;
-    _fadeAfterTransitionTimer?.cancel();
-    _fadeAfterTransitionTimer = Timer(_pageTransitionDuration, () {
+    final transition =
+        _pageTransitionDurationFor(MediaQuery.sizeOf(context).width);
+    Future<void>.delayed(transition, () {
       if (mounted && id == _flipScheduleId) {
         setState(() => _pageReadyForFlip = page);
       }
     });
   }
 
-  void _startAutoLoop(int cardsPerPage) {
-    _autoLoopTimer?.cancel();
-    _autoLoopTimer = Timer(_pageDisplayDuration, () {
-      if (!mounted) return;
+  void _startAutoLoop() {
+    final generation = _autoLoopGeneration;
+    final width = MediaQuery.sizeOf(context).width;
+    final displayDuration = _pageDisplayDurationFor(width);
+    final transitionDuration = _pageTransitionDurationFor(width);
+    Future<void>.delayed(displayDuration, () {
+      if (!mounted || !_inViewport || generation != _autoLoopGeneration) return;
+      final cardsPerPage = _cardsPerPageForWidth(width);
       final totalPages = (_shuffledItems.length / cardsPerPage).ceil();
       if (totalPages == 0) return;
       final nextPage = (_currentPage + 1) % totalPages;
       _flipScheduleId++;
-      _pageController.animateToPage(
-        nextPage,
-        duration: _pageTransitionDuration,
-        curve: Curves.easeInOut,
-      ).then((_) {
-        if (mounted) setState(() => _pageReadyForFlip = nextPage);
-        _startAutoLoop(cardsPerPage);
+      _pageController
+          .animateToPage(
+            nextPage,
+            duration: transitionDuration,
+            curve: Curves.easeInOut,
+          )
+          .then((_) {
+        if (mounted && _inViewport && generation == _autoLoopGeneration) {
+          _startAutoLoop();
+        }
       });
     });
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final available = MediaQuery.sizeOf(context).width - 2 * _sectionHorizontalPadding;
-    final cardsPerPage = _cardsPerPageForAvailableWidth(available);
-    if (_lastCardsPerPage != null && _lastCardsPerPage != cardsPerPage) {
-      _currentPage = 0;
-      _pageReadyForFlip = null;
-      _flipScheduleId++;
-      if (_pageController.hasClients) {
-        _pageController.jumpToPage(0);
-      }
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
-        setState(() => _pageReadyForFlip = 0);
-        _startAutoLoop(cardsPerPage);
-      });
-    }
-    _lastCardsPerPage = cardsPerPage;
   }
 
   @override
   void dispose() {
-    _initialRevealTimer?.cancel();
-    _autoLoopTimer?.cancel();
-    _fadeAfterTransitionTimer?.cancel();
+    _autoLoopGeneration++;
+    VisibilityDetectorController.instance.forget(
+      const ValueKey<String>('testimonials-section'),
+    );
     _pageController.dispose();
     super.dispose();
-  }
-
-  void _goToPage(int page, int cardsPerPage) {
-    final totalPages = (_shuffledItems.length / cardsPerPage).ceil();
-    if (totalPages == 0) return;
-    final target = ((page % totalPages) + totalPages) % totalPages;
-    if (target == _currentPage) return;
-    _flipScheduleId++;
-    _pageController.animateToPage(
-      target,
-      duration: _pageTransitionDuration,
-      curve: Curves.easeInOut,
-    ).then((_) {
-      if (mounted) setState(() => _pageReadyForFlip = target);
-    });
   }
 
   @override
@@ -282,195 +152,159 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = Breakpoints.isMobile(width);
-    final availableWidth = width - 2 * _sectionHorizontalPadding;
-    final cardsPerPage = _cardsPerPageForAvailableWidth(availableWidth);
-    final cardWidth = _cardWidthForAvailable(availableWidth);
-    final cardHeight = _cardHeightForAvailable(availableWidth);
-    final textTheme = Theme.of(context).textTheme;
+    final isCompact = Breakpoints.isCompact(width);
+    final cardsPerPage = _cardsPerPageForWidth(width);
 
-    final headingFontSize = isMobile ? 24.0 : 28.0;
-    final headingStyle = (textTheme.headlineMedium ?? textTheme.headlineSmall)?.copyWith(
-      color: AppColors.onPrimary,
-      fontWeight: FontWeight.bold,
-      height: 1.15,
-      fontSize: headingFontSize,
-    );
-    final realStyle = highlightStyleForLocale(
-      context,
-      color: AppColors.accent,
-      fontWeight: FontWeight.bold,
-      fontSize: isMobile ? 30 : 38,
-      height: 1.15,
-    );
-    final whiteItalicStyle = headingStyle?.copyWith(
-      fontStyle: FontStyle.italic,
-    );
+    if (_cardsPerPageSnapshot != null &&
+        _cardsPerPageSnapshot != cardsPerPage) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted || !_pageController.hasClients) return;
+        _flipScheduleId++;
+        _pageController.jumpToPage(0);
+        setState(() {
+          _currentPage = 0;
+          _pageReadyForFlip = 0;
+        });
+      });
+    }
+    _cardsPerPageSnapshot = cardsPerPage;
 
-    final introStyle = textTheme.bodyLarge?.copyWith(
-      height: 1.55,
-      color: AppColors.onPrimary.withValues(alpha: 0.9),
-    );
-
-    final heading = l10n.sectionTestimonialsHeading;
-    final headingWidget = RichText(
-      text: TextSpan(
-        style: headingStyle,
+    return VisibilityDetector(
+      key: const ValueKey<String>('testimonials-section'),
+      onVisibilityChanged: _onVisibilityChanged,
+      child: Stack(
+        clipBehavior: Clip.none,
         children: [
-          TextSpan(text: l10n.sectionTestimonialsPart1, style: realStyle),
-          TextSpan(text: l10n.sectionTestimonialsPart2),
-          TextSpan(text: l10n.sectionTestimonialsPart3, style: realStyle),
-          TextSpan(text: l10n.sectionTestimonialsPart4, style: whiteItalicStyle),
-        ],
-      ),
-    );
-
-    final headerContent = isMobile
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              headingWidget,
-              const SizedBox(height: 20),
-              Text(l10n.sectionTestimonialsSub1, style: introStyle),
-              const SizedBox(height: 12),
-              Text(l10n.sectionTestimonialsSub2, style: introStyle),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  _NavButton(
-                    icon: LucideIcons.chevronLeft,
-                    onPressed: () => _goToPage(_currentPage - 1, cardsPerPage),
+          const Positioned.fill(child: ChineseInkWashGlow()),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 56),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: _stripHorizontalInset,
                   ),
-                  const SizedBox(width: 12),
-                  _NavButton(
-                    icon: LucideIcons.chevronRight,
-                    onPressed: () => _goToPage(_currentPage + 1, cardsPerPage),
-                  ),
-                ],
-              ),
-            ],
-          )
-        : Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 24),
-                  child: RichText(
-                    text: TextSpan(
-                      style: headingStyle,
-                      children: [
-                        TextSpan(text: l10n.sectionTestimonialsPart1, style: realStyle),
-                        TextSpan(text: l10n.sectionTestimonialsPart2),
-                        TextSpan(text: l10n.sectionTestimonialsPart3, style: realStyle),
-                        TextSpan(text: l10n.sectionTestimonialsPart4, style: whiteItalicStyle),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(l10n.sectionTestimonialsSub1, style: introStyle),
-                    const SizedBox(height: 12),
-                    Text(l10n.sectionTestimonialsSub2, style: introStyle),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        _NavButton(
-                          icon: LucideIcons.chevronLeft,
-                          onPressed: () => _goToPage(_currentPage - 1, cardsPerPage),
-                        ),
-                        const SizedBox(width: 12),
-                        _NavButton(
-                          icon: LucideIcons.chevronRight,
-                          onPressed: () => _goToPage(_currentPage + 1, cardsPerPage),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          );
-
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(
-        vertical: 56,
-        horizontal: _sectionHorizontalPadding,
-      ),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF24201A),
-            Color(0xFF161210),
-            Color(0xFF0A0808),
-          ],
-          stops: [0.0, 0.45, 1.0],
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          headerContent,
-          const SizedBox(height: 40),
-          SizedBox(
-            height: cardHeight + 2 * _cardsVerticalPadding,
-            width: double.infinity,
-            child: PageView.builder(
-              controller: _pageController,
-              onPageChanged: (p) {
-                setState(() => _currentPage = p);
-                _scheduleFadeAfterTransition(p);
-              },
-              itemCount: (_shuffledItems.length / cardsPerPage).ceil(),
-              itemBuilder: (context, pageIndex) {
-                final start = pageIndex * cardsPerPage;
-                final end = math.min(start + cardsPerPage, _shuffledItems.length);
-                final count = end - start;
-                final isVisible = _pageReadyForFlip != null && pageIndex == _pageReadyForFlip;
-                // Full pages: distribute leftover space as gaps so the row spans the viewport.
-                // Partial last page: keep the normal gap and pack from the start.
-                final useSpaceBetween = count > 1 && count == cardsPerPage;
-                return Row(
-                  mainAxisAlignment: useSpaceBetween
-                      ? MainAxisAlignment.spaceBetween
-                      : MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (var i = start; i < end; i++) ...[
-                      if (!useSpaceBetween && i > start)
-                        const SizedBox(width: _cardGap),
-                      SizedBox(
-                        width: cardWidth,
-                        height: cardHeight,
-                        child: _FadeTestimonialCard(
-                          visible: isVisible,
-                          delay: Duration(milliseconds: 50 * (i - start)),
-                          duration: _fadeDuration,
-                          child: _TestimonialCard(
-                            quote: _shuffledItems[i].quote,
-                            name: _shuffledItems[i].name,
-                            location: _shuffledItems[i].location,
-                            imageIndex: i,
-                            imagePath: _shuffledItems[i].imagePath,
-                            isBlank: _shuffledItems[i].isBlank,
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints:
+                          const BoxConstraints(maxWidth: _headerMaxWidth),
+                      child: Column(
+                        children: [
+                          FieldWorkChineseSectionHeader(
+                            title: l10n.homeTestimonialsHeading,
+                            headline: l10n.homeTestimonialsSub1,
+                            isMobile: isMobile || isCompact,
+                            centerEmblem: TestimonialVoiceSeal(
+                              size: isMobile || isCompact ? 36 : 44,
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ],
-                );
-              },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                SizedBox(
+                  height: _cardHeightForWidth(width) +
+                      2 * _cardsVerticalPadding +
+                      (isMobile ? 12 : 0),
+                  width: double.infinity,
+                  child: PageView.builder(
+                    controller: _pageController,
+                    onPageChanged: (page) {
+                      setState(() => _currentPage = page);
+                      _scheduleFadeAfterTransition(page);
+                    },
+                    itemCount: (_shuffledItems.length / cardsPerPage).ceil(),
+                    itemBuilder: (context, pageIndex) {
+                      final start = pageIndex * cardsPerPage;
+                      final end = math.min(
+                        start + cardsPerPage,
+                        _shuffledItems.length,
+                      );
+                      final isVisible = _pageReadyForFlip != null &&
+                          pageIndex == _pageReadyForFlip;
+                      return _buildCarouselPage(
+                        pageIndex: pageIndex,
+                        start: start,
+                        end: end,
+                        isVisible: isVisible,
+                        isMobile: isMobile,
+                        viewportWidth: width,
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCarouselPage({
+    required int pageIndex,
+    required int start,
+    required int end,
+    required bool isVisible,
+    required bool isMobile,
+    required double viewportWidth,
+  }) {
+    final cardWidth =
+        isMobile ? viewportWidth - _stripHorizontalInset * 2 : _cardMaxWidth;
+    final cardHeight = _cardHeightForWidth(viewportWidth);
+
+    Widget buildCard(int itemIndex, int slotIndex) {
+      final item = _shuffledItems[itemIndex];
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: _cardsVerticalPadding),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final width = isMobile ? constraints.maxWidth : cardWidth;
+            return SizedBox(
+              width: width,
+              height: cardHeight,
+              child: _FadeTestimonialCard(
+                key: ValueKey<String>('fade-$pageIndex-$itemIndex'),
+                visible: isVisible,
+                delay: Duration(milliseconds: 50 * slotIndex),
+                duration: _fadeDurationFor(viewportWidth),
+                child: _TestimonialCard(
+                  quote: item.quote,
+                  name: item.name,
+                  location: item.location,
+                  imageIndex: itemIndex,
+                  imagePath: item.imagePath,
+                  imageTopInset: item.imageTopInset,
+                  isBlank: item.isBlank,
+                  isMobile: isMobile,
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    }
+
+    return SizedBox(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: _stripHorizontalInset),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var i = start; i < end; i++) ...[
+              if (i > start) const SizedBox(width: _cardGap),
+              if (isMobile)
+                Expanded(child: buildCard(i, i - start))
+              else
+                buildCard(i, i - start),
+            ],
+          ],
+        ),
       ),
     );
   }
@@ -478,6 +312,7 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
 
 class _FadeTestimonialCard extends StatefulWidget {
   const _FadeTestimonialCard({
+    super.key,
     required this.child,
     required this.visible,
     required this.delay,
@@ -503,17 +338,19 @@ class _FadeTestimonialCardState extends State<_FadeTestimonialCard>
     if (!widget.visible || _hasStarted || !mounted) return;
     _hasStarted = true;
     Future<void>.delayed(widget.delay, () {
-      if (mounted) _controller.forward();
+      if (mounted && widget.visible) _controller.forward();
     });
+  }
+
+  void _resetFade() {
+    _hasStarted = false;
+    _controller.reset();
   }
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.duration,
-    );
+    _controller = AnimationController(vsync: this, duration: widget.duration);
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
     _maybeStartFade();
   }
@@ -521,7 +358,12 @@ class _FadeTestimonialCardState extends State<_FadeTestimonialCard>
   @override
   void didUpdateWidget(covariant _FadeTestimonialCard oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _maybeStartFade();
+    if (!widget.visible && oldWidget.visible) {
+      _resetFade();
+    } else if (widget.visible && !oldWidget.visible) {
+      _resetFade();
+      _maybeStartFade();
+    }
   }
 
   @override
@@ -532,35 +374,56 @@ class _FadeTestimonialCardState extends State<_FadeTestimonialCard>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _animation,
-      child: widget.child,
-    );
+    return FadeTransition(opacity: _animation, child: widget.child);
   }
 }
 
-class _NavButton extends StatelessWidget {
-  const _NavButton({required this.icon, required this.onPressed});
+class _TestimonialNameBadge extends StatelessWidget {
+  const _TestimonialNameBadge({
+    required this.name,
+    this.compact = false,
+    this.isBlank = false,
+  });
 
-  final IconData icon;
-  final VoidCallback onPressed;
+  final String name;
+  final bool compact;
+  final bool isBlank;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: BorderRadius.circular(24),
-        child: Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: AppColors.onPrimary.withValues(alpha: 0.6), width: 1.5),
+    final color = AppColors.accent;
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: compact ? 8 : 10,
+        vertical: compact ? 3 : 4,
+      ),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.18),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withValues(alpha: 0.55)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            LucideIcons.user,
+            size: compact ? 12 : 14,
+            color: color,
           ),
-          child: Icon(icon, color: AppColors.onPrimary, size: 22),
-        ),
+          const SizedBox(width: 4),
+          Flexible(
+            child: Text(
+              isBlank ? '—' : name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: color,
+                    fontWeight: FontWeight.w600,
+                    fontSize: compact ? 11 : 12,
+                  ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -571,6 +434,8 @@ class _TestimonialCard extends StatefulWidget {
     required this.quote,
     required this.name,
     required this.location,
+    required this.isMobile,
+    this.imageTopInset = 0,
     this.imageIndex = 0,
     this.imagePath,
     this.isBlank = false,
@@ -579,6 +444,8 @@ class _TestimonialCard extends StatefulWidget {
   final String quote;
   final String name;
   final String location;
+  final bool isMobile;
+  final double imageTopInset;
   final int imageIndex;
   final String? imagePath;
   final bool isBlank;
@@ -621,13 +488,18 @@ class _TestimonialCardState extends State<_TestimonialCard> {
     ),
   ];
 
+  String get _resolvedImagePath =>
+      widget.imagePath ??
+      (widget.imageIndex.isEven
+          ? AppContent.assetTestimonialProfile
+          : AppContent.assetTestimonialParticipant);
+
   @override
   Widget build(BuildContext context) {
     final shadow = _isHovered ? _cardShadowHover : _cardShadow;
-    final borderColor = _isHovered
-        ? AppColors.accent
-        : AppColors.borderDark;
-    final scale = _isHovered ? 1.02 : 1.0;
+    final borderColor =
+        _isHovered ? AppColors.accent : AppColors.borderDark;
+    final scale = widget.isMobile ? 1.0 : (_isHovered ? 1.02 : 1.0);
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -641,7 +513,10 @@ class _TestimonialCardState extends State<_TestimonialCard> {
           curve: Curves.easeOut,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: borderColor, width: _isHovered ? 2 : 1.5),
+            border: Border.all(
+              color: borderColor,
+              width: _isHovered ? 2 : 1.5,
+            ),
             boxShadow: shadow,
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -649,162 +524,199 @@ class _TestimonialCardState extends State<_TestimonialCard> {
               colors: [
                 AppColors.surfaceElevatedDark,
                 AppColors.surfaceElevatedDark,
-                Color.lerp(AppColors.surfaceElevatedDark, AppColors.overlayDark, 0.35)!,
+                Color.lerp(
+                  AppColors.surfaceElevatedDark,
+                  AppColors.overlayDark,
+                  0.35,
+                )!,
               ],
               stops: const [0.0, 0.6, 1.0],
             ),
           ),
           clipBehavior: Clip.antiAlias,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              // Image with subtle bottom gradient and inner shadow
-              AspectRatio(
-                aspectRatio: 1,
-                child: Stack(
-                  fit: StackFit.expand,
+          child: widget.isMobile
+              ? Align(
+                  alignment: Alignment.topCenter,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AspectRatio(
+                        aspectRatio: _testimonialMobileCardAspect,
+                        child: _buildImageBlock(),
+                      ),
+                      _buildDivider(),
+                      _buildTextBlock(),
+                    ],
+                  ),
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Image.asset(
-                      widget.imagePath ?? (widget.imageIndex.isEven ? AppContent.assetTestimonialProfile : AppContent.assetTestimonialParticipant),
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(
-                        color: AppColors.accent.withValues(alpha: 0.15),
-                        child: const Icon(LucideIcons.user, size: 48, color: AppColors.accent),
-                      ),
+                    AspectRatio(
+                      aspectRatio: 1,
+                      child: _buildImageBlock(),
                     ),
-                    // Gradient overlay at bottom for depth
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      height: 72,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.transparent,
-                              Colors.black.withValues(alpha: 0.5),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    _buildDivider(),
+                    Expanded(child: _buildTextBlock()),
                   ],
                 ),
-              ),
-              // Divider line between image and content (theme accent)
-              Container(
-                height: 2,
-                margin: const EdgeInsets.symmetric(horizontal: 16),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImageBlock() {
+    final imageFit = widget.isMobile ? BoxFit.contain : BoxFit.cover;
+    final layoutWidth = MediaQuery.sizeOf(context).width;
+    final topInset = widget.imageTopInset;
+
+    final image = Image.asset(
+      _resolvedImagePath,
+      fit: imageFit,
+      alignment: topInset > 0 ? Alignment.topCenter : Alignment.center,
+      cacheWidth: MobileWebPerformance.devicePixelCacheWidth(
+        context,
+        layoutWidth,
+      ),
+      filterQuality: MobileWebPerformance.imageFilterQuality(context),
+      errorBuilder: (_, __, ___) => ColoredBox(
+        color: AppColors.accent.withValues(alpha: 0.15),
+        child: const Icon(
+          LucideIcons.user,
+          size: 48,
+          color: AppColors.accent,
+        ),
+      ),
+    );
+
+    return ColoredBox(
+      color: AppColors.borderDark.withValues(alpha: 0.35),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          if (topInset > 0)
+            Positioned(
+              top: topInset,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: image,
+            )
+          else
+            Positioned.fill(child: image),
+          if (!widget.isMobile)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: 72,
+              child: DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
                     colors: [
                       Colors.transparent,
-                      AppColors.accent.withValues(alpha: 0.6),
-                      AppColors.accent.withValues(alpha: 0.85),
-                      AppColors.accent.withValues(alpha: 0.6),
-                      Colors.transparent,
+                      Colors.black.withValues(alpha: 0.5),
                     ],
-                    stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
                   ),
                 ),
               ),
-              // Quote and attribution
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDivider() {
+    return Container(
+      height: 2,
+      margin: EdgeInsets.symmetric(horizontal: widget.isMobile ? 12 : 16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Colors.transparent,
+            AppColors.accent.withValues(alpha: 0.6),
+            AppColors.accent.withValues(alpha: 0.85),
+            AppColors.accent.withValues(alpha: 0.6),
+            Colors.transparent,
+          ],
+          stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextBlock() {
+    final quoteStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
+          height: widget.isMobile ? 1.35 : 1.45,
+          fontStyle: widget.isBlank ? FontStyle.normal : FontStyle.italic,
+          color: AppColors.onPrimary.withValues(
+            alpha: widget.isBlank ? 0.4 : 0.82,
+          ),
+          fontSize: widget.isMobile ? 13 : 14,
+        );
+
+    return Padding(
+      padding: widget.isMobile
+          ? const EdgeInsets.fromLTRB(14, 8, 14, 6)
+          : const EdgeInsets.fromLTRB(20, 18, 20, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: widget.isMobile ? MainAxisSize.min : MainAxisSize.max,
+        children: [
+          _TestimonialNameBadge(
+            name: widget.name,
+            compact: widget.isMobile,
+            isBlank: widget.isBlank,
+          ),
+          SizedBox(height: widget.isMobile ? 6 : 10),
+          if (widget.isMobile)
+            Text(
+              widget.isBlank ? '—' : widget.quote,
+              style: quoteStyle,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+            )
+          else
+            Expanded(
+              child: Text(
+                widget.isBlank ? '—' : widget.quote,
+                style: quoteStyle,
+                maxLines: 6,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          SizedBox(height: widget.isMobile ? 4 : 8),
+          Row(
+            children: [
+              Icon(
+                LucideIcons.mapPin,
+                size: widget.isMobile ? 12 : 14,
+                color: AppColors.accent.withValues(
+                  alpha: widget.isBlank ? 0.4 : 0.9,
+                ),
+              ),
+              const SizedBox(width: 4),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 18, 20, 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Accent bar with soft glow + quote
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 5,
-                            margin: const EdgeInsets.only(right: 12, top: 2),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(2.5),
-                              color: AppColors.accent,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.accentGlow.withValues(alpha: 0.7),
-                                  blurRadius: 12,
-                                  spreadRadius: 0,
-                                ),
-                                BoxShadow(
-                                  color: AppColors.accentGlow.withValues(alpha: 0.4),
-                                  blurRadius: 20,
-                                  spreadRadius: -2,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              widget.isBlank ? '—' : widget.quote,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                height: 1.55,
-                                fontStyle: widget.isBlank ? FontStyle.normal : FontStyle.italic,
-                                color: AppColors.onPrimary.withValues(
-                                  alpha: widget.isBlank ? 0.4 : 0.92,
-                                ),
-                                fontSize: 14,
-                              ),
-                              maxLines: 6,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      // Name with subtle styling
-                      Text(
-                        widget.name,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.onPrimary.withValues(
-                            alpha: widget.isBlank ? 0.5 : 1,
-                          ),
-                          letterSpacing: 0.4,
+                child: Text(
+                  widget.location,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.onPrimary.withValues(
+                          alpha: widget.isBlank ? 0.45 : 0.7,
                         ),
+                        fontSize: widget.isMobile ? 11 : 12,
                       ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Icon(
-                            LucideIcons.mapPin,
-                            size: 14,
-                            color: AppColors.accent.withValues(
-                              alpha: widget.isBlank ? 0.4 : 0.9,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: Text(
-                              widget.location,
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: AppColors.onPrimary.withValues(
-                                  alpha: widget.isBlank ? 0.45 : 0.7,
-                                ),
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }

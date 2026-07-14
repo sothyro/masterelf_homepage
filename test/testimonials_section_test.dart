@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:masterelf_homepage/l10n/app_localizations.dart';
+import 'package:masterelf_homepage/screens/home/widgets/field_work_chinese_design.dart';
 import 'package:masterelf_homepage/screens/home/widgets/testimonials_section.dart';
 import 'package:masterelf_homepage/theme/app_theme.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 void main() {
-  Future<void> pumpTestimonialsSection(WidgetTester tester, {required double width}) async {
+  setUp(() {
+    VisibilityDetectorController.instance.updateInterval = Duration.zero;
+  });
+
+  tearDown(() {
+    VisibilityDetectorController.instance.updateInterval =
+        const Duration(milliseconds: 500);
+  });
+
+  Future<void> pumpTestimonialsSection(
+    WidgetTester tester, {
+    required double width,
+  }) async {
     await tester.binding.setSurfaceSize(Size(width, 1200));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -29,6 +43,8 @@ void main() {
       ),
     );
 
+    await tester.pump();
+    VisibilityDetectorController.instance.notifyNow();
     await tester.pump(const Duration(milliseconds: 500));
   }
 
@@ -42,10 +58,12 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.byType(TestimonialsSection), findsOneWidget);
     expect(find.byType(PageView), findsOneWidget);
+    expect(find.byType(ChineseInkWashGlow), findsOneWidget);
+    expect(find.byType(FieldWorkChineseSectionHeader), findsOneWidget);
+    expect(find.byType(TestimonialVoiceSeal), findsOneWidget);
 
-    // Cycle through pages to catch overflow on long quotes.
     for (var i = 0; i < 4; i++) {
-      await tester.pump(const Duration(seconds: 7));
+      await tester.pump(const Duration(seconds: 4));
       expect(tester.takeException(), isNull);
     }
 
@@ -56,6 +74,8 @@ void main() {
     await pumpTestimonialsSection(tester, width: 1280);
     expect(tester.takeException(), isNull);
     expect(find.byType(TestimonialsSection), findsOneWidget);
+    expect(find.byType(ChineseInkWashGlow), findsOneWidget);
+    expect(find.byType(FieldWorkChineseSectionHeader), findsOneWidget);
     await disposeTestimonialsSection(tester);
   });
 }

@@ -127,6 +127,7 @@ class _AppShellState extends State<AppShell> {
     final bottomSafe = MediaQuery.paddingOf(context).bottom;
     final mobileBarHeight = isMobile ? kMobileStickyCtaBarHeight : 0.0;
     final fabBottomPadding = (isMobile ? 24.0 : 60.0) + bottomSafe + mobileBarHeight;
+    final footerBottomInset = isMobile ? kMobileStickyCtaBarHeight + 8 : 0.0;
 
     return AppShellScrollScope(
       scrollController: _scrollController,
@@ -160,22 +161,28 @@ class _AppShellState extends State<AppShell> {
           Semantics(
             container: true,
             label: l10n.semanticsMainContent,
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              physics: const ClampingScrollPhysics(),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  widget.child,
-                  Semantics(
-                    container: true,
-                    label: l10n.semanticsFooter,
-                    child: const AppFooter(),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  controller: _scrollController,
+                  physics: const ClampingScrollPhysics(),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        widget.child,
+                        Semantics(
+                          container: true,
+                          label: l10n.semanticsFooter,
+                          child: AppFooter(bottomInset: footerBottomInset),
+                        ),
+                      ],
+                    ),
                   ),
-                  // Reserve space so content isn't obscured by mobile sticky bar
-                  if (isMobile) SizedBox(height: kMobileStickyCtaBarHeight + 16),
-                ],
-              ),
+                );
+              },
             ),
           ),
           Positioned(

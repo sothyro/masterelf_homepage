@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../app_bootstrap.dart';
-import '../../config/home_core_activities_content.dart';
+import '../../config/field_work_content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../utils/app_asset_preloader.dart';
 import '../field_work/widgets/activity_stories_section.dart';
@@ -13,6 +13,7 @@ import 'widgets/field_work_section.dart';
 import 'widgets/story_section.dart';
 import 'widgets/featured_in_consultation_band.dart';
 import 'widgets/cta_section.dart';
+import 'widgets/testimonials_section.dart';
 
 /// Builds every homepage section immediately. During cold start the bootstrap
 /// loading overlay covers this screen until all sections are mounted and
@@ -64,9 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
             l10n: l10n,
             heading: l10n.homeCoreActivitiesHeading,
             subline: l10n.homeCoreActivitiesSubline,
-            pillars: buildHomeCoreActivities(l10n, languageCode),
+            pillars: buildFieldWorkCoreActivities(l10n, languageCode),
           ),
         ),
+        const RepaintBoundary(child: TestimonialsSection()),
         const RepaintBoundary(child: CtaSection()),
       ],
     );

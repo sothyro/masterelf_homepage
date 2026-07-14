@@ -12,7 +12,7 @@ import 'package:masterelf_homepage/widgets/app_drawer.dart';
 import 'test_helpers/fake_auth.dart';
 
 void main() {
-  Future<LocaleNotifier> pumpDrawer(WidgetTester tester) async {
+  Future<void> pumpDrawer(WidgetTester tester) async {
     final localeNotifier = LocaleNotifier();
     final router = GoRouter(
       initialLocation: '/',
@@ -53,7 +53,6 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    return localeNotifier;
   }
 
   testWidgets('drawer Journey tile navigates to /journey', (tester) async {
@@ -66,21 +65,5 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Journey page'), findsOneWidget);
-  });
-
-  testWidgets('drawer KM chip calls setLocaleFromCode', (tester) async {
-    final localeNotifier = await pumpDrawer(tester);
-    final scaffoldState = tester.state<ScaffoldState>(find.byType(Scaffold));
-    scaffoldState.openDrawer();
-    await tester.pumpAndSettle();
-
-    await tester.drag(find.byType(ListView), const Offset(0, -400));
-    await tester.pumpAndSettle();
-
-    expect(localeNotifier.locale.languageCode, 'en');
-    await tester.tap(find.text('KM'));
-    await tester.pumpAndSettle();
-
-    expect(localeNotifier.locale.languageCode, 'km');
   });
 }

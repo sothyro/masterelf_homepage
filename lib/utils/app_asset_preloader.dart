@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../config/app_content.dart';
+import '../config/testimonials_content.dart';
 import '../services/activity_video_platform.dart';
 import '../services/hero_video_platform.dart';
 import 'mobile_web_performance.dart';
@@ -57,33 +58,10 @@ List<String> get _webCriticalDecodeAssets => [
   AppContent.assetAcademyQiMen,
 ];
 
-/// Below-fold homepage images — preload after bootstrap (story only; no testimonials on home).
+/// Below-fold homepage images — preload after bootstrap (story + testimonials).
 List<String> get _belowFoldHomepageAssets => [
   AppContent.assetStoryBackground,
-];
-
-/// Testimonial portraits — deferred to background tier (not home below-fold).
-List<String> get _testimonialImageAssets => [
-  AppContent.assetTestimonialProfile,
-  AppContent.assetTestimonialParticipant,
-  AppContent.assetTestimonialPanhaLeakhena,
-  AppContent.assetTestimonialMoon,
-  AppContent.assetTestimonialRithy,
-  AppContent.assetTestimonialVanna,
-  AppContent.assetTestimonialThida,
-  AppContent.assetTestimonialZeiitey,
-  AppContent.assetTestimonial7,
-  AppContent.assetTestimonial8,
-  AppContent.assetTestimonial9,
-  AppContent.assetTestimonial10,
-  AppContent.assetTestimonial11,
-  AppContent.assetTestimonial12,
-  AppContent.assetTestimonial13,
-  AppContent.assetTestimonial14,
-  AppContent.assetTestimonial15,
-  AppContent.assetTestimonial16,
-  AppContent.assetTestimonial17,
-  AppContent.assetTestimonial18,
+  ...testimonialImageAssetsForPreload(),
 ];
 
 /// App screenshots — above-fold subset for first paint on /apps.
@@ -106,7 +84,6 @@ List<String> get _restImageAssets => [
   for (var i = 1; i <= 8; i++) AppContent.assetActivityPhoto(i),
   AppContent.assetActivityPhoto(15),
   AppContent.assetActivityPhoto(27),
-  ..._testimonialImageAssets,
 ];
 
 /// Preloads above-fold homepage assets before reveal; below-fold + rest in background.

@@ -12,7 +12,10 @@ import 'app_shell_scroll_scope.dart';
 import 'legal_popup.dart';
 
 class AppFooter extends StatelessWidget {
-  const AppFooter({super.key});
+  const AppFooter({super.key, this.bottomInset = 0});
+
+  /// Extra bottom padding inside the footer surface (e.g. mobile sticky CTA clearance).
+  final double bottomInset;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +24,7 @@ class AppFooter extends StatelessWidget {
     final company = AppContent.legalEntity;
     final width = MediaQuery.sizeOf(context).width;
     final isNarrow = Breakpoints.isMobile(width);
+    final verticalPadding = isNarrow ? 32.0 : 40.0;
 
     return Container(
       width: double.infinity,
@@ -30,9 +34,11 @@ class AppFooter extends StatelessWidget {
           top: BorderSide(color: AppColors.borderLight.withValues(alpha: 0.5), width: 1),
         ),
       ),
-      padding: EdgeInsets.symmetric(
-        vertical: isNarrow ? 32 : 40,
-        horizontal: isNarrow ? 16 : 24,
+      padding: EdgeInsets.fromLTRB(
+        isNarrow ? 16 : 24,
+        verticalPadding,
+        isNarrow ? 16 : 24,
+        verticalPadding + bottomInset,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

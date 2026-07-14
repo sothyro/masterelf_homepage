@@ -11,6 +11,7 @@ import 'package:masterelf_homepage/screens/home/widgets/field_work_section.dart'
 import 'package:masterelf_homepage/screens/home/widgets/featured_in_consultation_band.dart';
 import 'package:masterelf_homepage/screens/home/widgets/hero_section.dart';
 import 'package:masterelf_homepage/screens/home/widgets/story_section.dart';
+import 'package:masterelf_homepage/screens/home/widgets/testimonials_section.dart';
 import 'package:masterelf_homepage/screens/field_work/widgets/activity_stories_section.dart';
 import 'package:masterelf_homepage/theme/app_theme.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -73,6 +74,7 @@ void main() {
     expect(find.byType(StorySection), findsOneWidget);
     expect(find.byType(FeaturedInConsultationBand), findsOneWidget);
     expect(find.byType(ActivityStoriesSection), findsOneWidget);
+    expect(find.byType(TestimonialsSection), findsOneWidget);
     expect(find.byType(CtaSection), findsOneWidget);
   }
 

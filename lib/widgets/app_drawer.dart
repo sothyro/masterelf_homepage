@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import 'package:provider/provider.dart';
 
 import '../config/app_content.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
-import '../providers/locale_provider.dart';
 import '../utils/breakpoints.dart';
 import 'app_shell_scroll_scope.dart';
 import 'glass_container.dart';
@@ -19,7 +17,6 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final localeNotifier = context.read<LocaleNotifier>();
     final uri = GoRouterState.of(context).uri;
     final current = uri.path + (uri.fragment.isNotEmpty ? '#${uri.fragment}' : '');
 
@@ -40,7 +37,7 @@ class AppDrawer extends StatelessWidget {
               _DrawerHeader(),
               Expanded(
                 child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                   children: [
                     _SectionLabel(label: l10n.drawerNavigate),
                     _DrawerTile(
@@ -112,7 +109,7 @@ class AppDrawer extends StatelessWidget {
                         showMediaPostsPopup(context);
                       },
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 10),
                     _SectionLabel(label: l10n.consultations),
                     _DrawerTile(
                       label: l10n.consultations,
@@ -121,19 +118,15 @@ class AppDrawer extends StatelessWidget {
                       icon: LucideIcons.calendarCheck,
                       onTap: () => _go(context, '/consultations'),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     _SectionLabel(label: l10n.drawerGetInTouch),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 4),
                     _ContactCta(
                       label: l10n.contactUs,
                       icon: LucideIcons.messageCircle,
                       onTap: () => _go(context, '/contact'),
                     ),
-                    const SizedBox(height: 24),
-                    _SectionLabel(label: l10n.language),
-                    const SizedBox(height: 8),
-                    _LanguageChips(notifier: localeNotifier),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),
@@ -211,7 +204,7 @@ class _SectionLabel extends StatelessWidget {
     final locale = Localizations.localeOf(context);
     final isKm = locale.languageCode == 'km';
     return Padding(
-      padding: const EdgeInsets.only(left: 4, bottom: 6),
+      padding: const EdgeInsets.only(left: 4, bottom: 4),
       child: Text(
         isKm ? label : label.toUpperCase(),
         style: menuLabelStyle(
@@ -245,7 +238,7 @@ class _DrawerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final isActive = current == path;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
+      padding: const EdgeInsets.only(bottom: 2),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -253,7 +246,7 @@ class _DrawerTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
             child: Container(
             constraints: const BoxConstraints(minHeight: kMinTouchTargetSize),
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: isActive ? AppColors.accent.withValues(alpha: 0.18) : Colors.transparent,
@@ -347,56 +340,6 @@ class _ContactCta extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _LanguageChips extends StatelessWidget {
-  const _LanguageChips({required this.notifier});
-
-  final LocaleNotifier notifier;
-
-  static const _locales = [
-    ('en', 'EN'),
-    ('km', 'KM'),
-    ('zh', 'ZH'),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final code = notifier.locale.languageCode;
-    return Row(
-      children: _locales.map((e) {
-        final isSelected = code == e.$1;
-        return Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                notifier.setLocaleFromCode(e.$1);
-              },
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                decoration: BoxDecoration(
-                  color: isSelected ? AppColors.accent.withValues(alpha: 0.25) : Colors.white.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(20),
-                  border: isSelected ? Border.all(color: AppColors.accent, width: 1.5) : null,
-                ),
-                child: Text(
-                  e.$2,
-                  style: TextStyle(
-                    color: isSelected ? AppColors.accent : Colors.white70,
-                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                    fontSize: 13,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      }).toList(),
     );
   }
 }

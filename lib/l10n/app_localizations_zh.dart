@@ -3221,28 +3221,28 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fieldWorkGalleryHeading => '照片集';
 
   @override
-  String get fieldWorkPillarFengShuiTitle => '风水实地勘察';
+  String get fieldWorkPillarFengShuiTitle => '解锁物业旺运';
 
   @override
-  String get fieldWorkPillarFengShuiSubtitle => '在真实物业上进行罗盘读数与地貌评估。';
+  String get fieldWorkPillarFengShuiSubtitle => '实地罗盘、地貌与九运勘察——签约、动工或开业前，先看气场。';
 
   @override
-  String get fieldWorkPillarConsultTitle => '八字、奇门与易经咨询';
+  String get fieldWorkPillarConsultTitle => '人生抉择的清晰指引';
 
   @override
-  String get fieldWorkPillarConsultSubtitle => '办公室咨询——命盘、策略与可执行的下一步。';
+  String get fieldWorkPillarConsultSubtitle => '八字、奇门遁甲与易经——命盘化为时机与可执行的行动。';
 
   @override
-  String get fieldWorkPillarMaoShanTitle => '茅山住家祈福';
+  String get fieldWorkPillarMaoShanTitle => '居家可感知的茅山护佑';
 
   @override
-  String get fieldWorkPillarMaoShanSubtitle => '仪式助力居家安宁、护佑与和谐。';
+  String get fieldWorkPillarMaoShanSubtitle => '正统茅山仪轨，护佑空间、安定气场、重归安宁。';
 
   @override
-  String get fieldWorkPillarDateSelectionTitle => '择日 (Date Selection)';
+  String get fieldWorkPillarDateSelectionTitle => '择吉日，让天时助力';
 
   @override
-  String get fieldWorkPillarDateSelectionSubtitle => '为开业、签约与重要里程碑选择吉时。';
+  String get fieldWorkPillarDateSelectionSubtitle => '为开业、签约与里程碑择吉时，让努力落在对的日期。';
 
   @override
   String get fieldWorkPillarBooksTitle => '五福祈福丛书';
@@ -3265,6 +3265,31 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get homeCoreActivitiesSubline =>
       '以下每一张照片都来自真实案例——绝非素材图。看看 Master Elf 如何将正统中国玄学化为实地、办公室与祭坛上的清晰指引、护佑与旺运。您的下一篇章，也可以从这里开始。';
+
+  @override
+  String get homeTestimonialsPart1 => '来自';
+
+  @override
+  String get homeTestimonialsPart2 => '现场的\n';
+
+  @override
+  String get homeTestimonialsPart3 => '心声';
+
+  @override
+  String get homeTestimonialsPart4 => '。';
+
+  @override
+  String get homeTestimonialsHeading => '来自现场的心声。';
+
+  @override
+  String get homeTestimonialsSub1 =>
+      '客户与学员亲口所言——他们曾当面咨询、参与活动，并持续关注 Master Elf 的工作。';
+
+  @override
+  String get homeTestimonialsSub2 => '从金边到暹粒，遍及柬埔寨。';
+
+  @override
+  String get homeTestimonialsClientBadge => '客户心声';
 
   @override
   String get fieldWorkFromEventsLink => '查看实地工作';

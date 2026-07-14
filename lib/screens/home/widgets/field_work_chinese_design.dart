@@ -483,9 +483,30 @@ class _SealMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lang = Localizations.localeOf(context).languageCode;
-    final character = lang == 'zh' ? '实' : '实';
+    return _ChineseCharacterSeal(size: size, character: '实');
+  }
+}
 
+/// Public seal for testimonials header — 言 (voice / words).
+class TestimonialVoiceSeal extends StatelessWidget {
+  const TestimonialVoiceSeal({super.key, required this.size});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return _ChineseCharacterSeal(size: size, character: '言');
+  }
+}
+
+class _ChineseCharacterSeal extends StatelessWidget {
+  const _ChineseCharacterSeal({required this.size, required this.character});
+
+  final double size;
+  final String character;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: size,
       height: size,

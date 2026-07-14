@@ -3425,33 +3425,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fieldWorkGalleryHeading => 'Photo gallery';
 
   @override
-  String get fieldWorkPillarFengShuiTitle => 'Feng Shui site visit';
+  String get fieldWorkPillarFengShuiTitle => 'Unlock Your Property\'s Qi';
 
   @override
   String get fieldWorkPillarFengShuiSubtitle =>
-      'Compass readings and landform assessment on real properties.';
+      'Luopan, landform, and Period 9 readings on real sites—before you sign, build, or open.';
 
   @override
-  String get fieldWorkPillarConsultTitle =>
-      'BaZi, Qi Men & I Ching consultations';
+  String get fieldWorkPillarConsultTitle => 'Clarity for Life\'s Biggest Calls';
 
   @override
   String get fieldWorkPillarConsultSubtitle =>
-      'Office sessions—charts, strategy, and practical next steps.';
+      'BaZi, Qi Men Dunjia, and I Ching—charts turned into timing and steps you can act on.';
 
   @override
-  String get fieldWorkPillarMaoShanTitle => 'Mao Shan home blessing';
+  String get fieldWorkPillarMaoShanTitle => 'Protection You Can Feel at Home';
 
   @override
   String get fieldWorkPillarMaoShanSubtitle =>
-      'Ritual support for peace, protection, and harmony at home.';
+      'Authentic Mao Shan rites that shield your space, settle qi, and restore peace.';
 
   @override
-  String get fieldWorkPillarDateSelectionTitle => 'Date Selection (择日)';
+  String get fieldWorkPillarDateSelectionTitle =>
+      'Choose the Day Destiny Favours';
 
   @override
   String get fieldWorkPillarDateSelectionSubtitle =>
-      'Auspicious timing for openings, signings, and milestones.';
+      '择日 for openings, contracts, and milestones—so effort lands on the right day.';
 
   @override
   String get fieldWorkPillarBooksTitle => 'The 5-Blessing Book Series';
@@ -3476,6 +3476,31 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get homeCoreActivitiesSubline =>
       'Every photo below is from an actual session—not stock imagery. See how Master Elf turns classical Chinese metaphysics into clarity, protection, and prosperity for clients on site, in office, and at the altar. Your next chapter could start here.';
+
+  @override
+  String get homeTestimonialsPart1 => 'Voices ';
+
+  @override
+  String get homeTestimonialsPart2 => 'from the\n';
+
+  @override
+  String get homeTestimonialsPart3 => 'Field';
+
+  @override
+  String get homeTestimonialsPart4 => '.';
+
+  @override
+  String get homeTestimonialsHeading => 'Voices from the Field.';
+
+  @override
+  String get homeTestimonialsSub1 =>
+      'In their own words—clients and students who have sat with Master Elf, joined events, and followed the work.';
+
+  @override
+  String get homeTestimonialsSub2 => 'From Phnom Penh to Siem Reap and beyond.';
+
+  @override
+  String get homeTestimonialsClientBadge => 'Client voice';
 
   @override
   String get fieldWorkFromEventsLink => 'See real field work';

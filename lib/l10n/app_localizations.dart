@@ -6433,49 +6433,49 @@ abstract class AppLocalizations {
   /// No description provided for @fieldWorkPillarFengShuiTitle.
   ///
   /// In en, this message translates to:
-  /// **'Feng Shui site visit'**
+  /// **'Unlock Your Property\'s Qi'**
   String get fieldWorkPillarFengShuiTitle;
 
   /// No description provided for @fieldWorkPillarFengShuiSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Compass readings and landform assessment on real properties.'**
+  /// **'Luopan, landform, and Period 9 readings on real sites—before you sign, build, or open.'**
   String get fieldWorkPillarFengShuiSubtitle;
 
   /// No description provided for @fieldWorkPillarConsultTitle.
   ///
   /// In en, this message translates to:
-  /// **'BaZi, Qi Men & I Ching consultations'**
+  /// **'Clarity for Life\'s Biggest Calls'**
   String get fieldWorkPillarConsultTitle;
 
   /// No description provided for @fieldWorkPillarConsultSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Office sessions—charts, strategy, and practical next steps.'**
+  /// **'BaZi, Qi Men Dunjia, and I Ching—charts turned into timing and steps you can act on.'**
   String get fieldWorkPillarConsultSubtitle;
 
   /// No description provided for @fieldWorkPillarMaoShanTitle.
   ///
   /// In en, this message translates to:
-  /// **'Mao Shan home blessing'**
+  /// **'Protection You Can Feel at Home'**
   String get fieldWorkPillarMaoShanTitle;
 
   /// No description provided for @fieldWorkPillarMaoShanSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Ritual support for peace, protection, and harmony at home.'**
+  /// **'Authentic Mao Shan rites that shield your space, settle qi, and restore peace.'**
   String get fieldWorkPillarMaoShanSubtitle;
 
   /// No description provided for @fieldWorkPillarDateSelectionTitle.
   ///
   /// In en, this message translates to:
-  /// **'Date Selection (择日)'**
+  /// **'Choose the Day Destiny Favours'**
   String get fieldWorkPillarDateSelectionTitle;
 
   /// No description provided for @fieldWorkPillarDateSelectionSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Auspicious timing for openings, signings, and milestones.'**
+  /// **'择日 for openings, contracts, and milestones—so effort lands on the right day.'**
   String get fieldWorkPillarDateSelectionSubtitle;
 
   /// No description provided for @fieldWorkPillarBooksTitle.
@@ -6519,6 +6519,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Every photo below is from an actual session—not stock imagery. See how Master Elf turns classical Chinese metaphysics into clarity, protection, and prosperity for clients on site, in office, and at the altar. Your next chapter could start here.'**
   String get homeCoreActivitiesSubline;
+
+  /// No description provided for @homeTestimonialsPart1.
+  ///
+  /// In en, this message translates to:
+  /// **'Voices '**
+  String get homeTestimonialsPart1;
+
+  /// No description provided for @homeTestimonialsPart2.
+  ///
+  /// In en, this message translates to:
+  /// **'from the\n'**
+  String get homeTestimonialsPart2;
+
+  /// No description provided for @homeTestimonialsPart3.
+  ///
+  /// In en, this message translates to:
+  /// **'Field'**
+  String get homeTestimonialsPart3;
+
+  /// No description provided for @homeTestimonialsPart4.
+  ///
+  /// In en, this message translates to:
+  /// **'.'**
+  String get homeTestimonialsPart4;
+
+  /// No description provided for @homeTestimonialsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Voices from the Field.'**
+  String get homeTestimonialsHeading;
+
+  /// No description provided for @homeTestimonialsSub1.
+  ///
+  /// In en, this message translates to:
+  /// **'In their own words—clients and students who have sat with Master Elf, joined events, and followed the work.'**
+  String get homeTestimonialsSub1;
+
+  /// No description provided for @homeTestimonialsSub2.
+  ///
+  /// In en, this message translates to:
+  /// **'From Phnom Penh to Siem Reap and beyond.'**
+  String get homeTestimonialsSub2;
+
+  /// No description provided for @homeTestimonialsClientBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Client voice'**
+  String get homeTestimonialsClientBadge;
 
   /// No description provided for @fieldWorkFromEventsLink.
   ///
