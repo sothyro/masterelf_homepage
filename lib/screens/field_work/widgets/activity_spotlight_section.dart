@@ -51,6 +51,7 @@ class _ActivitySpotlightSectionState extends State<ActivitySpotlightSection> {
                   children: [
                     FieldWorkChineseSectionHeader(
                       title: widget.l10n.fieldWorkVideosHeading,
+                      subline: widget.l10n.fieldWorkVideosSubline,
                       isMobile: widget.isMobile,
                       centerEmblem: FieldWorkVideoEmblem(
                         size: widget.isMobile ? 40 : 48,

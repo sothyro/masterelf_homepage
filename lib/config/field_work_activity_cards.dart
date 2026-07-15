@@ -239,7 +239,7 @@ final List<FieldWorkPhotoCard> kFieldWorkPhotoCards = [
     ),
     subtitle: const LocalizedCopy(
       en: 'Compass-led storefront audits check entrance qi before launch—favouring foot traffic and revenue.',
-      km: 'ការត្រួតពិនិត្យហាងដឹកនាំដោយខ្យុង ពិនិត្យថាមពលច្រកមុនបើកដំណើរ—អំណោយផលដល់អតិថិជន និងចំណូល។',
+      km: 'សាវនកម្មហុងស៊ុយដឹកនាំដោយខ្យុង ពិនិត្យថាមពលច្រកមុនបើកដំណើរ—អំណោយផលដល់អតិថិជន និងចំណូល។',
       zh: '罗盘勘察店面入口气场，开业前迎纳旺气，利客流与营收。',
     ),
   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:masterelf_homepage/utils/scroll_activity_gate.dart';
 import 'package:masterelf_homepage/widgets/app_footer.dart';
 import 'package:masterelf_homepage/widgets/mobile_sticky_cta_bar.dart';
 
@@ -25,7 +26,7 @@ void main() {
     expect(tester.widget<AppFooter>(find.byType(AppFooter)).bottomInset, 0);
   });
 
-  testWidgets('mobile footer keeps sticky-bar clearance inside footer surface', (tester) async {
+  testWidgets('mobile footer uses safe-area bottom padding only', (tester) async {
     setTestViewSize(tester, const Size(375, 800));
     await pumpMasterElfApp(tester, surfaceSize: const Size(375, 800));
     await navigateTo(tester, '/about');
@@ -34,15 +35,14 @@ void main() {
     expect(find.byType(MobileStickyCtaBar), findsOneWidget);
     expect(
       tester.widget<AppFooter>(find.byType(AppFooter)).bottomInset,
-      kMobileStickyCtaBarHeight + 8,
+      16,
     );
-    expect(find.byWidgetPredicate(
-      (widget) => widget is SizedBox && widget.height == kMobileStickyCtaBarHeight + 16,
-    ), findsNothing);
 
     final controller = tester.widget<Scrollable>(find.byType(Scrollable).first).controller!;
     controller.jumpTo(controller.position.maxScrollExtent);
     await tester.pump(const Duration(milliseconds: 200));
+    await tester.pump(ScrollActivityGate.idleDelay);
+    ScrollActivityGate.resetForTesting();
 
     final footerRect = tester.getRect(find.byType(AppFooter));
     final viewportRect = tester.getRect(find.byType(SingleChildScrollView).first);

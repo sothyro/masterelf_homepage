@@ -9,6 +9,23 @@ import '../theme/app_theme.dart';
 /// Default seamless loop length for internal + external orbital motion.
 const Duration kMajesticOrbitalCycleDuration = Duration(milliseconds: 20000);
 
+/// Mobile orbital stage: card chrome is smaller; rings use the full frame width.
+const double kMobileOrbitalCardBodyScale = 0.76;
+const double kMobileOrbitalRingMargin = 6.0;
+const double kMobileOrbitalMaxOrbitRxFactor = 0.68;
+
+/// Largest ring rx that fits inside [frameWidth] without clipping off-screen.
+double mobileOrbitalExtentScale(
+  double frameWidth, {
+  double minScale = 0.72,
+  double maxScale = 1.05,
+}) {
+  if (frameWidth <= 0) return 1.0;
+  final maxRx = frameWidth / 2 - kMobileOrbitalRingMargin;
+  return (maxRx / (frameWidth * kMobileOrbitalMaxOrbitRxFactor))
+      .clamp(minScale, maxScale);
+}
+
 /// Ceremonial orbit — gentle acceleration wobble layered on steady rotation.
 double majesticOrbitalGracefulRotation(
   double t, {
@@ -82,6 +99,7 @@ class MajesticOrbitalCardFrame extends StatefulWidget {
     this.hovered,
     this.enableHoverTiltWobble = true,
     this.orbitExtentScale = 1.0,
+    this.cardBodyScale = 1.0,
   }) : assert(
           child != null || imageAsset != null,
           'Provide either child or imageAsset',
@@ -104,6 +122,8 @@ class MajesticOrbitalCardFrame extends StatefulWidget {
   final bool enableHoverTiltWobble;
   /// Scales satellite orbit ellipse radii (>1 extends rings beyond the card).
   final double orbitExtentScale;
+  /// Scales only the card chrome; orbital rings keep the outer frame size.
+  final double cardBodyScale;
 
   @override
   State<MajesticOrbitalCardFrame> createState() =>
@@ -184,59 +204,88 @@ class _MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
           final tiltY = (effectiveHovered ? 0.045 : 0.018) + hoverWobbleY;
           final lift = effectiveHovered ? 14.0 : 6.0;
           final hoverLift = effectiveHovered ? -6.0 + hoverFloat : 0.0;
+          final bodyScale = widget.cardBodyScale;
 
-          final cardBody = Positioned.fill(
-            child: Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.identity()
-                ..setEntry(3, 2, 0.0016)
-                ..rotateX(tiltX)
-                ..rotateY(tiltY)
-                ..translateByDouble(0.0, hoverLift, 0.0, 1.0),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 280),
-                curve: Curves.easeOutCubic,
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(radius),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.accentGlow.withValues(
-                        alpha: effectiveHovered ? 0.42 : 0.22,
-                      ),
-                      blurRadius: effectiveHovered ? 36 : 22,
-                      spreadRadius: effectiveHovered ? 2 : 0,
-                      offset: Offset(0, lift),
-                    ),
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.55),
-                      blurRadius: effectiveHovered ? 28 : 18,
-                      offset: Offset(0, lift + 8),
-                    ),
-                  ],
-                ),
-                child: _OrbitalFrameSurface(
-                  borderRadius: radius,
-                  shimmerProgress: t,
-                  animationProgress: t,
+          final scaledChrome = Stack(
+            fit: StackFit.expand,
+            clipBehavior: Clip.none,
+            children: [
+              Positioned.fill(
+                child: _AmbientGlow(
                   hovered: effectiveHovered,
-                  showCenterEmblem: widget.showCenterEmblem,
-                  imageAsset: widget.imageAsset,
-                  topLeft: widget.topLeft,
-                  topRight: widget.topRight,
-                  child: widget.child,
+                  pulse: t,
+                  borderRadius: radius,
+                  positioned: false,
                 ),
               ),
-            ),
+              Positioned.fill(
+                child: _ShadowPlate(
+                  lift: lift,
+                  hovered: effectiveHovered,
+                  borderRadius: radius,
+                  positioned: false,
+                ),
+              ),
+              Positioned.fill(
+                child: Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.0016)
+                  ..rotateX(tiltX)
+                  ..rotateY(tiltY)
+                  ..translateByDouble(0.0, hoverLift, 0.0, 1.0),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 280),
+                  curve: Curves.easeOutCubic,
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(radius),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.accentGlow.withValues(
+                          alpha: effectiveHovered ? 0.42 : 0.22,
+                        ),
+                        blurRadius: effectiveHovered ? 36 : 22,
+                        spreadRadius: effectiveHovered ? 2 : 0,
+                        offset: Offset(0, lift),
+                      ),
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.55),
+                        blurRadius: effectiveHovered ? 28 : 18,
+                        offset: Offset(0, lift + 8),
+                      ),
+                    ],
+                  ),
+                  child: _OrbitalFrameSurface(
+                    borderRadius: radius,
+                    shimmerProgress: t,
+                    animationProgress: t,
+                    hovered: effectiveHovered,
+                    showCenterEmblem: widget.showCenterEmblem,
+                    imageAsset: widget.imageAsset,
+                    topLeft: widget.topLeft,
+                    topRight: widget.topRight,
+                    child: widget.child,
+                  ),
+                ),
+              ),
+              ),
+            ],
           );
+
+          final cardChrome = bodyScale == 1.0
+              ? scaledChrome
+              : Transform.scale(
+                  scale: bodyScale,
+                  alignment: Alignment.center,
+                  child: scaledChrome,
+                );
 
           return Stack(
             clipBehavior: Clip.none,
             fit: StackFit.expand,
             children: [
-              _AmbientGlow(hovered: effectiveHovered, pulse: t, borderRadius: radius),
-              _ShadowPlate(lift: lift, hovered: effectiveHovered, borderRadius: radius),
               if (widget.showSatelliteOrbits)
                 Positioned.fill(
                   child: IgnorePointer(
@@ -248,7 +297,7 @@ class _MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
                     ),
                   ),
                 ),
-              cardBody,
+              Positioned.fill(child: cardChrome),
               if (widget.showSatelliteOrbits)
                 Positioned.fill(
                   child: IgnorePointer(
@@ -710,34 +759,35 @@ class _AmbientGlow extends StatelessWidget {
     required this.hovered,
     required this.pulse,
     required this.borderRadius,
+    this.positioned = true,
   });
 
   final bool hovered;
   final double pulse;
   final double borderRadius;
+  final bool positioned;
 
   @override
   Widget build(BuildContext context) {
     final breathe = 0.5 + 0.5 * math.sin(pulse * math.pi * 2);
-    return Positioned.fill(
-      child: IgnorePointer(
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius + 8),
-            gradient: RadialGradient(
-              center: Alignment.center,
-              radius: (hovered ? 0.95 : 0.82) + breathe * 0.08,
-              colors: [
-                const Color(0xFFB83232).withValues(alpha: hovered ? 0.42 : 0.28),
-                AppColors.accentGlow.withValues(alpha: 0.22 + breathe * 0.18),
-                Colors.transparent,
-              ],
-              stops: const [0.0, 0.42, 1.0],
-            ),
+    final glow = IgnorePointer(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(borderRadius + 8),
+          gradient: RadialGradient(
+            center: Alignment.center,
+            radius: (hovered ? 0.95 : 0.82) + breathe * 0.08,
+            colors: [
+              const Color(0xFFB83232).withValues(alpha: hovered ? 0.42 : 0.28),
+              AppColors.accentGlow.withValues(alpha: 0.22 + breathe * 0.18),
+              Colors.transparent,
+            ],
+            stops: const [0.0, 0.42, 1.0],
           ),
         ),
       ),
     );
+    return positioned ? Positioned.fill(child: glow) : glow;
   }
 }
 
@@ -746,35 +796,36 @@ class _ShadowPlate extends StatelessWidget {
     required this.lift,
     required this.hovered,
     required this.borderRadius,
+    this.positioned = true,
   });
 
   final double lift;
   final bool hovered;
   final double borderRadius;
+  final bool positioned;
 
   @override
   Widget build(BuildContext context) {
-    return Positioned.fill(
-      child: Transform.translate(
-        offset: Offset(0, lift + 10),
-        child: Transform.scale(
-          scale: 0.96,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(borderRadius + 2),
-              color: Colors.black.withValues(alpha: hovered ? 0.55 : 0.4),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.65),
-                  blurRadius: 24,
-                  offset: const Offset(0, 16),
-                ),
-              ],
-            ),
+    final plate = Transform.translate(
+      offset: Offset(0, lift + 10),
+      child: Transform.scale(
+        scale: 0.96,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius + 2),
+            color: Colors.black.withValues(alpha: hovered ? 0.55 : 0.4),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.65),
+                blurRadius: 24,
+                offset: const Offset(0, 16),
+              ),
+            ],
           ),
         ),
       ),
     );
+    return positioned ? Positioned.fill(child: plate) : plate;
   }
 }
 

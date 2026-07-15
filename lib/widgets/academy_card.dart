@@ -318,7 +318,7 @@ class _AcademyCardState extends State<AcademyCard> {
 
       final l10n = AppLocalizations.of(context);
 
-      return l10n?.exploreCourses ?? 'Explore';
+      return l10n?.methodPillarCta ?? 'Book this consultation';
 
     } catch (_) {
 

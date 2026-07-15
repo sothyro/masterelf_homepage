@@ -5,6 +5,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../../utils/mobile_web_performance.dart';
 import '../../../services/activity_video_platform.dart';
 import '../../../theme/app_theme.dart';
@@ -377,7 +378,7 @@ class _ActivityVideoPlayerState extends State<ActivityVideoPlayer>
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Tap to retry video',
+                            AppLocalizations.of(context)!.fieldWorkVideoTapToRetry,
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                   color: AppColors.onSurfaceVariantDark,
                                 ),

@@ -334,36 +334,40 @@ class _FeaturedEventCardState extends State<_FeaturedEventCard> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
     final borderColor = _hovered
         ? AppColors.borderLight.withValues(alpha: 0.6)
         : AppColors.borderDark;
     final shadow = _hovered ? AppShadows.eventCardHover : AppShadows.eventCard;
 
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: widget.onViewEvent,
-          borderRadius: BorderRadius.circular(16),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeOut,
-            decoration: BoxDecoration(
-              color: AppColors.surfaceElevatedDark,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: borderColor, width: _hovered ? 1.5 : 1),
-              boxShadow: shadow,
-            ),
-            clipBehavior: Clip.none,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                MajesticOrbitalCardFrame(
+    final card = AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeOut,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.surfaceElevatedDark,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: borderColor, width: _hovered ? 1.5 : 1),
+        boxShadow: shadow,
+      ),
+      clipBehavior: Clip.none,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: isMobile ? 10 : 0),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final orbitExtent = isMobile
+                    ? mobileOrbitalExtentScale(constraints.maxWidth)
+                    : 1.0;
+                return MajesticOrbitalCardFrame(
                   aspectRatio: 16 / 9,
                   imageAsset: widget.imageAsset,
+                  cardBodyScale:
+                      isMobile ? kMobileOrbitalCardBodyScale : 1.0,
+                  orbitExtentScale: orbitExtent,
                   topRight: widget.limitedSeats
                       ? Container(
                           padding: const EdgeInsets.symmetric(
@@ -397,83 +401,96 @@ class _FeaturedEventCardState extends State<_FeaturedEventCard> {
                           ),
                         )
                       : null,
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.onPrimary,
+                    height: 1.25,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.title,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.onPrimary,
-                          height: 1.25,
+                const SizedBox(height: 12),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.calendar_today_outlined,
+                      size: 16,
+                      color: AppColors.onPrimary.withValues(alpha: 0.7),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        widget.date,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.onPrimary.withValues(alpha: 0.85),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.location_on_outlined,
+                      size: 16,
+                      color: AppColors.onPrimary.withValues(alpha: 0.7),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        widget.location,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.onPrimary.withValues(alpha: 0.85),
+                          fontSize: 14,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 12),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.calendar_today_outlined,
-                            size: 16,
-                            color: AppColors.onPrimary.withValues(alpha: 0.7),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              widget.date,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: AppColors.onPrimary.withValues(alpha: 0.85),
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.location_on_outlined,
-                            size: 16,
-                            color: AppColors.onPrimary.withValues(alpha: 0.7),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              widget.location,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: AppColors.onPrimary.withValues(alpha: 0.85),
-                                fontSize: 14,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        widget.description,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.onPrimary.withValues(alpha: 0.9),
-                          height: 1.4,
-                          fontSize: 14,
-                        ),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  widget.description,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppColors.onPrimary.withValues(alpha: 0.9),
+                    height: 1.4,
+                    fontSize: 14,
                   ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
           ),
+        ],
+      ),
+    );
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: widget.onViewEvent,
+          borderRadius: BorderRadius.circular(16),
+          child: card,
         ),
       ),
     );

@@ -20,6 +20,9 @@ import 'sticky_login_cta_bar.dart';
 import 'sticky_logout_cta_bar.dart';
 import '../screens/home/home_load_coordinator.dart';
 import '../screens/apps/apps_load_coordinator.dart';
+import '../screens/books/books_load_coordinator.dart';
+import '../screens/events/events_load_coordinator.dart';
+import '../screens/talisman/talisman_load_coordinator.dart';
 import '../screens/field_work/field_work_load_coordinator.dart';
 import 'app_shell_scroll_scope.dart';
 
@@ -126,6 +129,21 @@ class _AppShellState extends State<AppShell> {
         pixels: offset,
         maxScrollExtent: _scrollController.position.maxScrollExtent,
       );
+    } else if (path == '/books') {
+      BooksLoadCoordinator.onBooksScroll(
+        pixels: offset,
+        maxScrollExtent: _scrollController.position.maxScrollExtent,
+      );
+    } else if (path == '/events') {
+      EventsLoadCoordinator.onEventsScroll(
+        pixels: offset,
+        maxScrollExtent: _scrollController.position.maxScrollExtent,
+      );
+    } else if (path == '/talisman') {
+      TalismanLoadCoordinator.onTalismanScroll(
+        pixels: offset,
+        maxScrollExtent: _scrollController.position.maxScrollExtent,
+      );
     }
   }
 
@@ -147,7 +165,7 @@ class _AppShellState extends State<AppShell> {
     final bottomSafe = MediaQuery.paddingOf(context).bottom;
     final mobileBarHeight = isMobile ? kMobileStickyCtaBarHeight : 0.0;
     final fabBottomPadding = (isMobile ? 24.0 : 60.0) + bottomSafe + mobileBarHeight;
-    final footerBottomInset = isMobile ? kMobileStickyCtaBarHeight + 8 : 0.0;
+    final footerBottomInset = isMobile ? bottomSafe + 16 : 0.0;
 
     return AppShellScrollScope(
       scrollController: _scrollController,

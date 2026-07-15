@@ -17,8 +17,8 @@ void main() {
         const Duration(milliseconds: 500);
   });
 
-  Future<void> pumpAcademy(WidgetTester tester, {required double width}) async {
-    await tester.binding.setSurfaceSize(Size(width, 2400));
+  Future<void> pumpMethodPage(WidgetTester tester, {required double width}) async {
+    await tester.binding.setSurfaceSize(Size(width, 3200));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(
@@ -28,7 +28,7 @@ void main() {
         supportedLocales: AppLocalizations.supportedLocales,
         locale: const Locale('en'),
         home: MediaQuery(
-          data: MediaQueryData(size: Size(width, 2400)),
+          data: MediaQueryData(size: Size(width, 3200)),
           child: const SingleChildScrollView(
             child: AcademyScreen(),
           ),
@@ -40,18 +40,25 @@ void main() {
     assertNoLayoutOverflow(tester);
   }
 
-  Future<void> disposeAcademy(WidgetTester tester) async {
+  Future<void> disposeMethodPage(WidgetTester tester) async {
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump(const Duration(seconds: 7));
   }
 
   for (final width in [375.0, 768.0, 1280.0]) {
-    testWidgets('Academy page has no overflow at ${width.toInt()}px', (tester) async {
-      await pumpAcademy(tester, width: width);
+    testWidgets('The Method page has no overflow at ${width.toInt()}px', (tester) async {
+      await pumpMethodPage(tester, width: width);
 
-      expect(find.text('Academy'), findsWidgets);
+      expect(find.text('The Method'), findsWidgets);
+      expect(find.text('Why consultation comes first'), findsOneWidget);
+      expect(find.text('Six pillars of consultation'), findsOneWidget);
+      expect(find.text('What happens in a session'), findsOneWidget);
+      expect(find.text('Book this consultation'), findsWidgets);
+      expect(find.text('Academy'), findsNothing);
+      expect(find.textContaining('More courses'), findsNothing);
+      expect(find.textContaining('Mastery'), findsNothing);
 
-      await disposeAcademy(tester);
+      await disposeMethodPage(tester);
     });
   }
 }

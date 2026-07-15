@@ -8,6 +8,7 @@ class TalismanStoreItem {
     required this.subtitle,
     required this.hook,
     required this.price,
+    this.coverAsset,
   });
 
   final String id;
@@ -15,6 +16,7 @@ class TalismanStoreItem {
   final String subtitle;
   final String hook;
   final String price;
+  final String? coverAsset;
 }
 
 /// All nine talisman charms for the store grid.

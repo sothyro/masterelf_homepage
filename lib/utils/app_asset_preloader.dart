@@ -66,6 +66,36 @@ List<String> get _appsPageAboveFoldAssets => [
 /// Remaining apps page screenshots — deferred after first paint.
 List<String> get _appsPageDeferredAssets => AppContent.appShowcaseDeferredAssets;
 
+/// Above-fold book store assets — hero uses shared contact hero; blessing covers on mount.
+List<String> get _booksPageAboveFoldAssets => [
+  AppContent.assetContactHero,
+  AppContent.assetBook1,
+  AppContent.assetBook2,
+  AppContent.assetBook3,
+  AppContent.assetBook4,
+  AppContent.assetBook5,
+];
+
+/// Below-fold book store assets — shelf panorama and period9 covers.
+List<String> get _booksPageDeferredAssets => [
+  AppContent.assetShelfMockupFiveBlessings,
+  AppContent.assetPeriod9Book1,
+  AppContent.assetPeriod9Book2,
+];
+
+/// Above-fold events page assets — hero, upcoming image, venue logos.
+List<String> get _eventsPageAboveFoldAssets => [
+  AppContent.assetEventHero,
+  AppContent.assetEvent2027,
+  AppContent.assetVenueChipmong,
+  AppContent.assetVenueLegendCinema,
+];
+
+/// Talisman page — hero background only (product images added when available).
+List<String> get _talismanPageAboveFoldAssets => [
+  AppContent.assetContactHero,
+];
+
 /// Remaining images for other pages; loaded in background after homepage tiers.
 List<String> get _restImageAssets => [
   AppContent.assetAboutHero,
@@ -87,6 +117,10 @@ class AppAssetPreloader {
   static bool _belowFoldStarted = false;
   static bool _appsPageStarted = false;
   static bool _appsDeferredStarted = false;
+  static bool _booksPageStarted = false;
+  static bool _booksDeferredStarted = false;
+  static bool _eventsPageStarted = false;
+  static bool _talismanPageStarted = false;
   static bool _fieldWorkVideosStarted = false;
   static bool _backgroundPreloadStarted = false;
   static final Set<String> _preloadedTestimonialPaths = {};
@@ -115,6 +149,21 @@ class AppAssetPreloader {
 
   @visibleForTesting
   static int get appsDeferredAssetCount => _appsPageDeferredAssets.length;
+
+  @visibleForTesting
+  static int get booksDeferredAssetCount => _booksPageDeferredAssets.length;
+
+  @visibleForTesting
+  static bool get booksDeferredPreloadStarted => _booksDeferredStarted;
+
+  @visibleForTesting
+  static bool get booksPagePreloadStarted => _booksPageStarted;
+
+  @visibleForTesting
+  static bool get eventsPagePreloadStarted => _eventsPageStarted;
+
+  @visibleForTesting
+  static bool get talismanPagePreloadStarted => _talismanPageStarted;
 
   @visibleForTesting
   static bool get appsDeferredPreloadStarted => _appsDeferredStarted;
@@ -210,6 +259,10 @@ class AppAssetPreloader {
     _belowFoldStarted = false;
     _appsPageStarted = false;
     _appsDeferredStarted = false;
+    _booksPageStarted = false;
+    _booksDeferredStarted = false;
+    _eventsPageStarted = false;
+    _talismanPageStarted = false;
     _fieldWorkVideosStarted = false;
     _backgroundPreloadStarted = false;
     _preloadedTestimonialPaths.clear();
@@ -266,6 +319,38 @@ class AppAssetPreloader {
       _appsPageDeferredAssets,
       batchSize: kIsWeb ? 2 : 4,
     );
+  }
+
+  /// Above-fold book assets — call when [BookStoreScreen] mounts.
+  static Future<void> preloadBooksPageAssets() async {
+    if (_booksPageStarted) return;
+    _booksPageStarted = true;
+    await _loadImageList(_booksPageAboveFoldAssets, (_, __) {});
+  }
+
+  /// Deferred book assets — shelf panorama and period9 covers.
+  static Future<void> preloadBooksDeferredAssets() async {
+    if (_booksDeferredStarted) return;
+    if (MobileWebPerformance.isMobileWebViewport()) return;
+    _booksDeferredStarted = true;
+    await _loadImageListBatched(
+      _booksPageDeferredAssets,
+      batchSize: kIsWeb ? 2 : 4,
+    );
+  }
+
+  /// Above-fold events assets — call when [EventsScreen] mounts.
+  static Future<void> preloadEventsPageAssets() async {
+    if (_eventsPageStarted) return;
+    _eventsPageStarted = true;
+    await _loadImageList(_eventsPageAboveFoldAssets, (_, __) {});
+  }
+
+  /// Talisman hero — call when [TalismanStoreScreen] mounts.
+  static Future<void> preloadTalismanPageAssets() async {
+    if (_talismanPageStarted) return;
+    _talismanPageStarted = true;
+    await _loadImageList(_talismanPageAboveFoldAssets, (_, __) {});
   }
 
   /// Mid-page homepage assets — story, field-work thumbs, press logos.

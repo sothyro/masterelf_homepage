@@ -136,6 +136,35 @@ void main() {
       expect(AppAssetPreloader.appsDeferredPreloadStarted, isTrue);
     });
 
+    test('preloadBooksPageAssets warms blessing covers', () async {
+      await AppAssetPreloader.preloadBooksPageAssets();
+      expect(AppAssetPreloader.booksPagePreloadStarted, isTrue);
+      expect(AppAssetPreloader.booksDeferredPreloadStarted, isFalse);
+    });
+
+    test('preloadBooksPageAssets is idempotent', () async {
+      await AppAssetPreloader.preloadBooksPageAssets();
+      await AppAssetPreloader.preloadBooksPageAssets();
+      expect(AppAssetPreloader.booksPagePreloadStarted, isTrue);
+    });
+
+    test('preloadBooksDeferredAssets is idempotent', () async {
+      await AppAssetPreloader.preloadBooksDeferredAssets();
+      await AppAssetPreloader.preloadBooksDeferredAssets();
+      expect(AppAssetPreloader.booksDeferredPreloadStarted, isTrue);
+      expect(AppAssetPreloader.booksDeferredAssetCount, greaterThan(0));
+    });
+
+    test('preloadEventsPageAssets warms hero and venue assets', () async {
+      await AppAssetPreloader.preloadEventsPageAssets();
+      expect(AppAssetPreloader.eventsPagePreloadStarted, isTrue);
+    });
+
+    test('preloadTalismanPageAssets warms hero only', () async {
+      await AppAssetPreloader.preloadTalismanPageAssets();
+      expect(AppAssetPreloader.talismanPagePreloadStarted, isTrue);
+    });
+
     test('preloadActivityStoryCovers deduplicates paths', () async {
       const paths = [
         'assets/images/activities/fengshui.webp',

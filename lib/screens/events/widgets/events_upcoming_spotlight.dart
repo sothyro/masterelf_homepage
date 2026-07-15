@@ -5,9 +5,11 @@ import '../../../config/events_data.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/mobile_web_performance.dart';
 import '../../home/widgets/field_work_chinese_design.dart';
 import '../../store/widgets/description_with_highlight.dart';
 import 'events_upcoming_3d_frame.dart';
+import '../../../widgets/majestic_orbital_card_frame.dart';
 import 'events_event_badges.dart';
 import 'events_meta_chip.dart';
 import 'events_zodiac_calendar_strip.dart';
@@ -34,6 +36,7 @@ class _EventsUpcomingSpotlightState extends State<EventsUpcomingSpotlight> {
 
   @override
   Widget build(BuildContext context) {
+    final reducedMotion = MobileWebPerformance.prefersReducedMotion(context);
     return LayoutBuilder(
       builder: (context, constraints) {
         final isNarrow = constraints.maxWidth < Breakpoints.mobile;
@@ -41,7 +44,7 @@ class _EventsUpcomingSpotlightState extends State<EventsUpcomingSpotlight> {
         final l10n = widget.l10n;
 
         final orbitalStage = _OrbitalVisualStage(
-          hovered: _hovered,
+          hovered: reducedMotion ? false : _hovered,
           isNarrow: isNarrow,
           imageAsset: event.imageAsset,
           limitedSeats: event.limitedSeats,
@@ -57,25 +60,25 @@ class _EventsUpcomingSpotlightState extends State<EventsUpcomingSpotlight> {
           onRegister: widget.onRegister,
         );
 
-        return MouseRegion(
-          onEnter: (_) => setState(() => _hovered = true),
-          onExit: (_) => setState(() => _hovered = false),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOutCubic,
-            clipBehavior: Clip.none,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(isNarrow ? 20 : 24),
-              border: Border.all(
-                color: _hovered
-                    ? AppColors.accent.withValues(alpha: 0.55)
-                    : AppColors.borderDark,
-                width: _hovered ? 1.5 : 1,
-              ),
-              boxShadow: _hovered ? AppShadows.eventCardHover : AppShadows.card,
+        final card = AnimatedContainer(
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOutCubic,
+          width: double.infinity,
+          clipBehavior: Clip.none,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(isNarrow ? 20 : 24),
+            border: Border.all(
+              color: _hovered && !reducedMotion
+                  ? AppColors.accent.withValues(alpha: 0.55)
+                  : AppColors.borderDark,
+              width: _hovered && !reducedMotion ? 1.5 : 1,
             ),
-            child: isNarrow || !constraints.hasBoundedHeight
-                ? Column(
+            boxShadow: _hovered && !reducedMotion
+                ? AppShadows.eventCardHover
+                : AppShadows.card,
+          ),
+          child: isNarrow || !constraints.hasBoundedHeight
+              ? Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       orbitalStage,
@@ -109,7 +112,13 @@ class _EventsUpcomingSpotlightState extends State<EventsUpcomingSpotlight> {
                       ],
                     ),
                   ),
-          ),
+        );
+
+        if (reducedMotion) return card;
+        return MouseRegion(
+          onEnter: (_) => setState(() => _hovered = true),
+          onExit: (_) => setState(() => _hovered = false),
+          child: card,
         );
       },
     );
@@ -136,8 +145,9 @@ class _OrbitalVisualStage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final horizontalRingPad = isNarrow ? 24.0 : 44.0;
-    final verticalRingPad = isNarrow ? 32.0 : 40.0;
+    final horizontalRingPad = isNarrow ? 0.0 : 44.0;
+    final verticalRingPad = isNarrow ? 10.0 : 40.0;
+    final stageInset = isNarrow ? 8.0 : 16.0;
 
     return Padding(
       padding: EdgeInsets.fromLTRB(
@@ -161,49 +171,58 @@ class _OrbitalVisualStage extends StatelessWidget {
           borderRadius: BorderRadius.circular(isNarrow ? 16 : 20),
         ),
         child: Padding(
-          padding: EdgeInsets.all(isNarrow ? 12 : 16),
-          child: EventsUpcoming3DFrame(
-            imageAsset: imageAsset,
-            aspectRatio: 16 / 9,
-            hovered: hovered,
-            topLeft: EventsEventBadges(
-              l10n: l10n,
-              status: event.status,
-              format: event.format,
-            ),
-            topRight: limitedSeats
-                ? Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppColors.accent,
-                          AppColors.accentLight.withValues(alpha: 0.95),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.accentGlow.withValues(alpha: 0.45),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
+          padding: EdgeInsets.all(stageInset),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final orbitExtent = isNarrow
+                  ? mobileOrbitalExtentScale(constraints.maxWidth)
+                  : kEventsUpcomingOrbitExtentScale;
+              return EventsUpcoming3DFrame(
+                imageAsset: imageAsset,
+                aspectRatio: 16 / 9,
+                hovered: hovered,
+                cardBodyScale: isNarrow ? kMobileOrbitalCardBodyScale : 1.0,
+                orbitExtentScale: orbitExtent,
+                topLeft: EventsEventBadges(
+                  l10n: l10n,
+                  status: event.status,
+                  format: event.format,
+                ),
+                topRight: limitedSeats
+                    ? Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
                         ),
-                      ],
-                    ),
-                    child: Text(
-                      l10n.limitedSeats,
-                      style: const TextStyle(
-                        color: AppColors.onAccent,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.2,
-                      ),
-                    ),
-                  )
-                : null,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              AppColors.accent,
+                              AppColors.accentLight.withValues(alpha: 0.95),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.accentGlow.withValues(alpha: 0.45),
+                              blurRadius: 12,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          l10n.limitedSeats,
+                          style: const TextStyle(
+                            color: AppColors.onAccent,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 0.2,
+                          ),
+                        ),
+                      )
+                    : null,
+              );
+            },
           ),
         ),
       ),

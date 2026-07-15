@@ -207,7 +207,7 @@ class _DesktopHeader extends StatelessWidget {
         label: l10n.charteredPractitioner,
         items: [
           _NavItem(l10n.journey, '/journey', LucideIcons.compass),
-          _NavItem(l10n.academyPageTitle, '/academy', LucideIcons.graduationCap),
+          _NavItem(l10n.methodPageTitle, '/academy', LucideIcons.layers),
         ],
         isActive: activeDropdownIndex == 0,
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:masterelf_homepage/l10n/app_localizations.dart';
+import 'package:masterelf_homepage/screens/events/events_load_coordinator.dart';
+import 'package:masterelf_homepage/screens/field_work/field_work_load_coordinator.dart';
 import 'package:masterelf_homepage/screens/consultations/site_inspection_screen.dart';
 import 'package:masterelf_homepage/theme/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -55,9 +57,11 @@ void main() {
     await settleHomeScreenTimers(tester);
     drainLayoutExceptions(tester);
     await navigateTo(tester, '/field-work');
+    await tester.pump(const Duration(seconds: 5));
+    FieldWorkLoadCoordinator.resetForTesting();
     drainLayoutExceptions(tester);
 
-    expect(find.text('Master Elf ក្នុងសកម្មភាព'), findsWidgets);
+    expect(find.text('ការងារពិត។ កន្លែងពិត។ លទ្ធផលពិត។'), findsWidgets);
   });
 
   testWidgets('Events screen shows Chinese event title', (tester) async {
@@ -65,9 +69,11 @@ void main() {
     await settleHomeScreenTimers(tester);
     drainLayoutExceptions(tester);
     await navigateTo(tester, '/events');
+    await tester.pump(const Duration(seconds: 5));
+    EventsLoadCoordinator.resetForTesting();
     drainLayoutExceptions(tester);
 
-    expect(find.text('Master Elf - 凤凰崛起 2026'), findsWidgets);
+    expect(find.text('周期转换时，您应在场。'), findsWidgets);
   });
 
   testWidgets('Site inspection form shows Khmer save label', (tester) async {
@@ -104,6 +110,8 @@ void main() {
     await settleHomeScreenTimers(tester);
     drainLayoutExceptions(tester);
     await navigateTo(tester, '/field-work/video/feng-shui-compass-on-site');
+    await tester.pump(const Duration(seconds: 5));
+    FieldWorkLoadCoordinator.resetForTesting();
     drainLayoutExceptions(tester);
 
     expect(find.text('风水实地勘察 — 现场罗盘'), findsOneWidget);

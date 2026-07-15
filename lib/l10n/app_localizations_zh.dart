@@ -246,6 +246,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get talismanStoreSpotlightTaglineHighlight => '随身可佩';
 
   @override
+  String get talismanStoreHeroBrowseCta => '浏览系列';
+
+  @override
   String get talismanStoreIntroHeading => '虔诚甄选，灵符护佑';
 
   @override
@@ -341,6 +344,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get bookStoreSectionTaglineHighlight => '今日可用';
+
+  @override
+  String get bookStoreHeroBrowseCta => '浏览书库';
 
   @override
   String get bookStoreSectionMarketing =>
@@ -747,7 +753,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get notSureWhereToStart => '不知从何开始？';
 
   @override
-  String get notSureBody => '我们随时为您提供帮助。只需联系我们，我们将引导您迈出最佳下一步，无论是咨询、课程还是支持性社群。';
+  String get notSureBody =>
+      '我们随时为您提供帮助。联系我们，我们将引导您迈出最佳下一步——无论是面对面咨询、复诊，还是与团队直接沟通。';
 
   @override
   String get language => '语言';
@@ -829,7 +836,147 @@ class AppLocalizationsZh extends AppLocalizations {
   String get academyFengShuiDesc => '气的流动之执业师。';
 
   @override
-  String get academyPageTitle => '学院';
+  String get academyPageTitle => '体系';
+
+  @override
+  String get methodPageTitle => '体系';
+
+  @override
+  String get methodHeroHeadline => '先明其本，再行其远。';
+
+  @override
+  String get methodHeroSubline =>
+      '与 Master Hong Chhay Heng 面对面咨询——一套融汇人生与事业的完整体系。';
+
+  @override
+  String get methodHeroPrimaryCta => '预约面对面咨询';
+
+  @override
+  String get methodHeroSecondaryCta => '查看咨询类型';
+
+  @override
+  String get methodWhyConsultTitle => '为何从咨询开始';
+
+  @override
+  String get methodWhyConsultBody =>
+      '应用、书籍与活动是辅助——但清晰的起点在面对面。在一次咨询中，命盘、空间与时机一并解读，让您带着可践行的根基离开，而非零散建议。';
+
+  @override
+  String get methodSystemTitle => '一套融汇体系';
+
+  @override
+  String get methodSystemBody =>
+      'Master Hong Chhay Heng 的方法将八字、风水、奇门遁甲、易经、择日与茅山融为一体。每一门都有清晰的公式与标准——在每次咨询中一致运用，使您的策略有据、有原则、可落地。';
+
+  @override
+  String get methodPillarsTitle => '六大咨询支柱';
+
+  @override
+  String get methodPillarsSubline =>
+      '每一支柱对应人生与事业的不同维度。预约与您情况匹配的咨询——或从综合咨询开始，由我们为您指引方向。';
+
+  @override
+  String get methodPillarCta => '预约此项咨询';
+
+  @override
+  String get methodPillarBaziTitle => '八字解读';
+
+  @override
+  String get methodPillarBaziHook => '认识自我、人生周期，以及影响抉择的时机。';
+
+  @override
+  String get methodPillarBaziTopics => '四柱 • 人生潜能 • 事业与人际周期';
+
+  @override
+  String get methodPillarFengShuiTitle => '风水';
+
+  @override
+  String get methodPillarFengShuiHook => '居家与办公环境如何助益或阻碍您的目标。';
+
+  @override
+  String get methodPillarFengShuiTopics => '气流 • 形势与理气 • 空间布局';
+
+  @override
+  String get methodPillarQimenTitle => '奇门遁甲';
+
+  @override
+  String get methodPillarQimenHook => '事业、竞争与关键决策的战略择势。';
+
+  @override
+  String get methodPillarQimenTopics => '九宫 • 战略时机 • 情境优势';
+
+  @override
+  String get methodPillarDateSelectionTitle => '择日';
+
+  @override
+  String get methodPillarDateSelectionHook => '何时行动——开业、婚嫁、签约与人生大事。';
+
+  @override
+  String get methodPillarDateSelectionTopics => '通书 • 吉时 • 活动与里程碑';
+
+  @override
+  String get methodPillarIchingTitle => '易经';
+
+  @override
+  String get methodPillarIchingHook => '十字路口的清晰指引——读懂变化，选择下一步。';
+
+  @override
+  String get methodPillarIchingTopics => '六十四卦 • 占筮 • 变化与策略';
+
+  @override
+  String get methodPillarMaoshanTitle => '茅山';
+
+  @override
+  String get methodPillarMaoshanHook => '人生转折与灵性关键时刻的仪式支持。';
+
+  @override
+  String get methodPillarMaoshanTopics => '仪式 • 传统 • 转化';
+
+  @override
+  String get methodSessionTitle => '咨询如何进行';
+
+  @override
+  String get methodSessionStep1Title => '倾听';
+
+  @override
+  String get methodSessionStep1Body => '从您的情况出发——人生、事业，或两者兼有——以及您希望改变什么。';
+
+  @override
+  String get methodSessionStep2Title => '解读';
+
+  @override
+  String get methodSessionStep2Body => '依案情运用命盘、空间或时机等相应法门进行评估。';
+
+  @override
+  String get methodSessionStep3Title => '策谋';
+
+  @override
+  String get methodSessionStep3Body => '您将获得清晰的优先级、原则与下一步——而非模糊的预测。';
+
+  @override
+  String get methodSessionStep4Title => '跟进';
+
+  @override
+  String get methodSessionStep4Body => '应用、书籍、活动或复诊，按您的节奏支持您的决定。';
+
+  @override
+  String get methodSocialProofTitle => '数万追随者信赖';
+
+  @override
+  String get methodClosingCta => '预约面对面咨询';
+
+  @override
+  String get methodNotSureBody =>
+      '不确定哪种咨询适合您？联系我们，我们将帮您找到与 Master Hong Chhay Heng 面谈的最佳起点。';
+
+  @override
+  String get methodJourneyIntro => '从这三项咨询开始——或在「体系」页探索全部六项。';
+
+  @override
+  String get academyHeroHeadline => '一套可践行、能落地的改变之道。';
+
+  @override
+  String get academyHeroSubline => '八字、风水、奇门遁甲等六大法门，融汇为择时、择人、择地的完整体系。';
 
   @override
   String get academyQiMenAbout => '基于时间与空间的古老策略体系，用于决策、择日与情境优势。';
@@ -1004,19 +1151,28 @@ class AppLocalizationsZh extends AppLocalizations {
   String get eventsUpcomingSubline => '选择活动并预订座位。期待与您相见。';
 
   @override
-  String get eventsPageHeroHeadline => '洞见化为体验之地';
+  String get eventsPageHeroHeadline => '活动';
 
   @override
-  String get eventsPageHeroSubline => '现场启示、在线典藏，以及 Master Elf 教学旅程的下一章。';
+  String get eventsPageHeroSubline => '周期转换时，您应在场。';
 
   @override
-  String get eventsPageHeroHighlight => '下一章';
+  String get eventsPageHeroBody => 'Master Elf 现场启示。';
 
   @override
-  String get eventsCompletedHeading => '近期已完成';
+  String get eventsPageHeroHighlight => '周期转换';
 
   @override
-  String get eventsCompletedSubline => '感动我们社群的时刻——现场与线上，皆有留存。';
+  String get eventsPageHeroPrimaryCta => '预留席位';
+
+  @override
+  String get eventsPageHeroSecondaryCta => '查看即将举行';
+
+  @override
+  String get eventsCompletedHeading => '现场见证';
+
+  @override
+  String get eventsCompletedSubline => '数百人已在金边与线上齐聚——看洞见如何化为行动。';
 
   @override
   String get eventsCompletedBadge => '已完成';
@@ -1031,7 +1187,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get eventsUpcomingSpotlightHeading => '即将登场';
 
   @override
-  String get eventsUpcomingSpotlightSubline => '下一场盛会正在筹备中。尽早预留席位。';
+  String get eventsUpcomingSpotlightSubline => '血羊年将至，席位有限——在周期开启前锁定您的位置。';
 
   @override
   String get eventsGoat2027Title => 'Master Elf — 迎接 2027 血羊年';
@@ -1040,14 +1196,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get eventsGoat2027Subtitle => '新生肖周期的年度启示';
 
   @override
-  String get eventsGoat2027Hook => '以清晰、策略与天时应势，迈入血羊之年。';
+  String get eventsGoat2027Hook => '以清晰根基迈入血羊年——而非猜测。';
 
   @override
   String get eventsGoat2027Description =>
-      'Master Elf 年度盛会回归——现场授课、九运战略，以及血羊年兴旺之路。';
+      'Master Elf 年度启示回归金边现场。一日读懂来年周期：九运战略、个人时机，以及开年前真正要紧的优先事项。';
 
   @override
-  String get eventsGoat2027DescriptionHighlight => '血羊之年';
+  String get eventsGoat2027DescriptionHighlight => '开年前';
 
   @override
   String get eventsGoat2027Date => '2027年2月 · 金边';
@@ -1056,7 +1212,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get eventsGoat2027Location => '金边';
 
   @override
-  String get eventsZodiacStripLabel => '血羊年始于2027年2月';
+  String get eventsZodiacStripLabel => '凤凰落幕 · 血羊开启 — 2027年2月';
 
   @override
   String get eventsZodiacStripPhoenix => '凤凰 2026';
@@ -1065,11 +1221,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get eventsZodiacStripGoat => '血羊 2027';
 
   @override
-  String get eventsPhoenixRecapHook => '开启新时代的启示——金边现场见证。';
+  String get eventsPhoenixRecapHook => '满座。周期转换。这就是当时发生的事。';
 
   @override
   String get eventsPhoenixRecapBody =>
-      '数百人齐聚 Master Elf 最受期待的启示。《凤凰崛起》标志着一个转折点——重生、转化，以及在九运中崛起的框架。';
+      '数百人齐聚金边，见证 Master Elf 2026 年标志性启示。《凤凰崛起》不是一堂课——而是为我们的社群提供了在九运中重生与崛起的转折点框架。';
 
   @override
   String get eventsPhoenixRecapHighlight => '转折点';
@@ -1087,35 +1243,44 @@ class AppLocalizationsZh extends AppLocalizations {
   String get event1Subtitle => '大师启示——金边现场';
 
   @override
-  String get event1Hook => '洞见化为行动的一刻——Master Elf 2026 年标志性启示。';
+  String get event1Hook => '现场见证——为后续一切定调的启示。';
 
   @override
   String get event2Subtitle => '新加坡版——现已上线';
 
   @override
-  String get event2Hook => '风水与占星精髓，录播回放，随时重温。';
+  String get event2Hook => '未能到场新加坡？完整框架随时重温——按您的节奏。';
 
   @override
   String get event3Subtitle => '火马年战略——线上典藏';
 
   @override
-  String get event3Hook => '火马年兵法艺术——策略随时回看。';
+  String get event3Hook => '火马年奇门战略，录播典藏——可反复研读的决断之道。';
 
   @override
-  String get eventsWhyAttendTitle => '为何 Master Elf 活动值得参与';
+  String get eventsWhyAttendTitle => '为何亲临现场';
 
   @override
   String get eventsWhyAttendLead =>
-      '无论您曾在金边或线上参与，还是正在为血羊年做准备——这些聚会都将古典智慧化为可行动的决定。';
+      '书籍与应用助您准备。活动改变您看待一年的方式——现场、当面、与 Master Elf 共读周期转换。';
 
   @override
-  String get eventsWhyAttend1 => '直接向 Master Elf 学习——现场启示与书本难以替代的纵深。';
+  String get eventsWhyAttend1 => '回放无法替代的纵深——现场启示、真实提问、真实清晰。';
 
   @override
-  String get eventsWhyAttend2 => '加入准备在每一轮生肖周期中崛起的同修社群。';
+  String get eventsWhyAttend2 => '随每一轮生肖周期前行的社群——行动者，而非旁观者。';
 
   @override
-  String get eventsWhyAttend3 => '即将举行的席位有限。尽早报名血羊年 2027 盛会。';
+  String get eventsWhyAttend3 => '血羊年 2027 席位有限。立即报名——或先浏览上方典藏再决定。';
+
+  @override
+  String get eventsConsultationLink => '更倾向私人咨询？预约面谈';
+
+  @override
+  String get eventsClosingHeading => '无法亲临现场？';
+
+  @override
+  String get eventsClosingBody => '面对面咨询带来同样的清晰——针对您的情况量身定制。';
 
   @override
   String get secureYourSeat => '预订座位';
@@ -1124,7 +1289,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get searchEvent => '搜索活动…';
 
   @override
-  String get registerForEvent => '报名';
+  String get registerForEvent => '预订座位';
 
   @override
   String get eventColumn => '活动';
@@ -1190,6 +1355,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get journeyHeroSubline => '从使命到清明——风水与中华玄学实践。';
 
   @override
+  String get journeyHeroBody => '从使命到带来清明与成果的体系。';
+
+  @override
+  String get journeyHeroMethodCta => '探索体系';
+
+  @override
   String get journeySectionTheStory => '历程';
 
   @override
@@ -1226,6 +1397,25 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get journeyPhoenixBody =>
       '「凤凰崛起」是 Master Elf 的悟道与系统之名，象征重生、转化，以及洞见化为行动的一刻。在九运中，凤凰崛起——掌握正确知识，你也能腾飞。他的框架将八字、奇门遁甲、易经、择日、风水与茅山融为一体，为准备好的人提供连贯之道。';
+
+  @override
+  String get journeyMethodBridgeTitle => '体系';
+
+  @override
+  String get journeyMethodBridgeBody =>
+      '六大学问，一套整合体系——每一项咨询都建立在 Master Elf 数十年精进的古典框架之上。';
+
+  @override
+  String get journeyMethodBridgeCta => '探索体系';
+
+  @override
+  String get journeyViewAllSixConsultations => '查看全部六项咨询';
+
+  @override
+  String get journeyClosingHeading => '准备开始了吗？';
+
+  @override
+  String get journeyClosingBody => '每条路径都从面对面咨询开始。告诉我们您的目标，我们将指引您找到合适的起点。';
 
   @override
   String get methodPageHeadline => '我们的方法';
@@ -1587,10 +1777,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sampleFeature => '示例專題';
 
   @override
-  String get event1Title => 'Master Elf - 凤凰崛起 2026';
+  String get event1Title => 'Master Elf — 凤凰崛起 2026';
 
   @override
-  String get event1Description => '師父開示。';
+  String get event1Description => '大师启示——2026年2月金边现场。';
 
   @override
   String get event1Location => '金邊';
@@ -1599,7 +1789,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get event2Title => '風水與占星 2026';
 
   @override
-  String get event2Description => '新加坡版风水与占星 2026——现已提供线上回放。';
+  String get event2Description => '新加坡版——2026风水与占星完整线上回放。';
 
   @override
   String get event2Location => '新加坡圣淘沙名胜世界';
@@ -1608,7 +1798,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get event3Title => '赤馬奇門';
 
   @override
-  String get event3Description => '火马年兵法艺术——已完成的线上活动，可供回放。';
+  String get event3Description => '火马年奇门战略——线上已完成，随时回放。';
 
   @override
   String get event3Location => '新加坡名胜世界';
@@ -3200,7 +3390,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fieldWorkSeeRealSessionsLink => '浏览实地工作';
 
   @override
-  String get fieldWorkJourneyTeaser => '课堂之外——看看我们在现场如何工作。';
+  String get fieldWorkJourneyTeaser => '看体系如何落地——真实的现场勘察、仪式与解读。';
 
   @override
   String get fieldWorkJourneyCta => '探索实地工作';
@@ -3301,6 +3491,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fieldWorkVideosSubline => '六个现场瞬间——咨询、仪式与实地勘察，如实记录。';
 
   @override
+  String get fieldWorkMethodBridgeTitle => '体系';
+
+  @override
+  String get fieldWorkMethodBridgeBody => '这些现场片段是六大学问之一。在「体系」页了解它们如何贯通。';
+
+  @override
+  String get fieldWorkMethodBridgeCta => '探索体系';
+
+  @override
+  String get fieldWorkClosingHeading => '准备好您的专属咨询了吗？';
+
+  @override
+  String get fieldWorkClosingBody =>
+      '您在此所见，正是咨询在实践中的样子。预约面对面咨询，我们将以同样深度为您量身定制。';
+
+  @override
   String get fieldWorkStoriesHeading => '核心服务';
 
   @override
@@ -3347,6 +3553,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get fieldWorkVideoSpotlight6Subtitle => '为开业、签约与重要里程碑选择吉时。';
+
+  @override
+  String get bookStoreShelfPanoramaSemanticLabel => '五福系列书架展示';
+
+  @override
+  String get eventsVenueChipmong => 'Chipmong';
+
+  @override
+  String get eventsVenueLegendCinema => 'Legend Cinema';
+
+  @override
+  String get fieldWorkVideoTapToRetry => '点击重试视频';
 
   @override
   String get inspectionXuanKongPeriod => '玄空运期';

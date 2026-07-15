@@ -7,6 +7,7 @@ import '../../../config/events_data.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/mobile_web_performance.dart';
 import '../../home/widgets/field_work_chinese_design.dart';
 import '../../store/widgets/description_with_highlight.dart';
 import 'events_event_badges.dart';
@@ -50,6 +51,8 @@ class _EventsCompletedSpotlightState extends State<EventsCompletedSpotlight> {
             Image.asset(
               event.imageAsset,
               fit: BoxFit.cover,
+              cacheWidth: MobileWebPerformance.cardImageCacheWidth(context, 640),
+              filterQuality: MobileWebPerformance.imageFilterQuality(context),
               errorBuilder: (_, __, ___) => ColoredBox(
                 color: AppColors.primary.withValues(alpha: 0.2),
                 child: Icon(
@@ -170,7 +173,7 @@ class _EventsCompletedSpotlightState extends State<EventsCompletedSpotlight> {
                       children: [
                         copyBlock,
                         const SizedBox(height: 22),
-                        const _VenuePartnerLogos(),
+                        _VenuePartnerLogos(l10n: l10n),
                       ],
                     )
                   : Row(
@@ -178,9 +181,9 @@ class _EventsCompletedSpotlightState extends State<EventsCompletedSpotlight> {
                       children: [
                         Expanded(flex: 5, child: copyBlock),
                         const SizedBox(width: 20),
-                        const Expanded(
+                        Expanded(
                           flex: 4,
-                          child: _VenuePartnerLogos(),
+                          child: _VenuePartnerLogos(l10n: l10n),
                         ),
                       ],
                     ),
@@ -193,12 +196,17 @@ class _EventsCompletedSpotlightState extends State<EventsCompletedSpotlight> {
 }
 
 class _VenuePartnerLogos extends StatelessWidget {
-  const _VenuePartnerLogos();
+  const _VenuePartnerLogos({required this.l10n});
 
-  static const _logos = [
-    (asset: AppContent.assetVenueChipmong, label: 'Chipmong'),
-    (asset: AppContent.assetVenueLegendCinema, label: 'Legend Cinema'),
-  ];
+  final AppLocalizations l10n;
+
+  List<({String asset, String label})> get _logos => [
+        (asset: AppContent.assetVenueChipmong, label: l10n.eventsVenueChipmong),
+        (
+          asset: AppContent.assetVenueLegendCinema,
+          label: l10n.eventsVenueLegendCinema,
+        ),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -272,6 +280,8 @@ class _VenuePartnerCardState extends State<_VenuePartnerCard> {
                   widget.assetPath,
                   fit: BoxFit.cover,
                   alignment: Alignment.center,
+                  cacheWidth: MobileWebPerformance.cardImageCacheWidth(context, 120),
+                  filterQuality: MobileWebPerformance.imageFilterQuality(context),
                   errorBuilder: (_, __, ___) => ColoredBox(
                     color: AppColors.borderDark,
                     child: Icon(

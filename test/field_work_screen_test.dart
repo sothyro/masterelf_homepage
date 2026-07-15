@@ -85,6 +85,14 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.byType(ActivitySpotlightSection), findsOneWidget);
     expect(find.text('Watch real work in action'), findsOneWidget);
+    expect(
+      find.text(
+        'Six moments from the field—consultations, rituals, and site visits as they happen.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Book a face-to-face consultation'), findsWidgets);
+    expect(find.text('Ready for your own session?'), findsOneWidget);
     expect(find.byType(ActivityStoriesSection), findsOneWidget);
     expect(find.text('Our core activities'), findsOneWidget);
     expect(find.text('Unlock Your Property\'s Qi'), findsOneWidget);

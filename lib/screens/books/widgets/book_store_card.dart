@@ -4,6 +4,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/mobile_web_performance.dart';
 import 'bundle_cover_preview.dart';
 
 /// Single book card with cover, title, price, and Add to Cart.
@@ -86,6 +87,12 @@ class _BookStoreCardState extends State<BookStoreCard> {
                       child: Image.asset(
                         widget.asset,
                         fit: BoxFit.cover,
+                        cacheWidth: MobileWebPerformance.cardImageCacheWidth(
+                          context,
+                          isNarrow ? MediaQuery.sizeOf(context).width - 64 : 340,
+                        ),
+                        filterQuality:
+                            MobileWebPerformance.imageFilterQuality(context),
                         errorBuilder: (_, __, ___) => Container(
                           color: AppColors.borderDark,
                           child: Icon(

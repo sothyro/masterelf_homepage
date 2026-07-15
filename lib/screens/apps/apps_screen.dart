@@ -74,15 +74,17 @@ class _AppsScreenState extends State<AppsScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          StorePageHero(
-            title: '',
-            description: '',
-            descriptionHighlight: '',
-            titleContent: const AppsHeroMedallion(),
-            heroHeightNarrow: 477,
-            heroHeightWide: 477,
-            backgroundCacheWidth:
-                MobileWebPerformance.heroBackgroundCacheWidth(context),
+          RepaintBoundary(
+            child: StorePageHero(
+              title: '',
+              description: '',
+              descriptionHighlight: '',
+              titleContent: const AppsHeroMedallion(),
+              heroHeightNarrow: 477,
+              heroHeightWide: 477,
+              backgroundCacheWidth:
+                  MobileWebPerformance.heroBackgroundCacheWidth(context),
+            ),
           ),
           AppsChinesePageShell(
             child: StoreContentContainer(
@@ -91,15 +93,23 @@ class _AppsScreenState extends State<AppsScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 8),
-                  SectionAnchor(
-                    key: _keyMasterElf,
-                    child: AppsMasterElfSystemIntro(l10n: l10n),
+                  RepaintBoundary(
+                    child: SectionAnchor(
+                      key: _keyMasterElf,
+                      child: AppsMasterElfSystemIntro(l10n: l10n),
+                    ),
                   ),
                   SizedBox(height: isMobile ? 28 : 36),
-                  AppsFeatureGallery(
-                    groups: groups,
-                    overviewPlatformsLabel: l10n.appsGroupOverviewPlatforms,
-                    includeGroupIds: const {'overview'},
+                  AppsDeferredSection(
+                    sectionKey: 'overview-ecosystem',
+                    placeholderHeight: isMobile ? 600 : 720,
+                    child: RepaintBoundary(
+                      child: AppsFeatureGallery(
+                        groups: groups,
+                        overviewPlatformsLabel: l10n.appsGroupOverviewPlatforms,
+                        includeGroupIds: const {'overview'},
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 48),
                   const ChineseMountingBar(),
@@ -116,7 +126,9 @@ class _AppsScreenState extends State<AppsScreen> {
                       sectionKey: 'period9',
                       placeholderHeight: isMobile ? 720 : 880,
                       eager: eagerPeriod9,
-                      child: AppsPeriod9Section(l10n: l10n),
+                      child: RepaintBoundary(
+                        child: AppsPeriod9Section(l10n: l10n),
+                      ),
                     ),
                   ),
                   SizedBox(height: isMobile ? 48 : 56),
@@ -133,10 +145,12 @@ class _AppsScreenState extends State<AppsScreen> {
                   AppsDeferredSection(
                     sectionKey: 'feature-atlas',
                     placeholderHeight: isMobile ? 900 : 1100,
-                    child: AppsFeatureGallery(
-                      groups: groups,
-                      overviewPlatformsLabel: l10n.appsGroupOverviewPlatforms,
-                      excludeGroupIds: const {'overview'},
+                    child: RepaintBoundary(
+                      child: AppsFeatureGallery(
+                        groups: groups,
+                        overviewPlatformsLabel: l10n.appsGroupOverviewPlatforms,
+                        excludeGroupIds: const {'overview'},
+                      ),
                     ),
                   ),
                   const SizedBox(height: 32),

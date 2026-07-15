@@ -43,7 +43,7 @@ class FeaturedInConsultationBand extends StatelessWidget {
                 FilledButton.icon(
                   onPressed: () => context.push('/consultations'),
                   icon: const Icon(LucideIcons.calendarCheck, size: 18),
-                  label: Text(l10n.fieldWorkBookConsultation),
+                  label: Text(l10n.methodClosingCta),
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.accent,
                     foregroundColor: AppColors.onAccent,

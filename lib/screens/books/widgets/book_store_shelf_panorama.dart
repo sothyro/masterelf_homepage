@@ -4,6 +4,7 @@ import '../../../config/app_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/mobile_web_performance.dart';
 import '../../store/widgets/description_with_highlight.dart';
 
 /// Full-viewport shelf mockup between the 5-Blessing grid and Period 9 series.
@@ -19,6 +20,7 @@ class BookStoreShelfPanorama extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width;
     final isNarrow = Breakpoints.isMobile(width);
     final horizontalPadding = isNarrow ? 16.0 : 24.0;
+    final shelfCacheWidth = MobileWebPerformance.devicePixelCacheWidth(context, width);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -47,8 +49,9 @@ class BookStoreShelfPanorama extends StatelessWidget {
             width: width,
             fit: BoxFit.fitWidth,
             alignment: Alignment.center,
-            filterQuality: FilterQuality.medium,
-            semanticLabel: 'Five Blessings book series shelf display',
+            cacheWidth: shelfCacheWidth,
+            filterQuality: MobileWebPerformance.imageFilterQuality(context),
+            semanticLabel: l10n.bookStoreShelfPanoramaSemanticLabel,
             errorBuilder: (_, __, ___) => const SizedBox.shrink(),
           ),
         ),

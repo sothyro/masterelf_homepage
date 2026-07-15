@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../config/events_data.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
+import '../../../utils/mobile_web_performance.dart';
 import '../../home/widgets/field_work_chinese_design.dart';
 import 'events_event_badges.dart';
 import 'events_meta_chip.dart';
@@ -55,6 +57,8 @@ class _EventsCompletedOnlineCardState extends State<EventsCompletedOnlineCard> {
                   child: Image.asset(
                     event.imageAsset,
                     fit: BoxFit.cover,
+                    cacheWidth: MobileWebPerformance.cardImageCacheWidth(context, 280),
+                    filterQuality: MobileWebPerformance.imageFilterQuality(context),
                     errorBuilder: (_, __, ___) => ColoredBox(
                       color: AppColors.primary.withValues(alpha: 0.15),
                       child: Icon(
@@ -113,6 +117,19 @@ class _EventsCompletedOnlineCardState extends State<EventsCompletedOnlineCard> {
                     icon: LucideIcons.calendar,
                     label: event.date,
                     compact: true,
+                  ),
+                  const SizedBox(height: 14),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton.icon(
+                      onPressed: () => context.push('/journey'),
+                      icon: const Icon(LucideIcons.bookOpen, size: 16),
+                      label: Text(widget.l10n.eventsExploreJourney),
+                      style: TextButton.styleFrom(
+                        foregroundColor: AppColors.accent,
+                        padding: EdgeInsets.zero,
+                      ),
+                    ),
                   ),
                 ],
               ),

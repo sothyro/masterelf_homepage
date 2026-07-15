@@ -626,7 +626,7 @@ class _TestimonialCardState extends State<_TestimonialCard> {
   }
 
   Widget _buildImageBlock() {
-    final imageFit = widget.isMobile ? BoxFit.contain : BoxFit.cover;
+    const imageFit = BoxFit.cover;
     final viewportWidth = MediaQuery.sizeOf(context).width;
     final cardLayoutWidth = widget.isMobile
         ? viewportWidth - 48

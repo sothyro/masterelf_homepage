@@ -25,6 +25,7 @@ class ActivityStoriesSection extends StatefulWidget {
     required this.pillars,
     this.heading,
     this.subline,
+    this.initialRealm,
     this.preloadOwnerKey = 'activity-stories-section',
   });
 
@@ -32,6 +33,7 @@ class ActivityStoriesSection extends StatefulWidget {
   final List<FieldWorkShowcasePillar> pillars;
   final String? heading;
   final String? subline;
+  final FieldWorkRealm? initialRealm;
   final String preloadOwnerKey;
 
   @override
@@ -78,6 +80,15 @@ class _ActivityStoriesSectionState extends State<ActivityStoriesSection> {
   void initState() {
     super.initState();
     _shuffledPillars = List<FieldWorkShowcasePillar>.from(widget.pillars);
+    final realm = widget.initialRealm;
+    if (realm != null) {
+      _shuffledPillars.sort((a, b) {
+        final aMatch = a.realm == realm;
+        final bMatch = b.realm == realm;
+        if (aMatch == bMatch) return 0;
+        return aMatch ? -1 : 1;
+      });
+    }
   }
 
   static double _cardHeightForWidth(double viewportWidth) {

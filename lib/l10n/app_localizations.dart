@@ -157,7 +157,7 @@ abstract class AppLocalizations {
   /// No description provided for @appsHeroBrandSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Master Elf Chinese Metaphysic System'**
+  /// **'Master Elf Chinese Metaphysics System'**
   String get appsHeroBrandSubtitle;
 
   /// No description provided for @appsIntroTagline.
@@ -568,6 +568,12 @@ abstract class AppLocalizations {
   /// **'carry'**
   String get talismanStoreSpotlightTaglineHighlight;
 
+  /// No description provided for @talismanStoreHeroBrowseCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse the collection'**
+  String get talismanStoreHeroBrowseCta;
+
   /// No description provided for @talismanStoreIntroHeading.
   ///
   /// In en, this message translates to:
@@ -759,6 +765,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'use today'**
   String get bookStoreSectionTaglineHighlight;
+
+  /// No description provided for @bookStoreHeroBrowseCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse the library'**
+  String get bookStoreHeroBrowseCta;
 
   /// No description provided for @bookStoreSectionMarketing.
   ///
@@ -1555,7 +1567,7 @@ abstract class AppLocalizations {
   /// No description provided for @notSureBody.
   ///
   /// In en, this message translates to:
-  /// **'We\'re here to help. Just reach out to us and we\'ll guide you to your best next step, whether it\'s a consultation, course or supportive community.'**
+  /// **'We\'re here to help. Reach out and we\'ll guide you to your best next step — whether that\'s a face-to-face consultation, a follow-up visit, or a direct conversation with our team.'**
   String get notSureBody;
 
   /// No description provided for @language.
@@ -1717,8 +1729,278 @@ abstract class AppLocalizations {
   /// No description provided for @academyPageTitle.
   ///
   /// In en, this message translates to:
-  /// **'Academy'**
+  /// **'The Method'**
   String get academyPageTitle;
+
+  /// No description provided for @methodPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The Method'**
+  String get methodPageTitle;
+
+  /// No description provided for @methodHeroHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Understand the foundation before you move.'**
+  String get methodHeroHeadline;
+
+  /// No description provided for @methodHeroSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Face-to-face consultation with Master Hong Chhay Heng — one integrated system for life and business strategy.'**
+  String get methodHeroSubline;
+
+  /// No description provided for @methodHeroPrimaryCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a face-to-face consultation'**
+  String get methodHeroPrimaryCta;
+
+  /// No description provided for @methodHeroSecondaryCta.
+  ///
+  /// In en, this message translates to:
+  /// **'View consultation types'**
+  String get methodHeroSecondaryCta;
+
+  /// No description provided for @methodWhyConsultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Why consultation comes first'**
+  String get methodWhyConsultTitle;
+
+  /// No description provided for @methodWhyConsultBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps, books, and events support the work — but clarity starts in person. In a face-to-face session, your chart, your space, and your timing are read together so you leave with a foundation you can act on, not scattered advice.'**
+  String get methodWhyConsultBody;
+
+  /// No description provided for @methodSystemTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'One integrated system'**
+  String get methodSystemTitle;
+
+  /// No description provided for @methodSystemBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Hong Chhay Heng\'s method unites BaZi, Feng Shui, QiMen Dunjia, I Ching, Date Selection, and Mao Shan into one coherent framework. Each discipline has clear formulas and standards — applied consistently in every consultation so your strategy is explainable, principled, and effective.'**
+  String get methodSystemBody;
+
+  /// No description provided for @methodPillarsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Six pillars of consultation'**
+  String get methodPillarsTitle;
+
+  /// No description provided for @methodPillarsSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Each pillar addresses a different dimension of your life and business. Book the consultation that matches your situation — or start with a general session and we\'ll guide you from there.'**
+  String get methodPillarsSubline;
+
+  /// No description provided for @methodPillarCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Book this consultation'**
+  String get methodPillarCta;
+
+  /// No description provided for @methodPillarBaziTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'BaZi Reading'**
+  String get methodPillarBaziTitle;
+
+  /// No description provided for @methodPillarBaziHook.
+  ///
+  /// In en, this message translates to:
+  /// **'Who you are, your cycles, and the timing that shapes your decisions.'**
+  String get methodPillarBaziHook;
+
+  /// No description provided for @methodPillarBaziTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Four Pillars • Life potential • Career & relationship cycles'**
+  String get methodPillarBaziTopics;
+
+  /// No description provided for @methodPillarFengShuiTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Feng Shui'**
+  String get methodPillarFengShuiTitle;
+
+  /// No description provided for @methodPillarFengShuiHook.
+  ///
+  /// In en, this message translates to:
+  /// **'How your environment helps or hinders your goals at home and work.'**
+  String get methodPillarFengShuiHook;
+
+  /// No description provided for @methodPillarFengShuiTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Qi flow • Form & Compass • Space alignment'**
+  String get methodPillarFengShuiTopics;
+
+  /// No description provided for @methodPillarQimenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'QiMen Dunjia'**
+  String get methodPillarQimenTitle;
+
+  /// No description provided for @methodPillarQimenHook.
+  ///
+  /// In en, this message translates to:
+  /// **'Strategic moves for business, competition, and pivotal decisions.'**
+  String get methodPillarQimenHook;
+
+  /// No description provided for @methodPillarQimenTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Nine Palaces • Strategic timing • Situational advantage'**
+  String get methodPillarQimenTopics;
+
+  /// No description provided for @methodPillarDateSelectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Selection'**
+  String get methodPillarDateSelectionTitle;
+
+  /// No description provided for @methodPillarDateSelectionHook.
+  ///
+  /// In en, this message translates to:
+  /// **'When to act — openings, weddings, signings, and major milestones.'**
+  String get methodPillarDateSelectionHook;
+
+  /// No description provided for @methodPillarDateSelectionTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Tung Shu • Auspicious hours • Events & milestones'**
+  String get methodPillarDateSelectionTopics;
+
+  /// No description provided for @methodPillarIchingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'I Ching'**
+  String get methodPillarIchingTitle;
+
+  /// No description provided for @methodPillarIchingHook.
+  ///
+  /// In en, this message translates to:
+  /// **'Clarity at crossroads — reading change and choosing your next move.'**
+  String get methodPillarIchingHook;
+
+  /// No description provided for @methodPillarIchingTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'64 Hexagrams • Divination • Change & strategy'**
+  String get methodPillarIchingTopics;
+
+  /// No description provided for @methodPillarMaoshanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mao Shan'**
+  String get methodPillarMaoshanTitle;
+
+  /// No description provided for @methodPillarMaoshanHook.
+  ///
+  /// In en, this message translates to:
+  /// **'Ritual support at key life transitions and spiritual turning points.'**
+  String get methodPillarMaoshanHook;
+
+  /// No description provided for @methodPillarMaoshanTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Rituals • Tradition • Transformation'**
+  String get methodPillarMaoshanTopics;
+
+  /// No description provided for @methodSessionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What happens in a session'**
+  String get methodSessionTitle;
+
+  /// No description provided for @methodSessionStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen'**
+  String get methodSessionStep1Title;
+
+  /// No description provided for @methodSessionStep1Body.
+  ///
+  /// In en, this message translates to:
+  /// **'We begin with your situation — life, business, or both — and what you want to change.'**
+  String get methodSessionStep1Body;
+
+  /// No description provided for @methodSessionStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get methodSessionStep2Title;
+
+  /// No description provided for @methodSessionStep2Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Your chart, space, or timing is assessed using the disciplines that fit your case.'**
+  String get methodSessionStep2Body;
+
+  /// No description provided for @methodSessionStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Strategise'**
+  String get methodSessionStep3Title;
+
+  /// No description provided for @methodSessionStep3Body.
+  ///
+  /// In en, this message translates to:
+  /// **'You receive clear priorities, principles, and next moves — not vague predictions.'**
+  String get methodSessionStep3Body;
+
+  /// No description provided for @methodSessionStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow through'**
+  String get methodSessionStep4Title;
+
+  /// No description provided for @methodSessionStep4Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps, books, events, or return visits support what you decide — at your pace.'**
+  String get methodSessionStep4Body;
+
+  /// No description provided for @methodSocialProofTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trusted by thousands'**
+  String get methodSocialProofTitle;
+
+  /// No description provided for @methodClosingCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a face-to-face consultation'**
+  String get methodClosingCta;
+
+  /// No description provided for @methodNotSureBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sure which consultation fits? Contact us and we\'ll help you choose the right starting point with Master Hong Chhay Heng.'**
+  String get methodNotSureBody;
+
+  /// No description provided for @methodJourneyIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Start with these three consultations — or explore all six on The Method.'**
+  String get methodJourneyIntro;
+
+  /// No description provided for @academyHeroHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'A practical framework for real change.'**
+  String get academyHeroHeadline;
+
+  /// No description provided for @academyHeroSubline.
+  ///
+  /// In en, this message translates to:
+  /// **'Six living disciplines — from BaZi to Feng Shui — taught as one system for decisive life and business.'**
+  String get academyHeroSubline;
 
   /// No description provided for @academyQiMenAbout.
   ///
@@ -2065,31 +2347,49 @@ abstract class AppLocalizations {
   /// No description provided for @eventsPageHeroHeadline.
   ///
   /// In en, this message translates to:
-  /// **'Where insight becomes experience'**
+  /// **'Events'**
   String get eventsPageHeroHeadline;
 
   /// No description provided for @eventsPageHeroSubline.
   ///
   /// In en, this message translates to:
-  /// **'Live revelations, online archives, and the next chapter of Master Elf\'s teaching journey.'**
+  /// **'Be in the room when the cycle turns.'**
   String get eventsPageHeroSubline;
+
+  /// No description provided for @eventsPageHeroBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Live revelation with Master Elf.'**
+  String get eventsPageHeroBody;
 
   /// No description provided for @eventsPageHeroHighlight.
   ///
   /// In en, this message translates to:
-  /// **'next chapter'**
+  /// **'cycle turns'**
   String get eventsPageHeroHighlight;
+
+  /// No description provided for @eventsPageHeroPrimaryCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve your seat'**
+  String get eventsPageHeroPrimaryCta;
+
+  /// No description provided for @eventsPageHeroSecondaryCta.
+  ///
+  /// In en, this message translates to:
+  /// **'See what\'s coming'**
+  String get eventsPageHeroSecondaryCta;
 
   /// No description provided for @eventsCompletedHeading.
   ///
   /// In en, this message translates to:
-  /// **'Recently Completed'**
+  /// **'Proof in the room'**
   String get eventsCompletedHeading;
 
   /// No description provided for @eventsCompletedSubline.
   ///
   /// In en, this message translates to:
-  /// **'Moments that moved our community—captured in person and online.'**
+  /// **'Hundreds have already gathered — live in Phnom Penh and online. See what changed when insight became action.'**
   String get eventsCompletedSubline;
 
   /// No description provided for @eventsCompletedBadge.
@@ -2113,13 +2413,13 @@ abstract class AppLocalizations {
   /// No description provided for @eventsUpcomingSpotlightHeading.
   ///
   /// In en, this message translates to:
-  /// **'Upcoming Spotlight'**
+  /// **'What\'s next'**
   String get eventsUpcomingSpotlightHeading;
 
   /// No description provided for @eventsUpcomingSpotlightSubline.
   ///
   /// In en, this message translates to:
-  /// **'The next gathering is already taking shape. Reserve your place early.'**
+  /// **'The Blood Goat year is approaching. Seats are limited — secure yours before the cycle begins.'**
   String get eventsUpcomingSpotlightSubline;
 
   /// No description provided for @eventsGoat2027Title.
@@ -2137,19 +2437,19 @@ abstract class AppLocalizations {
   /// No description provided for @eventsGoat2027Hook.
   ///
   /// In en, this message translates to:
-  /// **'Step into the Blood Goat year with clarity, strategy, and heaven-aligned timing.'**
+  /// **'Enter the Blood Goat year with a clear foundation — not guesswork.'**
   String get eventsGoat2027Hook;
 
   /// No description provided for @eventsGoat2027Description.
   ///
   /// In en, this message translates to:
-  /// **'Master Elf\'s signature annual event returns—live teachings, Period 9 strategy, and the roadmap for thriving in the Year of the Blood Goat.'**
+  /// **'Master Elf\'s annual revelation returns live in Phnom Penh. One day to read the cycle ahead: Period 9 strategy, personal timing, and the priorities that matter before the year begins.'**
   String get eventsGoat2027Description;
 
   /// No description provided for @eventsGoat2027DescriptionHighlight.
   ///
   /// In en, this message translates to:
-  /// **'Year of the Blood Goat'**
+  /// **'before the year begins'**
   String get eventsGoat2027DescriptionHighlight;
 
   /// No description provided for @eventsGoat2027Date.
@@ -2167,7 +2467,7 @@ abstract class AppLocalizations {
   /// No description provided for @eventsZodiacStripLabel.
   ///
   /// In en, this message translates to:
-  /// **'Blood Goat Year begins February 2027'**
+  /// **'Phoenix closes · Blood Goat opens — February 2027'**
   String get eventsZodiacStripLabel;
 
   /// No description provided for @eventsZodiacStripPhoenix.
@@ -2185,13 +2485,13 @@ abstract class AppLocalizations {
   /// No description provided for @eventsPhoenixRecapHook.
   ///
   /// In en, this message translates to:
-  /// **'The revelation that launched a new era—witnessed live in Phnom Penh.'**
+  /// **'The room was full. The cycle shifted. This is what happened.'**
   String get eventsPhoenixRecapHook;
 
   /// No description provided for @eventsPhoenixRecapBody.
   ///
   /// In en, this message translates to:
-  /// **'Hundreds gathered for Master Elf\'s most anticipated revelation. The Rise of Phoenix marked a turning point—renewal, transformation, and the framework for rising in Period 9.'**
+  /// **'Hundreds gathered in Phnom Penh for Master Elf\'s defining revelation of 2026. The Rise of the Phoenix was not a lecture — it was a turning point that gave our community a framework for renewal and rising in Period 9.'**
   String get eventsPhoenixRecapBody;
 
   /// No description provided for @eventsPhoenixRecapHighlight.
@@ -2227,7 +2527,7 @@ abstract class AppLocalizations {
   /// No description provided for @event1Hook.
   ///
   /// In en, this message translates to:
-  /// **'The moment insight became action—Master Elf\'s defining revelation of 2026.'**
+  /// **'Witnessed live — the revelation that set the tone for everything that followed.'**
   String get event1Hook;
 
   /// No description provided for @event2Subtitle.
@@ -2239,7 +2539,7 @@ abstract class AppLocalizations {
   /// No description provided for @event2Hook.
   ///
   /// In en, this message translates to:
-  /// **'Feng Shui and astrology mastery, captured for replay at your pace.'**
+  /// **'Couldn\'t attend in Singapore? The full framework is yours to revisit — on your schedule.'**
   String get event2Hook;
 
   /// No description provided for @event3Subtitle.
@@ -2251,38 +2551,56 @@ abstract class AppLocalizations {
   /// No description provided for @event3Hook.
   ///
   /// In en, this message translates to:
-  /// **'The art of war in the Year of the Fire Horse—strategy you can revisit anytime.'**
+  /// **'Fire Horse strategy, captured for replay — decisive moves you can study again and again.'**
   String get event3Hook;
 
   /// No description provided for @eventsWhyAttendTitle.
   ///
   /// In en, this message translates to:
-  /// **'Why Master Elf events matter'**
+  /// **'Why show up in person'**
   String get eventsWhyAttendTitle;
 
   /// No description provided for @eventsWhyAttendLead.
   ///
   /// In en, this message translates to:
-  /// **'Whether you joined us in Phnom Penh or online, or you\'re preparing for the Blood Goat year ahead—these gatherings turn classical wisdom into decisions you can act on.'**
+  /// **'Books and apps prepare you. Events change how you see the year — live, in the room, with Master Elf reading the cycle as it turns.'**
   String get eventsWhyAttendLead;
 
   /// No description provided for @eventsWhyAttend1.
   ///
   /// In en, this message translates to:
-  /// **'Learn directly from Master Elf—live revelations and depth you won\'t find in books alone.'**
+  /// **'Depth you cannot get from replay alone — live revelation, real questions, real clarity.'**
   String get eventsWhyAttend1;
 
   /// No description provided for @eventsWhyAttend2.
   ///
   /// In en, this message translates to:
-  /// **'Join a community of practitioners ready to rise with each zodiac cycle.'**
+  /// **'A community that moves with each zodiac cycle — practitioners who act, not just observe.'**
   String get eventsWhyAttend2;
 
   /// No description provided for @eventsWhyAttend3.
   ///
   /// In en, this message translates to:
-  /// **'Upcoming seats are limited. Register early for the Blood Goat 2027 gathering.'**
+  /// **'Blood Goat 2027 seats are limited. Register now — or revisit the archives above while you decide.'**
   String get eventsWhyAttend3;
+
+  /// No description provided for @eventsConsultationLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Prefer a private session? Book a consultation'**
+  String get eventsConsultationLink;
+
+  /// No description provided for @eventsClosingHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t make the room?'**
+  String get eventsClosingHeading;
+
+  /// No description provided for @eventsClosingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A face-to-face consultation brings the same clarity — tailored to your situation.'**
+  String get eventsClosingBody;
 
   /// No description provided for @secureYourSeat.
   ///
@@ -2299,7 +2617,7 @@ abstract class AppLocalizations {
   /// No description provided for @registerForEvent.
   ///
   /// In en, this message translates to:
-  /// **'Register'**
+  /// **'Reserve your seat'**
   String get registerForEvent;
 
   /// No description provided for @eventColumn.
@@ -2377,7 +2695,7 @@ abstract class AppLocalizations {
   /// No description provided for @aboutPageTitle.
   ///
   /// In en, this message translates to:
-  /// **'Master Elf | The Rise of Phoenix'**
+  /// **'Master Elf | The Rise of the Phoenix'**
   String get aboutPageTitle;
 
   /// No description provided for @aboutBreadcrumb.
@@ -2427,6 +2745,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'From a calling to clarity—Feng Shui and Chinese Metaphysics in practice.'**
   String get journeyHeroSubline;
+
+  /// No description provided for @journeyHeroBody.
+  ///
+  /// In en, this message translates to:
+  /// **'From a calling to a system that brings clarity and results.'**
+  String get journeyHeroBody;
+
+  /// No description provided for @journeyHeroMethodCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore the method'**
+  String get journeyHeroMethodCta;
 
   /// No description provided for @journeySectionTheStory.
   ///
@@ -2493,6 +2823,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The Rise of the Phoenix is Master Elf\'s revelation and the name of his system. It symbolises renewal, transformation and the moment when insight leads to action. In Period 9, the phoenix rises—and with the right knowledge, so can you. His framework integrates BaZi, Qimen Dunjia, I Ching, Date Selection, Feng Shui and Mao Shan into one coherent approach for those ready to rise.'**
   String get journeyPhoenixBody;
+
+  /// No description provided for @journeyMethodBridgeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The Method'**
+  String get journeyMethodBridgeTitle;
+
+  /// No description provided for @journeyMethodBridgeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Six disciplines, one integrated system — each consultation builds on the same classical framework Master Elf has refined over decades.'**
+  String get journeyMethodBridgeBody;
+
+  /// No description provided for @journeyMethodBridgeCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore The Method'**
+  String get journeyMethodBridgeCta;
+
+  /// No description provided for @journeyViewAllSixConsultations.
+  ///
+  /// In en, this message translates to:
+  /// **'View all six consultations'**
+  String get journeyViewAllSixConsultations;
+
+  /// No description provided for @journeyClosingHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to begin?'**
+  String get journeyClosingHeading;
+
+  /// No description provided for @journeyClosingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every path starts with a face-to-face consultation. Tell us your goal and we\'ll guide you to the right starting point.'**
+  String get journeyClosingBody;
 
   /// No description provided for @methodPageHeadline.
   ///
@@ -3181,13 +3547,13 @@ abstract class AppLocalizations {
   /// No description provided for @event1Title.
   ///
   /// In en, this message translates to:
-  /// **'Master Elf - The Rise of Phoenix 2026'**
+  /// **'Master Elf — The Rise of the Phoenix 2026'**
   String get event1Title;
 
   /// No description provided for @event1Description.
   ///
   /// In en, this message translates to:
-  /// **'The Master Revelation.'**
+  /// **'The Master Revelation — live in Phnom Penh, February 2026.'**
   String get event1Description;
 
   /// No description provided for @event1Location.
@@ -3205,7 +3571,7 @@ abstract class AppLocalizations {
   /// No description provided for @event2Description.
   ///
   /// In en, this message translates to:
-  /// **'The Singapore Edition of Feng Shui & Astrology 2026—now available as an online replay.'**
+  /// **'The Singapore edition — Feng Shui and astrology for 2026, now available as a full online replay.'**
   String get event2Description;
 
   /// No description provided for @event2Location.
@@ -3223,7 +3589,7 @@ abstract class AppLocalizations {
   /// No description provided for @event3Description.
   ///
   /// In en, this message translates to:
-  /// **'The Art of War in the Year of the Fire Horse—completed online event, available for replay.'**
+  /// **'QiMen strategy for the Fire Horse year — completed online, available for replay anytime.'**
   String get event3Description;
 
   /// No description provided for @event3Location.
@@ -6391,7 +6757,7 @@ abstract class AppLocalizations {
   /// No description provided for @fieldWorkJourneyTeaser.
   ///
   /// In en, this message translates to:
-  /// **'Beyond the classroom—see how we work in the field.'**
+  /// **'See the method in practice — real site visits, rituals, and readings in the field.'**
   String get fieldWorkJourneyTeaser;
 
   /// No description provided for @fieldWorkJourneyCta.
@@ -6586,6 +6952,36 @@ abstract class AppLocalizations {
   /// **'Six moments from the field—consultations, rituals, and site visits as they happen.'**
   String get fieldWorkVideosSubline;
 
+  /// No description provided for @fieldWorkMethodBridgeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The Method'**
+  String get fieldWorkMethodBridgeTitle;
+
+  /// No description provided for @fieldWorkMethodBridgeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'These sessions are one pillar of a six-part system. See how they connect on The Method.'**
+  String get fieldWorkMethodBridgeBody;
+
+  /// No description provided for @fieldWorkMethodBridgeCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore The Method'**
+  String get fieldWorkMethodBridgeCta;
+
+  /// No description provided for @fieldWorkClosingHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready for your own session?'**
+  String get fieldWorkClosingHeading;
+
+  /// No description provided for @fieldWorkClosingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'What you see here is how consultations unfold in practice. Book a face-to-face session and we\'ll tailor the same depth to your situation.'**
+  String get fieldWorkClosingBody;
+
   /// No description provided for @fieldWorkStoriesHeading.
   ///
   /// In en, this message translates to:
@@ -6681,6 +7077,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choosing auspicious timing for openings, signings, and milestones.'**
   String get fieldWorkVideoSpotlight6Subtitle;
+
+  /// No description provided for @bookStoreShelfPanoramaSemanticLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Five Blessings book series shelf display'**
+  String get bookStoreShelfPanoramaSemanticLabel;
+
+  /// No description provided for @eventsVenueChipmong.
+  ///
+  /// In en, this message translates to:
+  /// **'Chipmong'**
+  String get eventsVenueChipmong;
+
+  /// No description provided for @eventsVenueLegendCinema.
+  ///
+  /// In en, this message translates to:
+  /// **'Legend Cinema'**
+  String get eventsVenueLegendCinema;
+
+  /// No description provided for @fieldWorkVideoTapToRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to retry video'**
+  String get fieldWorkVideoTapToRetry;
 
   /// No description provided for @inspectionXuanKongPeriod.
   ///

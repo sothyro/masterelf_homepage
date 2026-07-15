@@ -36,7 +36,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get masterElfSystem => 'Master Elf System';
 
   @override
-  String get appsHeroBrandSubtitle => 'Master Elf Chinese Metaphysic System';
+  String get appsHeroBrandSubtitle => 'Master Elf Chinese Metaphysics System';
 
   @override
   String get appsIntroTagline =>
@@ -265,6 +265,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get talismanStoreSpotlightTaglineHighlight => 'carry';
 
   @override
+  String get talismanStoreHeroBrowseCta => 'Browse the collection';
+
+  @override
   String get talismanStoreIntroHeading => 'Sacred charms, chosen with devotion';
 
   @override
@@ -374,6 +377,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bookStoreSectionTaglineHighlight => 'use today';
+
+  @override
+  String get bookStoreHeroBrowseCta => 'Browse the library';
 
   @override
   String get bookStoreSectionMarketing =>
@@ -813,7 +819,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notSureBody =>
-      'We\'re here to help. Just reach out to us and we\'ll guide you to your best next step, whether it\'s a consultation, course or supportive community.';
+      'We\'re here to help. Reach out and we\'ll guide you to your best next step — whether that\'s a face-to-face consultation, a follow-up visit, or a direct conversation with our team.';
 
   @override
   String get language => 'Language';
@@ -907,7 +913,165 @@ class AppLocalizationsEn extends AppLocalizations {
       'Chartered Practitioner of the Qi flow. Assign best Feng Shui for your home and office.';
 
   @override
-  String get academyPageTitle => 'Academy';
+  String get academyPageTitle => 'The Method';
+
+  @override
+  String get methodPageTitle => 'The Method';
+
+  @override
+  String get methodHeroHeadline => 'Understand the foundation before you move.';
+
+  @override
+  String get methodHeroSubline =>
+      'Face-to-face consultation with Master Hong Chhay Heng — one integrated system for life and business strategy.';
+
+  @override
+  String get methodHeroPrimaryCta => 'Book a face-to-face consultation';
+
+  @override
+  String get methodHeroSecondaryCta => 'View consultation types';
+
+  @override
+  String get methodWhyConsultTitle => 'Why consultation comes first';
+
+  @override
+  String get methodWhyConsultBody =>
+      'Apps, books, and events support the work — but clarity starts in person. In a face-to-face session, your chart, your space, and your timing are read together so you leave with a foundation you can act on, not scattered advice.';
+
+  @override
+  String get methodSystemTitle => 'One integrated system';
+
+  @override
+  String get methodSystemBody =>
+      'Master Hong Chhay Heng\'s method unites BaZi, Feng Shui, QiMen Dunjia, I Ching, Date Selection, and Mao Shan into one coherent framework. Each discipline has clear formulas and standards — applied consistently in every consultation so your strategy is explainable, principled, and effective.';
+
+  @override
+  String get methodPillarsTitle => 'Six pillars of consultation';
+
+  @override
+  String get methodPillarsSubline =>
+      'Each pillar addresses a different dimension of your life and business. Book the consultation that matches your situation — or start with a general session and we\'ll guide you from there.';
+
+  @override
+  String get methodPillarCta => 'Book this consultation';
+
+  @override
+  String get methodPillarBaziTitle => 'BaZi Reading';
+
+  @override
+  String get methodPillarBaziHook =>
+      'Who you are, your cycles, and the timing that shapes your decisions.';
+
+  @override
+  String get methodPillarBaziTopics =>
+      'Four Pillars • Life potential • Career & relationship cycles';
+
+  @override
+  String get methodPillarFengShuiTitle => 'Feng Shui';
+
+  @override
+  String get methodPillarFengShuiHook =>
+      'How your environment helps or hinders your goals at home and work.';
+
+  @override
+  String get methodPillarFengShuiTopics =>
+      'Qi flow • Form & Compass • Space alignment';
+
+  @override
+  String get methodPillarQimenTitle => 'QiMen Dunjia';
+
+  @override
+  String get methodPillarQimenHook =>
+      'Strategic moves for business, competition, and pivotal decisions.';
+
+  @override
+  String get methodPillarQimenTopics =>
+      'Nine Palaces • Strategic timing • Situational advantage';
+
+  @override
+  String get methodPillarDateSelectionTitle => 'Date Selection';
+
+  @override
+  String get methodPillarDateSelectionHook =>
+      'When to act — openings, weddings, signings, and major milestones.';
+
+  @override
+  String get methodPillarDateSelectionTopics =>
+      'Tung Shu • Auspicious hours • Events & milestones';
+
+  @override
+  String get methodPillarIchingTitle => 'I Ching';
+
+  @override
+  String get methodPillarIchingHook =>
+      'Clarity at crossroads — reading change and choosing your next move.';
+
+  @override
+  String get methodPillarIchingTopics =>
+      '64 Hexagrams • Divination • Change & strategy';
+
+  @override
+  String get methodPillarMaoshanTitle => 'Mao Shan';
+
+  @override
+  String get methodPillarMaoshanHook =>
+      'Ritual support at key life transitions and spiritual turning points.';
+
+  @override
+  String get methodPillarMaoshanTopics =>
+      'Rituals • Tradition • Transformation';
+
+  @override
+  String get methodSessionTitle => 'What happens in a session';
+
+  @override
+  String get methodSessionStep1Title => 'Listen';
+
+  @override
+  String get methodSessionStep1Body =>
+      'We begin with your situation — life, business, or both — and what you want to change.';
+
+  @override
+  String get methodSessionStep2Title => 'Read';
+
+  @override
+  String get methodSessionStep2Body =>
+      'Your chart, space, or timing is assessed using the disciplines that fit your case.';
+
+  @override
+  String get methodSessionStep3Title => 'Strategise';
+
+  @override
+  String get methodSessionStep3Body =>
+      'You receive clear priorities, principles, and next moves — not vague predictions.';
+
+  @override
+  String get methodSessionStep4Title => 'Follow through';
+
+  @override
+  String get methodSessionStep4Body =>
+      'Apps, books, events, or return visits support what you decide — at your pace.';
+
+  @override
+  String get methodSocialProofTitle => 'Trusted by thousands';
+
+  @override
+  String get methodClosingCta => 'Book a face-to-face consultation';
+
+  @override
+  String get methodNotSureBody =>
+      'Not sure which consultation fits? Contact us and we\'ll help you choose the right starting point with Master Hong Chhay Heng.';
+
+  @override
+  String get methodJourneyIntro =>
+      'Start with these three consultations — or explore all six on The Method.';
+
+  @override
+  String get academyHeroHeadline => 'A practical framework for real change.';
+
+  @override
+  String get academyHeroSubline =>
+      'Six living disciplines — from BaZi to Feng Shui — taught as one system for decisive life and business.';
 
   @override
   String get academyQiMenAbout =>
@@ -1110,21 +1274,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'Choose your event and secure your seat. We can\'t wait to see you there.';
 
   @override
-  String get eventsPageHeroHeadline => 'Where insight becomes experience';
+  String get eventsPageHeroHeadline => 'Events';
 
   @override
-  String get eventsPageHeroSubline =>
-      'Live revelations, online archives, and the next chapter of Master Elf\'s teaching journey.';
+  String get eventsPageHeroSubline => 'Be in the room when the cycle turns.';
 
   @override
-  String get eventsPageHeroHighlight => 'next chapter';
+  String get eventsPageHeroBody => 'Live revelation with Master Elf.';
 
   @override
-  String get eventsCompletedHeading => 'Recently Completed';
+  String get eventsPageHeroHighlight => 'cycle turns';
+
+  @override
+  String get eventsPageHeroPrimaryCta => 'Reserve your seat';
+
+  @override
+  String get eventsPageHeroSecondaryCta => 'See what\'s coming';
+
+  @override
+  String get eventsCompletedHeading => 'Proof in the room';
 
   @override
   String get eventsCompletedSubline =>
-      'Moments that moved our community—captured in person and online.';
+      'Hundreds have already gathered — live in Phnom Penh and online. See what changed when insight became action.';
 
   @override
   String get eventsCompletedBadge => 'Completed';
@@ -1136,11 +1308,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventsUpcomingBadge => 'Upcoming';
 
   @override
-  String get eventsUpcomingSpotlightHeading => 'Upcoming Spotlight';
+  String get eventsUpcomingSpotlightHeading => 'What\'s next';
 
   @override
   String get eventsUpcomingSpotlightSubline =>
-      'The next gathering is already taking shape. Reserve your place early.';
+      'The Blood Goat year is approaching. Seats are limited — secure yours before the cycle begins.';
 
   @override
   String get eventsGoat2027Title =>
@@ -1152,14 +1324,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventsGoat2027Hook =>
-      'Step into the Blood Goat year with clarity, strategy, and heaven-aligned timing.';
+      'Enter the Blood Goat year with a clear foundation — not guesswork.';
 
   @override
   String get eventsGoat2027Description =>
-      'Master Elf\'s signature annual event returns—live teachings, Period 9 strategy, and the roadmap for thriving in the Year of the Blood Goat.';
+      'Master Elf\'s annual revelation returns live in Phnom Penh. One day to read the cycle ahead: Period 9 strategy, personal timing, and the priorities that matter before the year begins.';
 
   @override
-  String get eventsGoat2027DescriptionHighlight => 'Year of the Blood Goat';
+  String get eventsGoat2027DescriptionHighlight => 'before the year begins';
 
   @override
   String get eventsGoat2027Date => 'February 2027 · Phnom Penh';
@@ -1168,7 +1340,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventsGoat2027Location => 'Phnom Penh';
 
   @override
-  String get eventsZodiacStripLabel => 'Blood Goat Year begins February 2027';
+  String get eventsZodiacStripLabel =>
+      'Phoenix closes · Blood Goat opens — February 2027';
 
   @override
   String get eventsZodiacStripPhoenix => 'Phoenix 2026';
@@ -1178,11 +1351,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventsPhoenixRecapHook =>
-      'The revelation that launched a new era—witnessed live in Phnom Penh.';
+      'The room was full. The cycle shifted. This is what happened.';
 
   @override
   String get eventsPhoenixRecapBody =>
-      'Hundreds gathered for Master Elf\'s most anticipated revelation. The Rise of Phoenix marked a turning point—renewal, transformation, and the framework for rising in Period 9.';
+      'Hundreds gathered in Phnom Penh for Master Elf\'s defining revelation of 2026. The Rise of the Phoenix was not a lecture — it was a turning point that gave our community a framework for renewal and rising in Period 9.';
 
   @override
   String get eventsPhoenixRecapHighlight => 'turning point';
@@ -1201,40 +1374,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get event1Hook =>
-      'The moment insight became action—Master Elf\'s defining revelation of 2026.';
+      'Witnessed live — the revelation that set the tone for everything that followed.';
 
   @override
   String get event2Subtitle => 'Singapore edition — now available online';
 
   @override
   String get event2Hook =>
-      'Feng Shui and astrology mastery, captured for replay at your pace.';
+      'Couldn\'t attend in Singapore? The full framework is yours to revisit — on your schedule.';
 
   @override
   String get event3Subtitle => 'Fire Horse year strategy — online archive';
 
   @override
   String get event3Hook =>
-      'The art of war in the Year of the Fire Horse—strategy you can revisit anytime.';
+      'Fire Horse strategy, captured for replay — decisive moves you can study again and again.';
 
   @override
-  String get eventsWhyAttendTitle => 'Why Master Elf events matter';
+  String get eventsWhyAttendTitle => 'Why show up in person';
 
   @override
   String get eventsWhyAttendLead =>
-      'Whether you joined us in Phnom Penh or online, or you\'re preparing for the Blood Goat year ahead—these gatherings turn classical wisdom into decisions you can act on.';
+      'Books and apps prepare you. Events change how you see the year — live, in the room, with Master Elf reading the cycle as it turns.';
 
   @override
   String get eventsWhyAttend1 =>
-      'Learn directly from Master Elf—live revelations and depth you won\'t find in books alone.';
+      'Depth you cannot get from replay alone — live revelation, real questions, real clarity.';
 
   @override
   String get eventsWhyAttend2 =>
-      'Join a community of practitioners ready to rise with each zodiac cycle.';
+      'A community that moves with each zodiac cycle — practitioners who act, not just observe.';
 
   @override
   String get eventsWhyAttend3 =>
-      'Upcoming seats are limited. Register early for the Blood Goat 2027 gathering.';
+      'Blood Goat 2027 seats are limited. Register now — or revisit the archives above while you decide.';
+
+  @override
+  String get eventsConsultationLink =>
+      'Prefer a private session? Book a consultation';
+
+  @override
+  String get eventsClosingHeading => 'Can\'t make the room?';
+
+  @override
+  String get eventsClosingBody =>
+      'A face-to-face consultation brings the same clarity — tailored to your situation.';
 
   @override
   String get secureYourSeat => 'Book your seat';
@@ -1243,7 +1427,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchEvent => 'Search event…';
 
   @override
-  String get registerForEvent => 'Register';
+  String get registerForEvent => 'Reserve your seat';
 
   @override
   String get eventColumn => 'Event';
@@ -1283,7 +1467,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get locationColumn => 'Location';
 
   @override
-  String get aboutPageTitle => 'Master Elf | The Rise of Phoenix';
+  String get aboutPageTitle => 'Master Elf | The Rise of the Phoenix';
 
   @override
   String get aboutBreadcrumb => 'About Master Elf.';
@@ -1310,6 +1494,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get journeyHeroSubline =>
       'From a calling to clarity—Feng Shui and Chinese Metaphysics in practice.';
+
+  @override
+  String get journeyHeroBody =>
+      'From a calling to a system that brings clarity and results.';
+
+  @override
+  String get journeyHeroMethodCta => 'Explore the method';
 
   @override
   String get journeySectionTheStory => 'The Story';
@@ -1349,6 +1540,26 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get journeyPhoenixBody =>
       'The Rise of the Phoenix is Master Elf\'s revelation and the name of his system. It symbolises renewal, transformation and the moment when insight leads to action. In Period 9, the phoenix rises—and with the right knowledge, so can you. His framework integrates BaZi, Qimen Dunjia, I Ching, Date Selection, Feng Shui and Mao Shan into one coherent approach for those ready to rise.';
+
+  @override
+  String get journeyMethodBridgeTitle => 'The Method';
+
+  @override
+  String get journeyMethodBridgeBody =>
+      'Six disciplines, one integrated system — each consultation builds on the same classical framework Master Elf has refined over decades.';
+
+  @override
+  String get journeyMethodBridgeCta => 'Explore The Method';
+
+  @override
+  String get journeyViewAllSixConsultations => 'View all six consultations';
+
+  @override
+  String get journeyClosingHeading => 'Ready to begin?';
+
+  @override
+  String get journeyClosingBody =>
+      'Every path starts with a face-to-face consultation. Tell us your goal and we\'ll guide you to the right starting point.';
 
   @override
   String get methodPageHeadline => 'Our Method';
@@ -1728,10 +1939,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sampleFeature => 'Sample feature';
 
   @override
-  String get event1Title => 'Master Elf - The Rise of Phoenix 2026';
+  String get event1Title => 'Master Elf — The Rise of the Phoenix 2026';
 
   @override
-  String get event1Description => 'The Master Revelation.';
+  String get event1Description =>
+      'The Master Revelation — live in Phnom Penh, February 2026.';
 
   @override
   String get event1Location => 'Phnom Penh';
@@ -1741,7 +1953,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get event2Description =>
-      'The Singapore Edition of Feng Shui & Astrology 2026—now available as an online replay.';
+      'The Singapore edition — Feng Shui and astrology for 2026, now available as a full online replay.';
 
   @override
   String get event2Location => 'Resorts World Sentosa, Singapore';
@@ -1751,7 +1963,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get event3Description =>
-      'The Art of War in the Year of the Fire Horse—completed online event, available for replay.';
+      'QiMen strategy for the Fire Horse year — completed online, available for replay anytime.';
 
   @override
   String get event3Location => 'Resorts World Singapore';
@@ -3404,7 +3616,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fieldWorkJourneyTeaser =>
-      'Beyond the classroom—see how we work in the field.';
+      'See the method in practice — real site visits, rituals, and readings in the field.';
 
   @override
   String get fieldWorkJourneyCta => 'Explore field work';
@@ -3513,6 +3725,23 @@ class AppLocalizationsEn extends AppLocalizations {
       'Six moments from the field—consultations, rituals, and site visits as they happen.';
 
   @override
+  String get fieldWorkMethodBridgeTitle => 'The Method';
+
+  @override
+  String get fieldWorkMethodBridgeBody =>
+      'These sessions are one pillar of a six-part system. See how they connect on The Method.';
+
+  @override
+  String get fieldWorkMethodBridgeCta => 'Explore The Method';
+
+  @override
+  String get fieldWorkClosingHeading => 'Ready for your own session?';
+
+  @override
+  String get fieldWorkClosingBody =>
+      'What you see here is how consultations unfold in practice. Book a face-to-face session and we\'ll tailor the same depth to your situation.';
+
+  @override
   String get fieldWorkStoriesHeading => 'Our core activities';
 
   @override
@@ -3569,6 +3798,19 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get fieldWorkVideoSpotlight6Subtitle =>
       'Choosing auspicious timing for openings, signings, and milestones.';
+
+  @override
+  String get bookStoreShelfPanoramaSemanticLabel =>
+      'Five Blessings book series shelf display';
+
+  @override
+  String get eventsVenueChipmong => 'Chipmong';
+
+  @override
+  String get eventsVenueLegendCinema => 'Legend Cinema';
+
+  @override
+  String get fieldWorkVideoTapToRetry => 'Tap to retry video';
 
   @override
   String get inspectionXuanKongPeriod => 'Xuan Kong Period';

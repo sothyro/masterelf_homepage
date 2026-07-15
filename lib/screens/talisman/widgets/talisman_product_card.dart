@@ -4,6 +4,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/mobile_web_performance.dart';
 
 class TalismanProductCard extends StatefulWidget {
   const TalismanProductCard({
@@ -15,6 +16,7 @@ class TalismanProductCard extends StatefulWidget {
     required this.price,
     required this.pricePrefix,
     this.compactButton = false,
+    this.coverAsset,
   });
 
   final AppLocalizations l10n;
@@ -24,6 +26,7 @@ class TalismanProductCard extends StatefulWidget {
   final String price;
   final String pricePrefix;
   final bool compactButton;
+  final String? coverAsset;
 
   @override
   State<TalismanProductCard> createState() => _TalismanProductCardState();
@@ -57,19 +60,30 @@ class _TalismanProductCardState extends State<TalismanProductCard> {
           children: [
             AspectRatio(
               aspectRatio: isNarrow ? 1.35 : 1.2,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.accent.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: Icon(
-                    LucideIcons.sparkles,
-                    size: 40,
-                    color: AppColors.accent.withValues(alpha: 0.6),
-                  ),
-                ),
-              ),
+              child: widget.coverAsset != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.asset(
+                        widget.coverAsset!,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                        cacheWidth: MobileWebPerformance.cardImageCacheWidth(
+                          context,
+                          isNarrow ? MediaQuery.sizeOf(context).width - 48 : 340,
+                        ),
+                        filterQuality:
+                            MobileWebPerformance.imageFilterQuality(context),
+                        errorBuilder: (_, __, ___) => _placeholderIcon(),
+                      ),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.accent.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: _placeholderIcon(),
+                    ),
             ),
             SizedBox(height: isNarrow ? 10 : 12),
             Text(
@@ -175,6 +189,16 @@ class _TalismanProductCardState extends State<TalismanProductCard> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _placeholderIcon() {
+    return Center(
+      child: Icon(
+        LucideIcons.sparkles,
+        size: 40,
+        color: AppColors.accent.withValues(alpha: 0.6),
       ),
     );
   }

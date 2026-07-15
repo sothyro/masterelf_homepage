@@ -314,7 +314,7 @@ class FieldWorkChineseSectionHeader extends StatelessWidget {
         Text(title, textAlign: TextAlign.center, style: titleStyle),
         if (headline != null || subline != null) ...[
           SizedBox(height: isMobile ? 14 : 18),
-          _CenterJewelLine(width: isMobile ? 120 : 180),
+          ChineseJewelLine(width: isMobile ? 120 : 180),
           SizedBox(height: isMobile ? 16 : 20),
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : 720),
@@ -385,8 +385,9 @@ class _OrnamentalRule extends StatelessWidget {
   }
 }
 
-class _CenterJewelLine extends StatelessWidget {
-  const _CenterJewelLine({required this.width});
+/// Diamond-centred gold rule used under section titles.
+class ChineseJewelLine extends StatelessWidget {
+  const ChineseJewelLine({super.key, required this.width});
 
   final double width;
 
@@ -472,6 +473,66 @@ class FieldWorkVideoEmblem extends StatelessWidget {
         color: AppColors.onAccent,
       ),
     );
+  }
+}
+
+/// Square seal for The Method page hero — 道 (the Way).
+class MethodWaySeal extends StatelessWidget {
+  const MethodWaySeal({super.key, required this.size});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return _ChineseCharacterSeal(size: size, character: '道');
+  }
+}
+
+/// Square seal for Events page hero — 会 (gathering / assembly).
+class EventsGatheringSeal extends StatelessWidget {
+  const EventsGatheringSeal({super.key, required this.size});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return _ChineseCharacterSeal(size: size, character: '会');
+  }
+}
+
+/// Square seal for upcoming events section — 期 (upcoming period).
+class EventsUpcomingSeal extends StatelessWidget {
+  const EventsUpcomingSeal({super.key, required this.size});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return _ChineseCharacterSeal(size: size, character: '期');
+  }
+}
+
+/// Square seal for completed events section — 典 (classic / archive).
+class EventsArchiveSeal extends StatelessWidget {
+  const EventsArchiveSeal({super.key, required this.size});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return _ChineseCharacterSeal(size: size, character: '典');
+  }
+}
+
+/// Square seal for Academy page hero — 学 (learning / academy).
+class AcademyLearningSeal extends StatelessWidget {
+  const AcademyLearningSeal({super.key, required this.size});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return _ChineseCharacterSeal(size: size, character: '学');
   }
 }
 

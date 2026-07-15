@@ -34,6 +34,7 @@ class TalismanGrid extends StatelessWidget {
               price: item.price,
               pricePrefix: prefix,
               compactButton: crossAxisCount >= 2,
+              coverAsset: item.coverAsset,
             ),
         ];
 

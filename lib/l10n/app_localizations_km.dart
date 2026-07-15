@@ -36,7 +36,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get masterElfSystem => 'ប្រព័ន្ធកម្មវិធី Master Elf';
 
   @override
-  String get appsHeroBrandSubtitle => 'ប្រព័ន្ធ Master Elf Chinese Metaphysic';
+  String get appsHeroBrandSubtitle => 'ប្រព័ន្ធ Master Elf Chinese Metaphysics';
 
   @override
   String get appsIntroTagline =>
@@ -112,7 +112,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get appsGroupBaziBenefit =>
-      'ដោះស្រាយរចនាប័ទ្មជីវិត វដ្តសំណាង និងពេលវេលាផ្ទាល់ខ្លួន។';
+      'ដោះស្រាយរចនាបទជីវិត វដ្តសំណាង និងពេលវេលាផ្ទាល់ខ្លួន។';
 
   @override
   String get appsGroupQiMen => 'ឈីមិនទុនជា';
@@ -147,7 +147,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get appsGroupFengShuiToolsBenefit =>
-      'ត្រីមាស ទិស និងការកែយុគ ៩ នៅក្នុងដៃអ្នក។';
+      'ខ្យុង ទិស និងការកែយុគ ៩ នៅក្នុងដៃអ្នក។';
 
   @override
   String get appsGroupIChing => 'អ៊ីឈីង';
@@ -204,11 +204,11 @@ class AppLocalizationsKm extends AppLocalizations {
   String get getItOnGooglePlay => 'ដោនឡូតពី Google Play';
 
   @override
-  String get talismanStoreSpotlightTitle => 'ហាងស្ដេចយ័ន្ដ';
+  String get talismanStoreSpotlightTitle => 'ហាងស្តេចយ័ន្ត';
 
   @override
   String get talismanStoreSpotlightDesc =>
-      'ស្តេចយ័ន្ត និងថ្នាំបន្ថយដែលជ្រើសរើស។ បន្ថែមទៅកន្ត្រក ហើយយើងនឹងទាក់ទងអ្នកដើម្បីបញ្ចប់ការបញ្ជាទិញ។';
+      'ស្តេចយ័ន្ត និងវត្ថុសិរីដែលជ្រើសរើស។ បន្ថែមទៅកន្ត្រក ហើយយើងនឹងទាក់ទងអ្នកដើម្បីបញ្ចប់ការបញ្ជាទិញ។';
 
   @override
   String get marketplaceAddedToCart =>
@@ -242,7 +242,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get talismanProduct8Title => 'ពរផ្ទះ';
 
   @override
-  String get talismanProduct9Title => 'យ័ន្តគតិបណ្ឌិត';
+  String get talismanProduct9Title => 'យ័ន្តបញ្ញា';
 
   @override
   String get masterElfSystemSpotlightTagline =>
@@ -252,10 +252,10 @@ class AppLocalizationsKm extends AppLocalizations {
   String get masterElfSystemSpotlightTaglineHighlight => 'ភាពច្បាស់លាស់';
 
   @override
-  String get period9SpotlightTagline => 'ហុងស៊ុយនៅក្នុងដៃអ្នក។';
+  String get period9SpotlightTagline => 'ហុងស៊ុយនៅក្នុងហោប៉ៅអ្នក។';
 
   @override
-  String get period9SpotlightTaglineHighlight => 'ដៃ';
+  String get period9SpotlightTaglineHighlight => 'ហោប៉ៅ';
 
   @override
   String get talismanStoreSpotlightTagline =>
@@ -263,6 +263,9 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get talismanStoreSpotlightTaglineHighlight => 'យកទៅជាមួយ';
+
+  @override
+  String get talismanStoreHeroBrowseCta => 'រុករកបណ្តុំ';
 
   @override
   String get talismanStoreIntroHeading => 'យ័ន្តបរិសុទ្ធ ជ្រើសរើសដោយការលះបង់';
@@ -275,11 +278,11 @@ class AppLocalizationsKm extends AppLocalizations {
   String get talismanStoreIntroHighlight => 'ការពារ ទាក់ទាញ និងស្តារតុល្យភាព';
 
   @override
-  String get talismanStoreCollectionHeading => 'យ័ន្តបរិសុទ្ធប្រាំបួន';
+  String get talismanStoreCollectionHeading => 'អថ័នបរិសុទ្ធទាំង៩';
 
   @override
   String get talismanStoreCollectionIntro =>
-      'បំណងប្រាំបួន ការហៅមួយ—ដើរក្រោមពរស្តេចពីមេឃ នៅពេលអ្នកត្រូវការសញ្ញាជាងគេ។';
+      'បំណងទាំង៩ ការហៅមួយ—ដើរក្រោមពរស្តេចពីមេឃ នៅពេលអ្នកត្រូវការសញ្ញាជាងគេ។';
 
   @override
   String get talismanStoreCollectionIntroHighlight => 'ពរស្តេចពីមេឃ';
@@ -289,7 +292,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get talismanStoreTrustBody =>
-      'ថ្នាំបន្ថយជ្រើសរើសដោយដៃ។ ពរបុរាណ។ រៀបចំដោយវិញ្ញាណ—មិនមែនគองលេងធ្វើចំនួនច្រើន។';
+      'វត្ថុសិរីជ្រើសរើសដោយដៃ។ ពរបុរាណ។ រៀបចំដោយវិញ្ញាណ—មិនមែនគองលេងធ្វើចំនួនច្រើន។';
 
   @override
   String get talismanStoreClosingHeading =>
@@ -359,7 +362,7 @@ class AppLocalizationsKm extends AppLocalizations {
       'បិទផ្ទះដោយសន្តិភាព—ឲ្យគ្រប់បន្ទប់ស្វាគមន៍ពរល្អ។';
 
   @override
-  String get talismanProduct9Subtitle => 'យ័ន្តបញ្ញាសម្រាប់ឆ្លងកាត់';
+  String get talismanProduct9Subtitle => 'យ័ន្តបញ្ញាសម្រាប់ឆ្នាន់ផ្លូវជីវិត';
 
   @override
   String get talismanProduct9Hook =>
@@ -376,8 +379,11 @@ class AppLocalizationsKm extends AppLocalizations {
   String get bookStoreSectionTaglineHighlight => 'ប្រើបានថ្ងៃនេះ';
 
   @override
+  String get bookStoreHeroBrowseCta => 'រុករកបណ្ណាល័យ';
+
+  @override
   String get bookStoreSectionMarketing =>
-      'ស្វែងយល់ជ្រៅទៅក្នុងហុងស៊ុយ (Feng Shui) យុគទី ៩ (Period 9) និងរូបវិទ្យាចិនបុរាណ ជាមួយសៀវភៅដែលយើងជ្រើសរើស។ ល្អសម្រាប់អ្នកអនុវត្ត និងអ្នកចូលចិត្ត—ជាវឥឡូវ ហើយផ្លាស់ប្តូរការយល់ឃើញរបស់អ្នក។';
+      'បណ្ណាល័យជ្រើសរើសរបស់ Master Elf—សរសេរសម្រាប់ផ្ទះ អាជីវកម្ម និងការសម្រេចចិត្តក្នុងជីវិត។ ជ្រើសរើសសៀវភៅមួយក្បាល ឬបង្កើតមូលដ្ឋានពេញលេញរបស់អ្នក។';
 
   @override
   String get bookStoreSectionMarketingHighlight => 'មូលដ្ឋានពេញលេញ';
@@ -510,7 +516,8 @@ class AppLocalizationsKm extends AppLocalizations {
   String get bookStoreBook5Price => '24.99';
 
   @override
-  String get bookStoreBlessingBundleTitle => 'បណ្តុំស៊េរី ៥-ពរជ័យ ពេញលេញ';
+  String get bookStoreBlessingBundleTitle =>
+      'បណ្តុំស៊េរីពរជ័យប្រាំប្រការ ពេញលេញ';
 
   @override
   String get bookStoreBlessingBundleSubtitle =>
@@ -549,15 +556,15 @@ class AppLocalizationsKm extends AppLocalizations {
   String get bookStorePeriod9Book2Price => '24.99';
 
   @override
-  String get bookStoreBlessingSeriesHeading => 'ស៊េរីសៀវភៅ ៥-ពរជ័យ';
+  String get bookStoreBlessingSeriesHeading => 'ស៊េរីសៀវភៅពរជ័យប្រាំប្រការ';
 
   @override
   String get bookStoreShelfPanoramaTopHeading =>
-      'ណែនាំស៊េរីព្រះវិហារប្រាំព្រះអង្គ';
+      'ណែនាំស៊េរីសៀវភៅពរជ័យប្រាំប្រការ';
 
   @override
   String get bookStoreShelfPanoramaTopBody =>
-      'បណ្ណាល័យដ៏មហាធន់ពី Master Hong Chhay Heng—សៀវភៅប្រាំកម្មវិធីដែលប្តូររូបវិទ្យាចិនបុរាណទៅជាការសម្រេចចិត្តប្រចាំថ្ងៃដែលអ្នកទុកចិត្តបាន។';
+      'បណ្ណាល័យដ៏មហាធន់ពី Master Hong Chhay Heng—សៀវភៅប្រាំក្បាលដែលប្តូររូបវិទ្យាចិនបុរាណទៅជាការសម្រេចចិត្តប្រចាំថ្ងៃដែលអ្នកទុកចិត្តបាន។';
 
   @override
   String get bookStoreShelfPanoramaTopHighlight =>
@@ -580,7 +587,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get bookStorePeriod9BridgeBody =>
-      'ស៊េរីព្រះវិហារប្រាំព្រះអង្គកសាងមូលដ្ឋានរបស់អ្នក—សៀវភៅពីរក្បាលនេះគូសផែនទីយុគភ្លើង ២០២៤–២០៤៣ ជាមួយវិធីសាស្ត្រផ្កាយហោះដែលអ្នកអាចអនុវត្តបានភ្លាមៗ។';
+      'ស៊េរីសៀវភៅពរជ័យប្រាំប្រការកសាងមូលដ្ឋានរបស់អ្នក—សៀវភៅពីរក្បាលនេះគូសផែនទីយុគភ្លើង ២០២៤–២០៤៣ ជាមួយវិធីសាស្ត្រផ្កាយហោះដែលអ្នកអាចអនុវត្តបានភ្លាមៗ។';
 
   @override
   String get bookStorePeriod9BridgeHighlight => 'យុគភ្លើង ២០២៤–២០៤៣';
@@ -606,7 +613,7 @@ class AppLocalizationsKm extends AppLocalizations {
       'បានបន្ថែមទៅកន្ត្រកហើយ។ យើងនឹងទាក់ទងអ្នកដើម្បីបញ្ចប់ការបញ្ជាទិញ។';
 
   @override
-  String get bookStoreBestsellerBadge => 'ចំណាត់ថ្នាក់លក់ដាច់';
+  String get bookStoreBestsellerBadge => 'លក់ដាច់';
 
   @override
   String get bookStoreNav => 'ហាងសៀវភៅ';
@@ -696,7 +703,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get journey => 'ដំណើររបស់ខ្ញុំ';
 
   @override
-  String get ourMethod => 'វិធីសាស្រ្តរបស់ពួកយើង';
+  String get ourMethod => 'វិធីសាស្ត្ររបស់ពួកយើង';
 
   @override
   String get events => 'ព្រឹត្តិការណ៍';
@@ -762,7 +769,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get heroHeadline2Prefix => 'តម្លៃពិតរបស់វាគឺការចង្អុលបង្ហាញជម្រើស ';
 
   @override
-  String get heroHeadline2Highlight => 'ដ៏ល្អប្រសើរ។';
+  String get heroHeadline2Highlight => 'ជម្រើស។';
 
   @override
   String get heroSubline => 'សេវាហុងស៊ុយ (Feng Shui) និងរៀបចំជីវិត';
@@ -778,10 +785,10 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get eventsSectionSubline =>
-      'ចូលរួម Master Elf ផ្ទាល់ — វគ្គសិក្សា ការបញ្ចេញ និងវគ្គវាល។';
+      'ចូលរួម Master Elf ផ្ទាល់ — វគ្គសិក្សា ការបង្ហាញខ្លួន និងវគ្គវាល។';
 
   @override
-  String get earlyBirdEnds => 'តម្លៃបញ្ចុះតម្លៃដំណើរការដំបូង';
+  String get earlyBirdEnds => 'តម្លៃបញ្ចុះពេលមុន';
 
   @override
   String get comingUpNext => 'នឹងមកដល់ឆាប់ៗនេះ!';
@@ -813,7 +820,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get notSureBody =>
-      'យើងនៅទីនេះដើម្បីជួយ គ្រាន់តែទាក់ទងយើង យើងនឹងណែនាំអ្នកទៅជំហានបន្ទាប់ដ៏ល្អបំផុត វាជាការពិគ្រោះ វគ្គសិក្សា ឬសហគមន៍គាំទ្រ។';
+      'យើងនៅទីនេះដើម្បីជួយ។ ទាក់ទងមកយើង យើងនឹងណែនាំអ្នកទៅជំហានបន្ទាប់ដ៏ល្អបំផុត — វាអាចជាការពិគ្រោះផ្ទាល់ ការមកពិគ្រោះម្តងទៀត ឬការជជែកផ្ទាល់ជាមួយក្រុមរបស់យើង។';
 
   @override
   String get language => 'ភាសា';
@@ -860,11 +867,11 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get sectionStoryPara2 =>
-      'តាមរយៈការសិក្សា សាកល្បង និងបង្កើតវិធីសាស្រ្តបញ្ជាក់ច្បាស់ដែលមានឫសគល់ពីរូបវិទ្យាចិនជាច្រើនឆ្នាំ។';
+      'តាមរយៈការសិក្សា សាកល្បង និងបង្កើតវិធីសាស្ត្របញ្ជាក់ច្បាស់ដែលមានឫសគល់ពីរូបវិទ្យាចិនជាច្រើនឆ្នាំ។';
 
   @override
   String get sectionStoryPara3 =>
-      'ថ្ងៃនេះ វិធីសាស្រ្តនោះបានជួយមនុស្សច្រើនជាង ៥១,០០០ នាក់បង្កើតលទ្ធផលល្អប្រសើរសម្រាប់ខ្លួន និងអ្នកដទៃ។';
+      'ថ្ងៃនេះ វិធីសាស្ត្រនោះបានជួយមនុស្សច្រើនជាង ៥១,០០០ នាក់បង្កើតលទ្ធផលល្អប្រសើរសម្រាប់ខ្លួន និងអ្នកដទៃ។';
 
   @override
   String get sectionStoryCtaButton => 'ការខិតខំរបស់ Master Elf';
@@ -874,7 +881,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get sectionTestimonialsSub1 =>
-      'ពួកគេមិនគ្រាន់តែចូលរួមព្រឹត្តិការណ៍ទេ! ពួកគេបានឃើញយុទ្ធសាស្រ្តពិត។';
+      'ពួកគេមិនគ្រាន់តែចូលរួមព្រឹត្តិការណ៍ទេ! ពួកគេបានឃើញយុទ្ធសាស្ត្រពិត។';
 
   @override
   String get sectionTestimonialsSub2 => 'ពីអ្នកដឹកនាំអាជីវកម្មដល់បុគ្គល។';
@@ -907,11 +914,169 @@ class AppLocalizationsKm extends AppLocalizations {
       'ម៉ាស្ទ័រនៃលំហូរឈី (Qi)។ កំណត់ហុងស៊ុយល្អបំផុតសម្រាប់ផ្ទះ និងការិយាល័យរបស់អ្នក។';
 
   @override
-  String get academyPageTitle => 'សាលាបណ្ដុះបណ្ដាល';
+  String get academyPageTitle => 'វិធីសាស្ត្រ';
+
+  @override
+  String get methodPageTitle => 'វិធីសាស្ត្រ';
+
+  @override
+  String get methodHeroHeadline => 'យល់គោលដើម មុនពេលធ្វើជំហាន។';
+
+  @override
+  String get methodHeroSubline =>
+      'ការពិគ្រោះផ្ទាល់ជាមួយ Master Hong Chhay Heng — ប្រព័ន្ធតែមួយសម្រាប់ជីវិត និងយុទ្ធសាស្ត្រអាជីវកម្ម។';
+
+  @override
+  String get methodHeroPrimaryCta => 'កក់ការពិគ្រោះផ្ទាល់';
+
+  @override
+  String get methodHeroSecondaryCta => 'មើលប្រភេទការពិគ្រោះ';
+
+  @override
+  String get methodWhyConsultTitle => 'ហេតុអ្វីបានជាការពិគ្រោះមុន';
+
+  @override
+  String get methodWhyConsultBody =>
+      'កម្មវិធី សៀវភៅ និងព្រឹត្តិការណ៍គាំទ្រការងារ — ប៉ុន្តែភាពច្បាស់ចាប់ផ្តើមពីការជួបផ្ទាល់។ ក្នុងវគ្គមួយ ក្រាបកំណើត លំហ និងពេលវេលាត្រូវបានអានរួមគ្នា ដើម្បីឱ្យអ្នកចាកចេញជាមួយគោលដ្ឋានអាចអនុវត្តបាន។';
+
+  @override
+  String get methodSystemTitle => 'ប្រព័ន្ធតែមួយរួមបញ្ចូលគ្នា';
+
+  @override
+  String get methodSystemBody =>
+      'វិធីសាស្ត្ររបស់ Master Hong Chhay Heng រួមបញ្ចូលបាទហឺ ហុងស៊ុយ ឈីមិនទុនជា អ៊ីជីង ការជ្រើសរើសថ្ងៃ និងម៉ាវសានជាប្រព័ន្ធតែមួយ។ វិជ្ជាមួយៗមានរូបមន្ត និងស្តង់ដារច្បាស់ — អនុវត្តដូចគ្នាក្នុងរាល់ការពិគ្រោះ។';
+
+  @override
+  String get methodPillarsTitle => 'សសរពិគ្រោះចំនួន ៦';
+
+  @override
+  String get methodPillarsSubline =>
+      'សសរមួយៗគ្របដណ្តប់ផ្នែកផ្សេងនៃជីវិត និងអាជីវកម្មរបស់អ្នក។ កក់ការពិគ្រោះដែលសមនឹងស្ថានភាពរបស់អ្នក — ឬចាប់ផ្តើមពីវគ្គទូទៅ។';
+
+  @override
+  String get methodPillarCta => 'កក់ការពិគ្រោះនេះ';
+
+  @override
+  String get methodPillarBaziTitle => 'ការអានបាទហឺ';
+
+  @override
+  String get methodPillarBaziHook =>
+      'អ្នកជាអ្នកណា វដ្តជីវិត និងពេលវេលាដែលរៀបចំការសម្រេចចិត្តរបស់អ្នក។';
+
+  @override
+  String get methodPillarBaziTopics =>
+      'សសរទាំងបួន • សក្តានុពលជីវិត • វដ្តអាជីវកម្ម និងទំនាក់ទំនង';
+
+  @override
+  String get methodPillarFengShuiTitle => 'ហុងស៊ុយ';
+
+  @override
+  String get methodPillarFengShuiHook =>
+      'បរិស្ថានផ្ទះ និងការិយាល័យជួយ ឬរារាំងគោលដៅរបស់អ្នក។';
+
+  @override
+  String get methodPillarFengShuiTopics =>
+      'លំហូរឈី • ទ្រង់ទ្រាយ និងទិស • ការតម្រឹមលំហ';
+
+  @override
+  String get methodPillarQimenTitle => 'ឈីមិនទុនជា';
+
+  @override
+  String get methodPillarQimenHook =>
+      'ជំហានយុទ្ធសាស្ត្រសម្រាប់អាជីវកម្ម ការប្រកួតប្រជែង និងការសម្រេចចិត្តសំខាន់។';
+
+  @override
+  String get methodPillarQimenTopics =>
+      'វាលទាំង៩ • ពេលវេលាយុទ្ធសាស្ត្រ • អត្ថប្រយោជន៍ស្ថានការ';
+
+  @override
+  String get methodPillarDateSelectionTitle => 'ការជ្រើសរើសថ្ងៃ';
+
+  @override
+  String get methodPillarDateSelectionHook =>
+      'ពេលណាដែលត្រូវធ្វើ — បើកដំណើរ អាពាហ៍ពិពាហ៍ ចុះហត្ថលេខា និងព្រឹត្តិការណ៍សំខាន់។';
+
+  @override
+  String get methodPillarDateSelectionTopics =>
+      'តុងស៊ូ • ម៉ោងហេង • ព្រឹត្តិការណ៍ និងហេតុសំខាន់';
+
+  @override
+  String get methodPillarIchingTitle => 'អ៊ីជីង';
+
+  @override
+  String get methodPillarIchingHook =>
+      'ភាពច្បាស់នៅឆ្នាន់ផ្លូវ — អានការផ្លាស់ប្តូរ និងជ្រើសរើសជំហានបន្ទាប់។';
+
+  @override
+  String get methodPillarIchingTopics =>
+      'តម្រា ៦៤ • ទស្សន៍ទាយ • ការផ្លាស់ប្តូរ និងយុទ្ធសាស្ត្រ';
+
+  @override
+  String get methodPillarMaoshanTitle => 'ម៉ាវសាន';
+
+  @override
+  String get methodPillarMaoshanHook =>
+      'ការគាំទ្រពិធីនៅពេលប្តូរជីវិត និងពេលបត់បែនខាងវិញ្ញាណ។';
+
+  @override
+  String get methodPillarMaoshanTopics => 'ពិធី • ប្រពៃណី • ការផ្លាស់ប្តូរ';
+
+  @override
+  String get methodSessionTitle => 'អ្វីដែលកើតឡើងក្នុងវគ្គ';
+
+  @override
+  String get methodSessionStep1Title => 'ស្តាប់';
+
+  @override
+  String get methodSessionStep1Body =>
+      'យើងចាប់ផ្តើមពីស្ថានភាពរបស់អ្នក — ជីវិត អាជីវកម្ម ឬទាំងពីរ — និងអ្វីដែលអ្នកចង់ផ្លាស់ប្តូរ។';
+
+  @override
+  String get methodSessionStep2Title => 'អាន';
+
+  @override
+  String get methodSessionStep2Body =>
+      'ក្រាប លំហ ឬពេលវេលាត្រូវបានវាយតម្លៃតាមវិជ្ជាដែលសមនឹងករណីរបស់អ្នក។';
+
+  @override
+  String get methodSessionStep3Title => 'រៀបយុទ្ធសាស្ត្រ';
+
+  @override
+  String get methodSessionStep3Body =>
+      'អ្នកទទួលបានអាទិភាព គោលការណ៍ និងជំហានបន្ទាប់ច្បាស់ — មិនមែនការទស្សន៍ទាយរួម។';
+
+  @override
+  String get methodSessionStep4Title => 'តាមដាន';
+
+  @override
+  String get methodSessionStep4Body =>
+      'កម្មវិធី សៀវភៅ ព្រឹត្តិការណ៍ ឬការមកពិគ្រោះម្តងទៀត គាំទ្រអ្វីដែលអ្នកសម្រេចចិត្ត — តាមល្បឿនរបស់អ្នក។';
+
+  @override
+  String get methodSocialProofTitle => 'ទុកចិត្តដោយអ្នកតាមដានរាប់ម៉ឺន';
+
+  @override
+  String get methodClosingCta => 'កក់ការពិគ្រោះផ្ទាល់';
+
+  @override
+  String get methodNotSureBody =>
+      'មិនដឹងថាការពិគ្រោះណាសមទេ? ទាក់ទងយើង យើងនឹងជួយអ្នកជ្រើសចំណុចចាប់ផ្តើមដ៏ល្អបំផុតជាមួយ Master Hong Chhay Heng។';
+
+  @override
+  String get methodJourneyIntro =>
+      'ចាប់ផ្តើមពីការពិគ្រោះបីប្រភេទនេះ — ឬស្វែងរកទាំងប្រាំមួយនៅលើ «វិធីសាស្ត្រ»។';
+
+  @override
+  String get academyHeroHeadline =>
+      'គោលការណ៍ជាក់ស្តែងសម្រាប់ការផ្លាស់ប្តូរពិតប្រាកដ។';
+
+  @override
+  String get academyHeroSubline =>
+      'វិជ្ជា ៦ ដែលរស់នៅ — ពីបាទហឺរដល់ហុងស៊ុយ — បង្រៀនជាប្រព័ន្ធតែមួយសម្រាប់ជីវិត និងអាជីវកម្ម។';
 
   @override
   String get academyQiMenAbout =>
-      'ប្រព័ន្ធយុទ្ធសាស្រ្តបុរាណចិនផ្អែកលើពេលវេលា និងទីកន្លែង។ ប្រើសម្រាប់ការសម្រេចចិត្ត ការជ្រើសរើសកាលពេលាមង្គល និងទាញប្រយោជន៍ពីស្ថានការ។';
+      'ប្រព័ន្ធយុទ្ធសាស្ត្របុរាណចិនផ្អែកលើពេលវេលា និងទីកន្លែង។ ប្រើសម្រាប់ការសម្រេចចិត្ត ការជ្រើសរើសកាលពេលាមង្គល និងទាញប្រយោជន៍ពីស្ថានការ។';
 
   @override
   String get academyBaZiAbout =>
@@ -923,7 +1088,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get academyQiMenTopics =>
-      'យុទ្ធសាស្រ្ដឈីមិនទ្វារវាសនាទាំង៩ • ពេលវេលាយុទ្ធសាស្រ្ត • ការសម្រេចចិត្តដ៏ត្រឹមត្រូវសម្រាប់អាជីវកម្ម និងគ្រួសារ';
+      'វាលទាំង៩ • ពេលវេលាយុទ្ធសាស្ត្រ • ការសម្រេចចិត្តអាជីវកម្ម និងផ្ទាល់ខ្លួន';
 
   @override
   String get academyBaZiTopics =>
@@ -931,14 +1096,14 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get academyFengShuiTopics =>
-      'លំហូរដង្ហើមនាគ • រៀបសណ្ឋានដី • កន្លែងឈរជើងដ៏រឹងមាំ';
+      'លំហូរឈី • ទ្រង់ទ្រាយ និងទិស • ការតម្រឹមលំហ';
 
   @override
   String get academyDateSelection => 'ការជ្រើសរើសថ្ងៃ (Date Selection)™';
 
   @override
   String get academyDateSelectionDesc =>
-      'ជ្រើសរើសពេលវេលារុក្ខជាតិសម្រាប់ព្រឹត្តិការណ៍ជីវិត និងអាជីវកម្មសំខាន់។';
+      'ជ្រើសរើសពេលវេលាហេងសម្រាប់ព្រឹត្តិការណ៍ជីវិត និងអាជីវកម្មសំខាន់។';
 
   @override
   String get academyDateSelectionAbout =>
@@ -961,7 +1126,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get academyIChingTopics =>
-      'តម្រាអ៊ីជីង៦៤ • ការទស្សន៍ទាយ • ការផ្លាស់ប្តូរ និងយុទ្ធសាស្រ្ត';
+      'តម្រាអ៊ីជីង៦៤ • ការទស្សន៍ទាយ • ការផ្លាស់ប្តូរ និងយុទ្ធសាស្ត្រ';
 
   @override
   String get academyMaoShan => 'ម៉ៅសាន (Mao Shan)™';
@@ -1033,7 +1198,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get consult4Desc =>
-      'ប្រឈមមុខនឹងការសម្រេចចិត្តស្មុយស្មាញជាមួយបញ្ញាបុរាណ។ ឈីមិនទុនជា (Qi Men Dunjia) និងអ៊ីជីង (I Ching) ផ្តល់នូវការយល់ដឹងយុទ្ធសាស្ត្រ និងភាពច្បាស់—ដើម្បីឱ្យអ្នកឃើញជម្រើសច្បាស់ ព្យាករណ៍លទ្ធផល និងជ្រើសជំហានដែលសមនឹងគោលដៅរបស់អ្នក។';
+      'ប្រឈមមុខនឹងការសម្រេចចិត្តស្មុយស្មាញជាមួយបញ្ញាបុរាណ។ ឈីមិនទុនជា (Qi Men Dunjia) និងអ៊ីជីង (I Ching) ផ្តល់នូវការយល់ដឹងយុទ្ធសាស្ត្រ និងភាពច្បាស់—ដើម្បីឱ្យអ្នកឃើញជម្រើសច្បាស់ មើលលទ្ធផលជាមុន និងជ្រើសជំហានដែលសមនឹងគោលដៅរបស់អ្នក។';
 
   @override
   String get consult5Category => 'ពិធីការម៉ៅសាន (Mao Shan)';
@@ -1079,7 +1244,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get popupFormPrompt =>
-      'បញ្ចូលព័ត៌មានរបស់អ្នកនៅខាងក្រោម យើងនឹងជូនដំណឹងអ្នកយ៉ាងលឿនបំផុត។';
+      'បញ្ចូលព័ត៌មានរបស់អ្នកនៅខាងក្រោម យើងនឹងជូនដំណឹងពេលតួរាសីរបស់អ្នកចាប់ផ្ញើ។';
 
   @override
   String get submit => 'ដាក់ស្នើ';
@@ -1110,21 +1275,29 @@ class AppLocalizationsKm extends AppLocalizations {
       'ជ្រើសរើសព្រឹត្តិការណ៍របស់អ្នក និងណាត់កៅអីរបស់អ្នក។ យើងនឹងរង់ចាំជួបអ្នក។';
 
   @override
-  String get eventsPageHeroHeadline => 'កន្លែងដែលការយល់ដឹងក្លាយជាបទពិសោធន៍';
+  String get eventsPageHeroHeadline => 'ព្រឹត្តិការណ៍';
 
   @override
-  String get eventsPageHeroSubline =>
-      'ការបញ្ចេញផ្ទាល់ បណ្ណាល័យអនឡាញ និងជំហានបន្ទាប់នៃដំណើរបង្រៀនរបស់ Master Elf។';
+  String get eventsPageHeroSubline => 'ចូលរួមនៅពេលវដ្តរាសីប្តូរ។';
 
   @override
-  String get eventsPageHeroHighlight => 'ជំហានបន្ទាប់';
+  String get eventsPageHeroBody => 'ការបង្ហាញខ្លួនផ្ទាល់ជាមួយ Master Elf។';
 
   @override
-  String get eventsCompletedHeading => 'បានបញ្ចប់ថ្មីៗ';
+  String get eventsPageHeroHighlight => 'វដ្តរាសីប្តូរ';
+
+  @override
+  String get eventsPageHeroPrimaryCta => 'កក់កៅអីរបស់អ្នក';
+
+  @override
+  String get eventsPageHeroSecondaryCta => 'មើលអ្វីនឹងមកដល់';
+
+  @override
+  String get eventsCompletedHeading => 'ភស្តុតាងក្នុងបន្ទប់';
 
   @override
   String get eventsCompletedSubline =>
-      'ពេលវេលាដែលផ្លាស់ប្តូរសហគមន៍របស់យើង—ថតជាប់ផ្ទាល់ និងអនឡាញ។';
+      'រាប់រយនាក់បានជួបជុំរួចហើយ — ផ្ទាល់នៅភ្នំពេញ និងអនឡាញ។ មើលអ្វីបានផ្លាស់ប្តូរនៅពេលការយល់ដឹងក្លាយជាសកម្មភាព។';
 
   @override
   String get eventsCompletedBadge => 'បានបញ្ចប់';
@@ -1136,29 +1309,29 @@ class AppLocalizationsKm extends AppLocalizations {
   String get eventsUpcomingBadge => 'នឹងមកដល់';
 
   @override
-  String get eventsUpcomingSpotlightHeading => 'ព្រឹត្តិការណ៍ពិសេសនឹងមកដល់';
+  String get eventsUpcomingSpotlightHeading => 'អ្វីនឹងមកដល់';
 
   @override
   String get eventsUpcomingSpotlightSubline =>
-      'ការជួបជុំបន្ទាប់កំពុងរៀបចំ។ កក់កៅអីរបស់អ្នកឱ្យបានមុន។';
+      'ឆ្នាំពពែឈាមកំពុងខិតខំចូល។ កៅអីមានកំណត់ — កក់របស់អ្នកមុនវដ្តចាប់ផ្តើម។';
 
   @override
   String get eventsGoat2027Title => 'Master Elf — ខិតខំសម្រាប់ឆ្នាំពពែឈាម ២០២៧';
 
   @override
   String get eventsGoat2027Subtitle =>
-      'ការបញ្ចេញប្រចាំឆ្នាំសម្រាប់វដ្តរាសីថ្មី';
+      'ការបង្ហាញខ្លួនប្រចាំឆ្នាំសម្រាប់វដ្តរាសីថ្មី';
 
   @override
   String get eventsGoat2027Hook =>
-      'ចូលឆ្នាំពពែឈាមដោយច្បាស់លាស់ យុទ្ធសាស្ត្រ និងពេលវេលាសមស្របពីមេឃ។';
+      'ចូលឆ្នាំពពែឈាមដោយមូលដ្ឋានច្បាស់ — មិនមែនការទាយ។';
 
   @override
   String get eventsGoat2027Description =>
-      'ព្រឹត្តិការណ៍ប្រចាំឆ្នាំរបស់ Master Elf ត្រឡប់មកវិញ—ការបង្រៀនផ្ទាល់ យុគទី ៩ និងផែនទីសម្រាប់រីកចម្រើនក្នុងឆ្នាំពពែឈាម។';
+      'ការបង្ហាញខ្លួនប្រចាំឆ្នាំរបស់ Master Elf ត្រឡប់មកវិញផ្ទាល់នៅភ្នំពេញ។ មួយថ្ងៃដើម្បីអានវដ្តខាងមុខ៖ យុគទី ៩ យុទ្ធសាស្ត្រ ពេលវេលាផ្ទាល់ និងអាទិភាពសំខាន់មុនឆ្នាំចាប់ផ្តើម។';
 
   @override
-  String get eventsGoat2027DescriptionHighlight => 'ឆ្នាំពពែឈាម';
+  String get eventsGoat2027DescriptionHighlight => 'មុនឆ្នាំចាប់ផ្តើម';
 
   @override
   String get eventsGoat2027Date => 'ខែកុម្ភៈ ២០២៧ · ភ្នំពេញ';
@@ -1167,7 +1340,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get eventsGoat2027Location => 'ភ្នំពេញ';
 
   @override
-  String get eventsZodiacStripLabel => 'ឆ្នាំពពែឈាមចាប់ផ្តើមខែកុម្ភៈ ២០២៧';
+  String get eventsZodiacStripLabel => 'មយូរ៉ាបិទ · ពពែឈាមបើក — ខែកុម្ភៈ ២០២៧';
 
   @override
   String get eventsZodiacStripPhoenix => 'មយូរ៉ា ២០២៦';
@@ -1177,11 +1350,11 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get eventsPhoenixRecapHook =>
-      'ការបញ្ចេញដែលបើកយុគថ្មី—ជួបជុំផ្ទាល់នៅភ្នំពេញ។';
+      'បន្ទប់ពេញ។ វដ្តប្តូរ។ នេះជាអ្វីដែលបានកើតឡើង។';
 
   @override
   String get eventsPhoenixRecapBody =>
-      'រាប់រយនាក់បានជួបជុំសម្រាប់ការបញ្ចេញដែលរង់ចាំច្រើនបំផុតរបស់ Master Elf។ «ការកើនឡើងរបស់មយូរញ» គឺជាចំណុចបង្វិល—ការធ្វើឱ្យបរិសុទ្ធ ការផ្លាស់ប្តូរ និងគោលការណ៍សម្រាប់កើនឡើងក្នុងយុគទី ៩។';
+      'រាប់រយនាក់បានជួបជុំនៅភ្នំពេញសម្រាប់ការបង្ហាញខ្លួនសំខាន់របស់ Master Elf ឆ្នាំ ២០២៦។ «ការកើនឡើងរបស់មយូរ៉ា» មិនមែនជាបញ្ជីមេរៀន — វាជាចំណុចបង្វិលដែលផ្តល់គោលការណ៍សម្រាប់ការធ្វើឱ្យបរិសុទ្ធ និងកើនឡើងក្នុងយុគទី ៩។';
 
   @override
   String get eventsPhoenixRecapHighlight => 'ចំណុចបង្វិល';
@@ -1196,44 +1369,55 @@ class AppLocalizationsKm extends AppLocalizations {
   String get eventsHomeRecentCompleted => 'បានបញ្ចប់ថ្មីៗ';
 
   @override
-  String get event1Subtitle => 'ការបញ្ចេញរបស់ Master Elf — ផ្ទាល់នៅភ្នំពេញ';
+  String get event1Subtitle =>
+      'ការបង្ហាញខ្លួនរបស់ Master Elf — ផ្ទាល់នៅភ្នំពេញ';
 
   @override
   String get event1Hook =>
-      'ពេលវេលាដែលការយល់ដឹងក្លាយជាសកម្មភាព—ការបញ្ចេញសំខាន់របស់ Master Elf ឆ្នាំ ២០២៦។';
+      'ជួបជុំផ្ទាល់ — ការបង្ហាញខ្លួនដែលកំណត់សំឡេងសម្រាប់អ្វីដែលបន្តមក។';
 
   @override
   String get event2Subtitle => 'កំណែសិងប៉ូរ — មានអនឡាញឥឡូវ';
 
   @override
   String get event2Hook =>
-      'ជំនាញហុងស៊ុយ និងហាស្ត្រូឡូហ្គី ថតទុកសម្រាប់មើលឡើងវិញតាមល្បឿនរបស់អ្នក។';
+      'មិនអាចចូលរួមនៅសិងប៉ូរ? គោលការណ៍ពេញលេញរបស់អ្នកដើម្បីមើលឡើងវិញ — តាមកាលវិភាគរបស់អ្នក។';
 
   @override
   String get event3Subtitle => 'យុទ្ធសាស្ត្រឆ្នាំសេះភ្លើង — បណ្ណាល័យអនឡាញ';
 
   @override
   String get event3Hook =>
-      'សិល្បៈសង្គ្រាមក្នុងឆ្នាំសេះភ្លើង—យុទ្ធសាស្ត្រដែលអ្នកអាចមើលឡើងវិញបានគ្រប់ពេល។';
+      'យុទ្ធសាស្ត្រសេះភ្លើង ថតទុកសម្រាប់មើលឡើងវិញ — ចលនាសម្រេចចិត្តដែលអ្នកអាចសិក្សាឡើងវិញ។';
 
   @override
-  String get eventsWhyAttendTitle => 'ហេតុអ្វីព្រឹត្តិការណ៍ Master Elf សំខាន់';
+  String get eventsWhyAttendTitle => 'ហេតុអ្វីត្រូវចូលរួមផ្ទាល់';
 
   @override
   String get eventsWhyAttendLead =>
-      'មិនថាអ្នកចូលរួមនៅភ្នំពេញ ឬអនឡាញ ឬកំពុងត្រៀមឆ្នាំពពែឈាម—ការជួបជុំទាំងនេះប្តូរប្រាជ្ញាបុរាណទៅជាការសម្រេចចិត្តដែលអ្នកអាចអនុវត្តបាន។';
+      'សៀវភៅ និងកម្មវិធីរៀបចំអ្នក។ ព្រឹត្តិការណ៍ផ្លាស់ប្តូររបៀបអ្នកមើលឆ្នាំ — ផ្ទាល់ ក្នុងបន្ទប់ ជាមួយ Master Elf អានវដ្តរាសីដែលប្តូរ។';
 
   @override
   String get eventsWhyAttend1 =>
-      'រៀនផ្ទាល់ពី Master Elf—ការបញ្ចេញផ្ទាល់ និងជម្រៅដែលសៀវភៅមិនអាចផ្តល់បាន។';
+      'ជម្រៅដែលមិនអាចទទួលបានពីការមើលឡើងវិញតែម្តង — ការបង្ហាញខ្លួនផ្ទាល់ សំណួរពិត ភាពច្បាស់លាស់ពិត។';
 
   @override
   String get eventsWhyAttend2 =>
-      'ចូលរួមសហគមន៍អ្នកអនុវត្តដែលត្រៀមកើនឡើងជាមួយវដ្តរាសីនីមួយៗ។';
+      'សហគមន៍ដែលដើរជាមួយវដ្តរាសីនីមួយៗ — អ្នកអនុវត្តដែលសកម្ម មិនមែនតែសង្កេត។';
 
   @override
   String get eventsWhyAttend3 =>
-      'កៅអីមានកំណត់។ ណាត់កៅអីរបស់អ្នក និងចូលរួមព្រឹត្តិការណ៍ពិសេស!';
+      'កៅអីឆ្នាំពពែឈាម ២០២៧ មានកំណត់។ ចុះឈ្មោះឥឡូវ — ឬរុករកបណ្ណាល័យខាងលើខណៈអ្នកសម្រេចចិត្ត។';
+
+  @override
+  String get eventsConsultationLink => 'ចូលចិត្តវគ្គឯកជន? កក់ការពិគ្រោះ';
+
+  @override
+  String get eventsClosingHeading => 'មិនអាចមកដល់បានទេ?';
+
+  @override
+  String get eventsClosingBody =>
+      'ការពិគ្រោះផ្ទាល់ផ្តល់ភាពច្បាស់លាស់ដូចគ្នា — ត្រូវបានធ្វើតាមស្ថានភាពរបស់អ្នក។';
 
   @override
   String get secureYourSeat => 'ណាត់កៅអីរបស់អ្នក';
@@ -1242,7 +1426,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get searchEvent => 'ស្វែងរកព្រឹត្តិការណ៍…';
 
   @override
-  String get registerForEvent => 'ចុះឈ្មោះ';
+  String get registerForEvent => 'កក់កៅអីរបស់អ្នក';
 
   @override
   String get eventColumn => 'ព្រឹត្តិការណ៍';
@@ -1297,7 +1481,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get aboutBullet2 => 'បេសកកម្មដែលមេឃប្រគល់អោយ។';
 
   @override
-  String get aboutBullet3 => 'ណែនាំអ្នកដោយក្បួនទៅរកលទ្ធផលដ៏ល្អ។';
+  String get aboutBullet3 => 'ណែនាំអ្នកដោយរូបវិទ្យាចិនទៅរកលទ្ធផលដ៏ល្អ។';
 
   @override
   String get aboutBullet4 => 'ការសម្រេចពិត។ លទ្ធផលពិត។';
@@ -1308,6 +1492,12 @@ class AppLocalizationsKm extends AppLocalizations {
   @override
   String get journeyHeroSubline =>
       'ពីការហៅទៅភាពច្បាស់—ហុងស៊ុយ និងក្បួនចិនបុរាណក្នុងការអនុវត្ត។';
+
+  @override
+  String get journeyHeroBody => 'ពីការហៅទៅប្រព័ន្ធដែលនាំមកភាពច្បាស់ និងលទ្ធផល។';
+
+  @override
+  String get journeyHeroMethodCta => 'ស្វែងរកវិធីសាស្ត្រ';
 
   @override
   String get journeySectionTheStory => 'រឿងរ៉ាវ';
@@ -1324,15 +1514,15 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get journeyStory1 =>
-      'Master Elf គឺជាអ្នកអនុវត្តហុងស៊ុយ និងក្បួនចិនបុរាណដែលទទួលស្គាល់ដោយមានមនុស្សច្រើនជាង ៥១,០០០ នាក់តាមដាន និងកាតព្វកិច្ចណែនាំទាំងបុគ្គល និងអាជីវកម្មឆ្ពោះទៅរកភាពច្បាស់ និងលទ្ធផលល្អ។ ផ្លូវរបស់គាត់មិនមែនចាប់ផ្តើមដោយចៃដន្យនោះទេ—វាចាប់ផ្តើមពីការហៅពីទេវតា។';
+      'Master Elf គឺជាអ្នកអនុវត្តហុងស៊ុយ និងក្បួនចិនបុរាណដែលទទួលស្គាល់ដោយមានមនុស្សច្រើនជាង ៥១,០០០ នាក់តាមដាន និងកាតព្វកិច្ចណែនាំទាំងបុគ្គល និងអាជីវកម្មឆ្ពោះទៅរកភាពច្បាស់ និងលទ្ធផលល្អ។ ផ្លូវរបស់គាត់មិនមែនចាប់ផ្តើមដោយចៃដន្យនោះទេ—វាចាប់ផ្តើមពីការហៅ។';
 
   @override
   String get journeyStory2 =>
-      'អ្វីដែលចាប់ផ្តើមជាជំនឿដ៏ជ្រាលជ្រៅលើបញ្ញាមេឃ បានក្លាយជាបេសកកម្ម៖ នាំយកប្រព័ន្ធបុរាណនៃពេលវេលា ទីកន្លែង និងវាសនាចូលជីវិតប្រចាំថ្ងៃ។ តាមរយៈឆ្នាំនៃការសិក្សា អនុវត្ត និងកែលម្អ គាត់បានបង្កើតវិធីសាស្រ្តដែលប្តូររូបវិទ្យាទៅជាការយល់ដឹងអាចអនុវត្តបាន។';
+      'អ្វីដែលចាប់ផ្តើមជាជំនឿដ៏ជ្រាលជ្រៅលើបញ្ញាមេឃ បានក្លាយជាបេសកកម្ម៖ នាំយកប្រព័ន្ធបុរាណនៃពេលវេលា ទីកន្លែង និងវាសនាចូលជីវិតប្រចាំថ្ងៃ។ តាមរយៈឆ្នាំនៃការសិក្សា អនុវត្ត និងកែលម្អ គាត់បានបង្កើតវិធីសាស្ត្រដែលប្តូររូបវិទ្យាទៅជាការយល់ដឹងអាចអនុវត្តបាន។';
 
   @override
   String get journeyStory3 =>
-      'ថ្ងៃនេះ វិធីសាស្រ្តនោះជួយអតិថិជនសម្រេចចិត្តល្អជាង ជ្រើសរើសកាលបរិច្ឆេទរុក្ខជាតិ យល់ចំណុចខ្លាំង និងសម្របបរិស្ថានជុំវិញរបស់ពួកគេ។ ពីការអានវាសនាដល់ការជ្រើសរើសកាលបរិច្ឆេទយុទ្ធសាស្រ្ត និងការត្រវែងហុងស៊ុយ ប្រព័ន្ធរបស់ Master Elf ត្រូវបានរចនាសម្រាប់ផលប៉ះពាល់ពិត។';
+      'ថ្ងៃនេះ វិធីសាស្ត្រនោះជួយអតិថិជនសម្រេចចិត្តល្អជាង ជ្រើសរើសថ្ងៃហេង យល់ចំណុចខ្លាំង និងសម្របបរិស្ថានជុំវិញរបស់ពួកគេ។ ពីការអានវាសនាដល់ការជ្រើសរើសកាលបរិច្ឆេទយុទ្ធសាស្ត្រ និងសាវនកម្មហុងស៊ុយ ប្រព័ន្ធរបស់ Master Elf ត្រូវបានរចនាសម្រាប់ផលប៉ះពាល់ពិត។';
 
   @override
   String get journeyPeriod9Title => 'យុគទី ៩ (Period 9) និងយុគសម័យថ្មី';
@@ -1342,14 +1532,34 @@ class AppLocalizationsKm extends AppLocalizations {
       'យើងឥឡូវនៅយុគទី ៩ (Period 9) (២០២៤–២០៤៣) យុគភ្លើង Li ក្នុងវដ្តរយៈកាលប្រាំបួនស៊ួនកុង (Xuan Kong)។ ដំណាក់កាល ២០ ឆ្នាំនេះផ្តោតលើថាមពលធាតុភ្លើង ទិសខាងត្បូង និងចំណុចភាពឃើញ ការរីកចម្រើន និងភាពច្បាស់ខាងក្នុង។';
 
   @override
-  String get journeyPhoenixTitle => 'ការកើតឡើងរបស់មយូរ៉ា';
+  String get journeyPhoenixTitle => 'ការកើនឡើងរបស់មយូរ៉ា';
 
   @override
   String get journeyPhoenixBody =>
-      'ការកើនឡើងរបស់មយូរ៉ា គឺជាការបង្ហាញរបស់ Master Elf និងឈ្មោះប្រព័ន្ធរបស់គាត់។ វាសម្គាល់ការធ្វើឱ្យបរិសុទ្ធ ការផ្លាស់ប្តូរ និងពេលវេលាដែលការយល់ដឹងនាំទៅរកសកម្មភាព។ ក្នុងយុគទី ៩ ភ្និកស័រកើនឡើង—ហើយជាមួយចំណេះដឹងត្រឹមត្រូវ អ្នកក៏អាចធ្វើបានដែរ។ គោលការណ៍របស់គាត់រួមបញ្ចូលប៉ាជឺ (BaZi) ឈីមិនទុនជា (Qi Men Dunjia) អ៊ីជីង (I Ching) ការជ្រើសរើសថ្ងៃ (Date Selection) ហុងស៊ុយ (Feng Shui) និងម៉ៅសាន (Mao Shan) ជាវិធីសាស្ត្រជាប់លាប់សម្រាប់អ្នកដែលត្រៀមរួចកើនឡើង។';
+      'ការកើនឡើងរបស់មយូរ៉ា គឺជាការបង្ហាញខ្លួនរបស់ Master Elf និងឈ្មោះប្រព័ន្ធរបស់គាត់។ វាសម្គាល់ការធ្វើឱ្យបរិសុទ្ធ ការផ្លាស់ប្តូរ និងពេលវេលាដែលការយល់ដឹងនាំទៅរកសកម្មភាព។ ក្នុងយុគទី ៩ មយូរ៉ាកើនឡើង—ហើយជាមួយចំណេះដឹងត្រឹមត្រូវ អ្នកក៏អាចធ្វើបានដែរ។ គោលការណ៍របស់គាត់រួមបញ្ចូលប៉ាជឺ (BaZi) ឈីមិនទុនជា (Qi Men Dunjia) អ៊ីជីង (I Ching) ការជ្រើសរើសថ្ងៃ (Date Selection) ហុងស៊ុយ (Feng Shui) និងម៉ៅសាន (Mao Shan) ជាវិធីសាស្ត្រជាប់លាប់សម្រាប់អ្នកដែលត្រៀមរួចកើនឡើង។';
 
   @override
-  String get methodPageHeadline => 'វិធីសាស្រ្តរបស់យើង';
+  String get journeyMethodBridgeTitle => 'វិធីសាស្ត្រ';
+
+  @override
+  String get journeyMethodBridgeBody =>
+      'វិជ្ជាប្រាំមួយ ប្រព័ន្ធតែមួយ — ការពិគ្រោះរៀងរាល់មួយសាងសង់លើគោលការណ៍បុរាណដែល Master Elf បានកែលម្អជាងទសវត្សរ៍។';
+
+  @override
+  String get journeyMethodBridgeCta => 'ស្វែងរកវិធីសាស្ត្រ';
+
+  @override
+  String get journeyViewAllSixConsultations => 'មើលការពិគ្រោះទាំងប្រាំមួយ';
+
+  @override
+  String get journeyClosingHeading => 'ត្រៀមរួចចាប់ផ្តើមហើយឬនៅ?';
+
+  @override
+  String get journeyClosingBody =>
+      'ផ្លូវរាល់ផ្លូវចាប់ផ្តើមពីការពិគ្រោះផ្ទាល់។ ប្រាប់យើងពីគោលដៅរបស់អ្នក ហើយយើងនឹងណែនាំអ្នកទៅចំណុចចាប់ផ្តើមត្រឹមត្រូវ។';
+
+  @override
+  String get methodPageHeadline => 'វិធីសាស្ត្ររបស់យើង';
 
   @override
   String get methodIntro =>
@@ -1367,7 +1577,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get methodQimenBody =>
-      'ឈីមិនទុនជា (Qi Men Dunjia) សាងសង់លើក្រឡា ៣×៣ ប្រាង្គប្រាំបួនដែលផ្លាស់ប្តូរជាមួយកាលបរិច្ឆេទ និងម៉ោងទ្វេ។ យើងកំណត់ក្រាហ្វសម្រាប់ពេលវេលាសំណួរ ឬព្រឹត្តិការណ៍ ដាក់ផ្កាយបីអវធម៌ (អ៊ី ប៊ីង ឌីង) ច្រកប្រាំបួន និងទេវតាប្រាំបួន ហើយបកស្រាយដោយប្រើយិន ឬយ៉ាងទុនជា។ រូបមន្តរស្មីពេលវេលា និងប្រើសម្រាប់យុទ្ធសាស្ត្រ ការជ្រើសរើសថ្ងៃ និងការវិភាគស្ថានភាព។';
+      'ឈីមិនទុនជា (Qi Men Dunjia) សាងសង់លើក្រឡា ៣×៣ ប្រាង្គប្រាំបួនដែលផ្លាស់ប្តូរជាមួយកាលបរិច្ឆេទ និងម៉ោងទ្វេ។ យើងកំណត់ក្រាហ្វសម្រាប់ពេលវេលាសំណួរ ឬព្រឹត្តិការណ៍ ដាក់ផ្កាយបីអវធម៌ (អ៊ី ប៊ីង ឌីង) ច្រកប្រាំបី និងទេវតាប្រាំបី ហើយបកស្រាយដោយប្រើយិន ឬយ៉ាងទុនជា។ រូបមន្តរស្មីពេលវេលា និងប្រើសម្រាប់យុទ្ធសាស្ត្រ ការជ្រើសរើសថ្ងៃ និងការវិភាគស្ថានភាព។';
 
   @override
   String get methodIChingTitle => 'អ៊ីជីង (I Ching) — សៀវភៅការផ្លាស់ប្តូរ';
@@ -1389,7 +1599,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get methodFengShuiBody =>
-      'យើងប្រើហុងស៊ុយ (Feng Shui) តារាហោះហើរស៊ួនកុង (Xuan Kong Fei Xing)។ រយៈកាលអាគារ (ផ្អែកលើឆ្នាំបញ្ចប់; ឆ្នាំហុងស៊ុយចាប់ផ្តើម ៤ កុម្ភៈ) និងទិសដៅមុខ (២៤ ភ្នំ) កំណត់ក្រាហ្វតារាហោះហើរ។ ប្រាង្គប្រាំបួនទទួលផ្កាយដែលរួមបញ្ចូលជាមួយប្លង់លូវស៊ូ។ យើងវាយតម្លៃផ្កាយភ្នំ និងទឹក តុល្យភាពធាតុ និងការកែតម្រូវយុគទី ៩ ដើម្បីណែនាំការដាក់ និងថ្នាំបន្ថយ។';
+      'យើងប្រើហុងស៊ុយ (Feng Shui) តារាហោះហើរស៊ួនកុង (Xuan Kong Fei Xing)។ រយៈកាលអាគារ (ផ្អែកលើឆ្នាំបញ្ចប់; ឆ្នាំហុងស៊ុយចាប់ផ្តើម ៤ កុម្ភៈ) និងទិសដៅមុខ (២៤ ភ្នំ) កំណត់ក្រាហ្វតារាហោះហើរ។ ប្រាង្គប្រាំបួនទទួលផ្កាយដែលរួមបញ្ចូលជាមួយប្លង់លូវស៊ូ។ យើងវាយតម្លៃផ្កាយភ្នំ និងទឹក តុល្យភាពធាតុ និងការកែតម្រូវយុគទី ៩ ដើម្បីណែនាំការដាក់ និងវត្ថុសិរីហុងស៊ុយ។';
 
   @override
   String get methodMaoShanTitle => 'ម៉ៅសាន (Mao Shan)';
@@ -1688,10 +1898,10 @@ class AppLocalizationsKm extends AppLocalizations {
   String get zodiacSnake => 'ម្សាញ់';
 
   @override
-  String get zodiacHorse => 'មមីរ';
+  String get zodiacHorse => 'សេះ';
 
   @override
-  String get zodiacGoat => 'មមែ';
+  String get zodiacGoat => 'ពពែ';
 
   @override
   String get zodiacMonkey => 'វក';
@@ -1729,10 +1939,11 @@ class AppLocalizationsKm extends AppLocalizations {
   String get sampleFeature => 'អត្ថបទពិសេសគំរូ';
 
   @override
-  String get event1Title => 'Master Elf - ការកើនឡើងរបស់មយូរ៉ា ២០២៦';
+  String get event1Title => 'Master Elf — ការកើនឡើងរបស់មយូរ៉ា ២០២៦';
 
   @override
-  String get event1Description => 'ការបង្ហាញរបស់ Master Elf។';
+  String get event1Description =>
+      'ការបង្ហាញខ្លួនរបស់ Master Elf — ផ្ទាល់នៅភ្នំពេញ ខែកុម្ភៈ ២០២៦។';
 
   @override
   String get event1Location => 'ភ្នំពេញ';
@@ -1742,7 +1953,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get event2Description =>
-      'កម្មវិធីហ្វងស៊ី និងហាស្ត្រូឡូហ្គី ២០២៦ កំណែសិងប៉ូរ—មានជាការមើលឡើងវិញអនឡាញឥឡូវ។';
+      'កំណែសិងប៉ូរ — ហ្វងស៊ី និងហាស្ត្រូឡូហ្គី ២០២៦ ឥឡូវមានជាការមើលឡើងវិញអនឡាញពេញលេញ។';
 
   @override
   String get event2Location => 'Resorts World Sentosa សិង្ហបុរី';
@@ -1752,7 +1963,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get event3Description =>
-      'សិល្បៈសង្គ្រាមក្នុងឆ្នាំសេះភ្លើង—ព្រឹត្តិការណ៍អនឡាញបានបញ្ចប់ មានសម្រាប់មើលឡើងវិញ។';
+      'យុទ្ធសាស្ត្រឈីមិនសម្រាប់ឆ្នាំសេះភ្លើង — បញ្ចប់អនឡាញ មានសម្រាប់មើលឡើងវិញគ្រប់ពេល។';
 
   @override
   String get event3Location => 'Resorts World សិង្ហបុរី';
@@ -1768,7 +1979,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get event4Location => 'ភ្នំពេញ';
 
   @override
-  String get loginSectionTitle => 'ការចូលប្រើប្រាស់បុគ្គលិក / រដ្ឋាភិបាល';
+  String get loginSectionTitle => 'ការចូលប្រើប្រាស់បុគ្គលិក / អ្នកគ្រប់គ្រង';
 
   @override
   String get loginSectionIntro =>
@@ -1790,7 +2001,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get goToDashboard => 'ទៅផ្ទាំងគ្រប់គ្រង';
 
   @override
-  String get siteInspection => 'ការពិនិត្យវាល';
+  String get siteInspection => 'ការត្រួតពិនិត្យទីតាំង';
 
   @override
   String get welcomeBack => 'សូមស្វាគមន៍មកវិញ';
@@ -2564,7 +2775,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get inspectionDragonAssess1 => 'គ្រប់គ្រង និងអំណោយផល';
 
   @override
-  String get inspectionDragonAssess2 => 'រតុល';
+  String get inspectionDragonAssess2 => 'រតុល្យភាព';
 
   @override
   String get inspectionDragonAssess3 => 'ខ្សោយពេក';
@@ -2594,7 +2805,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get inspectionTigerAssess1 => 'រាបស្មើត្រឹមត្រូវ (អំណោយផល)';
 
   @override
-  String get inspectionTigerAssess2 => 'រតុល';
+  String get inspectionTigerAssess2 => 'រតុល្យភាព';
 
   @override
   String get inspectionTigerAssess3 => 'គ្រប់គ្រងពេក (មិនអំណោយផល)';
@@ -2639,7 +2850,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get inspectionMajorHighways => 'ផ្លូវហោវយូរសំខាន់';
 
   @override
-  String get inspectionRiversWaterBodies => 'ទន្លេ/បន្ទប់ទឹកសំខាន់';
+  String get inspectionRiversWaterBodies => 'ទន្លេ/ទឹកដីសំខាន់';
 
   @override
   String get inspectionMountainsTerrain => 'ភ្នំ/ដីមានកំពស់';
@@ -2685,7 +2896,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get inspectionNoiseSources => 'ប្រភពរំខាន';
 
   @override
-  String get inspectionAirQuality => 'គុណភាពខ្យល់ និងការចំណាយ';
+  String get inspectionAirQuality => 'គុណភាពខ្យល់ និងការបំពុល';
 
   @override
   String get inspectionFoulOdorsFrom => 'ក្លិនអាក្រក់ពី';
@@ -2760,7 +2971,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get inspectionBack => 'ក្រោយ';
 
   @override
-  String get inspectionWaterBodiesPresent => 'បន្ទប់ទឹកមាន';
+  String get inspectionWaterBodiesPresent => 'ទឹកដីមាន';
 
   @override
   String get inspectionWaterLocation => 'ទីតាំងទឹក (ធៀបអគារ)';
@@ -2922,7 +3133,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get inspectionAirModerate => 'មធ្យម (បរិស្ថានក្រុង)';
 
   @override
-  String get inspectionAirIndustrial => 'មានការចំណាយឧស្សាហកម្ម';
+  String get inspectionAirIndustrial => 'មានការបំពុលឧស្សាហកម្ម';
 
   @override
   String get inspectionAirDust => 'ធូលីពីសំណង់';
@@ -3021,7 +3232,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get inspectionQualityModerate => 'មធ្យម (មានល្បាយ)';
 
   @override
-  String get inspectionQualityPolluted => 'ចំណាយ/ខ្មៅ';
+  String get inspectionQualityPolluted => 'បំពុល/ភ្លៅ';
 
   @override
   String get inspectionQualityFoul => 'ក្លិនអាក្រក់';
@@ -3345,7 +3556,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get fieldWorkRealmRitual => 'ពិធីម៉ៅសាន';
 
   @override
-  String get fieldWorkRealmSite => 'ទស្សនាវាល';
+  String get fieldWorkRealmSite => 'ទស្សនាទីតាំង';
 
   @override
   String get fieldWorkFilterVideos => 'វីដេអូ';
@@ -3377,7 +3588,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get fieldWorkJourneyTeaser =>
-      'ក្រៅពីបន្ទប់រៀន—មើលរបៀបយើងធ្វើការនៅវាលពិត។';
+      'មើលវិធីសាស្ត្រក្នុងការអនុវត្ត — ទស្សនាវាល ពិធី និងការអានពិត។';
 
   @override
   String get fieldWorkJourneyCta => 'ស្វែងរកការងារពិត';
@@ -3417,7 +3628,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get fieldWorkPillarMaoShanSubtitle =>
-      'ពិធីម៉ៅសានពិត ការពារលំហ សម្រាកថាមពល និងស្តារសុខដម។';
+      'ពិធីម៉ៅសានពិត ការពារលំហ សម្ដៅឈី និងស្តារសុខដម។';
 
   @override
   String get fieldWorkPillarDateSelectionTitle => 'ជ្រើសថ្ងៃដែលវាសនាអំណោយផល';
@@ -3457,13 +3668,13 @@ class AppLocalizationsKm extends AppLocalizations {
   String get homeTestimonialsPart2 => 'ពី\n';
 
   @override
-  String get homeTestimonialsPart3 => 'សមរភព';
+  String get homeTestimonialsPart3 => 'វាល';
 
   @override
   String get homeTestimonialsPart4 => '។';
 
   @override
-  String get homeTestimonialsHeading => 'សម្លេងពីសមរភព។';
+  String get homeTestimonialsHeading => 'សម្លេងពីវាល។';
 
   @override
   String get homeTestimonialsSub1 =>
@@ -3484,6 +3695,24 @@ class AppLocalizationsKm extends AppLocalizations {
   @override
   String get fieldWorkVideosSubline =>
       'រយៈពេលចំនួន ៦ ពីវាល—ការពិគ្រោះ ពិធី និងទស្សនាវាលដូចពេលកើតឡើង។';
+
+  @override
+  String get fieldWorkMethodBridgeTitle => 'វិធីសាស្ត្រ';
+
+  @override
+  String get fieldWorkMethodBridgeBody =>
+      'វគ្គទាំងនេះគឺជាសសរមួយក្នុងប្រព័ន្ធប្រាំមួយ។ មើលរបៀបភ្ជាប់គ្នានៅលើ «វិធីសាស្ត្រ»។';
+
+  @override
+  String get fieldWorkMethodBridgeCta => 'ស្វែងរកវិធីសាស្ត្រ';
+
+  @override
+  String get fieldWorkClosingHeading =>
+      'ត្រៀមរួចសម្រាប់វគ្គផ្ទាល់របស់អ្នកហើយឬនៅ?';
+
+  @override
+  String get fieldWorkClosingBody =>
+      'អ្វីដែលអ្នកឃើញនៅទីនេះគឺរបៀបការពិគ្រោះដំណើរការក្នុងការអនុវត្ត។ កក់ការពិគ្រោះផ្ទាល់ ហើយយើងនឹងធ្វើតាមជម្រៅដូចគ្នាសម្រាប់ស្ថានភាពរបស់អ្នក។';
 
   @override
   String get fieldWorkStoriesHeading => 'សកម្មភាពស្នូលរបស់យើង';
@@ -3507,7 +3736,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get fieldWorkVideoSpotlight2Title =>
-      'ត្រវែងហុងស៊ុយ — ទិសមុខ និងទិសអង្គុយ';
+      'សាវនកម្មហុងស៊ុយ — ទិសមុខ និងទិសអង្គុយ';
 
   @override
   String get fieldWorkVideoSpotlight2Subtitle =>
@@ -3540,6 +3769,19 @@ class AppLocalizationsKm extends AppLocalizations {
   @override
   String get fieldWorkVideoSpotlight6Subtitle =>
       'ជ្រើសពេលវេលាហេងសម្រាប់បើកដំណើរ ចុះហត្ថលេខា និងគោលដៅសំខាន់។';
+
+  @override
+  String get bookStoreShelfPanoramaSemanticLabel =>
+      'ការតាំងបង្ហាញសៀវភៅស៊េរីពរជ័យប្រាំប្រការលើធ្នើ';
+
+  @override
+  String get eventsVenueChipmong => 'Chipmong';
+
+  @override
+  String get eventsVenueLegendCinema => 'Legend Cinema';
+
+  @override
+  String get fieldWorkVideoTapToRetry => 'សូមចុចដើម្បីព្យាយាមមើលវីដេអូម្តងទៀត';
 
   @override
   String get inspectionXuanKongPeriod => 'រយៈកាលស៊ួនកុង (Xuan Kong)';
@@ -3608,12 +3850,10 @@ class AppLocalizationsKm extends AppLocalizations {
       'ការិយាល័យអ្នកគ្រប់គ្រង/ម្ចាស់ - គុណភាព';
 
   @override
-  String get inspectionCashierSector =>
-      'ការិយាល័យទូរសារ/ធុងសុវត្ថិភាព - ប្រាង្គ';
+  String get inspectionCashierSector => 'ទូរសារ/ធុងសុវត្ថិភាព - ប្រាង្គ';
 
   @override
-  String get inspectionCashierQuality =>
-      'ការិយាល័យទូរសារ/ធុងសុវត្ថិភាព - គុណភាព';
+  String get inspectionCashierQuality => 'ទូរសារ/ធុងសុវត្ថិភាព - គុណភាព';
 
   @override
   String get inspectionToiletSector => 'ទីតាំងបន្ទប់ទឹក - ប្រាង្គ';
@@ -3893,7 +4133,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get inspectionEntranceAcceptable => 'ទទួលយកបានជាមួយការកែតម្រូវតូច';
 
   @override
-  String get inspectionEntranceRemedial => 'ត្រូវការការកែព្យាបាល';
+  String get inspectionEntranceRemedial => 'ត្រូវការការកែតម្រូវ';
 
   @override
   String get inspectionCeilingHeight => 'កម្ពស់ពិដាន (ម)';
@@ -3914,10 +4154,10 @@ class AppLocalizationsKm extends AppLocalizations {
   String get inspectionAirCirculation => 'ការរំញ័រខ្យល់';
 
   @override
-  String get inspectionAirGood => 'ការបរិសុទ្ធល្អ';
+  String get inspectionAirGood => 'ការបើរខ្យល់ល្អ';
 
   @override
-  String get inspectionAirPoor => 'អាក្រក់/ឈឺចាប់';
+  String get inspectionAirPoor => 'ខ្សោយ/ឈឺចាប់';
 
   @override
   String get inspectionFloorPlanShape => 'រាងប្លង់';
@@ -3935,7 +4175,7 @@ class AppLocalizationsKm extends AppLocalizations {
   String get inspectionShapeTriangular => 'ផ្នែកត្រីកោណ';
 
   @override
-  String get inspectionReceptionSector => 'ទទួលភ្ញៀវ/ការិយាល័យទូរសារ - ប្រាង្គ';
+  String get inspectionReceptionSector => 'ទទួលភ្ញៀវ/ទូរសារ - ប្រាង្គ';
 
   @override
   String get inspectionReceptionFlyingStar => 'ទទួលភ្ញៀវ - តារាហោះហើរ';
@@ -4012,7 +4252,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get inspectionBestSectorCashier =>
-      'ប្រាង្គល្អបំផុត - ការិយាល័យទូរសារ/ហិរញ្ញវត្ថុ';
+      'ប្រាង្គល្អបំផុត - ទូរសារ/ហិរញ្ញវត្ថុ';
 
   @override
   String get inspectionBestSectorManager =>

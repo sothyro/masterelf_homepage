@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../utils/mobile_web_performance.dart';
 
 /// Composite preview of all five blessing covers for the bundle card.
 class BundleCoverPreview extends StatelessWidget {
@@ -39,9 +40,9 @@ class BundleCoverPreview extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Expanded(child: _miniCover(assets[0])),
+                    Expanded(child: _miniCover(context, assets[0])),
                     const SizedBox(width: 6),
-                    Expanded(child: _miniCover(assets[1])),
+                    Expanded(child: _miniCover(context, assets[1])),
                   ],
                 ),
               ),
@@ -49,11 +50,11 @@ class BundleCoverPreview extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Expanded(child: _miniCover(assets[2])),
+                    Expanded(child: _miniCover(context, assets[2])),
                     const SizedBox(width: 6),
-                    Expanded(child: _miniCover(assets[3])),
+                    Expanded(child: _miniCover(context, assets[3])),
                     const SizedBox(width: 6),
-                    Expanded(child: _miniCover(assets[4])),
+                    Expanded(child: _miniCover(context, assets[4])),
                   ],
                 ),
               ),
@@ -64,7 +65,7 @@ class BundleCoverPreview extends StatelessWidget {
     );
   }
 
-  Widget _miniCover(String asset) {
+  Widget _miniCover(BuildContext context, String asset) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: Image.asset(
@@ -72,6 +73,8 @@ class BundleCoverPreview extends StatelessWidget {
         fit: BoxFit.cover,
         width: double.infinity,
         height: double.infinity,
+        cacheWidth: MobileWebPerformance.cardImageCacheWidth(context, 80),
+        filterQuality: MobileWebPerformance.imageFilterQuality(context),
         errorBuilder: (_, __, ___) => Container(
           color: AppColors.borderDark,
           child: Icon(

@@ -1,47 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
-import '../../../utils/breakpoints.dart';
+import '../../home/widgets/field_work_chinese_design.dart';
 
 class EventsWhyAttendBand extends StatelessWidget {
-  const EventsWhyAttendBand({super.key, required this.l10n});
+  const EventsWhyAttendBand({
+    super.key,
+    required this.l10n,
+    required this.isMobile,
+    required this.onRegister,
+  });
 
   final AppLocalizations l10n;
+  final bool isMobile;
+  final VoidCallback onRegister;
 
   @override
   Widget build(BuildContext context) {
-    final isNarrow = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
-
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(isNarrow ? 24 : 32),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.surfaceElevatedDark,
-            AppColors.surfaceElevatedDark.withValues(alpha: 0.92),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.35)),
-        boxShadow: AppShadows.card,
-      ),
+    return FieldWorkChineseCtaPanel(
+      isMobile: isMobile,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            l10n.eventsWhyAttendTitle,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: AppColors.onPrimary,
-                  fontWeight: FontWeight.w700,
-                  height: 1.2,
+          Row(
+            children: [
+              EventsGatheringSeal(size: isMobile ? 36 : 44),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  l10n.eventsWhyAttendTitle,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        color: AppColors.onPrimary,
+                        fontWeight: FontWeight.w700,
+                        height: 1.2,
+                      ),
                 ),
+              ),
+            ],
           ),
-          SizedBox(height: isNarrow ? 14 : 18),
+          SizedBox(height: isMobile ? 14 : 18),
           Text(
             l10n.eventsWhyAttendLead,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -49,12 +49,38 @@ class EventsWhyAttendBand extends StatelessWidget {
                   height: 1.6,
                 ),
           ),
-          SizedBox(height: isNarrow ? 20 : 28),
+          SizedBox(height: isMobile ? 20 : 28),
           _WhyAttendBullet(icon: LucideIcons.sparkles, text: l10n.eventsWhyAttend1),
-          SizedBox(height: isNarrow ? 12 : 16),
+          SizedBox(height: isMobile ? 12 : 16),
           _WhyAttendBullet(icon: LucideIcons.users, text: l10n.eventsWhyAttend2),
-          SizedBox(height: isNarrow ? 12 : 16),
+          SizedBox(height: isMobile ? 12 : 16),
           _WhyAttendBullet(icon: LucideIcons.calendarCheck, text: l10n.eventsWhyAttend3),
+          SizedBox(height: isMobile ? 22 : 28),
+          Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              FilledButton.icon(
+                onPressed: onRegister,
+                icon: const Icon(LucideIcons.calendarCheck, size: 18),
+                label: Text(l10n.registerForEvent),
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.accent,
+                  foregroundColor: AppColors.onAccent,
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                ),
+              ),
+              TextButton.icon(
+                onPressed: () => context.push('/consultations'),
+                icon: const Icon(LucideIcons.arrowRight, size: 18),
+                label: Text(l10n.eventsConsultationLink),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.accent,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
