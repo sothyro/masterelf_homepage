@@ -4,6 +4,7 @@ import 'package:masterelf_homepage/screens/apps/widgets/apps_chapter_header.dart
 import 'package:masterelf_homepage/screens/apps/widgets/apps_hero_medallion.dart';
 import 'package:masterelf_homepage/screens/apps/widgets/apps_master_elf_system_intro.dart';
 import 'package:masterelf_homepage/screens/apps/widgets/apps_yuk9_brand.dart';
+import 'package:masterelf_homepage/utils/scroll_activity_gate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import 'test_helpers/pump_app.dart';
@@ -13,8 +14,10 @@ Future<void> revealAppsDeferredSections(WidgetTester tester) async {
   if (scrollable.evaluate().isEmpty) return;
   await tester.drag(scrollable.first, const Offset(0, -2400));
   await tester.pump();
+  await tester.pump(ScrollActivityGate.idleDelay);
   VisibilityDetectorController.instance.notifyNow();
   await tester.pump(const Duration(milliseconds: 100));
+  ScrollActivityGate.resetForTesting();
 }
 
 void main() {
@@ -25,6 +28,7 @@ void main() {
   tearDown(() {
     VisibilityDetectorController.instance.updateInterval =
         const Duration(milliseconds: 500);
+    ScrollActivityGate.resetForTesting();
   });
 
   for (final width in [375.0, 768.0, 1280.0]) {

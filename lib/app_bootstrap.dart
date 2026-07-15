@@ -52,14 +52,12 @@ class HomeReadiness {
 
   static bool get isReady => _completer?.isCompleted ?? false;
 
-  /// Completes once all homepage sections are mounted and two further frames
-  /// have been painted (layout + raster settled).
+  /// Completes once critical homepage sections are mounted and two further
+  /// frames have been painted (layout + raster settled).
   static Future<void> get ready => _gate.future;
 
-  /// Call when every homepage section is in the tree. Completes [ready]
-  /// after two additional frames so the loader dismisses onto a fully
-  /// painted page.
-  static void markAllSectionsMounted() {
+  /// Call when Hero, Events, Academies, and Consultations are in the tree.
+  static void markCriticalHomeContentReady() {
     if (_gate.isCompleted || _settling || holdForTesting) return;
     _settling = true;
     final binding = WidgetsBinding.instance;
@@ -71,6 +69,18 @@ class HomeReadiness {
       binding.scheduleFrame();
     });
     binding.scheduleFrame();
+  }
+
+  /// Legacy alias — prefer [markCriticalHomeContentReady].
+  static void markAllSectionsMounted() => markCriticalHomeContentReady();
+
+  /// If [HomeScreen] unmounts while settling, complete the gate so bootstrap
+  /// does not hang until timeout.
+  static void onHomeScreenDisposed() {
+    if (_settling && !_gate.isCompleted) {
+      _settling = false;
+      _gate.complete();
+    }
   }
 
   @visibleForTesting

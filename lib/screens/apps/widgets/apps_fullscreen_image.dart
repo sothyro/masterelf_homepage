@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../../utils/mobile_web_performance.dart';
 import '../../../theme/app_theme.dart';
 
 /// Opens a fullscreen zoomable view for an app screenshot.
@@ -24,6 +25,10 @@ void showAppsFullscreenImage(BuildContext context, String asset) {
                 child: Image.asset(
                   asset,
                   fit: BoxFit.contain,
+                  cacheWidth: MobileWebPerformance.devicePixelCacheWidth(
+                    context,
+                    MediaQuery.sizeOf(context).width,
+                  ),
                   filterQuality: FilterQuality.high,
                   errorBuilder: (_, __, ___) => Icon(
                     LucideIcons.imageOff,

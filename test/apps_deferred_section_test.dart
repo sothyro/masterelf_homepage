@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:masterelf_homepage/utils/app_asset_preloader.dart';
 import 'package:masterelf_homepage/screens/apps/widgets/apps_deferred_section.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 void main() {
   setUp(() {
     VisibilityDetectorController.instance.updateInterval = Duration.zero;
+    AppAssetPreloader.resetForTesting();
+    AppAssetPreloader.disableBackgroundFontsForTesting = true;
   });
 
   tearDown(() {
@@ -27,7 +30,9 @@ void main() {
       ),
     );
 
+    await tester.pump();
     expect(find.text('loaded'), findsOneWidget);
+    expect(AppAssetPreloader.appsDeferredPreloadStarted, isTrue);
   });
 
   testWidgets('deferred section shows placeholder until visible', (tester) async {
@@ -61,5 +66,6 @@ void main() {
     await tester.pump();
 
     expect(find.text('loaded'), findsOneWidget);
+    expect(AppAssetPreloader.appsDeferredPreloadStarted, isTrue);
   });
 }

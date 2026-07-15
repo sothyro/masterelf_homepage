@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../config/app_content.dart';
-import '../config/testimonials_content.dart';
 import '../services/activity_video_platform.dart';
 import '../services/hero_video_platform.dart';
 import 'mobile_web_performance.dart';
@@ -26,8 +25,8 @@ List<String> get _criticalImageAssets => [
   AppContent.assetHeroBackground,
 ];
 
-/// Above-the-fold homepage images (events, academies, consultations, featured-in).
-List<String> get _aboveFoldHomepageAssets => [
+/// First-screen homepage images (events, academies, consultations) — blocks bootstrap.
+List<String> get _firstScreenHomepageAssets => [
   AppContent.assetEventMain,
   AppContent.assetEvent2027,
   AppContent.assetEvent2026FengShui,
@@ -38,6 +37,11 @@ List<String> get _aboveFoldHomepageAssets => [
   AppContent.assetAcademyQiMen,
   AppContent.assetPeriod9Book1,
   AppContent.assetPeriod9Book2,
+];
+
+/// Mid-page homepage images — loaded after critical gate / section mount.
+List<String> get _midPageHomepageAssets => [
+  AppContent.assetStoryBackground,
   AppContent.assetActivityFengShui,
   AppContent.assetActivityConsultation,
   AppContent.assetActivityMaoShan,
@@ -45,23 +49,12 @@ List<String> get _aboveFoldHomepageAssets => [
   ...AppContent.featuredPressLogos,
 ];
 
-/// Subset decoded to GPU on desktop web before reveal (hero poster + first
-/// sections) to avoid first-paint decode jank without risking mobile tab OOM.
-List<String> get _webCriticalDecodeAssets => [
-  AppContent.assetHeroBackground,
-  AppContent.assetEventMain,
-  AppContent.assetEvent2027,
-  AppContent.assetEvent2026FengShui,
-  AppContent.assetEvent2026CrimsonHorse,
-  AppContent.assetAcademy,
-  AppContent.assetBaziHarmony,
-  AppContent.assetAcademyQiMen,
-];
+/// Legacy alias for tests.
+List<String> get _aboveFoldHomepageAssets => _firstScreenHomepageAssets;
 
-/// Below-fold homepage images — preload after bootstrap (story + testimonials).
+/// Below-fold homepage images — story background only (also in mid-page tier).
 List<String> get _belowFoldHomepageAssets => [
   AppContent.assetStoryBackground,
-  ...testimonialImageAssetsForPreload(),
 ];
 
 /// App screenshots — above-fold subset for first paint on /apps.
@@ -90,9 +83,14 @@ List<String> get _restImageAssets => [
 class AppAssetPreloader {
   AppAssetPreloader._();
 
+  static bool _midPageHomeStarted = false;
   static bool _belowFoldStarted = false;
   static bool _appsPageStarted = false;
+  static bool _appsDeferredStarted = false;
   static bool _fieldWorkVideosStarted = false;
+  static bool _backgroundPreloadStarted = false;
+  static final Set<String> _preloadedTestimonialPaths = {};
+  static final Set<String> _preloadedActivityCoverPaths = {};
 
   /// When true, skips network font work during bootstrap (tests only).
   @visibleForTesting
@@ -107,10 +105,22 @@ class AppAssetPreloader {
   static bool disableHeroVideoForTesting = false;
 
   @visibleForTesting
-  static int get aboveFoldAssetCount => _aboveFoldHomepageAssets.length;
+  static int get aboveFoldAssetCount => _firstScreenHomepageAssets.length;
+
+  @visibleForTesting
+  static int get midPageHomeAssetCount => _midPageHomepageAssets.length;
 
   @visibleForTesting
   static int get belowFoldAssetCount => _belowFoldHomepageAssets.length;
+
+  @visibleForTesting
+  static int get appsDeferredAssetCount => _appsPageDeferredAssets.length;
+
+  @visibleForTesting
+  static bool get appsDeferredPreloadStarted => _appsDeferredStarted;
+
+  @visibleForTesting
+  static bool get backgroundPreloadStarted => _backgroundPreloadStarted;
 
   /// Phased bootstrap preload: critical → above-fold → decode → fonts →
   /// hero video prewarm → homepage render gate → reveal.
@@ -127,7 +137,7 @@ class AppAssetPreloader {
     // Start hero video load in parallel (web: native HTML video; does not block
     // loader dismiss — poster stays until canplaythrough).
     if (!disableHeroVideoForTesting &&
-        MobileWebPerformance.shouldPrewarmHeroVideo()) {
+        MobileWebPerformance.shouldPrewarmHeroVideoDuringBootstrap()) {
       unawaited(HeroVideoPlatform.prewarm());
     }
 
@@ -138,29 +148,22 @@ class AppAssetPreloader {
     // Phase 2 — above-fold bundle (20 → 55%)
     final webBatchSize = kIsWeb ? 3 : 6;
     await _loadImageListBatchedWithProgress(
-      _aboveFoldHomepageAssets,
+      _firstScreenHomepageAssets,
       (completed, total) {
         onProgress(0.20 + 0.35 * (total > 0 ? completed / total : 1.0));
       },
       batchSize: webBatchSize,
     );
 
-    // Phase 3 — GPU decode (55 → 65%). Native decodes all above-fold assets;
-    // desktop web decodes the critical subset; mobile web skips (tab OOM risk).
-    if (!disableImageDecodeForTesting) {
-      final decodeAssets = kIsWeb
-          ? (MobileWebPerformance.isMobileWebViewport()
-              ? const <String>[]
-              : _webCriticalDecodeAssets)
-          : _aboveFoldHomepageAssets;
-      if (decodeAssets.isNotEmpty) {
-        await _decodeImageListBatchedWithProgress(
-          decodeAssets,
-          (completed, total) {
-            onProgress(0.55 + 0.10 * (total > 0 ? completed / total : 1.0));
-          },
-        );
-      }
+    // Phase 3 — GPU decode (55 → 65%). Native only; web relies on widget
+    // cacheWidth decode to avoid double-decoding at full resolution (OOM risk).
+    if (!disableImageDecodeForTesting && !kIsWeb) {
+      await _decodeImageListBatchedWithProgress(
+        _firstScreenHomepageAssets,
+        (completed, total) {
+          onProgress(0.55 + 0.10 * (total > 0 ? completed / total : 1.0));
+        },
+      );
     }
     onProgress(0.65);
 
@@ -184,6 +187,8 @@ class AppAssetPreloader {
   /// bootstrap once the loading overlay has dismissed so it never competes
   /// with hero video init or first paint.
   static void startBackgroundPreload() {
+    if (_backgroundPreloadStarted) return;
+    _backgroundPreloadStarted = true;
     unawaited(_runBackgroundPreloadSafely());
   }
 
@@ -201,9 +206,14 @@ class AppAssetPreloader {
 
   @visibleForTesting
   static void resetForTesting() {
+    _midPageHomeStarted = false;
     _belowFoldStarted = false;
     _appsPageStarted = false;
+    _appsDeferredStarted = false;
     _fieldWorkVideosStarted = false;
+    _backgroundPreloadStarted = false;
+    _preloadedTestimonialPaths.clear();
+    _preloadedActivityCoverPaths.clear();
     disableBackgroundFontsForTesting = false;
     disableImageDecodeForTesting = false;
     disableHeroVideoForTesting = false;
@@ -212,6 +222,7 @@ class AppAssetPreloader {
   /// Warm first two field-work spotlight videos — call when [FieldWorkScreen] mounts.
   static void preloadFieldWorkSpotlightVideos(double layoutWidth) {
     if (_fieldWorkVideosStarted) return;
+    if (MobileWebPerformance.isMobileWebWidth(layoutWidth)) return;
     _fieldWorkVideosStarted = true;
     unawaited(_preloadFieldWorkSpotlightVideos(layoutWidth));
   }
@@ -231,7 +242,7 @@ class AppAssetPreloader {
     }
   }
 
-  /// App demo video + screenshot PNGs — call when [AppsScreen] mounts.
+  /// Above-fold apps assets — call when [AppsScreen] mounts.
   static Future<void> preloadAppsPageAssets() async {
     if (_appsPageStarted) return;
     _appsPageStarted = true;
@@ -239,15 +250,31 @@ class AppAssetPreloader {
     // Tier A — above-fold icons/posters (small, awaited).
     await _loadImageList(_appsPageAboveFoldAssets, (_, __) {});
 
-    // Tier C — app demo video bytes (non-blocking).
-    unawaited(rootBundle.load(AppContent.assetAppPageVideo));
+    // Tier C — app demo video bytes (desktop/tablet web only; device player
+    // lazy-loads on mobile web).
+    if (!MobileWebPerformance.isMobileWebViewport()) {
+      unawaited(rootBundle.load(AppContent.assetAppPageVideo));
+    }
+  }
 
-    // Tier D — remaining showcase PNGs (non-blocking batched warm).
-    unawaited(
-      _loadImageListBatched(
-        _appsPageDeferredAssets,
-        batchSize: kIsWeb ? 2 : 4,
-      ),
+  /// Deferred apps screenshots — call when a deferred section nears viewport.
+  static Future<void> preloadAppsDeferredAssets() async {
+    if (_appsDeferredStarted) return;
+    if (MobileWebPerformance.isMobileWebViewport()) return;
+    _appsDeferredStarted = true;
+    await _loadImageListBatched(
+      _appsPageDeferredAssets,
+      batchSize: kIsWeb ? 2 : 4,
+    );
+  }
+
+  /// Mid-page homepage assets — story, field-work thumbs, press logos.
+  static Future<void> preloadMidPageHomeAssets() async {
+    if (_midPageHomeStarted) return;
+    _midPageHomeStarted = true;
+    await _loadImageListBatched(
+      _midPageHomepageAssets,
+      batchSize: kIsWeb ? 2 : 4,
     );
   }
 
@@ -255,8 +282,49 @@ class AppAssetPreloader {
   static Future<void> preloadBelowFoldHomepage() async {
     if (_belowFoldStarted) return;
     _belowFoldStarted = true;
-    await _loadImageListBatched(_belowFoldHomepageAssets);
+    await _loadImageListBatched(
+      _belowFoldHomepageAssets,
+      batchSize: kIsWeb ? 2 : 4,
+    );
   }
+
+  /// Lazily warm testimonial portrait assets for visible carousel pages.
+  static Future<void> preloadTestimonialPortraits(List<String> paths) async {
+    if (paths.isEmpty) return;
+    final pending = paths
+        .where((path) => !_preloadedTestimonialPaths.contains(path))
+        .toList();
+    if (pending.isEmpty) return;
+    for (final path in pending) {
+      _preloadedTestimonialPaths.add(path);
+    }
+    await _loadImageListBatched(
+      pending,
+      batchSize: kIsWeb ? 2 : 4,
+    );
+  }
+
+  @visibleForTesting
+  static int get preloadedTestimonialCount => _preloadedTestimonialPaths.length;
+
+  /// Lazily warm activity story cover images for visible carousel pages.
+  static Future<void> preloadActivityStoryCovers(List<String> paths) async {
+    if (paths.isEmpty) return;
+    final pending = paths
+        .where((path) => !_preloadedActivityCoverPaths.contains(path))
+        .toList();
+    if (pending.isEmpty) return;
+    for (final path in pending) {
+      _preloadedActivityCoverPaths.add(path);
+    }
+    await _loadImageListBatched(
+      pending,
+      batchSize: kIsWeb ? 2 : 4,
+    );
+  }
+
+  @visibleForTesting
+  static int get preloadedActivityCoverCount => _preloadedActivityCoverPaths.length;
 
   static Future<void> _backgroundPreload() async {
     if (!_belowFoldStarted) {

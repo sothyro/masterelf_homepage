@@ -208,6 +208,9 @@ class _FeaturedInMarqueeState extends State<_FeaturedInMarquee>
   @override
   void dispose() {
     _disposed = true;
+    VisibilityDetectorController.instance.forget(
+      const ValueKey<String>('featured-in-marquee'),
+    );
     _controller.dispose();
     super.dispose();
   }

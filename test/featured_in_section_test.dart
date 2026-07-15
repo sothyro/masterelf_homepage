@@ -133,6 +133,18 @@ void main() {
     await disposeFeaturedIn(tester);
   });
 
+  testWidgets('FeaturedInSection forgets visibility detector on dispose', (
+    tester,
+  ) async {
+    await pumpFeaturedIn(tester, width: 375);
+    expect(
+      find.byKey(const ValueKey<String>('featured-in-marquee')),
+      findsOneWidget,
+    );
+    await disposeFeaturedIn(tester);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('featuredLogoSize scales responsively', (tester) async {
     expect(featuredLogoSize(1280), 256);
     expect(featuredLogoSize(900), 200);

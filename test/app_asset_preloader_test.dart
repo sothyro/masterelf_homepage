@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:masterelf_homepage/app.dart';
+import 'package:masterelf_homepage/config/app_content.dart';
+import 'package:masterelf_homepage/config/testimonials_content.dart';
 import 'package:masterelf_homepage/app_bootstrap.dart';
 import 'package:masterelf_homepage/main.dart';
+import 'package:masterelf_homepage/screens/home/home_load_coordinator.dart';
 import 'package:masterelf_homepage/utils/app_asset_preloader.dart';
 import 'package:masterelf_homepage/utils/hero_video_preloader.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -25,6 +28,7 @@ void main() {
     AppAssetPreloader.disableImageDecodeForTesting = true;
     AppAssetPreloader.disableHeroVideoForTesting = true;
     HomeReadiness.reset();
+    HomeLoadCoordinator.resetForTesting();
     initializeAppBootstrap('/');
     previousErrorHandler = FlutterError.onError;
     FlutterError.onError = (details) {
@@ -40,6 +44,7 @@ void main() {
 
   tearDown(() {
     FlutterError.onError = previousErrorHandler;
+    HomeLoadCoordinator.resetForTesting();
     VisibilityDetectorController.instance.updateInterval =
         const Duration(milliseconds: 500);
   });
@@ -87,6 +92,59 @@ void main() {
     test('preloadAppsPageAssets is idempotent', () async {
       await AppAssetPreloader.preloadAppsPageAssets();
       await AppAssetPreloader.preloadAppsPageAssets();
+    });
+
+    test('first-screen bootstrap asset count excludes mid-page images', () {
+      expect(AppAssetPreloader.aboveFoldAssetCount, 10);
+      expect(AppAssetPreloader.midPageHomeAssetCount, greaterThan(4));
+    });
+
+    test('belowFoldHomepage preloads story background only', () {
+      expect(AppAssetPreloader.belowFoldAssetCount, 1);
+    });
+
+    test('preloadTestimonialPortraits deduplicates paths', () async {
+      final paths = testimonialImageAssetsForPreload().take(3).toList();
+      expect(paths, isNotEmpty);
+      await AppAssetPreloader.preloadTestimonialPortraits(paths);
+      expect(AppAssetPreloader.preloadedTestimonialCount, paths.length);
+      await AppAssetPreloader.preloadTestimonialPortraits(paths);
+      expect(AppAssetPreloader.preloadedTestimonialCount, paths.length);
+    });
+
+    test('startBackgroundPreload is idempotent', () async {
+      AppAssetPreloader.startBackgroundPreload();
+      AppAssetPreloader.startBackgroundPreload();
+      await Future<void>.delayed(const Duration(milliseconds: 50));
+    });
+
+    test('preloadBelowFoldHomepage does not include testimonial portraits', () async {
+      await AppAssetPreloader.preloadBelowFoldHomepage();
+      expect(AppAssetPreloader.preloadedTestimonialCount, 0);
+      expect(AppContent.assetStoryBackground, isNotEmpty);
+    });
+
+    test('preloadAppsPageAssets does not bulk-load deferred screenshots', () async {
+      await AppAssetPreloader.preloadAppsPageAssets();
+      expect(AppAssetPreloader.appsDeferredPreloadStarted, isFalse);
+      expect(AppAssetPreloader.appsDeferredAssetCount, greaterThan(0));
+    });
+
+    test('preloadAppsDeferredAssets is idempotent', () async {
+      await AppAssetPreloader.preloadAppsDeferredAssets();
+      await AppAssetPreloader.preloadAppsDeferredAssets();
+      expect(AppAssetPreloader.appsDeferredPreloadStarted, isTrue);
+    });
+
+    test('preloadActivityStoryCovers deduplicates paths', () async {
+      const paths = [
+        'assets/images/activities/fengshui.webp',
+        'assets/images/activities/consultation.webp',
+      ];
+      await AppAssetPreloader.preloadActivityStoryCovers(paths);
+      expect(AppAssetPreloader.preloadedActivityCoverCount, 2);
+      await AppAssetPreloader.preloadActivityStoryCovers(paths);
+      expect(AppAssetPreloader.preloadedActivityCoverCount, 2);
     });
 
     test('resetForTesting allows preloadBelowFoldHomepage to run again', () async {

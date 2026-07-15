@@ -4,6 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:masterelf_homepage/app.dart';
 import 'package:masterelf_homepage/app_bootstrap.dart';
+import 'package:masterelf_homepage/screens/apps/apps_load_coordinator.dart';
+import 'package:masterelf_homepage/screens/field_work/field_work_load_coordinator.dart';
+import 'package:masterelf_homepage/screens/home/home_load_coordinator.dart';
+import 'package:masterelf_homepage/utils/scroll_activity_gate.dart';
 
 bool _initialized = false;
 
@@ -76,6 +80,11 @@ Future<void> settleHomeScreenTimers(WidgetTester tester) async {
   for (var i = 0; i < 16; i++) {
     await tester.pump(const Duration(milliseconds: 250));
   }
+  await tester.pump(const Duration(seconds: 5));
+  HomeLoadCoordinator.resetForTesting();
+  AppsLoadCoordinator.resetForTesting();
+  FieldWorkLoadCoordinator.resetForTesting();
+  ScrollActivityGate.resetForTesting();
 }
 
 /// Pumps the full app at [width], navigates to [path], and asserts no layout overflows.
@@ -95,6 +104,13 @@ Future<void> pumpRouteAtWidth(
   await navigateTo(tester, path);
   await tester.pump(const Duration(milliseconds: 300));
   drainLayoutExceptions(tester);
+  final routePath = path.split('#').first;
+  if (routePath == '/apps' || routePath == '/field-work') {
+    await tester.pump(const Duration(seconds: 5));
+    AppsLoadCoordinator.resetForTesting();
+    FieldWorkLoadCoordinator.resetForTesting();
+    ScrollActivityGate.resetForTesting();
+  }
   if (drainOverflows) {
     drainLayoutExceptions(tester);
   } else {
@@ -123,5 +139,11 @@ Future<void> pumpRouteAtWidthWithLocale(
   await navigateTo(tester, path);
   await tester.pump(const Duration(milliseconds: 300));
   drainLayoutExceptions(tester);
+  final routePath = path.split('#').first;
+  if (routePath == '/apps' || routePath == '/field-work') {
+    await tester.pump(const Duration(seconds: 5));
+    AppsLoadCoordinator.resetForTesting();
+    FieldWorkLoadCoordinator.resetForTesting();
+  }
   assertNoLayoutOverflow(tester);
 }

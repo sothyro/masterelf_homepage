@@ -8,6 +8,7 @@ import '../l10n/app_localizations.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 import '../utils/breakpoints.dart';
+import '../utils/scroll_activity_gate.dart';
 import 'app_header.dart';
 import 'app_footer.dart';
 import 'app_drawer.dart';
@@ -17,6 +18,9 @@ import 'sticky_cta_bar.dart';
 import 'sticky_inspection_cta_bar.dart';
 import 'sticky_login_cta_bar.dart';
 import 'sticky_logout_cta_bar.dart';
+import '../screens/home/home_load_coordinator.dart';
+import '../screens/apps/apps_load_coordinator.dart';
+import '../screens/field_work/field_work_load_coordinator.dart';
 import 'app_shell_scroll_scope.dart';
 
 /// Maximum height (from top of overlay) that participates in hit testing.
@@ -40,8 +44,8 @@ const double _heroThreshold = 400;
 class _AppShellState extends State<AppShell> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool _showBackToTop = false;
-  bool _menuVisible = true;
+  final ValueNotifier<bool> _showBackToTop = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> _menuVisible = ValueNotifier<bool>(true);
   String _routeLocation = '';
 
   @override
@@ -64,10 +68,8 @@ class _AppShellState extends State<AppShell> {
           if (_scrollController.hasClients) {
             _scrollController.jumpTo(0);
           }
-          setState(() {
-            _menuVisible = true;
-            _showBackToTop = false;
-          });
+          _menuVisible.value = true;
+          _showBackToTop.value = false;
         });
       }
     }
@@ -77,6 +79,8 @@ class _AppShellState extends State<AppShell> {
   void dispose() {
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _showBackToTop.dispose();
+    _menuVisible.dispose();
     super.dispose();
   }
 
@@ -88,10 +92,8 @@ class _AppShellState extends State<AppShell> {
         if (_scrollController.hasClients) {
           _scrollController.jumpTo(0);
         }
-        setState(() {
-          _menuVisible = true;
-          _showBackToTop = false;
-        });
+        _menuVisible.value = true;
+        _showBackToTop.value = false;
       });
     }
   }
@@ -99,13 +101,31 @@ class _AppShellState extends State<AppShell> {
   void _onScroll() {
     if (!_scrollController.hasClients) return;
     final offset = _scrollController.offset;
+    ScrollActivityGate.onScrollOffset(offset);
     final showBackToTop = offset > _heroThreshold;
     final menuVisible = offset <= _heroThreshold;
-    if (showBackToTop != _showBackToTop || menuVisible != _menuVisible) {
-      setState(() {
-        _showBackToTop = showBackToTop;
-        _menuVisible = menuVisible;
-      });
+    if (showBackToTop != _showBackToTop.value) {
+      _showBackToTop.value = showBackToTop;
+    }
+    if (menuVisible != _menuVisible.value) {
+      _menuVisible.value = menuVisible;
+    }
+    final path = GoRouterState.of(context).uri.path;
+    if (path == '/') {
+      HomeLoadCoordinator.onHomeScroll(
+        pixels: offset,
+        maxScrollExtent: _scrollController.position.maxScrollExtent,
+      );
+    } else if (path == '/apps') {
+      AppsLoadCoordinator.onAppsScroll(
+        pixels: offset,
+        maxScrollExtent: _scrollController.position.maxScrollExtent,
+      );
+    } else if (path == '/field-work') {
+      FieldWorkLoadCoordinator.onFieldWorkScroll(
+        pixels: offset,
+        maxScrollExtent: _scrollController.position.maxScrollExtent,
+      );
     }
   }
 
@@ -131,11 +151,17 @@ class _AppShellState extends State<AppShell> {
 
     return AppShellScrollScope(
       scrollController: _scrollController,
-      child: Scaffold(
+      child: ValueListenableBuilder<bool>(
+        valueListenable: _showBackToTop,
+        builder: (context, showBackToTop, _) {
+          return ValueListenableBuilder<bool>(
+            valueListenable: _menuVisible,
+            builder: (context, menuVisible, _) {
+              return Scaffold(
       key: _scaffoldKey,
       backgroundColor: AppColors.backgroundDark,
       drawer: const AppDrawer(),
-      floatingActionButton: _showBackToTop
+      floatingActionButton: showBackToTop
           ? Padding(
               padding: EdgeInsets.only(bottom: fabBottomPadding),
               child: Container(
@@ -190,13 +216,13 @@ class _AppShellState extends State<AppShell> {
             right: 0,
             top: 0,
             child: IgnorePointer(
-              ignoring: !_menuVisible,
+              ignoring: !menuVisible,
               child: AnimatedSlide(
-                offset: _menuVisible ? Offset.zero : const Offset(0, -1),
+                offset: menuVisible ? Offset.zero : const Offset(0, -1),
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
                 child: AnimatedOpacity(
-                  opacity: _menuVisible ? 1 : 0,
+                  opacity: menuVisible ? 1 : 0,
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                     child: SafeArea(
@@ -260,13 +286,13 @@ class _AppShellState extends State<AppShell> {
               right: 0,
               bottom: 0,
               child: IgnorePointer(
-                ignoring: !_menuVisible,
+                ignoring: !menuVisible,
                 child: AnimatedSlide(
-                  offset: _menuVisible ? Offset.zero : const Offset(0, 1),
+                  offset: menuVisible ? Offset.zero : const Offset(0, 1),
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                   child: AnimatedOpacity(
-                    opacity: _menuVisible ? 1 : 0,
+                    opacity: menuVisible ? 1 : 0,
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                     child: MobileStickyCtaBar(),
@@ -276,7 +302,11 @@ class _AppShellState extends State<AppShell> {
             ),
         ],
       ),
-    ),
+    );
+            },
+          );
+        },
+      ),
     );
   }
 }

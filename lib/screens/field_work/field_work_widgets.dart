@@ -664,7 +664,7 @@ class _FieldWorkShowcaseCardState extends State<FieldWorkShowcaseCard> {
     return Image.asset(
       asset,
       fit: BoxFit.cover,
-      cacheWidth: MobileWebPerformance.devicePixelCacheWidth(context, layoutWidth),
+      cacheWidth: MobileWebPerformance.cardImageCacheWidth(context, layoutWidth),
       filterQuality: MobileWebPerformance.imageFilterQuality(context),
       errorBuilder: (_, __, ___) => ColoredBox(
         color: pillar.accentColor.withValues(alpha: 0.15),
@@ -826,9 +826,14 @@ class _FieldWorkShowcaseCardState extends State<FieldWorkShowcaseCard> {
   Widget build(BuildContext context) {
     final pillar = widget.pillar;
     final languageCode = Localizations.localeOf(context).languageCode;
-    final layoutWidth = MediaQuery.sizeOf(context).width;
     final chinese = widget.modernChineseStyle;
-    final shadow = _isHovered ? AppShadows.cardHover : AppShadows.card;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final layoutWidth = constraints.maxWidth.isFinite && constraints.maxWidth > 0
+            ? constraints.maxWidth
+            : MediaQuery.sizeOf(context).width;
+        final shadow = _isHovered ? AppShadows.cardHover : AppShadows.card;
     final borderColor = chinese
         ? (_isHovered
             ? AppColors.accent.withValues(alpha: 0.75)
@@ -1004,6 +1009,8 @@ class _FieldWorkShowcaseCardState extends State<FieldWorkShowcaseCard> {
           child: scaledCard,
         ),
       ),
+    );
+      },
     );
   }
 }

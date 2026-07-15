@@ -22,6 +22,10 @@ echo "=== Verifying web hero videos ==="
 dart run tool/verify_web_videos.dart
 
 echo ""
+echo "=== Verifying release images ==="
+dart run tool/verify_web_images.dart
+
+echo ""
 echo "=== Building web ==="
 flutter build web
 

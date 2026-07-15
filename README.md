@@ -116,7 +116,40 @@ ffmpeg -y -i tool/activity_video_sources/N.mp4 -vf scale=-2:480 \
   -movflags +faststart web/videos/activities/N.mp4
 ```
 
-Before a web release, run `dart run tool/verify_web_videos.dart` (also run automatically by `scripts/build_web_release.ps1` / `.sh`). Web builds strip duplicate hero and activity MP4s from the Flutter asset bundle so only the static `/videos/` files are served.
+Before a web release, run `dart run tool/verify_web_videos.dart` and `dart run tool/verify_web_images.dart` (also run automatically by `scripts/build_web_release.ps1` / `.sh`). Web builds strip duplicate hero and activity MP4s from the Flutter asset bundle so only the static `/videos/` files are served.
+
+**Raster images** (homepage cards, heroes, app mockups, testimonials) are shipped as optimized **WebP** under `assets/`. Originals are backed up locally to `tool/image_sources/` (not committed).
+
+```bash
+# Windows — encode all JPG/PNG under assets/ to tiered WebP
+.\tool\encode_images.ps1
+
+# macOS / Linux
+./tool/encode_images.sh
+```
+
+Re-encode from backups after tweaking quality profiles:
+
+```bash
+# Windows only
+.\tool\reencode_images_from_backup.ps1
+```
+
+Tiered ffmpeg profiles (see `tool/encode_images.ps1`):
+
+| Folder / type | Max edge | WebP quality |
+|---------------|----------|--------------|
+| `assets/images/apps/` | 2048px | 92 |
+| Testimonials + activities cards | 1200px | 89 |
+| Icons / press logos (`assets/icons/`, `assets/CL/`) | 512px | 90 |
+| Alpha icons (`logomono`, `yuk9icon`, `icon`) | original | lossless |
+| Heroes, books, events (default) | 1920px | 84 |
+
+After encoding, paths in `lib/config/app_content.dart` must use `.webp`. Verify before release:
+
+```bash
+dart run tool/verify_web_images.dart
+```
 
 ## Configuration
 

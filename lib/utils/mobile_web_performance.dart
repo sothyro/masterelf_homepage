@@ -30,13 +30,28 @@ class MobileWebPerformance {
     return Breakpoints.isMobile(width);
   }
 
-  /// Hero video is pre-warmed during bootstrap on all web viewports.
-  static bool shouldPrewarmHeroVideo() => kIsWeb;
+  /// Hero video may be pre-warmed during bootstrap (desktop/tablet web only).
+  static bool shouldPrewarmHeroVideoDuringBootstrap() =>
+      kIsWeb && !isMobileWebViewport();
+
+  /// Legacy alias — prefer [shouldPrewarmHeroVideoDuringBootstrap].
+  static bool shouldPrewarmHeroVideo() => shouldPrewarmHeroVideoDuringBootstrap();
 
   /// Decode width cap for [Image.asset] to limit GPU memory on mobile web.
   static int devicePixelCacheWidth(BuildContext context, double layoutWidth) {
     final dpr = MediaQuery.devicePixelRatioOf(context);
     return (layoutWidth * dpr).round().clamp(320, 1200);
+  }
+
+  /// Decode width for carousel card images (~340px), not full viewport.
+  static int cardImageCacheWidth(BuildContext context, double cardLayoutWidth) =>
+      devicePixelCacheWidth(context, cardLayoutWidth);
+
+  /// Full-bleed hero background decode cap (viewport × DPR, clamped).
+  static int? heroBackgroundCacheWidth(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    if (width <= 0) return null;
+    return devicePixelCacheWidth(context, width);
   }
 
   /// Decode target for crisp UI mockups inside device / phone bezels.
@@ -69,11 +84,15 @@ class MobileWebPerformance {
   /// Poster is shown only until the hero video is ready (or if load fails).
   static bool preferPosterOnlyHeroVideo(BuildContext context) => false;
 
-  /// Skip marquee / carousel auto-advance on mobile web or reduced motion.
-  static bool disableHeavyAnimations(BuildContext context) {
-    if (isMobileWeb(context)) return true;
+  /// True when the user prefers reduced motion (accessibility only).
+  static bool prefersReducedMotion(BuildContext context) {
     final mq = MediaQuery.maybeOf(context);
     return mq != null && mq.disableAnimations;
+  }
+
+  /// Skip marquee / carousel auto-advance for reduced motion only.
+  static bool disableHeavyAnimations(BuildContext context) {
+    return prefersReducedMotion(context);
   }
 
   /// Defer non-critical background preload after bootstrap on web.

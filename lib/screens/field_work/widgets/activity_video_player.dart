@@ -5,6 +5,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+import '../../../utils/mobile_web_performance.dart';
 import '../../../services/activity_video_platform.dart';
 import '../../../theme/app_theme.dart';
 import 'activity_video_playback_hub.dart';
@@ -280,6 +281,9 @@ class _ActivityVideoPlayerState extends State<ActivityVideoPlayer>
   }
 
   Widget _buildPlayerStack() {
+    final layoutWidth = widget.maxWidth ??
+        (MediaQuery.sizeOf(context).width - 32).clamp(200.0, 400.0);
+
     return AspectRatio(
       aspectRatio: 9 / 16,
       child: ClipRRect(
@@ -300,6 +304,10 @@ class _ActivityVideoPlayerState extends State<ActivityVideoPlayer>
               Image.asset(
                 widget.posterImage,
                 fit: BoxFit.cover,
+                cacheWidth: MobileWebPerformance.cardImageCacheWidth(
+                  context,
+                  layoutWidth,
+                ),
                 errorBuilder: (_, __, ___) => ColoredBox(
                   color: AppColors.borderDark,
                   child: Icon(

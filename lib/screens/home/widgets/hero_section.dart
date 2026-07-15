@@ -12,6 +12,7 @@ import '../../../utils/launcher_utils.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
 import '../../../utils/mobile_web_performance.dart';
+import '../../../utils/scroll_activity_gate.dart';
 
 class HeroSection extends StatefulWidget {
   const HeroSection({super.key});
@@ -21,10 +22,14 @@ class HeroSection extends StatefulWidget {
 }
 
 class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
+  static const Duration _posterFadeDuration = Duration(milliseconds: 500);
+
   bool _videoReady = false;
   bool _videoFailed = false;
+  bool _posterDismissed = false;
   bool _inViewport = true;
   bool _appActive = true;
+  Timer? _posterDismissTimer;
 
   @override
   void initState() {
@@ -33,6 +38,7 @@ class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
     _videoReady = HeroVideoPlatform.isReady;
     _videoFailed = HeroVideoPlatform.failed;
     HeroVideoPlatform.addReadyListener(_onVideoReady);
+    ScrollActivityGate.addActivityListener(_syncPlayback);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) unawaited(_startVideo());
     });
@@ -44,6 +50,7 @@ class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
       _videoReady = HeroVideoPlatform.isReady;
       _videoFailed = HeroVideoPlatform.failed;
     });
+    _schedulePosterDismiss();
     _syncPlayback();
   }
 
@@ -56,12 +63,24 @@ class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
       _videoReady = HeroVideoPlatform.isReady;
       _videoFailed = HeroVideoPlatform.failed;
     });
+    _schedulePosterDismiss();
     _syncPlayback();
+  }
+
+  void _schedulePosterDismiss() {
+    if (!_videoReady || _videoFailed || _posterDismissed) return;
+    _posterDismissTimer?.cancel();
+    _posterDismissTimer = Timer(_posterFadeDuration, () {
+      if (!mounted || !_videoReady || _videoFailed) return;
+      setState(() => _posterDismissed = true);
+    });
   }
 
   void _syncPlayback() {
     if (!_videoReady || _videoFailed) return;
-    if (_inViewport && _appActive) {
+    final shouldPlay =
+        _inViewport && _appActive && !ScrollActivityGate.isUserScrolling;
+    if (shouldPlay) {
       unawaited(HeroVideoPlatform.resume());
     } else {
       unawaited(HeroVideoPlatform.pause());
@@ -88,6 +107,8 @@ class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     HeroVideoPlatform.removeReadyListener(_onVideoReady);
+    ScrollActivityGate.removeActivityListener(_syncPlayback);
+    _posterDismissTimer?.cancel();
     VisibilityDetectorController.instance.forget(
       const ValueKey<String>('home-hero-section'),
     );
@@ -245,7 +266,7 @@ class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
     final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = Breakpoints.isMobile(width);
-    final showPoster = !_videoReady || _videoFailed;
+    final showPoster = (!_videoReady || _videoFailed) && !_posterDismissed;
     final videoLayer = HeroVideoPlatform.buildVideoLayer();
     final minHeight = Breakpoints.isSmall(width)
         ? 480.0
@@ -283,20 +304,21 @@ class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
                   ),
                 ),
               ),
-              AnimatedOpacity(
-                opacity: showPoster ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 500),
-                child: Image.asset(
-                  AppContent.assetHeroBackground,
-                  fit: BoxFit.cover,
-                  cacheWidth: heroCacheWidth,
-                  filterQuality: MobileWebPerformance.imageFilterQuality(context),
+              if (showPoster)
+                AnimatedOpacity(
+                  opacity: (!_videoReady || _videoFailed) ? 1.0 : 0.0,
+                  duration: _posterFadeDuration,
+                  child: Image.asset(
+                    AppContent.assetHeroBackground,
+                    fit: BoxFit.cover,
+                    cacheWidth: heroCacheWidth,
+                    filterQuality: MobileWebPerformance.imageFilterQuality(context),
+                  ),
                 ),
-              ),
               if (videoLayer != null)
                 AnimatedOpacity(
                   opacity: _videoReady && !_videoFailed ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 500),
+                  duration: _posterFadeDuration,
                   child: videoLayer,
                 ),
               Container(

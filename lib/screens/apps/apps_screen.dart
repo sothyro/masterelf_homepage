@@ -7,7 +7,9 @@ import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/app_asset_preloader.dart';
 import '../../utils/breakpoints.dart';
+import '../../utils/mobile_web_performance.dart';
 import '../../widgets/app_shell_scroll_scope.dart';
+import 'apps_load_coordinator.dart';
 import '../store/widgets/section_anchor.dart';
 import '../store/widgets/store_content_container.dart';
 import '../store/widgets/store_page_hero.dart';
@@ -36,6 +38,10 @@ class _AppsScreenState extends State<AppsScreen> {
   void initState() {
     super.initState();
     AppAssetPreloader.preloadAppsPageAssets();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      AppsLoadCoordinator.armAfterReveal();
+    });
   }
 
   @override
@@ -75,7 +81,8 @@ class _AppsScreenState extends State<AppsScreen> {
             titleContent: const AppsHeroMedallion(),
             heroHeightNarrow: 477,
             heroHeightWide: 477,
-            backgroundCacheWidth: width > 0 ? (width * MediaQuery.devicePixelRatioOf(context)).round().clamp(320, 1200) : null,
+            backgroundCacheWidth:
+                MobileWebPerformance.heroBackgroundCacheWidth(context),
           ),
           AppsChinesePageShell(
             child: StoreContentContainer(

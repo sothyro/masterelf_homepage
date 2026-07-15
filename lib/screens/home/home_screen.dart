@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../../app_bootstrap.dart';
 import '../../config/field_work_content.dart';
 import '../../l10n/app_localizations.dart';
-import '../../utils/app_asset_preloader.dart';
+import '../../utils/breakpoints.dart';
+import '../../widgets/viewport_deferred_section.dart';
 import '../field_work/widgets/activity_stories_section.dart';
+import 'home_load_coordinator.dart';
 import 'widgets/hero_section.dart';
 import 'widgets/events_section.dart';
 import 'widgets/academies_section.dart';
@@ -14,11 +16,10 @@ import 'widgets/story_section.dart';
 import 'widgets/featured_in_consultation_band.dart';
 import 'widgets/cta_section.dart';
 import 'widgets/testimonials_section.dart';
+import 'widgets/home_idle_mount.dart';
 
-/// Builds every homepage section immediately. During cold start the bootstrap
-/// loading overlay covers this screen until all sections are mounted and
-/// painted ([HomeReadiness]), so the reveal never shows in-progress builds
-/// and scrolling doesn't stutter from late-mounting widgets.
+/// Homepage with tiered mounting: critical sections first, mid-page after idle,
+/// below-fold when near the viewport.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -32,19 +33,25 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      HomeReadiness.markAllSectionsMounted();
-      // Below-fold assets load only after the loader can dismiss, so they
-      // never compete with first paint or hero video startup.
-      HomeReadiness.ready.then((_) {
-        AppAssetPreloader.preloadBelowFoldHomepage();
-      });
+      HomeReadiness.markCriticalHomeContentReady();
+      HomeReadiness.ready.then((_) => HomeLoadCoordinator.armAfterReveal());
     });
+  }
+
+  @override
+  void dispose() {
+    HomeReadiness.onHomeScreenDisposed();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final languageCode = Localizations.localeOf(context).languageCode;
+    final width = MediaQuery.sizeOf(context).width;
+    final isMobile = Breakpoints.isMobile(width);
+    final pillars = buildFieldWorkCoreActivities(l10n, languageCode);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -52,24 +59,48 @@ class _HomeScreenState extends State<HomeScreen> {
         const RepaintBoundary(child: EventsSection()),
         const RepaintBoundary(child: AcademiesSection()),
         const RepaintBoundary(child: ConsultationsSection()),
-        const RepaintBoundary(child: FieldWorkSection()),
-        const RepaintBoundary(child: StorySection()),
-        RepaintBoundary(
-          child: FeaturedInConsultationBand(
-            l10n: l10n,
-            showConsultationButton: false,
+        HomeIdleMount(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              RepaintBoundary(child: FieldWorkSection()),
+              RepaintBoundary(child: StorySection()),
+            ],
           ),
         ),
-        RepaintBoundary(
-          child: ActivityStoriesSection(
-            l10n: l10n,
-            heading: l10n.homeCoreActivitiesHeading,
-            subline: l10n.homeCoreActivitiesSubline,
-            pillars: buildFieldWorkCoreActivities(l10n, languageCode),
+        ViewportDeferredSection(
+          sectionKey: 'home-featured-band',
+          placeholderHeight: isMobile ? 320 : 400,
+          child: RepaintBoundary(
+            child: FeaturedInConsultationBand(
+              l10n: l10n,
+              showConsultationButton: false,
+            ),
           ),
         ),
-        const RepaintBoundary(child: TestimonialsSection()),
-        const RepaintBoundary(child: CtaSection()),
+        ViewportDeferredSection(
+          sectionKey: 'home-activity-stories',
+          placeholderHeight: isMobile ? 720 : 900,
+          child: RepaintBoundary(
+            child: ActivityStoriesSection(
+              l10n: l10n,
+              heading: l10n.homeCoreActivitiesHeading,
+              subline: l10n.homeCoreActivitiesSubline,
+              pillars: pillars,
+              preloadOwnerKey: 'home-activity-stories',
+            ),
+          ),
+        ),
+        ViewportDeferredSection(
+          sectionKey: 'home-testimonials',
+          placeholderHeight: isMobile ? 680 : 820,
+          child: const RepaintBoundary(child: TestimonialsSection()),
+        ),
+        ViewportDeferredSection(
+          sectionKey: 'home-cta',
+          placeholderHeight: isMobile ? 280 : 320,
+          child: const RepaintBoundary(child: CtaSection()),
+        ),
       ],
     );
   }

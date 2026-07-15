@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import '../../../config/app_content.dart';
 import '../../../config/testimonials_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
+import '../../../utils/carousel_row_preloader.dart';
 import '../../../utils/breakpoints.dart';
 import '../../../utils/mobile_web_performance.dart';
 import 'field_work_chinese_design.dart';
@@ -24,6 +26,7 @@ class TestimonialsSection extends StatefulWidget {
 }
 
 class _TestimonialsSectionState extends State<TestimonialsSection> {
+  static const String _preloadOwnerKey = 'home-testimonials';
   static const double _cardGap = 20;
   static const double _cardMaxWidth = 340;
   static const double _cardsHeight = 510;
@@ -86,6 +89,56 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
     );
   }
 
+  static double _cardLayoutWidthFor(double viewportWidth) {
+    if (Breakpoints.isMobile(viewportWidth)) {
+      return viewportWidth - _stripHorizontalInset * 2;
+    }
+    return _cardMaxWidth;
+  }
+
+  final List<String> _rowPathsBuffer = [];
+
+  void _portraitPathsForPage(int page, int cardsPerPage, List<String> out) {
+    out.clear();
+    final start = page * cardsPerPage;
+    final end = math.min(start + cardsPerPage, _shuffledItems.length);
+    for (var i = start; i < end; i++) {
+      final path = _shuffledItems[i].imagePath;
+      if (path != null) out.add(path);
+    }
+  }
+
+  void _preloadCurrentRow() {
+    final width = MediaQuery.sizeOf(context).width;
+    final cardsPerPage = _cardsPerPageForWidth(width);
+    _portraitPathsForPage(_currentPage, cardsPerPage, _rowPathsBuffer);
+    unawaited(
+      CarouselRowPreloader.preloadRow(
+        ownerKey: _preloadOwnerKey,
+        paths: _rowPathsBuffer,
+        cardsPerPage: cardsPerPage,
+        mobileSequential: Breakpoints.isMobile(width),
+      ),
+    );
+  }
+
+  void _prefetchNextRow() {
+    final width = MediaQuery.sizeOf(context).width;
+    final cardsPerPage = _cardsPerPageForWidth(width);
+    final totalPages = (_shuffledItems.length / cardsPerPage).ceil();
+    if (totalPages == 0) return;
+    final nextPage = (_currentPage + 1) % totalPages;
+    _portraitPathsForPage(nextPage, cardsPerPage, _rowPathsBuffer);
+    unawaited(
+      CarouselRowPreloader.preloadRow(
+        ownerKey: _preloadOwnerKey,
+        paths: _rowPathsBuffer,
+        cardsPerPage: cardsPerPage,
+        mobileSequential: Breakpoints.isMobile(width),
+      ),
+    );
+  }
+
   void _onVisibilityChanged(VisibilityInfo info) {
     final visible = info.visibleFraction > 0;
     if (visible == _inViewport) return;
@@ -94,9 +147,11 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
       if (_pageReadyForFlip == null && mounted) {
         setState(() => _pageReadyForFlip = 0);
       }
+      _preloadCurrentRow();
       _startAutoLoop();
     } else {
       _autoLoopGeneration++;
+      CarouselRowPreloader.cancel(_preloadOwnerKey);
     }
   }
 
@@ -112,10 +167,12 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   }
 
   void _startAutoLoop() {
+    if (MobileWebPerformance.prefersReducedMotion(context)) return;
     final generation = _autoLoopGeneration;
     final width = MediaQuery.sizeOf(context).width;
     final displayDuration = _pageDisplayDurationFor(width);
     final transitionDuration = _pageTransitionDurationFor(width);
+    _prefetchNextRow();
     Future<void>.delayed(displayDuration, () {
       if (!mounted || !_inViewport || generation != _autoLoopGeneration) return;
       final cardsPerPage = _cardsPerPageForWidth(width);
@@ -140,6 +197,7 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   @override
   void dispose() {
     _autoLoopGeneration++;
+    CarouselRowPreloader.cancel(_preloadOwnerKey);
     VisibilityDetectorController.instance.forget(
       const ValueKey<String>('testimonials-section'),
     );
@@ -215,6 +273,7 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                     onPageChanged: (page) {
                       setState(() => _currentPage = page);
                       _scheduleFadeAfterTransition(page);
+                      _preloadCurrentRow();
                     },
                     itemCount: (_shuffledItems.length / cardsPerPage).ceil(),
                     itemBuilder: (context, pageIndex) {
@@ -568,16 +627,19 @@ class _TestimonialCardState extends State<_TestimonialCard> {
 
   Widget _buildImageBlock() {
     final imageFit = widget.isMobile ? BoxFit.contain : BoxFit.cover;
-    final layoutWidth = MediaQuery.sizeOf(context).width;
+    final viewportWidth = MediaQuery.sizeOf(context).width;
+    final cardLayoutWidth = widget.isMobile
+        ? viewportWidth - 48
+        : 340.0;
     final topInset = widget.imageTopInset;
 
     final image = Image.asset(
       _resolvedImagePath,
       fit: imageFit,
       alignment: topInset > 0 ? Alignment.topCenter : Alignment.center,
-      cacheWidth: MobileWebPerformance.devicePixelCacheWidth(
+      cacheWidth: MobileWebPerformance.cardImageCacheWidth(
         context,
-        layoutWidth,
+        cardLayoutWidth,
       ),
       filterQuality: MobileWebPerformance.imageFilterQuality(context),
       errorBuilder: (_, __, ___) => ColoredBox(

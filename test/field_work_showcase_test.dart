@@ -14,10 +14,10 @@ void main() {
     expect(pillars[3].linkPath, '/consultations?service=dateselection');
     expect(pillars[0].title, 'Feng Shui site visit');
     expect(pillars[3].title, 'Date Selection (择日)');
-    expect(pillars[0].coverImage, 'assets/images/activities/fengshui.jpg');
-    expect(pillars[1].coverImage, 'assets/images/activities/consultation.jpg');
-    expect(pillars[2].coverImage, 'assets/images/activities/maosan.jpg');
-    expect(pillars[3].coverImage, 'assets/images/activities/dateselection.jpg');
+    expect(pillars[0].coverImage, 'assets/images/activities/fengshui.webp');
+    expect(pillars[1].coverImage, 'assets/images/activities/consultation.webp');
+    expect(pillars[2].coverImage, 'assets/images/activities/maosan.webp');
+    expect(pillars[3].coverImage, 'assets/images/activities/dateselection.webp');
     expect(pillars[0].realm, FieldWorkRealm.site);
     expect(pillars[2].realm, FieldWorkRealm.ritual);
   });

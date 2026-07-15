@@ -266,8 +266,6 @@ class _DesktopEventsLayoutState extends State<_DesktopEventsLayout> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback(_measureLeftHeight);
-
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.topCenter,

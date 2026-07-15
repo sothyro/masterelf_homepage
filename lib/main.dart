@@ -125,9 +125,11 @@ class _HeroVideoBootstrapState extends State<HeroVideoBootstrap> {
       // Retry autoplay now that the loading overlay is gone; browsers often
       // block muted autoplay while the page is still "obscured".
       unawaited(HeroVideoPlatform.resume());
-      // Background preload starts only after the overlay is gone so it never
-      // competes with hero video playback or first interaction.
-      AppAssetPreloader.startBackgroundPreload();
+      // Progressive-load routes arm coordinators on mount; others preload here.
+      final entryPath = bootstrapInitialLocation.split('#').first;
+      if (entryPath != '/' && entryPath != '/apps' && entryPath != '/field-work') {
+        AppAssetPreloader.startBackgroundPreload();
+      }
     });
   }
 

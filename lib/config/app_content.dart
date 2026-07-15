@@ -54,14 +54,14 @@ class AppContent {
 
   // Asset paths (§1, §2, §8, §9 – use images from assets folder)
   /// Logo for header; favicon can use same. Monochrome logo for tinting (e.g. accent).
-  static const String assetLogo = 'assets/icons/logomono.png';
-  static const String assetFavicon = 'assets/icons/logomono.png';
+  static const String assetLogo = 'assets/icons/logomono.webp';
+  static const String assetFavicon = 'assets/icons/logomono.webp';
 
   /// Apps page hero medallion (Period 9 / phoenix emblem).
-  static const String assetYuk9Icon = 'assets/icons/yuk9icon.png';
-  static const String assetHeroBackground = 'assets/images/main.jpg';
+  static const String assetYuk9Icon = 'assets/icons/yuk9icon.webp';
+  static const String assetHeroBackground = 'assets/images/main.webp';
   static const String assetBackgroundDirection =
-      'assets/images/backgrounddirection.jpg';
+      'assets/images/backgrounddirection.webp';
   static const String assetHeroVideo = 'assets/videos/videobackground720.mp4';
 
   /// Static web hero videos (served from [web/videos/], not the asset bundle).
@@ -70,111 +70,111 @@ class AppContent {
 
   /// Apps page: Master Elf System section video.
   static const String assetAppPageVideo = 'assets/videos/appads.mp4';
-  static const String assetEventCard = 'assets/images/event.jpg';
-  static const String assetEventMain = 'assets/images/event2026.jpg';
+  static const String assetEventCard = 'assets/images/event.webp';
+  static const String assetEventMain = 'assets/images/event2026.webp';
   static const String assetEvent2027 =
-      'assets/images/events/comingsoon2027.jpg';
+      'assets/images/events/comingsoon2027.webp';
   static const String assetEvent2026FengShui =
-      'assets/images/events/event2026_1.jpg';
+      'assets/images/events/event2026_1.webp';
   static const String assetEvent2026CrimsonHorse =
-      'assets/images/events/event2026_2.jpg';
+      'assets/images/events/event2026_2.webp';
 
   /// Events page hero background.
-  static const String assetEventHero = 'assets/images/eventbg.jpg';
+  static const String assetEventHero = 'assets/images/eventbg.webp';
 
   /// Activities page hero background.
-  static const String assetActivitiesHero = 'assets/images/activitiesbg.jpg';
+  static const String assetActivitiesHero = 'assets/images/activitiesbg.webp';
 
   /// Phoenix 2026 venue partners (Chipmong, Legend Cinema).
-  static const String assetVenueChipmong = 'assets/CL/CL (2).jpg';
-  static const String assetVenueLegendCinema = 'assets/CL/CL (3).jpg';
-  static const String assetAboutHero = 'assets/images/sessions.jpg';
-  static const String assetSessions = 'assets/images/sessions.jpg';
-  static const String assetParticipants = 'assets/images/participants.jpg';
-  static const String assetRegistration = 'assets/images/registration.jpg';
-  static const String assetDirection = 'assets/images/direction.jpg';
+  static const String assetVenueChipmong = 'assets/CL/CL (2).webp';
+  static const String assetVenueLegendCinema = 'assets/CL/CL (3).webp';
+  static const String assetAboutHero = 'assets/images/sessions.webp';
+  static const String assetSessions = 'assets/images/sessions.webp';
+  static const String assetParticipants = 'assets/images/participants.webp';
+  static const String assetRegistration = 'assets/images/registration.webp';
+  static const String assetDirection = 'assets/images/direction.webp';
 
   /// Contact page hero background.
-  static const String assetContactHero = 'assets/images/herobackground.jpg';
+  static const String assetContactHero = 'assets/images/herobackground.webp';
 
   /// Journey page hero background.
-  static const String assetJourneyHero = 'assets/images/endeavour.jpg';
+  static const String assetJourneyHero = 'assets/images/endeavour.webp';
 
   /// Story section image (portrait).
-  static const String assetStoryBackground = 'assets/images/story.PNG';
-  static const String assetTestimonialProfile = 'assets/images/profile.jpg';
+  static const String assetStoryBackground = 'assets/images/story.webp';
+  static const String assetTestimonialProfile = 'assets/images/profile.webp';
   static const String assetTestimonialParticipant =
-      'assets/images/participant2.jpg';
+      'assets/images/participant2.webp';
   static const String assetTestimonialPanhaLeakhena =
-      'assets/images/testimonials/panhaleakhena.jpg';
+      'assets/images/testimonials/panhaleakhena.webp';
   static const String assetTestimonialMoon =
-      'assets/images/testimonials/moon.jpg';
+      'assets/images/testimonials/moon.webp';
   static const String assetTestimonialRithy =
-      'assets/images/testimonials/rithy.jpg';
+      'assets/images/testimonials/rithy.webp';
   static const String assetTestimonialVanna =
-      'assets/images/testimonials/vanna.jpg';
+      'assets/images/testimonials/vanna.webp';
   static const String assetTestimonialThida =
-      'assets/images/testimonials/thida.jpg';
+      'assets/images/testimonials/thida.webp';
   static const String assetTestimonialZeiitey =
-      'assets/images/testimonials/zeiitey.jpg';
-  static const String assetTestimonial7 = 'assets/images/testimonials/7.jpg';
-  static const String assetTestimonial8 = 'assets/images/testimonials/8.jpg';
-  static const String assetTestimonial9 = 'assets/images/testimonials/9.jpg';
-  static const String assetTestimonial10 = 'assets/images/testimonials/10.jpg';
-  static const String assetTestimonial11 = 'assets/images/testimonials/11.jpg';
-  static const String assetTestimonial12 = 'assets/images/testimonials/12.jpg';
-  static const String assetTestimonial13 = 'assets/images/testimonials/13.jpg';
-  static const String assetTestimonial14 = 'assets/images/testimonials/14.jpg';
-  static const String assetTestimonial15 = 'assets/images/testimonials/15.jpg';
-  static const String assetTestimonial16 = 'assets/images/testimonials/16.jpg';
-  static const String assetTestimonial17 = 'assets/images/testimonials/17.jpg';
-  static const String assetTestimonial18 = 'assets/images/testimonials/18.jpg';
+      'assets/images/testimonials/zeiitey.webp';
+  static const String assetTestimonial7 = 'assets/images/testimonials/7.webp';
+  static const String assetTestimonial8 = 'assets/images/testimonials/8.webp';
+  static const String assetTestimonial9 = 'assets/images/testimonials/9.webp';
+  static const String assetTestimonial10 = 'assets/images/testimonials/10.webp';
+  static const String assetTestimonial11 = 'assets/images/testimonials/11.webp';
+  static const String assetTestimonial12 = 'assets/images/testimonials/12.webp';
+  static const String assetTestimonial13 = 'assets/images/testimonials/13.webp';
+  static const String assetTestimonial14 = 'assets/images/testimonials/14.webp';
+  static const String assetTestimonial15 = 'assets/images/testimonials/15.webp';
+  static const String assetTestimonial16 = 'assets/images/testimonials/16.webp';
+  static const String assetTestimonial17 = 'assets/images/testimonials/17.webp';
+  static const String assetTestimonial18 = 'assets/images/testimonials/18.webp';
   static const String assetTestimonialHena =
-      'assets/images/testimonials/hena.png';
+      'assets/images/testimonials/hena.webp';
   static const String assetTestimonialSokha =
-      'assets/images/testimonials/sokha.png';
+      'assets/images/testimonials/sokha.webp';
   static const String assetTestimonialPisey =
-      'assets/images/testimonials/pisey.png';
+      'assets/images/testimonials/pisey.webp';
   static const String assetTestimonialAiichen =
-      'assets/images/testimonials/aiichen.png';
+      'assets/images/testimonials/aiichen.webp';
   static const String assetTestimonialHengyang =
-      'assets/images/testimonials/hengyang.png';
+      'assets/images/testimonials/hengyang.webp';
   static const String assetTestimonialChanra =
-      'assets/images/testimonials/chanra.png';
+      'assets/images/testimonials/chanra.webp';
   static const String assetTestimonialDeth =
-      'assets/images/testimonials/deth.png';
+      'assets/images/testimonials/deth.webp';
   static const String assetTestimonialLinger =
-      'assets/images/testimonials/linger.png';
+      'assets/images/testimonials/linger.webp';
   static const String assetTestimonialOunnpovv =
-      'assets/images/testimonials/ounnpovv.png';
+      'assets/images/testimonials/ounnpovv.webp';
   static const String assetTestimonialMuysorng =
-      'assets/images/testimonials/muysorng.png';
+      'assets/images/testimonials/muysorng.webp';
   static const String assetTestimonialSokunna =
-      'assets/images/testimonials/sokunna.png';
+      'assets/images/testimonials/sokunna.webp';
   static const String assetTestimonialSaly =
-      'assets/images/testimonials/saly.png';
+      'assets/images/testimonials/saly.webp';
   static const String assetTestimonialRina =
-      'assets/images/testimonials/rina.png';
+      'assets/images/testimonials/rina.webp';
   static const String assetTestimonialChung =
-      'assets/images/testimonials/chung.png';
-  static const String assetAcademy = 'assets/images/apps.jpg';
+      'assets/images/testimonials/chung.webp';
+  static const String assetAcademy = 'assets/images/apps.webp';
 
   /// Consultation / appointments page (Smart Move cards).
-  static const String assetConsultation = 'assets/images/consultation.jpg';
+  static const String assetConsultation = 'assets/images/consultation.webp';
 
   /// Field Work homepage showcase pillars (assets/images/activities/).
   static const String assetActivityFengShui =
-      'assets/images/activities/fengshui.jpg';
+      'assets/images/activities/fengshui.webp';
   static const String assetActivityConsultation =
-      'assets/images/activities/consultation.jpg';
+      'assets/images/activities/consultation.webp';
   static const String assetActivityMaoShan =
-      'assets/images/activities/maosan.jpg';
+      'assets/images/activities/maosan.webp';
   static const String assetActivityDateSelection =
-      'assets/images/activities/dateselection.jpg';
+      'assets/images/activities/dateselection.webp';
 
-  /// Field Work photo carousel image (activity_01.jpg … activity_29.jpg).
+  /// Field Work photo carousel image (activity_01.webp … activity_29.webp).
   static String assetActivityPhoto(int n) =>
-      'assets/images/activities/activity_${n.toString().padLeft(2, '0')}.jpg';
+      'assets/images/activities/activity_${n.toString().padLeft(2, '0')}.webp';
 
   /// Activity spotlight videos (9:16) under assets/videos/activities/.
   static const String assetActivityVideo01 = 'assets/videos/activities/1.mp4';
@@ -206,50 +206,50 @@ class AppContent {
     assetActivityVideo05,
     assetActivityVideo06,
   ];
-  static const String assetBetterOption = 'assets/images/betteroption.jpg';
+  static const String assetBetterOption = 'assets/images/betteroption.webp';
 
   /// BaZi Harmony card image on main page (Academies section).
-  static const String assetBaziHarmony = 'assets/icons/baziharmony.jpg';
+  static const String assetBaziHarmony = 'assets/icons/baziharmony.webp';
 
   /// QiMen card image on main page (Academies section).
-  static const String assetAcademyQiMen = 'assets/icons/qimendunjia.jpg';
+  static const String assetAcademyQiMen = 'assets/icons/qimendunjia.webp';
 
   /// Feng Shui Charter card image (home Academies, Journey, Academy page).
-  static const String assetAcademyFengShui = 'assets/images/fengshuicard.jpg';
+  static const String assetAcademyFengShui = 'assets/images/fengshuicard.webp';
 
   // Apps page showcase (assets/images/apps/)
   /// Apps page hero banner
-  static const String assetAppsHero = 'assets/images/hero1x.jpg';
-  static const String assetAppMainMenu = 'assets/images/apps/mainmenu.png';
-  static const String assetAppBazi01 = 'assets/images/apps/bazi_01.png';
-  static const String assetAppBazi02 = 'assets/images/apps/bazi_02.png';
-  static const String assetAppBazi03 = 'assets/images/apps/bazi_03.png';
-  static const String assetAppBazi04 = 'assets/images/apps/bazi_04.png';
-  static const String assetAppBazi05 = 'assets/images/apps/bazi_05.png';
-  static const String assetAppBazi06 = 'assets/images/apps/bazi_06.png';
-  static const String assetAppBazi07 = 'assets/images/apps/bazi_07.png';
-  static const String assetAppQiMen = 'assets/images/apps/qimendunjia.png';
+  static const String assetAppsHero = 'assets/images/hero1x.webp';
+  static const String assetAppMainMenu = 'assets/images/apps/mainmenu.webp';
+  static const String assetAppBazi01 = 'assets/images/apps/bazi_01.webp';
+  static const String assetAppBazi02 = 'assets/images/apps/bazi_02.webp';
+  static const String assetAppBazi03 = 'assets/images/apps/bazi_03.webp';
+  static const String assetAppBazi04 = 'assets/images/apps/bazi_04.webp';
+  static const String assetAppBazi05 = 'assets/images/apps/bazi_05.webp';
+  static const String assetAppBazi06 = 'assets/images/apps/bazi_06.webp';
+  static const String assetAppBazi07 = 'assets/images/apps/bazi_07.webp';
+  static const String assetAppQiMen = 'assets/images/apps/qimendunjia.webp';
   static const String assetAppDateSelection =
-      'assets/images/apps/dateselection.png';
+      'assets/images/apps/dateselection.webp';
   static const String assetAppCoupleCompatibility01 =
-      'assets/images/apps/couple_compatibility_01.png';
+      'assets/images/apps/couple_compatibility_01.webp';
   static const String assetAppCoupleCompatibility02 =
-      'assets/images/apps/couple_compatibility_02.png';
+      'assets/images/apps/couple_compatibility_02.webp';
   static const String assetAppCoupleCompatibility03 =
-      'assets/images/apps/couple_compatibility_03.png';
+      'assets/images/apps/couple_compatibility_03.webp';
   static const String assetAppBusinessPartnership01 =
-      'assets/images/apps/business_partnership_01.png';
+      'assets/images/apps/business_partnership_01.webp';
   static const String assetAppBusinessPartnership02 =
-      'assets/images/apps/business_partnership_02.png';
+      'assets/images/apps/business_partnership_02.webp';
   static const String assetAppBusinessPartnership03 =
-      'assets/images/apps/business_partnership_03.png';
+      'assets/images/apps/business_partnership_03.webp';
   static const String assetAppFengShuiTools =
-      'assets/images/apps/fengshuitools.png';
-  static const String assetAppIChing = 'assets/images/apps/iching.png';
+      'assets/images/apps/fengshuitools.webp';
+  static const String assetAppIChing = 'assets/images/apps/iching.webp';
 
   /// Period 9 mobile app screenshots
-  static const String assetPeriod9_1 = 'assets/images/apps/period9_1.jpg';
-  static const String assetPeriod9_2 = 'assets/images/apps/period9_2.jpg';
+  static const String assetPeriod9_1 = 'assets/images/apps/period9_1.webp';
+  static const String assetPeriod9_2 = 'assets/images/apps/period9_2.webp';
 
   /// All Master Elf app showcase images (for preloader).
   static List<String> get appShowcaseImageAssets => [
@@ -286,31 +286,31 @@ class AppContent {
   ];
 
   /// Book store — 5-Blessing series (1080×1350, 4:5 covers)
-  static const String assetBook1 = 'assets/images/books/book1.jpg';
-  static const String assetBook2 = 'assets/images/books/book2.jpg';
-  static const String assetBook3 = 'assets/images/books/book3.jpg';
-  static const String assetBook4 = 'assets/images/books/book4.jpg';
-  static const String assetBook5 = 'assets/images/books/book5.jpg';
+  static const String assetBook1 = 'assets/images/books/book1.webp';
+  static const String assetBook2 = 'assets/images/books/book2.webp';
+  static const String assetBook3 = 'assets/images/books/book3.webp';
+  static const String assetBook4 = 'assets/images/books/book4.webp';
+  static const String assetBook5 = 'assets/images/books/book5.webp';
 
   /// Full-width shelf mockup panorama for the 5-Blessing series band.
   static const String assetShelfMockupFiveBlessings =
-      'assets/images/books/shelf_mockup_five_blessings.jpg';
+      'assets/images/books/shelf_mockup_five_blessings.webp';
 
   /// Period 9 Feng Shui book store volumes (legacy covers).
   static const String assetPeriod9Book1 =
-      'assets/stores/books/period9book1.jpg';
+      'assets/stores/books/period9book1.webp';
   static const String assetPeriod9Book2 =
-      'assets/stores/books/period9book2.jpg';
+      'assets/stores/books/period9book2.webp';
 
   /// Press / media logos shown in the home page Featured In section.
   static const List<String> featuredPressLogos = [
-    'assets/CL/CL (1).jpg',
-    'assets/CL/CL (2).jpg',
-    'assets/CL/CL (3).jpg',
-    'assets/CL/CL (4).jpg',
-    'assets/CL/CL (5).jpg',
-    'assets/CL/CL (6).jpg',
-    'assets/CL/CL (7).jpg',
-    'assets/CL/CL (8).jpg',
+    'assets/CL/CL (1).webp',
+    'assets/CL/CL (2).webp',
+    'assets/CL/CL (3).webp',
+    'assets/CL/CL (4).webp',
+    'assets/CL/CL (5).webp',
+    'assets/CL/CL (6).webp',
+    'assets/CL/CL (7).webp',
+    'assets/CL/CL (8).webp',
   ];
 }

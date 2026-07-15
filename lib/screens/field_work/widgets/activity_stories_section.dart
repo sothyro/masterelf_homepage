@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 import '../../../config/field_work_content.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
+import '../../../utils/carousel_row_preloader.dart';
 import '../../../utils/breakpoints.dart';
 import '../../../utils/mobile_web_performance.dart';
 import '../field_work_widgets.dart';
@@ -23,12 +25,14 @@ class ActivityStoriesSection extends StatefulWidget {
     required this.pillars,
     this.heading,
     this.subline,
+    this.preloadOwnerKey = 'activity-stories-section',
   });
 
   final AppLocalizations l10n;
   final List<FieldWorkShowcasePillar> pillars;
   final String? heading;
   final String? subline;
+  final String preloadOwnerKey;
 
   @override
   State<ActivityStoriesSection> createState() => _ActivityStoriesSectionState();
@@ -92,6 +96,55 @@ class _ActivityStoriesSectionState extends State<ActivityStoriesSection> {
     );
   }
 
+  static double _cardLayoutWidthFor(double viewportWidth) {
+    if (Breakpoints.isMobile(viewportWidth)) {
+      return viewportWidth - _stripHorizontalInset * 2;
+    }
+    return _cardMaxWidth;
+  }
+
+  void _coverPathsForPage(int page, int cardsPerPage, List<String> out) {
+    out.clear();
+    final start = page * cardsPerPage;
+    final end = math.min(start + cardsPerPage, _shuffledPillars.length);
+    for (var i = start; i < end; i++) {
+      out.add(_shuffledPillars[i].coverImage);
+    }
+  }
+
+  final List<String> _rowPathsBuffer = [];
+
+  void _preloadCurrentRow() {
+    final width = MediaQuery.sizeOf(context).width;
+    final cardsPerPage = _cardsPerPageForWidth(width);
+    _coverPathsForPage(_currentPage, cardsPerPage, _rowPathsBuffer);
+    unawaited(
+      CarouselRowPreloader.preloadRow(
+        ownerKey: widget.preloadOwnerKey,
+        paths: _rowPathsBuffer,
+        cardsPerPage: cardsPerPage,
+        mobileSequential: Breakpoints.isMobile(width),
+      ),
+    );
+  }
+
+  void _prefetchNextRow() {
+    final width = MediaQuery.sizeOf(context).width;
+    final cardsPerPage = _cardsPerPageForWidth(width);
+    final totalPages = (_shuffledPillars.length / cardsPerPage).ceil();
+    if (totalPages == 0) return;
+    final nextPage = (_currentPage + 1) % totalPages;
+    _coverPathsForPage(nextPage, cardsPerPage, _rowPathsBuffer);
+    unawaited(
+      CarouselRowPreloader.preloadRow(
+        ownerKey: widget.preloadOwnerKey,
+        paths: _rowPathsBuffer,
+        cardsPerPage: cardsPerPage,
+        mobileSequential: Breakpoints.isMobile(width),
+      ),
+    );
+  }
+
   void _onVisibilityChanged(VisibilityInfo info) {
     final visible = info.visibleFraction > 0;
     if (visible == _inViewport) return;
@@ -100,9 +153,11 @@ class _ActivityStoriesSectionState extends State<ActivityStoriesSection> {
       if (_pageReadyForFlip == null && mounted) {
         setState(() => _pageReadyForFlip = 0);
       }
+      _preloadCurrentRow();
       _startAutoLoop();
     } else {
       _autoLoopGeneration++;
+      CarouselRowPreloader.cancel(widget.preloadOwnerKey);
     }
   }
 
@@ -117,10 +172,12 @@ class _ActivityStoriesSectionState extends State<ActivityStoriesSection> {
   }
 
   void _startAutoLoop() {
+    if (MobileWebPerformance.prefersReducedMotion(context)) return;
     final generation = _autoLoopGeneration;
     final width = MediaQuery.sizeOf(context).width;
     final displayDuration = _pageDisplayDurationFor(width);
     final transitionDuration = _pageTransitionDurationFor(width);
+    _prefetchNextRow();
     Future<void>.delayed(displayDuration, () {
       if (!mounted || !_inViewport || generation != _autoLoopGeneration) return;
       final cardsPerPage = _cardsPerPageForWidth(width);
@@ -158,6 +215,7 @@ class _ActivityStoriesSectionState extends State<ActivityStoriesSection> {
   @override
   void dispose() {
     _autoLoopGeneration++;
+    CarouselRowPreloader.cancel(widget.preloadOwnerKey);
     VisibilityDetectorController.instance.forget(
       const ValueKey<String>('activity-stories-section'),
     );
@@ -298,6 +356,7 @@ class _ActivityStoriesSectionState extends State<ActivityStoriesSection> {
                 controller: _pageController,
                 onPageChanged: (page) {
                   setState(() => _currentPage = page);
+                  _preloadCurrentRow();
                   _scheduleFadeAfterTransition(page);
                 },
                 itemCount: (_shuffledPillars.length / cardsPerPage).ceil(),
@@ -613,7 +672,10 @@ class _ActivityStoryCardState extends State<_ActivityStoryCard> {
 
   Widget _buildImageBlock(FieldWorkShowcasePillar pillar) {
     final imageFit = widget.isMobile ? BoxFit.contain : BoxFit.cover;
-    final layoutWidth = MediaQuery.sizeOf(context).width;
+    final viewportWidth = MediaQuery.sizeOf(context).width;
+    final cardLayoutWidth = widget.isMobile
+        ? viewportWidth - 48
+        : 340.0;
 
     return ColoredBox(
       color: AppColors.borderDark.withValues(alpha: 0.35),
@@ -624,9 +686,9 @@ class _ActivityStoryCardState extends State<_ActivityStoryCard> {
             pillar.coverImage,
             fit: imageFit,
             alignment: Alignment.center,
-            cacheWidth: MobileWebPerformance.devicePixelCacheWidth(
+            cacheWidth: MobileWebPerformance.cardImageCacheWidth(
               context,
-              layoutWidth,
+              cardLayoutWidth,
             ),
             filterQuality: MobileWebPerformance.imageFilterQuality(context),
             errorBuilder: (_, __, ___) => ColoredBox(

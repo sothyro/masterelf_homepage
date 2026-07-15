@@ -6,6 +6,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 import '../../../config/apps_showcase_content.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
+import '../../../utils/carousel_row_preloader.dart';
 import '../../../utils/mobile_web_performance.dart';
 import '../../../widgets/chinese_device_showcase.dart';
 import '../../home/widgets/field_work_chinese_design.dart';
@@ -22,6 +23,7 @@ class AppsFeatureCarouselStage extends StatefulWidget {
 }
 
 class _AppsFeatureCarouselStageState extends State<AppsFeatureCarouselStage> {
+  static const _ownerKey = 'apps-feature-carousel';
   static const _tickDuration = Duration(milliseconds: 2500);
   static const _tickDurationMobileWeb = Duration(milliseconds: 5000);
   static const _transitionDuration = Duration(milliseconds: 400);
@@ -46,6 +48,7 @@ class _AppsFeatureCarouselStageState extends State<AppsFeatureCarouselStage> {
   @override
   void dispose() {
     _stopTimer();
+    CarouselRowPreloader.cancel(_ownerKey);
     VisibilityDetectorController.instance.forget(
       const ValueKey<String>('apps-feature-carousel'),
     );
@@ -63,7 +66,7 @@ class _AppsFeatureCarouselStageState extends State<AppsFeatureCarouselStage> {
 
   bool get _animationsEnabled {
     if (!mounted) return false;
-    if (MobileWebPerformance.disableHeavyAnimations(context)) return false;
+    if (MobileWebPerformance.prefersReducedMotion(context)) return false;
     final mq = MediaQuery.maybeOf(context);
     return mq == null || !mq.disableAnimations;
   }
@@ -94,6 +97,11 @@ class _AppsFeatureCarouselStageState extends State<AppsFeatureCarouselStage> {
     final visible = info.visibleFraction > 0.15;
     if (visible == _inViewport) return;
     _inViewport = visible;
+    if (visible) {
+      _preloadFeatureAssets(_featureIndex);
+    } else {
+      CarouselRowPreloader.cancel(_ownerKey);
+    }
     _syncTimer();
   }
 
@@ -103,19 +111,21 @@ class _AppsFeatureCarouselStageState extends State<AppsFeatureCarouselStage> {
     final nextAssetIndex = _assetIndex + 1;
     if (nextAssetIndex >= module.assets.length) {
       final nextFeature = (_featureIndex + 1) % widget.modules.length;
-      _precacheFeatureAssets(nextFeature);
+      _preloadFeatureAssets(nextFeature);
       setState(() {
         _assetIndex = 0;
         _featureIndex = nextFeature;
       });
     } else {
+      final nextPath = module.assets[nextAssetIndex % module.assets.length];
+      _preloadAssetPaths([nextPath]);
       setState(() => _assetIndex = nextAssetIndex);
     }
   }
 
   void _selectFeature(int index) {
     if (index == _featureIndex) return;
-    _precacheFeatureAssets(index);
+    _preloadFeatureAssets(index);
     setState(() {
       _featureIndex = index;
       _assetIndex = 0;
@@ -123,12 +133,29 @@ class _AppsFeatureCarouselStageState extends State<AppsFeatureCarouselStage> {
     _syncTimer();
   }
 
-  void _precacheFeatureAssets(int featureIndex) {
+  void _preloadFeatureAssets(int featureIndex) {
     if (!mounted) return;
     final assets = widget.modules[featureIndex].assets;
-    for (final asset in assets) {
-      precacheImage(AssetImage(asset), context);
-    }
+    if (assets.isEmpty) return;
+    final paths = <String>[
+      assets[_assetIndex % assets.length],
+      if (assets.length > 1) assets[(_assetIndex + 1) % assets.length],
+    ];
+    _preloadAssetPaths(paths);
+  }
+
+  void _preloadAssetPaths(List<String> paths) {
+    if (!mounted || paths.isEmpty) return;
+    final width = MediaQuery.sizeOf(context).width;
+    unawaited(
+      CarouselRowPreloader.preloadRow(
+        ownerKey: _ownerKey,
+        paths: paths,
+        cardsPerPage: paths.length,
+        mobileSequential:
+            MobileWebPerformance.isMobileWeb(context) || Breakpoints.isMobile(width),
+      ),
+    );
   }
 
   (String, String, String) _staggeredAssets(AppsFeatureGroup module) {

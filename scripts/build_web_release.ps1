@@ -27,6 +27,13 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
+Write-Host "`n=== Verifying release images ===" -ForegroundColor Cyan
+dart run tool/verify_web_images.dart
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Release image verification failed." -ForegroundColor Red
+    exit 1
+}
+
 Write-Host "`n=== Building web ===" -ForegroundColor Cyan
 flutter build web
 
