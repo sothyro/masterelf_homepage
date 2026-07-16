@@ -2287,8 +2287,14 @@ abstract class AppLocalizations {
   /// No description provided for @readFullArticles.
   ///
   /// In en, this message translates to:
-  /// **'Read Full Articles'**
+  /// **'Read Full Articles (Facebook)'**
   String get readFullArticles;
+
+  /// No description provided for @forecastChooseAnimal.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your animal'**
+  String get forecastChooseAnimal;
 
   /// No description provided for @popupFormPrompt.
   ///

@@ -17,8 +17,8 @@ class DeferredPageLoadCoordinator {
   bool _triggered = false;
   Timer? _idleTimer;
 
-  @visibleForTesting
-  void resetForTesting() {
+  /// Resets armed/triggered state (tests and page coordinators).
+  void reset() {
     _armed = false;
     _triggered = false;
     _idleTimer?.cancel();

@@ -65,7 +65,7 @@ void main() {
       find.text('Master Elf — Strive for the Year of the Blood Goat 2027'),
       findsOneWidget,
     );
-    expect(find.text('Master Elf - The Rise of Phoenix 2026'), findsOneWidget);
+    expect(find.text('Master Elf — The Rise of the Phoenix 2026'), findsOneWidget);
     expect(find.byType(MajesticOrbitalCardFrame), findsOneWidget);
   });
 }

@@ -89,13 +89,6 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
     );
   }
 
-  static double _cardLayoutWidthFor(double viewportWidth) {
-    if (Breakpoints.isMobile(viewportWidth)) {
-      return viewportWidth - _stripHorizontalInset * 2;
-    }
-    return _cardMaxWidth;
-  }
-
   final List<String> _rowPathsBuffer = [];
 
   void _portraitPathsForPage(int page, int cardsPerPage, List<String> out) {

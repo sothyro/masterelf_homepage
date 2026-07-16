@@ -55,7 +55,7 @@ const starMap = {
   'Tian Kong': 'ទៀន កុង',
   'Hui Chi': 'ហ៊ូយ ឈី',
   'Drinking jiǔ sè shā': 'ច្រិត ជីវ៉ូ សេ សា',
-  'Liu Xia': 'លៀវ សៀ',
+  'Liu Sha': 'លៀវ សៀ',
   'Sui Dian': 'សួយ ឌៀន',
   'Wen Chang': 'វ៉ិន ចាង',
   'Yi Ma': 'អ៊ី ម៉ា',

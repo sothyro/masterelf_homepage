@@ -107,13 +107,6 @@ class _ActivityStoriesSectionState extends State<ActivityStoriesSection> {
     );
   }
 
-  static double _cardLayoutWidthFor(double viewportWidth) {
-    if (Breakpoints.isMobile(viewportWidth)) {
-      return viewportWidth - _stripHorizontalInset * 2;
-    }
-    return _cardMaxWidth;
-  }
-
   void _coverPathsForPage(int page, int cardsPerPage, List<String> out) {
     out.clear();
     final start = page * cardsPerPage;

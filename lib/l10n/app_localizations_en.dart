@@ -1239,7 +1239,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get popupDescription => 'Year of Fire Horse';
 
   @override
-  String get readFullArticles => 'Read Full Articles';
+  String get readFullArticles => 'Read Full Articles (Facebook)';
+
+  @override
+  String get forecastChooseAnimal => 'Choose your animal';
 
   @override
   String get popupFormPrompt =>

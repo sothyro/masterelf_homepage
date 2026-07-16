@@ -49,9 +49,6 @@ List<String> get _midPageHomepageAssets => [
   ...AppContent.featuredPressLogos,
 ];
 
-/// Legacy alias for tests.
-List<String> get _aboveFoldHomepageAssets => _firstScreenHomepageAssets;
-
 /// Below-fold homepage images — story background only (also in mid-page tier).
 List<String> get _belowFoldHomepageAssets => [
   AppContent.assetStoryBackground,

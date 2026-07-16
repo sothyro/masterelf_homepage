@@ -12,8 +12,8 @@ void main() {
     expect(pillars[1].linkPath, '/field-work?realm=office');
     expect(pillars[2].linkPath, '/field-work?realm=ritual');
     expect(pillars[3].linkPath, '/consultations?service=dateselection');
-    expect(pillars[0].title, 'Feng Shui site visit');
-    expect(pillars[3].title, 'Date Selection (择日)');
+    expect(pillars[0].title, "Unlock Your Property's Qi");
+    expect(pillars[3].title, 'Choose the Day Destiny Favours');
     expect(pillars[0].coverImage, 'assets/images/activities/fengshui.webp');
     expect(pillars[1].coverImage, 'assets/images/activities/consultation.webp');
     expect(pillars[2].coverImage, 'assets/images/activities/maosan.webp');

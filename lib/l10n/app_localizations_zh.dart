@@ -1120,7 +1120,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get popupDescription => '获取您的个人 2026 生肖运势…';
 
   @override
-  String get readFullArticles => '阅读全文';
+  String get readFullArticles => '阅读全文 (Facebook)';
+
+  @override
+  String get forecastChooseAnimal => '选择您的生肖';
 
   @override
   String get popupFormPrompt => '在下方填写信息，我们将在您的生肖发布时通知您。';

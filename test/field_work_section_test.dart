@@ -38,23 +38,23 @@ void main() {
   testWidgets('FieldWorkSection shows all four pillars at mobile width', (tester) async {
     await pumpFieldWorkSection(tester, width: 375);
     expect(tester.takeException(), isNull);
-    expect(find.text('Feng Shui site visit'), findsOneWidget);
-    expect(find.text('BaZi, Qi Men & I Ching consultations'), findsOneWidget);
-    expect(find.text('Mao Shan home blessing'), findsOneWidget);
-    expect(find.textContaining('Date Selection'), findsOneWidget);
+    expect(find.text("Unlock Your Property's Qi"), findsOneWidget);
+    expect(find.text("Clarity for Life's Biggest Calls"), findsOneWidget);
+    expect(find.text('Protection You Can Feel at Home'), findsOneWidget);
+    expect(find.text('Choose the Day Destiny Favours'), findsOneWidget);
   });
 
   testWidgets('FieldWorkSection has no overflow at tablet width', (tester) async {
     await pumpFieldWorkSection(tester, width: 768);
     expect(tester.takeException(), isNull);
     expect(find.byType(FieldWorkSection), findsOneWidget);
-    expect(find.textContaining('Date Selection'), findsOneWidget);
+    expect(find.text('Choose the Day Destiny Favours'), findsOneWidget);
   });
 
   testWidgets('FieldWorkSection has no overflow at desktop width', (tester) async {
     await pumpFieldWorkSection(tester, width: 1280);
     expect(tester.takeException(), isNull);
     expect(find.byType(FieldWorkSection), findsOneWidget);
-    expect(find.text('Feng Shui site visit'), findsOneWidget);
+    expect(find.text("Unlock Your Property's Qi"), findsOneWidget);
   });
 }

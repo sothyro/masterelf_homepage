@@ -17,7 +17,7 @@ class TalismanLoadCoordinator {
       DeferredPageLoadCoordinator.idleFallback;
 
   @visibleForTesting
-  static void resetForTesting() => _delegate.resetForTesting();
+  static void resetForTesting() => _delegate.reset();
 
   static void armAfterReveal() => _delegate.arm();
 

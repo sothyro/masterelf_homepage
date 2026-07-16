@@ -33,7 +33,7 @@ int _maxBytesForAsset(String path) {
 List<String> get releaseImageAssets {
   final assets = <String>{
     AppContent.assetLogo,
-    AppContent.assetFavicon,
+    // assetFavicon shares the logo path.
     AppContent.assetYuk9Icon,
     AppContent.assetHeroBackground,
     AppContent.assetBackgroundDirection,
@@ -47,7 +47,7 @@ List<String> get releaseImageAssets {
     AppContent.assetVenueChipmong,
     AppContent.assetVenueLegendCinema,
     AppContent.assetAboutHero,
-    AppContent.assetSessions,
+    // assetSessions shares the about-hero path.
     AppContent.assetParticipants,
     AppContent.assetRegistration,
     AppContent.assetDirection,
@@ -140,7 +140,7 @@ bool verifyReleaseImages({void Function(String message)? logError}) {
       final sizeKb = (size / 1024).toStringAsFixed(1);
       final maxKb = (maxBytes / 1024).toStringAsFixed(0);
       fail(
-        'Release image too large: $path (${sizeKb} KB; max ${maxKb} KB). '
+        'Release image too large: $path ($sizeKb KB; max $maxKb KB). '
         'Re-encode with .\\tool\\encode_images.ps1 (see README.md).',
       );
     }

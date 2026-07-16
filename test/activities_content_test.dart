@@ -27,17 +27,17 @@ void main() {
       expect(video.detailPath(), '/field-work/video/feng-shui-compass-on-site');
     });
 
-    test('spotlight posters are unique and use category plus field photos', () {
+    test('spotlight posters match curated featured images', () {
       final posters = kActivityVideoSpotlights.map((v) => v.posterImage).toList();
-      expect(posters.toSet().length, 6);
-      expect(posters, containsAll([
+      expect(posters, [
         AppContent.assetActivityFengShui,
-        AppContent.assetActivityConsultation,
         AppContent.assetActivityMaoShan,
-        AppContent.assetActivityDateSelection,
-        AppContent.assetActivityPhoto(15),
-        AppContent.assetActivityPhoto(27),
-      ]));
+        AppContent.assetActivityConsultation,
+        AppContent.assetActivityPhoto(5),
+        AppContent.assetActivityPhoto(10),
+        AppContent.assetActivityPhoto(19),
+      ]);
+      expect(posters.toSet().length, 6);
     });
 
     test('returns null for unknown slug', () {

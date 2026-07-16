@@ -673,7 +673,6 @@ class _CompactEventCardState extends State<_CompactEventCard> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
     final borderColor = _hovered
         ? AppColors.borderLight.withValues(alpha: 0.5)

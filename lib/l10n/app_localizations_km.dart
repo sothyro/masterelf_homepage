@@ -1240,7 +1240,10 @@ class AppLocalizationsKm extends AppLocalizations {
   String get popupDescription => 'ឆ្នាំសេះភ្លើង ២០២៦';
 
   @override
-  String get readFullArticles => 'អានអត្ថបទពេញ';
+  String get readFullArticles => 'អានអត្ថបទពេញ (Facebook)';
+
+  @override
+  String get forecastChooseAnimal => 'ជ្រើសរើសតួរាសីរបស់អ្នក';
 
   @override
   String get popupFormPrompt =>

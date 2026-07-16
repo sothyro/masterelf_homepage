@@ -5,7 +5,6 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../config/app_content.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/app_theme.dart';
-import '../utils/breakpoints.dart';
 import 'app_shell_scroll_scope.dart';
 import 'glass_container.dart';
 import 'logo_with_shape_shadow.dart';
@@ -37,7 +36,7 @@ class AppDrawer extends StatelessWidget {
               _DrawerHeader(),
               Expanded(
                 child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
                   children: [
                     _SectionLabel(label: l10n.drawerNavigate),
                     _DrawerTile(
@@ -109,7 +108,7 @@ class AppDrawer extends StatelessWidget {
                         showMediaPostsPopup(context);
                       },
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 4),
                     _SectionLabel(label: l10n.consultations),
                     _DrawerTile(
                       label: l10n.consultations,
@@ -118,15 +117,15 @@ class AppDrawer extends StatelessWidget {
                       icon: LucideIcons.calendarCheck,
                       onTap: () => _go(context, '/consultations'),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 8),
                     _SectionLabel(label: l10n.drawerGetInTouch),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     _ContactCta(
                       label: l10n.contactUs,
                       icon: LucideIcons.messageCircle,
                       onTap: () => _go(context, '/contact'),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 8),
                   ],
                 ),
               ),
@@ -146,8 +145,9 @@ class AppDrawer extends StatelessWidget {
 class _DrawerHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Logo and title sizes stay fixed; only outer padding is tightened.
     return Padding(
-      padding: const EdgeInsets.fromLTRB(28, 24, 20, 20),
+      padding: const EdgeInsets.fromLTRB(20, 12, 16, 8),
       child: Row(
         children: [
           LogoWithShapeShadow(
@@ -204,15 +204,16 @@ class _SectionLabel extends StatelessWidget {
     final locale = Localizations.localeOf(context);
     final isKm = locale.languageCode == 'km';
     return Padding(
-      padding: const EdgeInsets.only(left: 4, bottom: 4),
+      padding: const EdgeInsets.only(left: 4, top: 6, bottom: 2),
       child: Text(
         isKm ? label : label.toUpperCase(),
         style: menuLabelStyle(
           context,
-          fontSize: 11,
+          fontSize: 10,
           color: Colors.white54,
           fontWeight: FontWeight.w600,
-          letterSpacing: isKm ? 0 : 1.2,
+          letterSpacing: isKm ? 0 : 1.0,
+          height: 1.1,
         ),
       ),
     );
@@ -238,48 +239,49 @@ class _DrawerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final isActive = current == path;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 2),
+      padding: const EdgeInsets.only(bottom: 1),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(12),
-            child: Container(
-            constraints: const BoxConstraints(minHeight: kMinTouchTargetSize),
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          borderRadius: BorderRadius.circular(10),
+          child: Container(
+            constraints: const BoxConstraints(minHeight: 36),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
               color: isActive ? AppColors.accent.withValues(alpha: 0.18) : Colors.transparent,
               border: isActive ? Border.all(color: AppColors.accent.withValues(alpha: 0.5), width: 1) : null,
             ),
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     color: isActive ? AppColors.accent.withValues(alpha: 0.25) : Colors.white.withValues(alpha: 0.08),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     icon,
-                    size: 20,
+                    size: 16,
                     color: isActive ? AppColors.accent : Colors.white70,
                   ),
                 ),
-                const SizedBox(width: 14),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     label,
                     style: menuItemLabelStyle(
                       context,
-                      fontSize: 15,
+                      fontSize: 14,
                       color: isActive ? AppColors.accent : Colors.white,
                       fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+                      height: 1.15,
                     ),
                   ),
                 ),
                 if (isActive)
-                  const Icon(LucideIcons.chevronRight, size: 18, color: AppColors.accent),
+                  const Icon(LucideIcons.chevronRight, size: 16, color: AppColors.accent),
               ],
             ),
           ),
@@ -302,11 +304,11 @@ class _ContactCta extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(12),
             gradient: const LinearGradient(
               colors: [Color(0xFFA68520), AppColors.accent],
               begin: Alignment.topLeft,
@@ -315,27 +317,27 @@ class _ContactCta extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: AppColors.accent.withValues(alpha: 0.35),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
+                blurRadius: 10,
+                offset: const Offset(0, 3),
               ),
             ],
           ),
           child: Row(
             children: [
-              Icon(icon, size: 22, color: AppColors.onAccent),
-              const SizedBox(width: 14),
+              Icon(icon, size: 18, color: AppColors.onAccent),
+              const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   label,
                   style: menuItemLabelStyle(
                     context,
-                    fontSize: 15,
+                    fontSize: 14,
                     color: AppColors.onAccent,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-              const Icon(LucideIcons.arrowRight, size: 20, color: AppColors.onAccent),
+              const Icon(LucideIcons.arrowRight, size: 16, color: AppColors.onAccent),
             ],
           ),
         ),

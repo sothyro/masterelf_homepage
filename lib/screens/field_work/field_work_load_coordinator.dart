@@ -21,7 +21,7 @@ class FieldWorkLoadCoordinator {
   @visibleForTesting
   static void resetForTesting() {
     _layoutWidth = null;
-    _delegate.resetForTesting();
+    _delegate.reset();
   }
 
   static void armAfterReveal({required double layoutWidth}) {

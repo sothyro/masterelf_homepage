@@ -71,7 +71,7 @@ bool verifyReleaseVideos({void Function(String message)? logError}) {
       final sizeMb = (size / (1024 * 1024)).toStringAsFixed(2);
       final maxMb = (entry.maxBytes / (1024 * 1024)).toStringAsFixed(0);
       fail(
-        'Release video too large: ${entry.path} (${sizeMb} MB; max ${maxMb} MB). '
+        'Release video too large: ${entry.path} ($sizeMb MB; max $maxMb MB). '
         'Re-encode with ffmpeg (see README.md).',
       );
     }
