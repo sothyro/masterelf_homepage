@@ -163,7 +163,7 @@ abstract class AppLocalizations {
   /// No description provided for @appsIntroTagline.
   ///
   /// In en, this message translates to:
-  /// **'Plot charts. Read the moment. Act with certainty — on every screen.'**
+  /// **'Plot charts. Read the moment. Act with certainty.'**
   String get appsIntroTagline;
 
   /// No description provided for @period9MobileApp.

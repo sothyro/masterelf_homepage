@@ -40,7 +40,7 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get appsIntroTagline =>
-      'គូរក្រាប។ អានពេលវេលា។ សម្រេចចិត្តដោយទំនុកចិត្ត — លើអេក្រង់គ្រប់មួយ។';
+      'គូរក្រាប។ អានពេលវេលា។ សម្រេចចិត្តដោយទំនុកចិត្ត។';
 
   @override
   String get period9MobileApp => 'កម្មវិធីយុគទី ៩ (Period 9)';

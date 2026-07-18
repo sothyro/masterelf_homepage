@@ -238,12 +238,25 @@ class _AppsHeroMedallionState extends State<AppsHeroMedallion>
                 ),
               ),
             ),
-            SizedBox(height: isNarrow ? 20 : 26),
-            MasterElfYuk9ProBrandTitle(
-              systemName: l10n.masterElfSystem,
-              subtitle: l10n.appsHeroBrandSubtitle,
-              isNarrow: isNarrow,
-            ),
+            // Mobile: pull brand lockup up into orbit padding so it sits closer
+            // to the emblem (viewport-based, not LayoutBuilder width).
+            if (Breakpoints.isMobile(MediaQuery.sizeOf(context).width))
+              Transform.translate(
+                offset: const Offset(0, -36),
+                child: MasterElfYuk9ProBrandTitle(
+                  systemName: l10n.masterElfSystem,
+                  subtitle: l10n.appsHeroBrandSubtitle,
+                  isNarrow: true,
+                ),
+              )
+            else ...[
+              const SizedBox(height: 26),
+              MasterElfYuk9ProBrandTitle(
+                systemName: l10n.masterElfSystem,
+                subtitle: l10n.appsHeroBrandSubtitle,
+                isNarrow: false,
+              ),
+            ],
           ],
         );
       },
@@ -271,6 +284,7 @@ class _StaticAppsHeroMedallion extends StatelessWidget {
         final cornerRadius = core * 0.145;
         final encroach = core * 0.045;
         final frameBand = core * 0.065;
+        final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
 
         return Column(
           mainAxisSize: MainAxisSize.min,
@@ -289,12 +303,23 @@ class _StaticAppsHeroMedallion extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: isNarrow ? 20 : 26),
-            MasterElfYuk9ProBrandTitle(
-              systemName: l10n.masterElfSystem,
-              subtitle: l10n.appsHeroBrandSubtitle,
-              isNarrow: isNarrow,
-            ),
+            if (isMobile)
+              Transform.translate(
+                offset: const Offset(0, -36),
+                child: MasterElfYuk9ProBrandTitle(
+                  systemName: l10n.masterElfSystem,
+                  subtitle: l10n.appsHeroBrandSubtitle,
+                  isNarrow: true,
+                ),
+              )
+            else ...[
+              const SizedBox(height: 26),
+              MasterElfYuk9ProBrandTitle(
+                systemName: l10n.masterElfSystem,
+                subtitle: l10n.appsHeroBrandSubtitle,
+                isNarrow: false,
+              ),
+            ],
           ],
         );
       },

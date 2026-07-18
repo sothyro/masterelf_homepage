@@ -239,15 +239,15 @@ class _DrawerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final isActive = current == path;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 1),
+      padding: const EdgeInsets.only(bottom: 2),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(10),
           child: Container(
-            constraints: const BoxConstraints(minHeight: 36),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            constraints: const BoxConstraints(minHeight: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: isActive ? AppColors.accent.withValues(alpha: 0.18) : Colors.transparent,
@@ -273,10 +273,10 @@ class _DrawerTile extends StatelessWidget {
                     label,
                     style: menuItemLabelStyle(
                       context,
-                      fontSize: 14,
+                      fontSize: 15,
                       color: isActive ? AppColors.accent : Colors.white,
                       fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-                      height: 1.15,
+                      height: 1.2,
                     ),
                   ),
                 ),

@@ -40,7 +40,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appsIntroTagline =>
-      'Plot charts. Read the moment. Act with certainty — on every screen.';
+      'Plot charts. Read the moment. Act with certainty.';
 
   @override
   String get period9MobileApp => 'Period 9 Mobile App';

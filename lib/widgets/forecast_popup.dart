@@ -54,134 +54,133 @@ class _ForecastPopupState extends State<ForecastPopup> {
     final size = MediaQuery.sizeOf(context);
     final selected = zodiacForecastById(_selectedId) ?? zodiacForecasts.first;
 
+    final isViewportMobile = size.width < Breakpoints.mobile;
+
     return Dialog(
       backgroundColor: Colors.transparent,
       insetPadding: EdgeInsets.symmetric(
-        horizontal: size.width < Breakpoints.mobile ? 12 : 24,
-        vertical: size.width < Breakpoints.mobile ? 20 : 36,
+        horizontal: isViewportMobile ? 12 : 24,
+        vertical: isViewportMobile ? 20 : 36,
       ),
-      child: ChineseCornerBrackets(
-        length: size.width < Breakpoints.mobile ? 16 : 22,
-        inset: size.width < Breakpoints.mobile ? 8 : 12,
-        strokeWidth: 1.2,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(
-            size.width < Breakpoints.mobile ? 14 : 18,
-          ),
-          child: ColoredBox(
-            color: FieldWorkChinesePalette.ink,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final dialogWidth = constraints.maxWidth.isFinite
-                    ? constraints.maxWidth
-                    : size.width.clamp(280.0, 960.0);
-                final isMobile = dialogWidth < Breakpoints.mobile;
-                final dialogHeight = size.height * (isMobile ? 0.82 : 0.78);
+      child: ChineseDialogFrame(
+        isMobile: isViewportMobile,
+        child: ColoredBox(
+          color: FieldWorkChinesePalette.ink,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final dialogWidth = constraints.maxWidth.isFinite
+                  ? constraints.maxWidth
+                  : size.width.clamp(280.0, 960.0);
+              final isMobile = dialogWidth < Breakpoints.mobile;
+              // Leave room for the frame bezel so the shell fits the viewport.
+              final frameChrome = isViewportMobile ? 12.0 : 16.0;
+              final dialogHeight =
+                  (size.height * (isMobile ? 0.82 : 0.78) - frameChrome)
+                      .clamp(320.0, size.height);
 
-                return Stack(
-                  children: [
-                    Positioned.fill(
-                      child: CustomPaint(
-                        painter: ChineseLatticePainter(
-                          color: AppColors.accent,
-                          opacity: 0.05,
-                          cellSize: isMobile ? 44 : 56,
+              return Stack(
+                children: [
+                  Positioned.fill(
+                    child: CustomPaint(
+                      painter: ChineseLatticePainter(
+                        color: AppColors.accent,
+                        opacity: 0.05,
+                        cellSize: isMobile ? 44 : 56,
+                      ),
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            FieldWorkChinesePalette.inkWash
+                                .withValues(alpha: 0.9),
+                            FieldWorkChinesePalette.ink
+                                .withValues(alpha: 0.98),
+                          ],
                         ),
                       ),
                     ),
-                    Positioned.fill(
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              FieldWorkChinesePalette.inkWash
-                                  .withValues(alpha: 0.9),
-                              FieldWorkChinesePalette.ink
-                                  .withValues(alpha: 0.98),
-                            ],
-                          ),
+                  ),
+                  SizedBox(
+                    width: dialogWidth.clamp(280.0, 960.0),
+                    height: dialogHeight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _ForecastHeader(
+                          l10n: l10n,
+                          isMobile: isMobile,
+                          showBack: isMobile && _mobileShowDetail,
+                          onBack: _mobileBackToList,
+                          onClose: () => Navigator.of(context).pop(),
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: dialogWidth.clamp(280.0, 960.0),
-                      height: dialogHeight,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          _ForecastHeader(
-                            l10n: l10n,
-                            isMobile: isMobile,
-                            showBack: isMobile && _mobileShowDetail,
-                            onBack: _mobileBackToList,
-                            onClose: () => Navigator.of(context).pop(),
-                          ),
-                          const ChineseMountingBar(),
-                          Expanded(
-                            child: isMobile
-                                ? (_mobileShowDetail
-                                    ? _ForecastDetail(
+                        const ChineseMountingBar(),
+                        Expanded(
+                          child: isMobile
+                              ? (_mobileShowDetail
+                                  ? _ForecastDetail(
+                                      zodiac: selected,
+                                      l10n: l10n,
+                                      isMobile: true,
+                                      onReadArticles: _openArticles,
+                                    )
+                                  : _AnimalList(
+                                      l10n: l10n,
+                                      selectedId: _selectedId,
+                                      onSelect: (id) =>
+                                          _selectAnimal(id, isMobile: true),
+                                      showPrompt: true,
+                                    ))
+                              : Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    SizedBox(
+                                      width: 220,
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          color: FieldWorkChinesePalette
+                                              .inkWash
+                                              .withValues(alpha: 0.65),
+                                          border: Border(
+                                            right: BorderSide(
+                                              color: AppColors.accent
+                                                  .withValues(alpha: 0.22),
+                                            ),
+                                          ),
+                                        ),
+                                        child: _AnimalList(
+                                          l10n: l10n,
+                                          selectedId: _selectedId,
+                                          onSelect: (id) => _selectAnimal(
+                                            id,
+                                            isMobile: false,
+                                          ),
+                                          showPrompt: true,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: _ForecastDetail(
                                         zodiac: selected,
                                         l10n: l10n,
-                                        isMobile: true,
+                                        isMobile: false,
                                         onReadArticles: _openArticles,
-                                      )
-                                    : _AnimalList(
-                                        l10n: l10n,
-                                        selectedId: _selectedId,
-                                        onSelect: (id) =>
-                                            _selectAnimal(id, isMobile: true),
-                                        showPrompt: true,
-                                      ))
-                                : Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      SizedBox(
-                                        width: 220,
-                                        child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            color: FieldWorkChinesePalette
-                                                .inkWash
-                                                .withValues(alpha: 0.65),
-                                            border: Border(
-                                              right: BorderSide(
-                                                color: AppColors.accent
-                                                    .withValues(alpha: 0.22),
-                                              ),
-                                            ),
-                                          ),
-                                          child: _AnimalList(
-                                            l10n: l10n,
-                                            selectedId: _selectedId,
-                                            onSelect: (id) => _selectAnimal(
-                                              id,
-                                              isMobile: false,
-                                            ),
-                                            showPrompt: true,
-                                          ),
-                                        ),
                                       ),
-                                      Expanded(
-                                        child: _ForecastDetail(
-                                          zodiac: selected,
-                                          l10n: l10n,
-                                          isMobile: false,
-                                          onReadArticles: _openArticles,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                          ),
-                        ],
-                      ),
+                                    ),
+                                  ],
+                                ),
+                        ),
+                      ],
                     ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

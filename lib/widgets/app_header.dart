@@ -134,11 +134,7 @@ class _MobileHeader extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            right: 28,
-            top: barHeight + 8,
-            child: _LanguageFlagsRow(notifier: localeNotifier),
-          ),
+          // Logo before flags so language chips win hit tests on overlap.
           Positioned(
             left: _kLogoLeftInsetDesktop,
             top: -36,
@@ -146,7 +142,7 @@ class _MobileHeader extends StatelessWidget {
             width: logoSlotWidth,
             child: GestureDetector(
               onTap: () => context.go('/'),
-              behavior: HitTestBehavior.opaque,
+              behavior: HitTestBehavior.deferToChild,
               child: LogoWithShapeShadow(
                 assetPath: AppContent.assetLogo,
                 height: logoHeight,
@@ -159,6 +155,11 @@ class _MobileHeader extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+          Positioned(
+            right: 28,
+            top: barHeight + 8,
+            child: _LanguageFlagsRow(notifier: localeNotifier),
           ),
         ],
       ),
@@ -270,11 +271,7 @@ class _DesktopHeader extends StatelessWidget {
                 child: content,
               ),
             ),
-            Positioned(
-              right: 28,
-              top: barHeight + 8,
-              child: _LanguageFlagsRow(notifier: localeNotifier),
-            ),
+            // Logo before flags so language chips win hit tests on overlap.
             Positioned(
               left: _kLogoLeftInsetDesktop,
               top: -36,
@@ -282,6 +279,7 @@ class _DesktopHeader extends StatelessWidget {
               width: logoSlotWidth,
               child: GestureDetector(
                 onTap: () => context.go('/'),
+                behavior: HitTestBehavior.deferToChild,
                 child: LogoWithShapeShadow(
                   assetPath: AppContent.assetLogo,
                   height: logoHeight,
@@ -294,6 +292,11 @@ class _DesktopHeader extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+            Positioned(
+              right: 28,
+              top: barHeight + 8,
+              child: _LanguageFlagsRow(notifier: localeNotifier),
             ),
           ],
         ),
@@ -579,7 +582,7 @@ class _LanguageFlagsRow extends StatelessWidget {
   final LocaleNotifier notifier;
 
   static const _locales = [
-    ('en', '🇺🇸'),
+    ('en', '🇸🇬'),
     ('km', '🇰🇭'),
     ('zh', '🇨🇳'),
   ];

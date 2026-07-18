@@ -89,21 +89,26 @@ class StorePageHero extends StatelessWidget {
     }
 
     if (bottomChild == null) {
+      // titleContent (e.g. AppsHeroMedallion): full header overlay inset is taller
+      // than needed on mobile — pull the medallion up while clearing the nav bar.
+      final contentTopPadding = isNarrow
+          ? (topPadding - 48).clamp(96.0, topPadding)
+          : topPadding;
       return ConstrainedBox(
         constraints: BoxConstraints(minHeight: minHeight),
-        child: _HeroBackground(
-          backgroundAsset: backgroundAsset,
-          backgroundCacheWidth: backgroundCacheWidth,
-          child: Align(
-            alignment: const Alignment(0, 0.12),
+        child: SizedBox(
+          width: double.infinity,
+          child: _HeroBackground(
+            backgroundAsset: backgroundAsset,
+            backgroundCacheWidth: backgroundCacheWidth,
             child: Padding(
               padding: EdgeInsets.fromLTRB(
                 horizontalPadding,
-                topPadding,
+                contentTopPadding,
                 horizontalPadding,
                 bottomPadding,
               ),
-              child: titleBlock,
+              child: Center(child: titleBlock),
             ),
           ),
         ),

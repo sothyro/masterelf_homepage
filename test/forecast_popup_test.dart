@@ -6,6 +6,7 @@ import 'package:masterelf_homepage/l10n/app_localizations.dart';
 import 'package:masterelf_homepage/providers/auth_provider.dart';
 import 'package:masterelf_homepage/services/auth_service.dart';
 import 'package:masterelf_homepage/theme/app_theme.dart';
+import 'package:masterelf_homepage/screens/home/widgets/field_work_chinese_design.dart';
 import 'package:masterelf_homepage/widgets/forecast_popup.dart';
 import 'package:masterelf_homepage/widgets/sticky_cta_bar.dart';
 import 'package:provider/provider.dart';
@@ -67,6 +68,7 @@ void main() {
     await pumpForecastDialog(tester, width: 1280);
 
     expect(find.byType(ForecastPopup), findsOneWidget);
+    expect(find.byType(ChineseDialogFrame), findsOneWidget);
     expect(find.text('Choose your animal'), findsOneWidget);
     expect(find.textContaining('12 ZODIACS FORECAST'), findsOneWidget);
     expect(find.text('Rat'), findsWidgets);
@@ -83,6 +85,7 @@ void main() {
   testWidgets('mobile list navigates to detail and back', (tester) async {
     await pumpForecastDialog(tester, width: 375, height: 800);
 
+    expect(find.byType(ChineseDialogFrame), findsOneWidget);
     expect(find.text('Choose your animal'), findsOneWidget);
     expect(find.widgetWithText(FilledButton, 'Read Full Articles (Facebook)'), findsNothing);
 

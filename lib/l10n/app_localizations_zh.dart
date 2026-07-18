@@ -39,7 +39,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appsHeroBrandSubtitle => 'Master Elf 中华玄学系统';
 
   @override
-  String get appsIntroTagline => '排盘、识时、决断 — 每一台设备，同一套系统。';
+  String get appsIntroTagline => '排盘、识时、决断。';
 
   @override
   String get period9MobileApp => '九运手机应用';

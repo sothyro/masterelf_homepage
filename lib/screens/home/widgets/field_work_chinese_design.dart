@@ -721,6 +721,95 @@ class FieldWorkChineseCtaPanel extends StatelessWidget {
   }
 }
 
+/// Double gold rim + ink bezel + corner brackets for dialogs / featured panels.
+///
+/// Scales rim thickness, radius, and bracket size for mobile vs desktop so the
+/// frame stays proportional inside tight [Dialog] inset padding.
+class ChineseDialogFrame extends StatelessWidget {
+  const ChineseDialogFrame({
+    super.key,
+    required this.child,
+    required this.isMobile,
+  });
+
+  final Widget child;
+  final bool isMobile;
+
+  @override
+  Widget build(BuildContext context) {
+    final outerRadius = isMobile ? 16.0 : 20.0;
+    final innerRadius = isMobile ? 11.0 : 14.0;
+    final bezel = isMobile ? 3.5 : 5.5;
+    final outerStroke = isMobile ? 1.15 : 1.45;
+    final bracketLength = isMobile ? 18.0 : 26.0;
+    final bracketInset = isMobile ? 5.0 : 8.0;
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(outerRadius),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.48),
+            blurRadius: isMobile ? 18 : 28,
+            offset: Offset(0, isMobile ? 8 : 12),
+          ),
+          BoxShadow(
+            color: AppColors.accentGlow.withValues(alpha: isMobile ? 0.16 : 0.22),
+            blurRadius: isMobile ? 20 : 34,
+            spreadRadius: -2,
+          ),
+        ],
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(outerRadius),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppColors.accentLight.withValues(alpha: 0.72),
+              AppColors.accent.withValues(alpha: 0.9),
+              AppColors.accent.withValues(alpha: 0.55),
+              AppColors.accentLight.withValues(alpha: 0.65),
+            ],
+            stops: const [0.0, 0.32, 0.68, 1.0],
+          ),
+        ),
+        padding: EdgeInsets.all(outerStroke),
+        child: Container(
+          padding: EdgeInsets.all(bezel),
+          decoration: BoxDecoration(
+            color: FieldWorkChinesePalette.ink,
+            borderRadius: BorderRadius.circular(
+              (outerRadius - outerStroke).clamp(0, outerRadius),
+            ),
+          ),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(innerRadius),
+              border: Border.all(
+                color: AppColors.accent.withValues(alpha: 0.38),
+                width: isMobile ? 0.9 : 1.1,
+              ),
+            ),
+            child: ChineseCornerBrackets(
+              length: bracketLength,
+              inset: bracketInset,
+              strokeWidth: isMobile ? 1.15 : 1.35,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  (innerRadius - 1).clamp(0, innerRadius),
+                ),
+                child: child,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Pill index tag along the top edge of a card (modern 序号 strip).
 class ChinesePillarIndexTag extends StatelessWidget {
   const ChinesePillarIndexTag({

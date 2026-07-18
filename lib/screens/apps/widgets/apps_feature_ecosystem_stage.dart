@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../theme/app_theme.dart';
+import '../../../utils/breakpoints.dart';
 import '../../../widgets/chinese_device_showcase.dart';
 import '../../home/widgets/field_work_chinese_design.dart';
 import 'apps_fullscreen_image.dart';
@@ -48,42 +50,68 @@ class _PlatformBand extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth < 80) return const SizedBox.shrink();
+        // Narrow layouts (mobile): icons — full label truncates in the pill.
+        final useIcons = constraints.maxWidth < Breakpoints.mobile;
         return Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Expanded(child: _GoldRule(towardCenter: true)),
-            Flexible(
-              child: Padding(
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: useIcons ? 8 : 16,
+              ),
+              child: Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: constraints.maxWidth < 360 ? 8 : 16,
+                  horizontal: useIcons ? 12 : 16,
+                  vertical: 8,
                 ),
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: constraints.maxWidth < 360 ? 10 : 16,
-                    vertical: 8,
+                decoration: BoxDecoration(
+                  color: FieldWorkChinesePalette.inkWash.withValues(
+                    alpha: 0.72,
                   ),
-                  decoration: BoxDecoration(
-                    color: FieldWorkChinesePalette.inkWash.withValues(
-                      alpha: 0.72,
-                    ),
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(
-                      color: AppColors.accent.withValues(alpha: 0.45),
-                    ),
-                  ),
-                  child: Text(
-                    label,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: AppColors.accent,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: constraints.maxWidth < 360 ? 0.4 : 1,
-                      fontSize: constraints.maxWidth < 360 ? 11 : null,
-                    ),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(
+                    color: AppColors.accent.withValues(alpha: 0.45),
                   ),
                 ),
+                child: useIcons
+                    ? Semantics(
+                        label: label,
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              LucideIcons.monitor,
+                              size: 16,
+                              color: AppColors.accent,
+                            ),
+                            SizedBox(width: 10),
+                            Icon(
+                              LucideIcons.tablet,
+                              size: 16,
+                              color: AppColors.accent,
+                            ),
+                            SizedBox(width: 10),
+                            Icon(
+                              LucideIcons.globe,
+                              size: 16,
+                              color: AppColors.accent,
+                            ),
+                          ],
+                        ),
+                      )
+                    : Text(
+                        label,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          color: AppColors.accent,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1,
+                        ),
+                      ),
               ),
             ),
             const Expanded(child: _GoldRule(towardCenter: false)),

@@ -29,7 +29,9 @@ import 'app_shell_scroll_scope.dart';
 /// Maximum height (from top of overlay) that participates in hit testing.
 /// Taps below this pass through to content (breadcrumbs, buttons, etc.).
 /// Must include nav bar (~72px) plus language flags row (barHeight+8 ≈ 80, row ~24px) so flags are clickable.
-const double _kHeaderHitTestHeight = 130.0;
+/// Covers the menu bar + language flag row with margin; below full stack height
+/// so hero content under empty header chrome stays tappable.
+const double _kHeaderHitTestHeight = 160.0;
 
 /// Wraps each route with persistent header and footer.
 class AppShell extends StatefulWidget {

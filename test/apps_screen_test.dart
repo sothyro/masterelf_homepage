@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 import 'package:masterelf_homepage/screens/apps/widgets/apps_chapter_header.dart';
 import 'package:masterelf_homepage/screens/apps/widgets/apps_hero_medallion.dart';
 import 'package:masterelf_homepage/screens/apps/widgets/apps_master_elf_system_intro.dart';
 import 'package:masterelf_homepage/screens/apps/widgets/apps_yuk9_brand.dart';
+import 'package:masterelf_homepage/utils/breakpoints.dart';
 import 'package:masterelf_homepage/utils/scroll_activity_gate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -40,19 +42,26 @@ void main() {
       expect(find.byType(AppsHeroMedallion), findsOneWidget);
       expect(find.byType(AppsMasterElfSystemIntro), findsOneWidget);
       expect(find.byType(MasterElfYuk9ProBrandTitle), findsNWidgets(2));
-      expect(find.text('Master Elf Chinese Metaphysic System'), findsOneWidget);
+      expect(find.text('Master Elf Chinese Metaphysics System'), findsOneWidget);
       expect(
         find.text(
-          'Plot charts. Read the moment. Act with certainty — on every screen.',
+          'Plot charts. Read the moment. Act with certainty.',
         ),
         findsOneWidget,
       );
       expect(find.text('Feature Atlas'), findsOneWidget);
       expect(find.text('Period 9 Mobile'), findsOneWidget);
       expect(find.text('Overview'), findsNothing);
-      expect(find.text('Desktop · Tablet · Web'), findsOneWidget);
 
       await revealAppsDeferredSections(tester);
+      // Band switches on content width (< 768); desktop content is capped at 1100.
+      if (width < Breakpoints.tablet) {
+        expect(find.byIcon(LucideIcons.monitor), findsOneWidget);
+        expect(find.byIcon(LucideIcons.tablet), findsOneWidget);
+        expect(find.byIcon(LucideIcons.globe), findsOneWidget);
+      } else {
+        expect(find.text('Desktop · Tablet · Web'), findsOneWidget);
+      }
       expect(find.text('BaZi Destiny'), findsWidgets);
       expect(find.text('Digital Platform'), findsNothing);
     });
@@ -75,7 +84,6 @@ void main() {
   ) async {
     await pumpRouteAtWidth(tester, '/apps#master-elf', 375);
     expect(find.byType(AppsMasterElfSystemIntro), findsOneWidget);
-    expect(find.text('Desktop · Tablet · Web'), findsOneWidget);
   });
 
   testWidgets('Apps page deep link scrolls to period9 section', (tester) async {
