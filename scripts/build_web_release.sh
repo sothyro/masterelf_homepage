@@ -26,8 +26,8 @@ echo "=== Verifying release images ==="
 dart run tool/verify_web_images.dart
 
 echo ""
-echo "=== Building web ==="
-flutter build web
+echo "=== Building web (release) ==="
+flutter build web --release --tree-shake-icons --no-source-maps --no-wasm-dry-run
 
 # Web uses static files under web/videos/; strip duplicate Flutter asset bundle copies.
 bundled_hero_video="build/web/assets/assets/videos/videobackground720.mp4"

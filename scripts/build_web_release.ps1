@@ -34,8 +34,8 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-Write-Host "`n=== Building web ===" -ForegroundColor Cyan
-flutter build web
+Write-Host "`n=== Building web (release) ===" -ForegroundColor Cyan
+flutter build web --release --tree-shake-icons --no-source-maps --no-wasm-dry-run
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Build failed." -ForegroundColor Red

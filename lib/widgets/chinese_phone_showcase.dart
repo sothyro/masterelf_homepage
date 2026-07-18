@@ -55,6 +55,7 @@ class _ChinesePhoneFrameState extends State<ChinesePhoneFrame> {
         height: widget.height,
         transform: Matrix4.identity()
           ..rotateZ(widget.rotation)
+          // ignore: deprecated_member_use
           ..scale(_hovered ? 1.03 : 1.0),
         transformAlignment: Alignment.bottomCenter,
         decoration: BoxDecoration(

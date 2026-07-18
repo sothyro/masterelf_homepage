@@ -117,6 +117,8 @@ class _SocialPopupYuk9OrbitsPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (!size.isFinite || size.width < 1 || size.height < 1) return;
+
     final center = Offset(size.width / 2, size.height / 2);
     final baseOpacity = hovered ? 1.0 : 0.88;
 
