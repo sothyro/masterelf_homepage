@@ -34,8 +34,8 @@ void initializeAppBootstrap(String initialLocation) {
   );
 }
 
-/// Signals when the homepage has fully mounted and painted, so the bootstrap
-/// loader stays visible until scrolling won't stutter from in-flight builds.
+/// Signals when the eager homepage has mounted and painted, so the bootstrap
+/// loader stays visible until Hero + Events layout won't stutter from in-flight builds.
 class HomeReadiness {
   HomeReadiness._();
 
@@ -56,7 +56,7 @@ class HomeReadiness {
   /// frames have been painted (layout + raster settled).
   static Future<void> get ready => _gate.future;
 
-  /// Call when Hero, Events, Academies, and Consultations are in the tree.
+  /// Call when eager homepage content (Hero + Events) is in the tree.
   static void markCriticalHomeContentReady() {
     if (_gate.isCompleted || _settling || holdForTesting) return;
     _settling = true;

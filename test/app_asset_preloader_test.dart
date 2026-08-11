@@ -94,9 +94,17 @@ void main() {
       await AppAssetPreloader.preloadAppsPageAssets();
     });
 
-    test('first-screen bootstrap asset count excludes mid-page images', () {
-      expect(AppAssetPreloader.aboveFoldAssetCount, 10);
+    test('first-screen bootstrap asset count is Events-only', () {
+      expect(AppAssetPreloader.aboveFoldAssetCount, 4);
+      expect(AppAssetPreloader.nearFoldHomeAssetCount, 4);
       expect(AppAssetPreloader.midPageHomeAssetCount, greaterThan(4));
+    });
+
+    test('preloadHomeNearFoldAssets is idempotent', () async {
+      await AppAssetPreloader.preloadHomeNearFoldAssets();
+      expect(AppAssetPreloader.nearFoldHomePreloadStarted, isTrue);
+      await AppAssetPreloader.preloadHomeNearFoldAssets();
+      expect(AppAssetPreloader.nearFoldHomePreloadStarted, isTrue);
     });
 
     test('belowFoldHomepage preloads story background only', () {

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../config/app_content.dart';
 import '../l10n/app_localizations.dart';
 import '../screens/legal/legal_content.dart';
 import '../utils/launcher_utils.dart';
 import '../theme/app_theme.dart';
+import '../theme/brand_icons.dart';
 import '../utils/breakpoints.dart';
 import 'app_shell_scroll_scope.dart';
 import 'legal_popup.dart';
@@ -299,14 +300,14 @@ class _ChatAndSocial extends StatelessWidget {
               style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
             ),
             IconButton(
-              icon: Icon(LucideIcons.facebook, color: AppColors.onPrimary, size: compact ? 18 : 22),
+              icon: Icon(BrandIcons.facebook, color: AppColors.onPrimary, size: compact ? 18 : 22),
               onPressed: () => launchUrlExternal(AppContent.facebookUrl),
               tooltip: l10n.tooltipFacebook,
               style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),
             ),
             if (AppContent.instagramUrl != null)
               IconButton(
-                icon: Icon(LucideIcons.instagram, color: AppColors.onPrimary, size: compact ? 18 : 22),
+                icon: Icon(BrandIcons.instagram, color: AppColors.onPrimary, size: compact ? 18 : 22),
                 onPressed: () => launchUrlExternal(AppContent.instagramUrl!),
                 tooltip: l10n.tooltipInstagram,
                 style: IconButton.styleFrom(padding: compact ? const EdgeInsets.all(6) : const EdgeInsets.all(8)),

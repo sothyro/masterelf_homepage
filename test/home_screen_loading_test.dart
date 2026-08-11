@@ -85,18 +85,26 @@ void main() {
   void expectCriticalSectionsPresent() {
     expect(find.byType(HeroSection), findsOneWidget);
     expect(find.byType(EventsSection), findsOneWidget);
-    expect(find.byType(AcademiesSection), findsOneWidget);
-    expect(find.byType(ConsultationsSection), findsOneWidget);
   }
 
   testWidgets('HomeScreen mounts critical sections first at mobile width', (
     tester,
   ) async {
-    await pumpHomeScreen(tester, width: 375);
+    await pumpHomeScreen(tester, width: 375, height: 700);
 
     expectCriticalSectionsPresent();
+    expect(find.byType(AcademiesSection), findsNothing);
+    expect(find.byType(ConsultationsSection), findsNothing);
     expect(find.byType(TestimonialsSection), findsNothing);
     expect(find.byType(ViewportDeferredSection), findsWidgets);
+    expect(
+      find.byKey(const ValueKey<String>('viewport-deferred-home-academies')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey<String>('viewport-deferred-home-consultations')),
+      findsOneWidget,
+    );
 
     await settleHomeTimers(tester);
   });
@@ -104,9 +112,15 @@ void main() {
   testWidgets('HomeScreen keeps deferred placeholders before scroll', (
     tester,
   ) async {
-    await pumpHomeScreen(tester, width: 1280, height: 4000);
+    await pumpHomeScreen(tester, width: 1280, height: 800);
 
     expectCriticalSectionsPresent();
+    expect(find.byType(AcademiesSection), findsNothing);
+    expect(find.byType(ConsultationsSection), findsNothing);
+    expect(
+      find.byKey(const ValueKey<String>('viewport-deferred-home-academies')),
+      findsOneWidget,
+    );
     expect(
       find.byKey(const ValueKey<String>('viewport-deferred-home-testimonials')),
       findsOneWidget,
@@ -151,6 +165,10 @@ void main() {
     expect(find.byType(StorySection), findsNothing);
 
     await tester.pump(ScrollActivityGate.idleDelay);
+    await tester.pump();
+    expect(find.byType(FieldWorkSection), findsNothing);
+
+    await tester.pump(const Duration(milliseconds: 300));
     await tester.pump();
 
     expect(find.byType(FieldWorkSection), findsOneWidget);

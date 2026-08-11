@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../config/app_content.dart';
@@ -10,9 +9,9 @@ import '../../../l10n/app_localizations.dart';
 import '../../../services/hero_video_platform.dart';
 import '../../../utils/launcher_utils.dart';
 import '../../../theme/app_theme.dart';
+import '../../../theme/brand_icons.dart';
 import '../../../utils/breakpoints.dart';
 import '../../../utils/mobile_web_performance.dart';
-import '../../../utils/scroll_activity_gate.dart';
 
 class HeroSection extends StatefulWidget {
   const HeroSection({super.key});
@@ -38,7 +37,6 @@ class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
     _videoReady = HeroVideoPlatform.isReady;
     _videoFailed = HeroVideoPlatform.failed;
     HeroVideoPlatform.addReadyListener(_onVideoReady);
-    ScrollActivityGate.addActivityListener(_syncPlayback);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) unawaited(_startVideo());
     });
@@ -78,8 +76,7 @@ class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
 
   void _syncPlayback() {
     if (!_videoReady || _videoFailed) return;
-    final shouldPlay =
-        _inViewport && _appActive && !ScrollActivityGate.isUserScrolling;
+    final shouldPlay = _inViewport && _appActive;
     if (shouldPlay) {
       unawaited(HeroVideoPlatform.resume());
     } else {
@@ -107,7 +104,6 @@ class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     HeroVideoPlatform.removeReadyListener(_onVideoReady);
-    ScrollActivityGate.removeActivityListener(_syncPlayback);
     _posterDismissTimer?.cancel();
     VisibilityDetectorController.instance.forget(
       const ValueKey<String>('home-hero-section'),
@@ -240,7 +236,7 @@ class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
           OutlinedButton.icon(
             onPressed: () => launchUrlExternal(AppContent.facebookUrl),
             icon: Icon(
-              LucideIcons.facebook,
+              BrandIcons.facebook,
               size: Breakpoints.isSmall(width) ? 18 : 20,
             ),
             style: OutlinedButton.styleFrom(

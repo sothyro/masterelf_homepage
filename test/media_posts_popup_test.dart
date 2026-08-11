@@ -2,9 +2,10 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:masterelf_homepage/l10n/app_localizations.dart';
 import 'package:masterelf_homepage/theme/app_theme.dart';
+import 'package:masterelf_homepage/theme/brand_icons.dart';
 import 'package:masterelf_homepage/widgets/media_posts_popup.dart';
 import 'package:masterelf_homepage/widgets/social_orbital_medallion.dart';
 import 'package:masterelf_homepage/widgets/social_popup_yuk9_orbits.dart';
@@ -47,7 +48,7 @@ void main() {
     expect(find.byType(SocialPopupYuk9Orbits), findsOneWidget);
     expect(find.byKey(const Key('social-orbital-facebook')), findsOneWidget);
     expect(find.byKey(const Key('social-orbital-telegram')), findsOneWidget);
-    expect(find.byIcon(LucideIcons.facebook), findsOneWidget);
+    expect(find.byIcon(BrandIcons.facebook), findsOneWidget);
     expect(find.byIcon(LucideIcons.send), findsOneWidget);
     expect(find.text('Media & Posts'), findsNothing);
     expect(find.text('Media coverage'), findsNothing);

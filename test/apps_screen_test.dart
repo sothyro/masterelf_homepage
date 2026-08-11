@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:masterelf_homepage/screens/apps/widgets/apps_chapter_header.dart';
 import 'package:masterelf_homepage/screens/apps/widgets/apps_hero_medallion.dart';
 import 'package:masterelf_homepage/screens/apps/widgets/apps_master_elf_system_intro.dart';

@@ -12,11 +12,11 @@ import 'mobile_web_performance.dart';
 
 // ---------------------------------------------------------------------------
 // Tier 1 — critical first paint (logo + hero static background).
-// Tier 2 — above-fold homepage (blocks bootstrap).
-// Tier 3 — below-fold homepage (background after reveal).
-// Tier 4 — other pages (background only).
-// The hero video is pre-warmed during bootstrap (phase 5) on web; native uses
-// the same asset via [HeroVideoController].
+// Tier 2 — eager homepage (Events) — blocks bootstrap.
+// Tier 3 — near-fold homepage (Academies / Consultations) — onNearViewport.
+// Tier 4 — mid/below-fold + other pages (background after reveal).
+// Hero video prewarms in parallel on desktop/tablet web and does not block
+// overlay dismiss; poster stays until ready.
 // ---------------------------------------------------------------------------
 
 /// Critical for first paint: logo (header) and hero background (fallback/static).
@@ -25,18 +25,20 @@ List<String> get _criticalImageAssets => [
   AppContent.assetHeroBackground,
 ];
 
-/// First-screen homepage images (events, academies, consultations) — blocks bootstrap.
+/// Eager homepage images (Events / orbital) — blocks bootstrap reveal.
 List<String> get _firstScreenHomepageAssets => [
   AppContent.assetEventMain,
   AppContent.assetEvent2027,
   AppContent.assetEvent2026FengShui,
   AppContent.assetEvent2026CrimsonHorse,
+];
+
+/// Near-fold homepage images — warmed when Academies/Consultations approach.
+List<String> get _homeNearFoldAssets => [
   AppContent.assetBackgroundDirection,
-  AppContent.assetAcademy,
   AppContent.assetBaziHarmony,
+  AppContent.assetAcademyFengShui,
   AppContent.assetAcademyQiMen,
-  AppContent.assetPeriod9Book1,
-  AppContent.assetPeriod9Book2,
 ];
 
 /// Mid-page homepage images — loaded after critical gate / section mount.
@@ -99,6 +101,9 @@ List<String> get _restImageAssets => [
   AppContent.assetEventHero,
   AppContent.assetActivitiesHero,
   AppContent.assetAppsHero,
+  AppContent.assetAcademy,
+  AppContent.assetPeriod9Book1,
+  AppContent.assetPeriod9Book2,
   AppContent.assetPeriod9_1,
   AppContent.assetPeriod9_2,
   for (var i = 1; i <= 8; i++) AppContent.assetActivityPhoto(i),
@@ -111,6 +116,7 @@ class AppAssetPreloader {
   AppAssetPreloader._();
 
   static bool _midPageHomeStarted = false;
+  static bool _nearFoldHomeStarted = false;
   static bool _belowFoldStarted = false;
   static bool _appsPageStarted = false;
   static bool _appsDeferredStarted = false;
@@ -139,7 +145,13 @@ class AppAssetPreloader {
   static int get aboveFoldAssetCount => _firstScreenHomepageAssets.length;
 
   @visibleForTesting
+  static int get nearFoldHomeAssetCount => _homeNearFoldAssets.length;
+
+  @visibleForTesting
   static int get midPageHomeAssetCount => _midPageHomepageAssets.length;
+
+  @visibleForTesting
+  static bool get nearFoldHomePreloadStarted => _nearFoldHomeStarted;
 
   @visibleForTesting
   static int get belowFoldAssetCount => _belowFoldHomepageAssets.length;
@@ -168,11 +180,12 @@ class AppAssetPreloader {
   @visibleForTesting
   static bool get backgroundPreloadStarted => _backgroundPreloadStarted;
 
-  /// Phased bootstrap preload: critical → above-fold → decode → fonts →
-  /// hero video prewarm → homepage render gate → reveal.
+  /// Phased bootstrap preload: critical → eager Events images → decode → fonts
+  /// → homepage paint gate → reveal. Hero video prewarms in parallel and does
+  /// not block dismiss.
   ///
   /// [waitForFirstPaint] (usually `HomeReadiness.ready`) keeps the final
-  /// progress step pending until the homepage has fully mounted and painted;
+  /// progress step pending until the eager homepage has painted;
   /// pass null when the initial route is not the homepage.
   static Future<void> preloadAll(
     void Function(double progress) onProgress, {
@@ -187,11 +200,15 @@ class AppAssetPreloader {
       unawaited(HeroVideoPlatform.prewarm());
     }
 
-    // Phase 1 — critical (0 → 20%)
-    await _loadImageList(_criticalImageAssets, (completed, total) {
-      onProgress(0.20 * (total > 0 ? completed / total : 1.0));
-    });
-    // Phase 2 — above-fold bundle (20 → 55%)
+    // Phase 1 — critical (0 → 20%), parallel.
+    await _loadImageListBatchedWithProgress(
+      _criticalImageAssets,
+      (completed, total) {
+        onProgress(0.20 * (total > 0 ? completed / total : 1.0));
+      },
+      batchSize: _criticalImageAssets.length.clamp(1, 4),
+    );
+    // Phase 2 — eager Events images (20 → 55%)
     final webBatchSize = kIsWeb ? 3 : 6;
     await _loadImageListBatchedWithProgress(
       _firstScreenHomepageAssets,
@@ -253,6 +270,7 @@ class AppAssetPreloader {
   @visibleForTesting
   static void resetForTesting() {
     _midPageHomeStarted = false;
+    _nearFoldHomeStarted = false;
     _belowFoldStarted = false;
     _appsPageStarted = false;
     _appsDeferredStarted = false;
@@ -356,6 +374,16 @@ class AppAssetPreloader {
     _midPageHomeStarted = true;
     await _loadImageListBatched(
       _midPageHomepageAssets,
+      batchSize: kIsWeb ? 2 : 4,
+    );
+  }
+
+  /// Near-fold Academies / Consultations images — call from viewport approach.
+  static Future<void> preloadHomeNearFoldAssets() async {
+    if (_nearFoldHomeStarted) return;
+    _nearFoldHomeStarted = true;
+    await _loadImageListBatched(
+      _homeNearFoldAssets,
       batchSize: kIsWeb ? 2 : 4,
     );
   }

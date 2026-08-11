@@ -14,6 +14,7 @@ class HomeIdleMount extends StatefulWidget {
     required this.child,
     this.minDelayAfterReady = const Duration(milliseconds: 800),
     this.maxWaitAfterReady = const Duration(milliseconds: 1500),
+    this.postIdleSettleDelay = const Duration(milliseconds: 300),
   });
 
   final Widget child;
@@ -25,6 +26,10 @@ class HomeIdleMount extends StatefulWidget {
   /// user is not actively scrolling.
   final Duration maxWaitAfterReady;
 
+  /// Extra settle time after scroll becomes idle before mounting, so the first
+  /// scroll gesture is not followed immediately by a mid-page layout spike.
+  final Duration postIdleSettleDelay;
+
   @override
   State<HomeIdleMount> createState() => _HomeIdleMountState();
 }
@@ -34,6 +39,7 @@ class _HomeIdleMountState extends State<HomeIdleMount> {
   int _generation = 0;
   Timer? _minDelayTimer;
   Timer? _maxWaitTimer;
+  Timer? _postIdleTimer;
 
   @override
   void initState() {
@@ -63,15 +69,44 @@ class _HomeIdleMountState extends State<HomeIdleMount> {
     });
   }
 
-  void _onScrollActivity() => _tryMount();
+  void _onScrollActivity() {
+    if (ScrollActivityGate.isUserScrolling) {
+      _postIdleTimer?.cancel();
+      _postIdleTimer = null;
+      return;
+    }
+    _tryMount();
+  }
 
   void _tryMount() {
     if (!mounted || _childMounted) return;
-    if (ScrollActivityGate.isUserScrolling) return;
+    if (ScrollActivityGate.isUserScrolling) {
+      _postIdleTimer?.cancel();
+      _postIdleTimer = null;
+      return;
+    }
 
+    final settle = widget.postIdleSettleDelay;
+    if (settle <= Duration.zero) {
+      _mountChild();
+      return;
+    }
+
+    _postIdleTimer?.cancel();
+    _postIdleTimer = Timer(settle, () {
+      if (!mounted || _childMounted) return;
+      if (ScrollActivityGate.isUserScrolling) return;
+      _mountChild();
+    });
+  }
+
+  void _mountChild() {
+    if (!mounted || _childMounted) return;
     _childMounted = true;
     _maxWaitTimer?.cancel();
     _maxWaitTimer = null;
+    _postIdleTimer?.cancel();
+    _postIdleTimer = null;
     setState(() {});
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -86,6 +121,7 @@ class _HomeIdleMountState extends State<HomeIdleMount> {
     _generation++;
     _minDelayTimer?.cancel();
     _maxWaitTimer?.cancel();
+    _postIdleTimer?.cancel();
     ScrollActivityGate.removeIdleListener(_onScrollActivity);
     ScrollActivityGate.removeActivityListener(_onScrollActivity);
     super.dispose();

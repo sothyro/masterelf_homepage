@@ -5,7 +5,7 @@ import '../../utils/inspection_form_constants.dart';
 import '../../utils/inspection_form_l10n_extension.dart';
 import '../../utils/twenty_four_mountains.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../../l10n/app_localizations.dart';

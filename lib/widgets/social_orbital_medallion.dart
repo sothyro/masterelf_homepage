@@ -1,10 +1,11 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../screens/home/widgets/field_work_chinese_design.dart';
 import '../theme/app_theme.dart';
+import '../theme/brand_icons.dart';
 import '../utils/breakpoints.dart';
 import 'majestic_orbital_card_frame.dart';
 import 'social_popup_yuk9_orbits.dart';
@@ -164,7 +165,7 @@ class _SocialOrbitalPairState extends State<SocialOrbitalPair>
                             children: [
                               _SocialChannelTile(
                                 key: const Key('social-orbital-facebook'),
-                                icon: LucideIcons.facebook,
+                                icon: BrandIcons.facebook,
                                 glowColor: SocialOrbitalPair._facebookGlow,
                                 size: iconSize,
                                 semanticLabel: widget.facebookLabel,

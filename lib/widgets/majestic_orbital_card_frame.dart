@@ -1,10 +1,12 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../theme/app_theme.dart';
+import '../utils/mobile_web_performance.dart';
+import '../utils/scroll_activity_gate.dart';
 
 /// Default seamless loop length for internal + external orbital motion.
 const Duration kMajesticOrbitalCycleDuration = Duration(milliseconds: 20000);
@@ -126,16 +128,41 @@ class MajesticOrbitalCardFrame extends StatefulWidget {
   final double cardBodyScale;
 
   @override
-  State<MajesticOrbitalCardFrame> createState() =>
-      _MajesticOrbitalCardFrameState();
+  State<MajesticOrbitalCardFrame> createState() => MajesticOrbitalCardFrameState();
 }
 
-class _MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
+class MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
     with SingleTickerProviderStateMixin {
+  /// Frames to wait after scroll idle before restarting the orbit ticker.
+  static const int _resumeFrameDelay = 2;
+
+  /// Keep cheap paint for this long after resume so blur/shadow shaders do not
+  /// compile on the same frames as the ticker restart.
+  static const Duration _resumeQualitySettle = Duration(milliseconds: 320);
+
   bool _hovered = false;
   bool _inViewport = true;
+  bool _userScrolling = false;
+  bool _resumeSettling = false;
+  bool _orbitStartAllowed = false;
+  bool _orbitStartScheduled = false;
+  int _resumeGeneration = 0;
+  Timer? _resumeQualityTimer;
   late final AnimationController _cycleController;
   late final Key _visibilityKey;
+
+  /// Whether the ceremonial cycle controller is actively ticking.
+  @visibleForTesting
+  bool get isCycleAnimating => _cycleController.isAnimating;
+
+  /// True while post-scroll resume is using the cheap paint path.
+  @visibleForTesting
+  bool get isResumeSettling => _resumeSettling;
+
+  bool get _shouldAnimate =>
+      _inViewport && _orbitStartAllowed && !_userScrolling;
+
+  bool get _forceCheapEffects => _userScrolling || _resumeSettling;
 
   @override
   void initState() {
@@ -147,9 +174,119 @@ class _MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
       vsync: this,
       duration: widget.cycleDuration,
     );
+    _userScrolling = ScrollActivityGate.isUserScrolling;
+    ScrollActivityGate.addActivityListener(_onScrollActivity);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _scheduleOrbitStartIfNeeded();
+  }
+
+  void _scheduleOrbitStartIfNeeded() {
+    if (_orbitStartAllowed || _orbitStartScheduled) return;
+    if (MobileWebPerformance.prefersReducedMotion(context)) return;
+
+    _orbitStartScheduled = true;
+    final defer = MobileWebPerformance.heroMedallionAnimationDefer();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted && _inViewport) _cycleController.repeat();
+      if (!mounted) return;
+      if (defer <= Duration.zero) {
+        setState(() {
+          _orbitStartAllowed = true;
+          _resumeSettling = true;
+        });
+        _scheduleSmoothResume(startTicker: true);
+        return;
+      }
+      Future<void>.delayed(defer, () {
+        if (!mounted || _orbitStartAllowed) return;
+        setState(() {
+          _orbitStartAllowed = true;
+          _resumeSettling = true;
+        });
+        _scheduleSmoothResume(startTicker: true);
+      });
     });
+  }
+
+  void _onScrollActivity() {
+    if (!mounted) return;
+    final scrolling = ScrollActivityGate.isUserScrolling;
+    if (scrolling == _userScrolling && !scrolling) {
+      // Still idle; ignore duplicate activity pings.
+      return;
+    }
+
+    if (scrolling) {
+      _cancelSmoothResume();
+      if (!_userScrolling || _resumeSettling) {
+        setState(() {
+          _userScrolling = true;
+          _resumeSettling = false;
+        });
+      } else {
+        _userScrolling = true;
+      }
+      _syncTicker();
+      return;
+    }
+
+    // Scroll just became idle: keep cheap paint, delay ticker restart.
+    setState(() {
+      _userScrolling = false;
+      _resumeSettling = true;
+    });
+    _scheduleSmoothResume(startTicker: true);
+  }
+
+  void _cancelSmoothResume() {
+    _resumeGeneration++;
+    _resumeQualityTimer?.cancel();
+    _resumeQualityTimer = null;
+  }
+
+  /// Restarts motion after [frameDelay] frames, then upgrades paint quality
+  /// once the orbit has been ticking for [_resumeQualitySettle].
+  void _scheduleSmoothResume({required bool startTicker}) {
+    final generation = ++_resumeGeneration;
+    _resumeQualityTimer?.cancel();
+    _resumeQualityTimer = null;
+
+    void afterFrames(int remaining, VoidCallback action) {
+      if (remaining <= 0) {
+        action();
+        return;
+      }
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted || generation != _resumeGeneration || _userScrolling) {
+          return;
+        }
+        afterFrames(remaining - 1, action);
+      });
+    }
+
+    afterFrames(_resumeFrameDelay, () {
+      if (!mounted || generation != _resumeGeneration || _userScrolling) return;
+      if (startTicker) _syncTicker();
+
+      _resumeQualityTimer = Timer(_resumeQualitySettle, () {
+        if (!mounted || generation != _resumeGeneration || _userScrolling) {
+          return;
+        }
+        if (!_resumeSettling) return;
+        setState(() => _resumeSettling = false);
+      });
+    });
+  }
+
+  void _syncTicker() {
+    if (_shouldAnimate) {
+      if (!_cycleController.isAnimating) _cycleController.repeat();
+    } else if (_cycleController.isAnimating) {
+      _cycleController.stop();
+    }
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
@@ -157,10 +294,19 @@ class _MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
     final visible = info.visibleFraction > 0.08;
     if (visible == _inViewport) return;
     _inViewport = visible;
-    if (visible) {
-      if (!_cycleController.isAnimating) _cycleController.repeat();
+    if (!visible) {
+      _cancelSmoothResume();
+      if (_resumeSettling) {
+        setState(() => _resumeSettling = false);
+      }
+      _syncTicker();
+      return;
+    }
+    if (_shouldAnimate && !_cycleController.isAnimating) {
+      setState(() => _resumeSettling = true);
+      _scheduleSmoothResume(startTicker: true);
     } else {
-      _cycleController.stop();
+      _syncTicker();
     }
   }
 
@@ -174,165 +320,237 @@ class _MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
 
   @override
   void dispose() {
+    _cancelSmoothResume();
+    ScrollActivityGate.removeActivityListener(_onScrollActivity);
     VisibilityDetectorController.instance.forget(_visibilityKey);
     _cycleController.dispose();
     super.dispose();
+  }
+
+  bool _preferCheapEffects(BuildContext context) {
+    return _forceCheapEffects || MobileWebPerformance.isMobileWeb(context);
+  }
+
+  List<BoxShadow> _cardShadows({
+    required bool hovered,
+    required double lift,
+    required bool cheap,
+  }) {
+    if (cheap) {
+      return [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: hovered ? 0.5 : 0.4),
+          blurRadius: hovered ? 16 : 12,
+          offset: Offset(0, lift),
+        ),
+      ];
+    }
+    return [
+      BoxShadow(
+        color: AppColors.accentGlow.withValues(alpha: hovered ? 0.42 : 0.22),
+        blurRadius: hovered ? 36 : 22,
+        spreadRadius: hovered ? 2 : 0,
+        offset: Offset(0, lift),
+      ),
+      BoxShadow(
+        color: Colors.black.withValues(alpha: 0.55),
+        blurRadius: hovered ? 28 : 18,
+        offset: Offset(0, lift + 8),
+      ),
+    ];
+  }
+
+  Widget _buildOrbitRings({
+    required _OrbitalRingLayer layer,
+    required bool hovered,
+    required bool enableExpensiveEffects,
+  }) {
+    return RepaintBoundary(
+      child: AnimatedBuilder(
+        animation: _cycleController,
+        builder: (context, _) {
+          return IgnorePointer(
+            child: _CardOrbitalRingsLayer(
+              progress: _cycleController.value,
+              hovered: hovered,
+              layer: layer,
+              extentScale: widget.orbitExtentScale,
+              enableExpensiveEffects: enableExpensiveEffects,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildCardChrome({
+    required bool hovered,
+    required bool cheapEffects,
+    required double radius,
+  }) {
+    final lift = hovered ? 14.0 : 6.0;
+    final wobbleActive = hovered && widget.enableHoverTiltWobble;
+    final bodyScale = widget.cardBodyScale;
+
+    final surface = _OrbitalFrameSurface(
+      borderRadius: radius,
+      animation: _cycleController,
+      hovered: hovered,
+      showCenterEmblem: widget.showCenterEmblem,
+      enableExpensiveEffects: !cheapEffects,
+      imageAsset: widget.imageAsset,
+      topLeft: widget.topLeft,
+      topRight: widget.topRight,
+      child: widget.child,
+    );
+
+    final shadowed = AnimatedContainer(
+      duration: const Duration(milliseconds: 280),
+      curve: Curves.easeOutCubic,
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(radius),
+        boxShadow: _cardShadows(hovered: hovered, lift: lift, cheap: cheapEffects),
+      ),
+      child: surface,
+    );
+
+    Widget tilted(double tiltX, double tiltY, double hoverLift, Widget child) {
+      return Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.identity()
+          ..setEntry(3, 2, 0.0016)
+          ..rotateX(tiltX)
+          ..rotateY(tiltY)
+          ..translateByDouble(0.0, hoverLift, 0.0, 1.0),
+        child: child,
+      );
+    }
+
+    final staticTiltX = hovered ? -0.035 : -0.012;
+    final staticTiltY = hovered ? 0.045 : 0.018;
+    final staticHoverLift = hovered ? -6.0 : 0.0;
+
+    final transformed = wobbleActive
+        ? AnimatedBuilder(
+            animation: _cycleController,
+            child: shadowed,
+            builder: (context, child) {
+              final t = _cycleController.value;
+              final tiltX =
+                  staticTiltX + majesticOrbitalHoverTiltWobble(t, phase: 0.0);
+              final tiltY = staticTiltY +
+                  majesticOrbitalHoverTiltWobble(t, phase: math.pi * 0.55);
+              final hoverLift =
+                  staticHoverLift + majesticOrbitalHoverFloat(t, phase: 0.9);
+              return tilted(tiltX, tiltY, hoverLift, child!);
+            },
+          )
+        : tilted(staticTiltX, staticTiltY, staticHoverLift, shadowed);
+
+    final ambient = RepaintBoundary(
+      child: AnimatedBuilder(
+        animation: _cycleController,
+        builder: (context, _) {
+          return _AmbientGlow(
+            hovered: hovered,
+            pulse: _cycleController.value,
+            borderRadius: radius,
+            positioned: false,
+          );
+        },
+      ),
+    );
+
+    final scaledChrome = Stack(
+      fit: StackFit.expand,
+      clipBehavior: Clip.none,
+      children: [
+        Positioned.fill(child: ambient),
+        Positioned.fill(
+          child: _ShadowPlate(
+            lift: lift,
+            hovered: hovered,
+            borderRadius: radius,
+            positioned: false,
+            cheap: cheapEffects,
+          ),
+        ),
+        Positioned.fill(child: transformed),
+      ],
+    );
+
+    if (bodyScale == 1.0) return scaledChrome;
+    return Transform.scale(
+      scale: bodyScale,
+      alignment: Alignment.center,
+      child: scaledChrome,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final effectiveHovered = widget.hovered ?? _hovered;
     final radius = widget.borderRadius;
+    final cheapEffects = _preferCheapEffects(context);
+    final enableExpensiveEffects = !cheapEffects;
 
     final frame = AspectRatio(
       aspectRatio: widget.aspectRatio,
-      child: AnimatedBuilder(
-        animation: _cycleController,
-        builder: (context, _) {
-          final t = _cycleController.value;
-          final wobbleActive = effectiveHovered && widget.enableHoverTiltWobble;
-          final hoverWobbleX = wobbleActive
-              ? majesticOrbitalHoverTiltWobble(t, phase: 0.0)
-              : 0.0;
-          final hoverWobbleY = wobbleActive
-              ? majesticOrbitalHoverTiltWobble(t, phase: math.pi * 0.55)
-              : 0.0;
-          final hoverFloat = wobbleActive
-              ? majesticOrbitalHoverFloat(t, phase: 0.9)
-              : 0.0;
-          final tiltX = (effectiveHovered ? -0.035 : -0.012) + hoverWobbleX;
-          final tiltY = (effectiveHovered ? 0.045 : 0.018) + hoverWobbleY;
-          final lift = effectiveHovered ? 14.0 : 6.0;
-          final hoverLift = effectiveHovered ? -6.0 + hoverFloat : 0.0;
-          final bodyScale = widget.cardBodyScale;
-
-          final scaledChrome = Stack(
-            fit: StackFit.expand,
-            clipBehavior: Clip.none,
-            children: [
-              Positioned.fill(
-                child: _AmbientGlow(
-                  hovered: effectiveHovered,
-                  pulse: t,
-                  borderRadius: radius,
-                  positioned: false,
-                ),
+      child: Stack(
+        clipBehavior: Clip.none,
+        fit: StackFit.expand,
+        children: [
+          if (widget.showSatelliteOrbits)
+            Positioned.fill(
+              child: _buildOrbitRings(
+                layer: _OrbitalRingLayer.behind,
+                hovered: effectiveHovered,
+                enableExpensiveEffects: enableExpensiveEffects,
               ),
-              Positioned.fill(
-                child: _ShadowPlate(
-                  lift: lift,
-                  hovered: effectiveHovered,
-                  borderRadius: radius,
-                  positioned: false,
-                ),
+            ),
+          Positioned.fill(
+            child: RepaintBoundary(
+              child: _buildCardChrome(
+                hovered: effectiveHovered,
+                cheapEffects: cheapEffects,
+                radius: radius,
               ),
-              Positioned.fill(
-                child: Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.0016)
-                  ..rotateX(tiltX)
-                  ..rotateY(tiltY)
-                  ..translateByDouble(0.0, hoverLift, 0.0, 1.0),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 280),
-                  curve: Curves.easeOutCubic,
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(radius),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.accentGlow.withValues(
-                          alpha: effectiveHovered ? 0.42 : 0.22,
-                        ),
-                        blurRadius: effectiveHovered ? 36 : 22,
-                        spreadRadius: effectiveHovered ? 2 : 0,
-                        offset: Offset(0, lift),
-                      ),
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.55),
-                        blurRadius: effectiveHovered ? 28 : 18,
-                        offset: Offset(0, lift + 8),
-                      ),
-                    ],
-                  ),
-                  child: _OrbitalFrameSurface(
-                    borderRadius: radius,
-                    shimmerProgress: t,
-                    animationProgress: t,
-                    hovered: effectiveHovered,
-                    showCenterEmblem: widget.showCenterEmblem,
-                    imageAsset: widget.imageAsset,
-                    topLeft: widget.topLeft,
-                    topRight: widget.topRight,
-                    child: widget.child,
-                  ),
-                ),
+            ),
+          ),
+          if (widget.showSatelliteOrbits)
+            Positioned.fill(
+              child: _buildOrbitRings(
+                layer: _OrbitalRingLayer.front,
+                hovered: effectiveHovered,
+                enableExpensiveEffects: enableExpensiveEffects,
               ),
-              ),
-            ],
-          );
-
-          final cardChrome = bodyScale == 1.0
-              ? scaledChrome
-              : Transform.scale(
-                  scale: bodyScale,
-                  alignment: Alignment.center,
-                  child: scaledChrome,
-                );
-
-          return Stack(
-            clipBehavior: Clip.none,
-            fit: StackFit.expand,
-            children: [
-              if (widget.showSatelliteOrbits)
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: _CardOrbitalRingsLayer(
-                      progress: t,
-                      hovered: effectiveHovered,
-                      layer: _OrbitalRingLayer.behind,
-                      extentScale: widget.orbitExtentScale,
-                    ),
-                  ),
-                ),
-              Positioned.fill(child: cardChrome),
-              if (widget.showSatelliteOrbits)
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: _CardOrbitalRingsLayer(
-                      progress: t,
-                      hovered: effectiveHovered,
-                      layer: _OrbitalRingLayer.front,
-                      extentScale: widget.orbitExtentScale,
-                    ),
-                  ),
-                ),
-            ],
-          );
-        },
+            ),
+        ],
       ),
+    );
+
+    final tickered = TickerMode(
+      enabled: _shouldAnimate,
+      child: frame,
     );
 
     if (widget.hovered != null) {
       return VisibilityDetector(
         key: _visibilityKey,
         onVisibilityChanged: _onVisibilityChanged,
-        child: TickerMode(enabled: _inViewport, child: frame),
+        child: tickered,
       );
     }
 
     return VisibilityDetector(
       key: _visibilityKey,
       onVisibilityChanged: _onVisibilityChanged,
-      child: TickerMode(
-        enabled: _inViewport,
-        child: MouseRegion(
-          onEnter: (_) => setState(() => _hovered = true),
-          onExit: (_) => setState(() => _hovered = false),
-          child: frame,
-        ),
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _hovered = true),
+        onExit: (_) => setState(() => _hovered = false),
+        child: tickered,
       ),
     );
   }
@@ -346,12 +564,14 @@ class MajesticOrbitalRings extends StatelessWidget {
     required this.hovered,
     required this.behind,
     this.extentScale = 1.0,
+    this.enableExpensiveEffects = true,
   });
 
   final double progress;
   final bool hovered;
   final bool behind;
   final double extentScale;
+  final bool enableExpensiveEffects;
 
   @override
   Widget build(BuildContext context) {
@@ -360,6 +580,7 @@ class MajesticOrbitalRings extends StatelessWidget {
       hovered: hovered,
       layer: behind ? _OrbitalRingLayer.behind : _OrbitalRingLayer.front,
       extentScale: extentScale,
+      enableExpensiveEffects: enableExpensiveEffects,
     );
   }
 }
@@ -370,12 +591,14 @@ class _CardOrbitalRingsLayer extends StatelessWidget {
     required this.hovered,
     required this.layer,
     required this.extentScale,
+    this.enableExpensiveEffects = true,
   });
 
   final double progress;
   final bool hovered;
   final _OrbitalRingLayer layer;
   final double extentScale;
+  final bool enableExpensiveEffects;
 
   @override
   Widget build(BuildContext context) {
@@ -385,6 +608,7 @@ class _CardOrbitalRingsLayer extends StatelessWidget {
         hovered: hovered,
         layer: layer,
         extentScale: extentScale,
+        enableExpensiveEffects: enableExpensiveEffects,
       ),
     );
   }
@@ -396,12 +620,14 @@ class _CardOrbitalRingsPainter extends CustomPainter {
     required this.hovered,
     required this.layer,
     required this.extentScale,
+    required this.enableExpensiveEffects,
   });
 
   final double progress;
   final bool hovered;
   final _OrbitalRingLayer layer;
   final double extentScale;
+  final bool enableExpensiveEffects;
 
   static const _orbits = [
     (rxF: 0.68, ryF: 0.22, tilt: -0.24, speed: 1.0, satPhases: [0.0, 1.15], stroke: 3.0),
@@ -491,13 +717,20 @@ class _CardOrbitalRingsPainter extends CustomPainter {
     final strokeWidth = front ? stroke : stroke * 0.7;
     final ringRect = Rect.fromCenter(center: center, width: rx * 2, height: ry * 2);
 
-    if (front) {
+    if (front && enableExpensiveEffects) {
       final glowPaint = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = strokeWidth + 6
         ..strokeCap = StrokeCap.round
         ..color = AppColors.accentGlow.withValues(alpha: baseOpacity * 0.4)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 9);
+      canvas.drawPath(path, glowPaint);
+    } else if (front) {
+      final glowPaint = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = strokeWidth + 3
+        ..strokeCap = StrokeCap.round
+        ..color = AppColors.accentGlow.withValues(alpha: baseOpacity * 0.28);
       canvas.drawPath(path, glowPaint);
     }
 
@@ -546,27 +779,36 @@ class _CardOrbitalRingsPainter extends CustomPainter {
     final satellite = _orbitPoint(center, rx, ry, tilt, travel);
     final scale = front ? 1.0 : 0.65;
 
-    final direction = speed >= 0 ? 1.0 : -1.0;
-    const trailLength = 0.55;
-    const trailSteps = 12;
-    for (var i = 1; i <= trailSteps; i++) {
-      final tTheta = travel - direction * trailLength * (i / trailSteps);
-      if ((math.sin(tTheta) > 0) != front) break;
-      final tp = _orbitPoint(center, rx, ry, tilt, tTheta);
-      final fade = (1 - i / trailSteps);
+    if (enableExpensiveEffects) {
+      final direction = speed >= 0 ? 1.0 : -1.0;
+      const trailLength = 0.55;
+      const trailSteps = 12;
+      for (var i = 1; i <= trailSteps; i++) {
+        final tTheta = travel - direction * trailLength * (i / trailSteps);
+        if ((math.sin(tTheta) > 0) != front) break;
+        final tp = _orbitPoint(center, rx, ry, tilt, tTheta);
+        final fade = (1 - i / trailSteps);
+        canvas.drawCircle(
+          tp,
+          (2.6 - ringIndex * 0.4) * fade * scale,
+          Paint()
+            ..color = AppColors.accentLight.withValues(alpha: 0.5 * fade * scale)
+            ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
+        );
+      }
+
+      final glow = Paint()
+        ..color = const Color(0xFFFFF4C2).withValues(alpha: 0.75 * scale)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
+      canvas.drawCircle(satellite, (9.0 - ringIndex * 1.5) * scale, glow);
+    } else {
       canvas.drawCircle(
-        tp,
-        (2.6 - ringIndex * 0.4) * fade * scale,
+        satellite,
+        (7.0 - ringIndex * 1.2) * scale,
         Paint()
-          ..color = AppColors.accentLight.withValues(alpha: 0.5 * fade * scale)
-          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2),
+          ..color = const Color(0xFFFFF4C2).withValues(alpha: 0.35 * scale),
       );
     }
-
-    final glow = Paint()
-      ..color = const Color(0xFFFFF4C2).withValues(alpha: 0.75 * scale)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
-    canvas.drawCircle(satellite, (9.0 - ringIndex * 1.5) * scale, glow);
 
     canvas.drawCircle(
       satellite,
@@ -585,17 +827,18 @@ class _CardOrbitalRingsPainter extends CustomPainter {
     return oldDelegate.progress != progress ||
         oldDelegate.hovered != hovered ||
         oldDelegate.layer != layer ||
-        oldDelegate.extentScale != extentScale;
+        oldDelegate.extentScale != extentScale ||
+        oldDelegate.enableExpensiveEffects != enableExpensiveEffects;
   }
 }
 
 class _OrbitalFrameSurface extends StatelessWidget {
   const _OrbitalFrameSurface({
     required this.borderRadius,
-    required this.shimmerProgress,
-    required this.animationProgress,
+    required this.animation,
     required this.hovered,
     required this.showCenterEmblem,
+    required this.enableExpensiveEffects,
     this.imageAsset,
     this.child,
     this.topLeft,
@@ -603,10 +846,10 @@ class _OrbitalFrameSurface extends StatelessWidget {
   });
 
   final double borderRadius;
-  final double shimmerProgress;
-  final double animationProgress;
+  final Animation<double> animation;
   final bool hovered;
   final bool showCenterEmblem;
+  final bool enableExpensiveEffects;
   final String? imageAsset;
   final Widget? child;
   final Widget? topLeft;
@@ -647,89 +890,131 @@ class _OrbitalFrameSurface extends StatelessWidget {
                   fit: StackFit.expand,
                   children: [
                     if (imageAsset != null)
-                      Image.asset(
-                        imageAsset!,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => ColoredBox(
-                          color: AppColors.accent.withValues(alpha: 0.12),
-                          child: Icon(
-                            LucideIcons.sparkles,
-                            size: 48,
-                            color: AppColors.accent.withValues(alpha: 0.5),
-                          ),
-                        ),
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          final cacheWidth =
+                              MobileWebPerformance.cardImageCacheWidth(
+                            context,
+                            constraints.maxWidth,
+                          );
+                          final cacheHeight = constraints.maxHeight.isFinite &&
+                                  constraints.maxHeight > 0
+                              ? MobileWebPerformance.cardImageCacheWidth(
+                                  context,
+                                  constraints.maxHeight,
+                                )
+                              : null;
+                          return Image.asset(
+                            imageAsset!,
+                            fit: BoxFit.cover,
+                            cacheWidth: cacheWidth,
+                            cacheHeight: cacheHeight,
+                            filterQuality:
+                                MobileWebPerformance.imageFilterQuality(context),
+                            errorBuilder: (_, __, ___) => ColoredBox(
+                              color: AppColors.accent.withValues(alpha: 0.12),
+                              child: Icon(
+                                Icons.auto_awesome,
+                                size: 48,
+                                color: AppColors.accent.withValues(alpha: 0.5),
+                              ),
+                            ),
+                          );
+                        },
                       )
                     else
                       child!,
                     if (imageAsset != null) ...[
-                      DecoratedBox(
+                      const DecoratedBox(
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: [
-                              Colors.white.withValues(alpha: 0.1),
+                              Color(0x1AFFFFFF),
                               Colors.transparent,
-                              Colors.black.withValues(alpha: 0.28),
+                              Color(0x47000000),
                             ],
-                            stops: const [0.0, 0.42, 1.0],
+                            stops: [0.0, 0.42, 1.0],
                           ),
                         ),
                       ),
-                      DecoratedBox(
+                      const DecoratedBox(
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.black.withValues(alpha: 0.05),
+                              Color(0x0D000000),
                               Colors.transparent,
-                              Colors.black.withValues(alpha: 0.32),
+                              Color(0x52000000),
                             ],
-                            stops: const [0.0, 0.55, 1.0],
+                            stops: [0.0, 0.55, 1.0],
                           ),
                         ),
                       ),
                     ],
-                    CustomPaint(
-                      painter: _ShimmerSweepPainter(progress: shimmerProgress),
+                    RepaintBoundary(
+                      child: AnimatedBuilder(
+                        animation: animation,
+                        builder: (context, _) {
+                          return CustomPaint(
+                            painter: _ShimmerSweepPainter(
+                              progress: animation.value,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     if (showCenterEmblem)
                       Positioned.fill(
                         child: IgnorePointer(
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              final emblemSize =
-                                  math.min(constraints.maxWidth, constraints.maxHeight) *
-                                      (hovered ? 0.72 : 0.68);
-                              return Center(
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Container(
-                                      width: emblemSize * 1.04,
-                                      height: emblemSize * 1.04,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        gradient: RadialGradient(
-                                          colors: [
-                                            const Color(0xFF2A1410).withValues(alpha: 0.28),
-                                            const Color(0xFF1A1208).withValues(alpha: 0.14),
-                                            Colors.transparent,
-                                          ],
-                                          stops: const [0.0, 0.5, 1.0],
-                                        ),
+                          child: RepaintBoundary(
+                            child: AnimatedBuilder(
+                              animation: animation,
+                              builder: (context, _) {
+                                return LayoutBuilder(
+                                  builder: (context, constraints) {
+                                    final emblemSize = math.min(
+                                          constraints.maxWidth,
+                                          constraints.maxHeight,
+                                        ) *
+                                        (hovered ? 0.72 : 0.68);
+                                    return Center(
+                                      child: Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          Container(
+                                            width: emblemSize * 1.04,
+                                            height: emblemSize * 1.04,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              gradient: RadialGradient(
+                                                colors: [
+                                                  const Color(0xFF2A1410)
+                                                      .withValues(alpha: 0.28),
+                                                  const Color(0xFF1A1208)
+                                                      .withValues(alpha: 0.14),
+                                                  Colors.transparent,
+                                                ],
+                                                stops: const [0.0, 0.5, 1.0],
+                                              ),
+                                            ),
+                                          ),
+                                          _MajesticCenterEmblem(
+                                            progress: animation.value,
+                                            hovered: hovered,
+                                            size: emblemSize,
+                                            enableExpensiveEffects:
+                                                enableExpensiveEffects,
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    _MajesticCenterEmblem(
-                                      progress: animationProgress,
-                                      hovered: hovered,
-                                      size: emblemSize,
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -797,12 +1082,14 @@ class _ShadowPlate extends StatelessWidget {
     required this.hovered,
     required this.borderRadius,
     this.positioned = true,
+    this.cheap = false,
   });
 
   final double lift;
   final bool hovered;
   final double borderRadius;
   final bool positioned;
+  final bool cheap;
 
   @override
   Widget build(BuildContext context) {
@@ -814,13 +1101,15 @@ class _ShadowPlate extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(borderRadius + 2),
             color: Colors.black.withValues(alpha: hovered ? 0.55 : 0.4),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.65),
-                blurRadius: 24,
-                offset: const Offset(0, 16),
-              ),
-            ],
+            boxShadow: cheap
+                ? null
+                : [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.65),
+                      blurRadius: 24,
+                      offset: const Offset(0, 16),
+                    ),
+                  ],
           ),
         ),
       ),
@@ -834,11 +1123,13 @@ class _MajesticCenterEmblem extends StatelessWidget {
     required this.progress,
     required this.hovered,
     required this.size,
+    this.enableExpensiveEffects = true,
   });
 
   final double progress;
   final bool hovered;
   final double size;
+  final bool enableExpensiveEffects;
 
   @override
   Widget build(BuildContext context) {
@@ -849,6 +1140,7 @@ class _MajesticCenterEmblem extends StatelessWidget {
         painter: _MajesticCenterEmblemPainter(
           progress: progress,
           hovered: hovered,
+          enableExpensiveEffects: enableExpensiveEffects,
         ),
       ),
     );
@@ -856,10 +1148,15 @@ class _MajesticCenterEmblem extends StatelessWidget {
 }
 
 class _MajesticCenterEmblemPainter extends CustomPainter {
-  _MajesticCenterEmblemPainter({required this.progress, required this.hovered});
+  _MajesticCenterEmblemPainter({
+    required this.progress,
+    required this.hovered,
+    required this.enableExpensiveEffects,
+  });
 
   final double progress;
   final bool hovered;
+  final bool enableExpensiveEffects;
 
   void _drawGracefulDashedRing(
     Canvas canvas, {
@@ -917,8 +1214,10 @@ class _MajesticCenterEmblemPainter extends CustomPainter {
         ],
         stops: const [0.0, 0.3, 0.5, 0.7, 1.0],
         transform: GradientRotation(highlightStart),
-      ).createShader(rect)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.5);
+      ).createShader(rect);
+    if (enableExpensiveEffects) {
+      highlightPaint.maskFilter = const MaskFilter.blur(BlurStyle.normal, 3.5);
+    }
 
     canvas.drawArc(rect, highlightStart, highlightSweep, false, highlightPaint);
   }
@@ -968,8 +1267,10 @@ class _MajesticCenterEmblemPainter extends CustomPainter {
         ],
         stops: const [0.0, 0.2, 0.5, 0.8, 1.0],
         transform: GradientRotation(highlightStart),
-      ).createShader(rect)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5);
+      ).createShader(rect);
+    if (enableExpensiveEffects) {
+      glowPaint.maskFilter = const MaskFilter.blur(BlurStyle.normal, 5);
+    }
 
     canvas.drawArc(rect, highlightStart, highlightSweep, false, glowPaint);
 
@@ -1078,11 +1379,17 @@ class _MajesticCenterEmblemPainter extends CustomPainter {
     }) {
       final jewelCenter =
           Offset(cx + math.cos(rotation) * radius, cy + math.sin(rotation) * radius);
-      if (glow) {
+      if (glow && enableExpensiveEffects) {
         final glowPaint = Paint()
           ..color = color.withValues(alpha: 0.55)
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
         canvas.drawCircle(jewelCenter, dotRadius * 2.4, glowPaint);
+      } else if (glow) {
+        canvas.drawCircle(
+          jewelCenter,
+          dotRadius * 2.0,
+          Paint()..color = color.withValues(alpha: 0.28),
+        );
       }
       final dotPaint = Paint()..color = color.withValues(alpha: 0.85 + spread * 0.15);
       canvas.drawCircle(jewelCenter, dotRadius, dotPaint);
@@ -1161,8 +1468,10 @@ class _MajesticCenterEmblemPainter extends CustomPainter {
     starPath.close();
 
     final starGlow = Paint()
-      ..color = AppColors.accentGlow.withValues(alpha: 0.55 + pulse * 0.2)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
+      ..color = AppColors.accentGlow.withValues(alpha: 0.55 + pulse * 0.2);
+    if (enableExpensiveEffects) {
+      starGlow.maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
+    }
     canvas.drawPath(starPath, starGlow);
 
     final starFill = Paint()
@@ -1183,7 +1492,9 @@ class _MajesticCenterEmblemPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MajesticCenterEmblemPainter oldDelegate) {
-    return oldDelegate.progress != progress || oldDelegate.hovered != hovered;
+    return oldDelegate.progress != progress ||
+        oldDelegate.hovered != hovered ||
+        oldDelegate.enableExpensiveEffects != enableExpensiveEffects;
   }
 }
 

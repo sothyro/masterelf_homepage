@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../app_bootstrap.dart';
 import '../../config/field_work_content.dart';
 import '../../l10n/app_localizations.dart';
+import '../../utils/app_asset_preloader.dart';
 import '../../utils/breakpoints.dart';
 import '../../widgets/viewport_deferred_section.dart';
 import '../field_work/widgets/activity_stories_section.dart';
@@ -33,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+      // Eager tree is Hero + Events only; deferred sections warm separately.
       HomeReadiness.markCriticalHomeContentReady();
       HomeReadiness.ready.then((_) => HomeLoadCoordinator.armAfterReveal());
     });
@@ -42,6 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     HomeReadiness.onHomeScreenDisposed();
     super.dispose();
+  }
+
+  void _warmNearFoldAssets() {
+    unawaited(AppAssetPreloader.preloadHomeNearFoldAssets());
   }
 
   @override
@@ -57,8 +65,18 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         const RepaintBoundary(child: HeroSection()),
         const RepaintBoundary(child: EventsSection()),
-        const RepaintBoundary(child: AcademiesSection()),
-        const RepaintBoundary(child: ConsultationsSection()),
+        ViewportDeferredSection(
+          sectionKey: 'home-academies',
+          placeholderHeight: isMobile ? 900 : 1100,
+          onNearViewport: _warmNearFoldAssets,
+          child: const RepaintBoundary(child: AcademiesSection()),
+        ),
+        ViewportDeferredSection(
+          sectionKey: 'home-consultations',
+          placeholderHeight: isMobile ? 720 : 900,
+          onNearViewport: _warmNearFoldAssets,
+          child: const RepaintBoundary(child: ConsultationsSection()),
+        ),
         HomeIdleMount(
           child: Column(
             mainAxisSize: MainAxisSize.min,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:masterelf_homepage/l10n/app_localizations.dart';
 import 'package:masterelf_homepage/screens/field_work/field_work_screen.dart';
 import 'package:masterelf_homepage/screens/field_work/widgets/activity_spotlight_section.dart';

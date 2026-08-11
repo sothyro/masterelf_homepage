@@ -8,7 +8,7 @@ import '../../../utils/mobile_web_performance.dart';
 import '../../home/widgets/field_work_chinese_design.dart';
 import 'events_event_badges.dart';
 import 'events_meta_chip.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class EventsCompletedOnlineCard extends StatefulWidget {
   const EventsCompletedOnlineCard({

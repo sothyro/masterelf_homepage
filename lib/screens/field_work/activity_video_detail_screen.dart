@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../config/field_work_content.dart';
 import '../../l10n/app_localizations.dart';
 import '../../theme/app_theme.dart';
+import '../../theme/brand_icons.dart';
 import '../../utils/breakpoints.dart';
 import '../../widgets/page_content_inset.dart';
 import 'field_work_widgets.dart';
@@ -86,7 +87,7 @@ class ActivityVideoDetailScreen extends StatelessWidget {
                     ),
                     OutlinedButton.icon(
                       onPressed: () => shareActivityVideoOnFacebook(context, video),
-                      icon: const Icon(LucideIcons.facebook, size: 18),
+                      icon: const Icon(BrandIcons.facebook, size: 18),
                       label: Text(l10n.fieldWorkShareFacebook),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.onPrimary,
