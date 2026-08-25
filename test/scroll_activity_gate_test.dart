@@ -6,11 +6,29 @@ void main() {
 
   test('isUserScrolling is false before any scroll', () {
     expect(ScrollActivityGate.isUserScrolling, isFalse);
+    expect(ScrollActivityGate.hasUserScrolled, isFalse);
   });
 
-  test('offset change marks user scrolling', () {
+  test('offset change marks user scrolling and first scroll', () {
     ScrollActivityGate.onScrollOffset(10);
     expect(ScrollActivityGate.isUserScrolling, isTrue);
+    expect(ScrollActivityGate.hasUserScrolled, isTrue);
+  });
+
+  test('first scroll listener fires once and is sticky', () {
+    var count = 0;
+    ScrollActivityGate.addFirstScrollListener(() => count++);
+    expect(count, 0);
+
+    ScrollActivityGate.onScrollOffset(10);
+    expect(count, 1);
+
+    ScrollActivityGate.onScrollOffset(20);
+    expect(count, 1);
+
+    var lateCount = 0;
+    ScrollActivityGate.addFirstScrollListener(() => lateCount++);
+    expect(lateCount, 1);
   });
 
   test('idle fires after delay with no further offset changes', () async {
@@ -24,6 +42,7 @@ void main() {
     await Future<void>.delayed(ScrollActivityGate.idleDelay);
     expect(ScrollActivityGate.isUserScrolling, isFalse);
     expect(idleCount, 1);
+    expect(ScrollActivityGate.hasUserScrolled, isTrue);
   });
 
   test('activity listener fires when scrolling starts and when idle', () async {
@@ -49,5 +68,17 @@ void main() {
 
     await Future<void>.delayed(ScrollActivityGate.idleDelay);
     expect(idleCount, 1);
+  });
+
+  test('showHomeEventsInkWash requires past hero and idle', () async {
+    ScrollActivityGate.onScrollOffset(100);
+    expect(ScrollActivityGate.showHomeEventsInkWash, isFalse);
+
+    await Future<void>.delayed(ScrollActivityGate.idleDelay);
+    expect(ScrollActivityGate.showHomeEventsInkWash, isFalse);
+
+    ScrollActivityGate.onScrollOffset(450);
+    await Future<void>.delayed(ScrollActivityGate.idleDelay);
+    expect(ScrollActivityGate.showHomeEventsInkWash, isTrue);
   });
 }

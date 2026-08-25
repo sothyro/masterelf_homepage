@@ -76,6 +76,8 @@ class _HeroSectionState extends State<HeroSection> with WidgetsBindingObserver {
 
   void _syncPlayback() {
     if (!_videoReady || _videoFailed) return;
+    // Pause only when off-screen or app inactive — avoid pause/resume churn
+    // on every scroll activity edge (expensive with HtmlElementView).
     final shouldPlay = _inViewport && _appActive;
     if (shouldPlay) {
       unawaited(HeroVideoPlatform.resume());

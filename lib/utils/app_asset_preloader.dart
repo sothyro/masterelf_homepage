@@ -15,8 +15,8 @@ import 'mobile_web_performance.dart';
 // Tier 2 — eager homepage (Events) — blocks bootstrap.
 // Tier 3 — near-fold homepage (Academies / Consultations) — onNearViewport.
 // Tier 4 — mid/below-fold + other pages (background after reveal).
-// Hero video prewarms in parallel on desktop/tablet web and does not block
-// overlay dismiss; poster stays until ready.
+// Hero video prewarms in parallel on homepage web and never blocks overlay
+// dismiss — poster shows until canplay. Events images warm after mount.
 // ---------------------------------------------------------------------------
 
 /// Critical for first paint: logo (header) and hero background (fallback/static).
@@ -25,7 +25,7 @@ List<String> get _criticalImageAssets => [
   AppContent.assetHeroBackground,
 ];
 
-/// Eager homepage images (Events / orbital) — blocks bootstrap reveal.
+/// Eager homepage images (Events) — warmed after reveal, not on critical path.
 List<String> get _firstScreenHomepageAssets => [
   AppContent.assetEventMain,
   AppContent.assetEvent2027,
@@ -180,66 +180,57 @@ class AppAssetPreloader {
   @visibleForTesting
   static bool get backgroundPreloadStarted => _backgroundPreloadStarted;
 
-  /// Phased bootstrap preload: critical → eager Events images → decode → fonts
-  /// → homepage paint gate → reveal. Hero video prewarms in parallel and does
-  /// not block dismiss.
+  /// Phased bootstrap preload: critical images → fonts → homepage paint gate
+  /// → reveal. Hero video prewarms in parallel and never blocks dismiss.
   ///
   /// [waitForFirstPaint] (usually `HomeReadiness.ready`) keeps the final
   /// progress step pending until the eager homepage has painted;
   /// pass null when the initial route is not the homepage.
+  ///
+  /// [prewarmHeroVideo] starts video download without awaiting it.
   static Future<void> preloadAll(
     void Function(double progress) onProgress, {
     Future<void>? waitForFirstPaint,
+    bool prewarmHeroVideo = false,
   }) async {
     onProgress(0.0);
 
-    // Start hero video load in parallel (web: native HTML video; does not block
-    // loader dismiss — poster stays until canplaythrough).
     if (!disableHeroVideoForTesting &&
-        MobileWebPerformance.shouldPrewarmHeroVideoDuringBootstrap()) {
+        (prewarmHeroVideo ||
+            MobileWebPerformance.shouldPrewarmHeroVideoDuringBootstrap())) {
       unawaited(HeroVideoPlatform.prewarm());
     }
 
-    // Phase 1 — critical (0 → 20%), parallel.
+    // Phase 1 — critical hero/chrome images (0 → 40%).
     await _loadImageListBatchedWithProgress(
       _criticalImageAssets,
       (completed, total) {
-        onProgress(0.20 * (total > 0 ? completed / total : 1.0));
+        onProgress(0.40 * (total > 0 ? completed / total : 1.0));
       },
       batchSize: _criticalImageAssets.length.clamp(1, 4),
     );
-    // Phase 2 — eager Events images (20 → 55%)
-    final webBatchSize = kIsWeb ? 3 : 6;
-    await _loadImageListBatchedWithProgress(
-      _firstScreenHomepageAssets,
-      (completed, total) {
-        onProgress(0.20 + 0.35 * (total > 0 ? completed / total : 1.0));
-      },
-      batchSize: webBatchSize,
-    );
+    onProgress(0.40);
 
-    // Phase 3 — GPU decode (55 → 65%). Native only; web relies on widget
-    // cacheWidth decode to avoid double-decoding at full resolution (OOM risk).
-    if (!disableImageDecodeForTesting && !kIsWeb) {
-      await _decodeImageListBatchedWithProgress(
-        _firstScreenHomepageAssets,
-        (completed, total) {
-          onProgress(0.55 + 0.10 * (total > 0 ? completed / total : 1.0));
-        },
-      );
-    }
-    onProgress(0.65);
-
-    // Phase 4 — main fonts (65 → 75%)
+    // Phase 2 — main fonts (40 → 75%). Events images are NOT awaited here.
     if (!disableBackgroundFontsForTesting) {
       await _loadMainFonts();
     }
     onProgress(0.75);
 
-    // Phase 5 — hero video continues loading in background (75 → 88%).
-    onProgress(0.88);
+    // Kick Events image warm without blocking reveal (widgets decode on paint).
+    unawaited(_loadImageListBatched(_firstScreenHomepageAssets, batchSize: 2));
+    if (!kIsWeb && !disableImageDecodeForTesting) {
+      unawaited(
+        _decodeImageListBatchedWithProgress(
+          _firstScreenHomepageAssets,
+          (_, __) {},
+          batchSize: 2,
+        ),
+      );
+    }
 
-    // Phase 6 — homepage render gate (88 → 100%).
+    // Phase 3 — homepage paint gate (75 → 100%).
+    onProgress(0.88);
     if (waitForFirstPaint != null) {
       await waitForFirstPaint;
     }

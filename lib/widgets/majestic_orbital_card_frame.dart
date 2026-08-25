@@ -96,6 +96,7 @@ class MajesticOrbitalCardFrame extends StatefulWidget {
     this.topRight,
     this.showCenterEmblem = true,
     this.showSatelliteOrbits = true,
+    this.enableOrbitMotion = true,
     this.cycleDuration = kMajesticOrbitalCycleDuration,
     this.borderRadius = 20,
     this.hovered,
@@ -114,6 +115,8 @@ class MajesticOrbitalCardFrame extends StatefulWidget {
   final Widget? topRight;
   final bool showCenterEmblem;
   final bool showSatelliteOrbits;
+  /// When false, the orbit ticker never starts (static card / first-screen freeze).
+  final bool enableOrbitMotion;
   final Duration cycleDuration;
   final double borderRadius;
   /// When set, hover tilt/glow follow this value instead of an internal
@@ -160,7 +163,10 @@ class MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
   bool get isResumeSettling => _resumeSettling;
 
   bool get _shouldAnimate =>
-      _inViewport && _orbitStartAllowed && !_userScrolling;
+      widget.enableOrbitMotion &&
+      _inViewport &&
+      _orbitStartAllowed &&
+      !_userScrolling;
 
   bool get _forceCheapEffects => _userScrolling || _resumeSettling;
 
@@ -186,7 +192,11 @@ class MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
 
   void _scheduleOrbitStartIfNeeded() {
     if (_orbitStartAllowed || _orbitStartScheduled) return;
-    if (MobileWebPerformance.prefersReducedMotion(context)) return;
+    if (!widget.enableOrbitMotion) return;
+    if (MobileWebPerformance.prefersReducedMotion(context) ||
+        MobileWebPerformance.disableHeavyAnimations(context)) {
+      return;
+    }
 
     _orbitStartScheduled = true;
     final defer = MobileWebPerformance.heroMedallionAnimationDefer();
@@ -315,6 +325,15 @@ class MajesticOrbitalCardFrameState extends State<MajesticOrbitalCardFrame>
     super.didUpdateWidget(oldWidget);
     if (oldWidget.cycleDuration != widget.cycleDuration) {
       _cycleController.duration = widget.cycleDuration;
+    }
+    if (widget.enableOrbitMotion && !oldWidget.enableOrbitMotion) {
+      _orbitStartScheduled = false;
+      _scheduleOrbitStartIfNeeded();
+    } else if (!widget.enableOrbitMotion && oldWidget.enableOrbitMotion) {
+      _cancelSmoothResume();
+      _orbitStartAllowed = false;
+      _orbitStartScheduled = false;
+      if (_cycleController.isAnimating) _cycleController.stop();
     }
   }
 

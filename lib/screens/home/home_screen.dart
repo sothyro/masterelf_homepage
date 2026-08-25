@@ -1,15 +1,11 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import '../../app_bootstrap.dart';
 import '../../config/field_work_content.dart';
 import '../../l10n/app_localizations.dart';
-import '../../utils/app_asset_preloader.dart';
 import '../../utils/breakpoints.dart';
-import '../../widgets/viewport_deferred_section.dart';
 import '../field_work/widgets/activity_stories_section.dart';
-import 'home_load_coordinator.dart';
+import 'home_section_mount_queue.dart';
 import 'widgets/hero_section.dart';
 import 'widgets/events_section.dart';
 import 'widgets/academies_section.dart';
@@ -19,10 +15,10 @@ import 'widgets/story_section.dart';
 import 'widgets/featured_in_consultation_band.dart';
 import 'widgets/cta_section.dart';
 import 'widgets/testimonials_section.dart';
-import 'widgets/home_idle_mount.dart';
+import 'widgets/home_queued_section.dart';
 
-/// Homepage with tiered mounting: critical sections first, mid-page after idle,
-/// below-fold when near the viewport.
+/// Homepage with tiered mounting: Hero + Events eager, then idle-time
+/// progressive hydration of below-fold sections via [HomeSectionMountQueue].
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -36,9 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      // Eager tree is Hero + Events only; deferred sections warm separately.
+      // Eager tree is Hero + Events only; queue fills the rest on idle.
+      // Background asset preload is armed from bootstrap dismiss (not here).
       HomeReadiness.markCriticalHomeContentReady();
-      HomeReadiness.ready.then((_) => HomeLoadCoordinator.armAfterReveal());
+      HomeSectionMountQueue.instance.armAfterCriticalReady();
     });
   }
 
@@ -46,10 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     HomeReadiness.onHomeScreenDisposed();
     super.dispose();
-  }
-
-  void _warmNearFoldAssets() {
-    unawaited(AppAssetPreloader.preloadHomeNearFoldAssets());
   }
 
   @override
@@ -65,28 +58,28 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         const RepaintBoundary(child: HeroSection()),
         const RepaintBoundary(child: EventsSection()),
-        ViewportDeferredSection(
+        HomeQueuedSection(
           sectionKey: 'home-academies',
           placeholderHeight: isMobile ? 900 : 1100,
-          onNearViewport: _warmNearFoldAssets,
           child: const RepaintBoundary(child: AcademiesSection()),
         ),
-        ViewportDeferredSection(
+        HomeQueuedSection(
           sectionKey: 'home-consultations',
           placeholderHeight: isMobile ? 720 : 900,
-          onNearViewport: _warmNearFoldAssets,
           child: const RepaintBoundary(child: ConsultationsSection()),
         ),
-        HomeIdleMount(
-          child: Column(
+        HomeQueuedSection(
+          sectionKey: 'home-field-work-story',
+          placeholderHeight: isMobile ? 1400 : 1600,
+          child: const Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               RepaintBoundary(child: FieldWorkSection()),
               RepaintBoundary(child: StorySection()),
             ],
           ),
         ),
-        ViewportDeferredSection(
+        HomeQueuedSection(
           sectionKey: 'home-featured-band',
           placeholderHeight: isMobile ? 320 : 400,
           child: RepaintBoundary(
@@ -96,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        ViewportDeferredSection(
+        HomeQueuedSection(
           sectionKey: 'home-activity-stories',
           placeholderHeight: isMobile ? 720 : 900,
           child: RepaintBoundary(
@@ -109,12 +102,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        ViewportDeferredSection(
+        HomeQueuedSection(
           sectionKey: 'home-testimonials',
           placeholderHeight: isMobile ? 680 : 820,
           child: const RepaintBoundary(child: TestimonialsSection()),
         ),
-        ViewportDeferredSection(
+        HomeQueuedSection(
           sectionKey: 'home-cta',
           placeholderHeight: isMobile ? 280 : 320,
           child: const RepaintBoundary(child: CtaSection()),

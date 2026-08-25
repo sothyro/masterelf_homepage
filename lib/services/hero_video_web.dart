@@ -63,6 +63,8 @@ class HeroVideoPlatform {
       element.style.width = '100%';
       element.style.height = '100%';
       element.style.setProperty('object-fit', 'cover');
+      // Platform views capture wheel/touch by default; keep scroll on Flutter.
+      element.style.pointerEvents = 'none';
 
       _element = element;
 
@@ -104,6 +106,8 @@ class HeroVideoPlatform {
         completer.complete(false);
       }
 
+      // Playable is enough for reveal; canplaythrough may arrive later.
+      element.onCanPlay.listen((_) => onReady());
       element.onCanPlayThrough.listen((_) => onReady());
       element.onError.listen(onError);
 

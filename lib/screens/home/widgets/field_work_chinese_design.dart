@@ -123,6 +123,27 @@ class ChineseInkWashGlow extends StatelessWidget {
   }
 }
 
+/// Cheap flat gradient for homepage Events before the hero is scrolled past.
+class EventsSectionLiteBackground extends StatelessWidget {
+  const EventsSectionLiteBackground({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            FieldWorkChinesePalette.ink,
+            Color(0xFF0C0A08),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// L-shaped gold corner brackets (traditional frame motif).
 class ChineseCornerBrackets extends StatelessWidget {
   const ChineseCornerBrackets({

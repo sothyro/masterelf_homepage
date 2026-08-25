@@ -37,7 +37,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
   }
 
-  testWidgets('EventsSection shows Goat 2027 orbital featured card on mobile', (tester) async {
+  testWidgets('EventsSection shows lite featured card on mobile', (tester) async {
     await pumpEventsSection(tester, width: 375);
     expect(tester.takeException(), isNull);
     expect(find.text('Coming Up Next'), findsOneWidget);
@@ -45,7 +45,8 @@ void main() {
       find.text('Master Elf — Strive for the Year of the Blood Goat 2027'),
       findsOneWidget,
     );
-    expect(find.byType(MajesticOrbitalCardFrame), findsOneWidget);
+    expect(find.byType(MajesticOrbitalCardFrame), findsNothing);
+    expect(find.byType(Image), findsWidgets);
     expect(find.text('Explore All Events'), findsOneWidget);
     expect(find.text('All Upcoming Events'), findsNothing);
   });
@@ -56,8 +57,12 @@ void main() {
     expect(find.byType(EventsSection), findsOneWidget);
   });
 
-  testWidgets('EventsSection shows Goat featured and completed sidebar on desktop', (tester) async {
+  testWidgets('EventsSection shows lite featured and completed sidebar on desktop', (
+    tester,
+  ) async {
     await pumpEventsSection(tester, width: 1280);
+    // Desktop sidebar mounts after settle fallback (2s) or scroll idle.
+    await tester.pump(const Duration(milliseconds: 2100));
     expect(tester.takeException(), isNull);
     expect(find.text('Coming Up Next'), findsOneWidget);
     expect(find.text('All Upcoming Events'), findsOneWidget);
@@ -66,6 +71,6 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Master Elf — The Rise of the Phoenix 2026'), findsOneWidget);
-    expect(find.byType(MajesticOrbitalCardFrame), findsOneWidget);
+    expect(find.byType(MajesticOrbitalCardFrame), findsNothing);
   });
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,8 +9,84 @@ import '../../../config/events_data.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../theme/app_theme.dart';
 import '../../../utils/breakpoints.dart';
-import '../../../widgets/majestic_orbital_card_frame.dart';
+import '../../../utils/mobile_web_performance.dart';
+import '../../../utils/scroll_activity_gate.dart';
 import 'field_work_chinese_design.dart';
+
+/// Desktop completed-events column: mounts after first scroll settles so the
+/// initial homescreen paint stays featured-card only.
+class _DeferredCompletedEventsSidebar extends StatefulWidget {
+  const _DeferredCompletedEventsSidebar({required this.builder});
+
+  final WidgetBuilder builder;
+
+  @override
+  State<_DeferredCompletedEventsSidebar> createState() =>
+      _DeferredCompletedEventsSidebarState();
+}
+
+class _DeferredCompletedEventsSidebarState
+    extends State<_DeferredCompletedEventsSidebar> {
+  static const Duration _settle = Duration(milliseconds: 350);
+
+  bool _mountedSidebar = false;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    ScrollActivityGate.addIdleListener(_onIdle);
+    ScrollActivityGate.addActivityListener(_onActivity);
+    if (ScrollActivityGate.hasUserScrolled &&
+        !ScrollActivityGate.isUserScrolling) {
+      _scheduleMount();
+    } else {
+      // Fallback: mount after reveal settle even if user never scrolls.
+      _timer = Timer(const Duration(milliseconds: 2000), () {
+        if (!mounted || _mountedSidebar) return;
+        setState(() => _mountedSidebar = true);
+      });
+    }
+  }
+
+  void _onActivity() {
+    if (ScrollActivityGate.isUserScrolling) {
+      _timer?.cancel();
+      _timer = null;
+    }
+  }
+
+  void _onIdle() {
+    if (!ScrollActivityGate.hasUserScrolled) return;
+    _scheduleMount();
+  }
+
+  void _scheduleMount() {
+    if (_mountedSidebar) return;
+    _timer?.cancel();
+    _timer = Timer(_settle, () {
+      if (!mounted || _mountedSidebar) return;
+      if (ScrollActivityGate.isUserScrolling) return;
+      setState(() => _mountedSidebar = true);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    ScrollActivityGate.removeIdleListener(_onIdle);
+    ScrollActivityGate.removeActivityListener(_onActivity);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_mountedSidebar) {
+      return const SizedBox(width: double.infinity, height: 520);
+    }
+    return widget.builder(context);
+  }
+}
 
 class EventsSection extends StatelessWidget {
   const EventsSection({super.key});
@@ -30,7 +108,7 @@ class EventsSection extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        const Positioned.fill(child: ChineseInkWashGlow()),
+        const Positioned.fill(child: EventsSectionLiteBackground()),
         Padding(
           padding: EdgeInsets.symmetric(vertical: isNarrow ? 48 : 64, horizontal: paddingH),
           child: Center(
@@ -58,19 +136,30 @@ class EventsSection extends StatelessWidget {
                   ],
                 )
               else
-                _DesktopEventsLayout(
-                  left: _buildComingUpNextBlock(
-                    context,
-                    l10n,
-                    featuredEvent,
-                    showExploreButton: true,
-                  ),
-                  right: (height) => _buildAllUpcomingBlock(
-                    context,
-                    l10n,
-                    otherEvents,
-                    matchedHeight: height,
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child: _buildComingUpNextBlock(
+                        context,
+                        l10n,
+                        featuredEvent,
+                        showExploreButton: true,
+                      ),
+                    ),
+                    const SizedBox(width: 32),
+                    Expanded(
+                      flex: 4,
+                      child: _DeferredCompletedEventsSidebar(
+                        builder: (ctx) => _buildAllUpcomingBlock(
+                          ctx,
+                          AppLocalizations.of(ctx)!,
+                          otherEvents,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 ],
               ),
@@ -120,13 +209,11 @@ class EventsSection extends StatelessWidget {
         if (featured != null)
           RepaintBoundary(
             child: _FeaturedEventCard(
-            title: featured.title,
-            date: featured.date,
-            location: featured.location,
-            description: featured.description,
-            imageAsset: featured.imageAsset,
-            limitedSeats: featured.limitedSeats,
-            onViewEvent: () => context.push('/events'),
+              title: featured.title,
+              date: featured.date,
+              location: featured.location,
+              imageAsset: featured.imageAsset,
+              onViewEvent: () => context.push('/events'),
             ),
           )
         else
@@ -224,273 +311,98 @@ class EventsSection extends StatelessWidget {
   }
 }
 
-/// Desktop two-column layout: sidebar height tracks the featured column.
-/// Sidebar sits behind orbital rings.
-class _DesktopEventsLayout extends StatefulWidget {
-  const _DesktopEventsLayout({
-    required this.left,
-    required this.right,
-  });
-
-  final Widget left;
-  final Widget Function(double height) right;
-
-  @override
-  State<_DesktopEventsLayout> createState() => _DesktopEventsLayoutState();
-}
-
-class _DesktopEventsLayoutState extends State<_DesktopEventsLayout> {
-  final GlobalKey _leftKey = GlobalKey();
-  double? _leftHeight;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(_measureLeftHeight);
-  }
-
-  @override
-  void didUpdateWidget(covariant _DesktopEventsLayout oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    WidgetsBinding.instance.addPostFrameCallback(_measureLeftHeight);
-  }
-
-  void _measureLeftHeight(Duration _) {
-    final renderBox = _leftKey.currentContext?.findRenderObject() as RenderBox?;
-    if (renderBox == null || !renderBox.hasSize) return;
-    final height = renderBox.size.height;
-    if (_leftHeight != height && mounted) {
-      setState(() => _leftHeight = height);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.topCenter,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Expanded(flex: 5, child: SizedBox.shrink()),
-            const SizedBox(width: 32),
-            Expanded(
-              flex: 4,
-              child: _leftHeight != null
-                  ? RepaintBoundary(child: widget.right(_leftHeight!))
-                  : const SizedBox.shrink(),
-            ),
-          ],
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 5,
-              child: RepaintBoundary(
-                child: KeyedSubtree(
-                  key: _leftKey,
-                  child: widget.left,
-                ),
-              ),
-            ),
-            const SizedBox(width: 32),
-            const Expanded(flex: 4, child: SizedBox.shrink()),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-/// Large featured event card for "Coming Up Next".
-class _FeaturedEventCard extends StatefulWidget {
+/// Lightweight featured event: decoded image + plain text. No orbital chrome,
+/// hover animation, shadows, or decorative CustomPaint.
+class _FeaturedEventCard extends StatelessWidget {
   const _FeaturedEventCard({
     required this.title,
     required this.date,
     required this.location,
-    required this.description,
     required this.imageAsset,
-    required this.limitedSeats,
     required this.onViewEvent,
   });
 
   final String title;
   final String date;
   final String location;
-  final String description;
   final String imageAsset;
-  final bool limitedSeats;
   final VoidCallback onViewEvent;
 
   @override
-  State<_FeaturedEventCard> createState() => _FeaturedEventCardState();
-}
-
-class _FeaturedEventCardState extends State<_FeaturedEventCard> {
-  bool _hovered = false;
-
-  @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final isMobile = Breakpoints.isMobile(MediaQuery.sizeOf(context).width);
-    final borderColor = _hovered
-        ? AppColors.borderLight.withValues(alpha: 0.6)
-        : AppColors.borderDark;
-    final shadow = _hovered ? AppShadows.eventCardHover : AppShadows.eventCard;
+    final muted = AppColors.onPrimary.withValues(alpha: 0.8);
 
-    final card = AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeOut,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColors.surfaceElevatedDark,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: borderColor, width: _hovered ? 1.5 : 1),
-        boxShadow: shadow,
-      ),
-      clipBehavior: Clip.none,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: isMobile ? 10 : 0),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final orbitExtent = isMobile
-                    ? mobileOrbitalExtentScale(constraints.maxWidth)
-                    : 1.0;
-                return MajesticOrbitalCardFrame(
-                  aspectRatio: 16 / 9,
-                  imageAsset: widget.imageAsset,
-                  cardBodyScale:
-                      isMobile ? kMobileOrbitalCardBodyScale : 1.0,
-                  orbitExtentScale: orbitExtent,
-                  topRight: widget.limitedSeats
-                      ? Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                AppColors.accent,
-                                AppColors.accentLight.withValues(alpha: 0.95),
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.accentGlow.withValues(alpha: 0.45),
-                                blurRadius: 12,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Text(
-                            l10n.limitedSeats,
-                            style: const TextStyle(
-                              color: AppColors.onAccent,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 0.2,
-                            ),
-                          ),
-                        )
-                      : null,
-                );
-              },
+    return Semantics(
+      button: true,
+      label: title,
+      child: GestureDetector(
+        onTap: onViewEvent,
+        behavior: HitTestBehavior.opaque,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final cacheWidth =
+                        MobileWebPerformance.cardImageCacheWidth(
+                      context,
+                      constraints.maxWidth,
+                    );
+                    return Image.asset(
+                      imageAsset,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      gaplessPlayback: true,
+                      cacheWidth: cacheWidth,
+                      filterQuality:
+                          MobileWebPerformance.imageFilterQuality(context),
+                      errorBuilder: (_, __, ___) => ColoredBox(
+                        color: AppColors.surfaceElevatedDark,
+                        child: Icon(
+                          Icons.image_not_supported_outlined,
+                          color: AppColors.onPrimary.withValues(alpha: 0.4),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.title,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            const SizedBox(height: 14),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.onPrimary,
                     height: 1.25,
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.calendar_today_outlined,
-                      size: 16,
-                      color: AppColors.onPrimary.withValues(alpha: 0.7),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        widget.date,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.onPrimary.withValues(alpha: 0.85),
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      Icons.location_on_outlined,
-                      size: 16,
-                      color: AppColors.onPrimary.withValues(alpha: 0.7),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        widget.location,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.onPrimary.withValues(alpha: 0.85),
-                          fontSize: 14,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  widget.description,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.onPrimary.withValues(alpha: 0.9),
-                    height: 1.4,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              date,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: muted,
                     fontSize: 14,
                   ),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
             ),
-          ),
-        ],
-      ),
-    );
-
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: widget.onViewEvent,
-          borderRadius: BorderRadius.circular(16),
-          child: card,
+            const SizedBox(height: 4),
+            Text(
+              location,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: muted,
+                    fontSize: 14,
+                  ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ),
       ),
     );

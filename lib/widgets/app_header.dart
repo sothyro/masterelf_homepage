@@ -44,7 +44,10 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
       label: l10n.semanticsNavigation,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+        padding: EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: isMobile ? 12 : 24,
+        ),
         color: Colors.transparent,
         child: isMobile
             ? _MobileHeader(l10n: l10n, localeNotifier: localeNotifier, onOpenDrawer: onOpenDrawer)
@@ -95,40 +98,29 @@ class _MobileHeader extends StatelessWidget {
               borderRadius: BorderRadius.circular(_kMenuBarRadius),
               border: Border.all(color: _MenuColors.barBorder, width: 1.5),
               boxShadow: AppShadows.header,
-              padding: const EdgeInsets.only(left: 16, right: 28, top: 10, bottom: 10),
+              // Tight padding so logo + menu + Contact fit at ~360–390px.
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
               child: Row(
                 children: [
-                  SizedBox(width: logoHeight + 10),
-                  const SizedBox(width: 4),
-                  Builder(
-                    builder: (context) {
-                      final isKm = Localizations.localeOf(context).languageCode == 'km';
-                      return Text(
-                        l10n.menu,
-                        style: menuLabelStyle(
-                          context,
-                          fontSize: 13,
-                          color: _MenuColors.linkText,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: isKm ? 0 : 1.2,
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(width: 6),
+                  // Clear the overlapping logo without taking half the bar.
+                  SizedBox(width: (logoSlotWidth * 0.42).clamp(72.0, 100.0)),
                   IconButton(
-                    icon: const Icon(LucideIcons.menu, color: _MenuColors.linkText, size: 24),
+                    icon: const Icon(LucideIcons.menu, color: _MenuColors.linkText, size: 22),
                     onPressed: onOpenDrawer ?? () {},
                     tooltip: l10n.menu,
                     style: IconButton.styleFrom(
                       minimumSize: const Size(kMinTouchTargetSize, kMinTouchTargetSize),
-                      tapTargetSize: MaterialTapTargetSize.padded,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      padding: const EdgeInsets.all(8),
+                      visualDensity: VisualDensity.compact,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: _ContactUsButton(l10n: l10n),
+                  const Spacer(),
+                  Flexible(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: _ContactUsButton(l10n: l10n, compact: true),
+                    ),
                   ),
                 ],
               ),
@@ -136,7 +128,7 @@ class _MobileHeader extends StatelessWidget {
           ),
           // Logo before flags so language chips win hit tests on overlap.
           Positioned(
-            left: _kLogoLeftInsetDesktop,
+            left: 12,
             top: -36,
             height: logoHeight,
             width: logoSlotWidth,
@@ -157,7 +149,7 @@ class _MobileHeader extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: 28,
+            right: 12,
             top: barHeight + 8,
             child: _LanguageFlagsRow(notifier: localeNotifier),
           ),
@@ -307,18 +299,25 @@ class _DesktopHeader extends StatelessWidget {
 
 /// Contact Us button styled like the Hero section's "Book Consultation" button.
 class _ContactUsButton extends StatelessWidget {
-  const _ContactUsButton({required this.l10n});
+  const _ContactUsButton({required this.l10n, this.compact = false});
 
   final AppLocalizations l10n;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = Breakpoints.isMobile(width);
     final isNarrow = Breakpoints.isNarrow(width);
-    final horizontalPadding = isMobile ? 16.0 : (isNarrow ? 20.0 : 24.0);
-    final verticalPadding = isMobile ? 8.0 : (isNarrow ? 10.0 : 12.0);
-    final fontSize = isMobile ? 14.0 : (isNarrow ? 14.0 : 15.0);
+    final horizontalPadding = compact
+        ? 12.0
+        : (isMobile ? 16.0 : (isNarrow ? 20.0 : 24.0));
+    final verticalPadding = compact
+        ? 6.0
+        : (isMobile ? 8.0 : (isNarrow ? 10.0 : 12.0));
+    final fontSize = compact
+        ? 13.0
+        : (isMobile ? 14.0 : (isNarrow ? 14.0 : 15.0));
 
     return Container(
       decoration: BoxDecoration(
@@ -330,8 +329,15 @@ class _ContactUsButton extends StatelessWidget {
         style: FilledButton.styleFrom(
           backgroundColor: AppColors.accent,
           foregroundColor: AppColors.onAccent,
-          padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: verticalPadding),
+          padding: EdgeInsets.symmetric(
+            horizontal: horizontalPadding,
+            vertical: verticalPadding,
+          ),
           minimumSize: isMobile ? const Size(0, kMinTouchTargetSize) : null,
+          tapTargetSize: compact
+              ? MaterialTapTargetSize.shrinkWrap
+              : MaterialTapTargetSize.padded,
+          visualDensity: compact ? VisualDensity.compact : VisualDensity.standard,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
@@ -339,6 +345,8 @@ class _ContactUsButton extends StatelessWidget {
         ),
         child: Text(
           l10n.contactUs,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: menuLabelStyle(
             context,
             fontSize: fontSize,

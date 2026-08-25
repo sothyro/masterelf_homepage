@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'breakpoints.dart';
+import 'scroll_activity_gate.dart';
 
 /// Shared mobile-web performance policy (memory + animation budgets).
 class MobileWebPerformance {
@@ -30,11 +31,10 @@ class MobileWebPerformance {
     return Breakpoints.isMobile(width);
   }
 
-  /// Hero video may be pre-warmed during bootstrap (desktop/tablet web only).
-  static bool shouldPrewarmHeroVideoDuringBootstrap() =>
-      kIsWeb && !isMobileWebViewport();
+  /// Hero video may be pre-warmed during bootstrap on homepage web only.
+  static bool shouldPrewarmHeroVideoDuringBootstrap() => false;
 
-  /// Legacy alias — prefer [shouldPrewarmHeroVideoDuringBootstrap].
+  /// Legacy alias — prefer explicit [prewarmHeroVideo] on [AppAssetPreloader.preloadAll].
   static bool shouldPrewarmHeroVideo() => shouldPrewarmHeroVideoDuringBootstrap();
 
   /// Decode width cap for [Image.asset] to limit GPU memory on mobile web.
@@ -90,9 +90,21 @@ class MobileWebPerformance {
     return mq != null && mq.disableAnimations;
   }
 
-  /// Skip marquee / carousel auto-advance for reduced motion only.
+  /// True when decorative motion (orbits, marquees, auto-advance) may run.
+  static bool shouldRunDecorativeMotion(BuildContext context) {
+    return !prefersReducedMotion(context);
+  }
+
+  /// Homepage featured decorative motion: after first scroll has settled.
+  static bool shouldRunHomepageDecorativeMotion(BuildContext context) {
+    return shouldRunDecorativeMotion(context) &&
+        ScrollActivityGate.hasUserScrolled &&
+        !ScrollActivityGate.isUserScrolling;
+  }
+
+  /// Skip marquee / carousel auto-advance when reduced motion is preferred.
   static bool disableHeavyAnimations(BuildContext context) {
-    return prefersReducedMotion(context);
+    return !shouldRunDecorativeMotion(context);
   }
 
   /// Defer non-critical background preload after bootstrap on web.

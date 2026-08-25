@@ -4,17 +4,18 @@ import 'package:masterelf_homepage/app_bootstrap.dart';
 import 'package:masterelf_homepage/l10n/app_localizations.dart';
 import 'package:masterelf_homepage/screens/home/home_load_coordinator.dart';
 import 'package:masterelf_homepage/screens/home/home_screen.dart';
+import 'package:masterelf_homepage/screens/home/home_section_mount_queue.dart';
 import 'package:masterelf_homepage/utils/app_asset_preloader.dart';
 import 'package:masterelf_homepage/screens/home/widgets/academies_section.dart';
 import 'package:masterelf_homepage/screens/home/widgets/consultations_section.dart';
 import 'package:masterelf_homepage/screens/home/widgets/events_section.dart';
 import 'package:masterelf_homepage/screens/home/widgets/field_work_section.dart';
 import 'package:masterelf_homepage/screens/home/widgets/hero_section.dart';
+import 'package:masterelf_homepage/screens/home/widgets/home_queued_section.dart';
 import 'package:masterelf_homepage/screens/home/widgets/story_section.dart';
 import 'package:masterelf_homepage/screens/home/widgets/testimonials_section.dart';
 import 'package:masterelf_homepage/theme/app_theme.dart';
 import 'package:masterelf_homepage/utils/scroll_activity_gate.dart';
-import 'package:masterelf_homepage/widgets/viewport_deferred_section.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 void main() {
@@ -22,6 +23,7 @@ void main() {
     VisibilityDetectorController.instance.updateInterval = Duration.zero;
     HomeReadiness.reset();
     HomeLoadCoordinator.resetForTesting();
+    HomeSectionMountQueue.resetForTesting();
     ScrollActivityGate.resetForTesting();
     AppAssetPreloader.resetForTesting();
     AppAssetPreloader.disableBackgroundFontsForTesting = true;
@@ -31,6 +33,7 @@ void main() {
     VisibilityDetectorController.instance.updateInterval =
         const Duration(milliseconds: 500);
     HomeLoadCoordinator.resetForTesting();
+    HomeSectionMountQueue.resetForTesting();
     ScrollActivityGate.resetForTesting();
   });
 
@@ -45,13 +48,14 @@ void main() {
     await tester.pump(const Duration(seconds: 3));
     drainExceptions(tester);
     HomeLoadCoordinator.resetForTesting();
+    HomeSectionMountQueue.resetForTesting();
     ScrollActivityGate.resetForTesting();
   }
 
   Future<void> pumpHomeScreen(
     WidgetTester tester, {
     required double width,
-    double height = 3200,
+    double height = 800,
   }) async {
     await tester.binding.setSurfaceSize(Size(width, height));
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -78,7 +82,7 @@ void main() {
 
     await tester.pump();
     VisibilityDetectorController.instance.notifyNow();
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pump(const Duration(milliseconds: 50));
     drainExceptions(tester);
   }
 
@@ -96,36 +100,35 @@ void main() {
     expect(find.byType(AcademiesSection), findsNothing);
     expect(find.byType(ConsultationsSection), findsNothing);
     expect(find.byType(TestimonialsSection), findsNothing);
-    expect(find.byType(ViewportDeferredSection), findsWidgets);
+    expect(find.byType(HomeQueuedSection), findsWidgets);
     expect(
-      find.byKey(const ValueKey<String>('viewport-deferred-home-academies')),
+      find.byKey(const ValueKey<String>('home-queued-home-academies')),
       findsOneWidget,
     );
     expect(
-      find.byKey(const ValueKey<String>('viewport-deferred-home-consultations')),
+      find.byKey(const ValueKey<String>('home-queued-home-consultations')),
       findsOneWidget,
     );
 
     await settleHomeTimers(tester);
   });
 
-  testWidgets('HomeScreen keeps deferred placeholders before scroll', (
+  testWidgets('HomeScreen idle queue mounts Academies without scroll', (
     tester,
   ) async {
     await pumpHomeScreen(tester, width: 1280, height: 800);
 
     expectCriticalSectionsPresent();
     expect(find.byType(AcademiesSection), findsNothing);
-    expect(find.byType(ConsultationsSection), findsNothing);
     expect(
-      find.byKey(const ValueKey<String>('viewport-deferred-home-academies')),
+      find.byKey(const ValueKey<String>('home-queued-home-academies')),
       findsOneWidget,
     );
-    expect(
-      find.byKey(const ValueKey<String>('viewport-deferred-home-testimonials')),
-      findsOneWidget,
-    );
-    expect(find.byType(TestimonialsSection), findsNothing);
+
+    await tester.pump(HomeSectionMountQueue.firstAdvanceDelay);
+    await tester.pump();
+    drainExceptions(tester);
+    expect(find.byType(AcademiesSection), findsOneWidget);
 
     await settleHomeTimers(tester);
   });
@@ -145,34 +148,42 @@ void main() {
     await settleHomeTimers(tester);
   });
 
-  testWidgets('HomeIdleMount does not mount mid-page sections during active scroll', (
+  testWidgets('mount queue does not advance during active scroll', (
     tester,
   ) async {
-    await pumpHomeScreen(tester, width: 1280, height: 4000);
+    await pumpHomeScreen(tester, width: 1280, height: 800);
 
     await tester.pump();
     await tester.pump();
     expect(HomeReadiness.isReady, isTrue);
-    expect(find.byType(FieldWorkSection), findsNothing);
+    expect(find.byType(AcademiesSection), findsNothing);
 
+    // Cancel first-advance timer by scrolling before it fires.
     ScrollActivityGate.onScrollOffset(10);
     for (var i = 0; i < 10; i++) {
       ScrollActivityGate.onScrollOffset(20.0 + i * 10);
       await tester.pump(const Duration(milliseconds: 100));
     }
 
+    expect(find.byType(AcademiesSection), findsNothing);
     expect(find.byType(FieldWorkSection), findsNothing);
     expect(find.byType(StorySection), findsNothing);
 
     await tester.pump(ScrollActivityGate.idleDelay);
     await tester.pump();
+    expect(find.byType(AcademiesSection), findsOneWidget);
     expect(find.byType(FieldWorkSection), findsNothing);
 
-    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pump(HomeSectionMountQueue.betweenSectionsDelay);
     await tester.pump();
+    expect(find.byType(ConsultationsSection), findsOneWidget);
 
+    await tester.pump(HomeSectionMountQueue.betweenSectionsDelay);
+    await tester.pump();
+    drainExceptions(tester);
     expect(find.byType(FieldWorkSection), findsOneWidget);
     expect(find.byType(StorySection), findsOneWidget);
+    HomeSectionMountQueue.resetForTesting();
     HomeLoadCoordinator.resetForTesting();
   });
 
@@ -182,6 +193,7 @@ void main() {
     HomeReadiness.reset();
     await pumpHomeScreen(tester, width: 1280, height: 1000);
     await tester.pump();
+    HomeSectionMountQueue.resetForTesting();
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 900));

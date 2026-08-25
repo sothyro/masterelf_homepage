@@ -80,6 +80,15 @@ void main() {
       expect(progressValues.last, 1.0);
     });
 
+    test('preloadAll with prewarmHeroVideo completes when video disabled', () async {
+      double? lastProgress;
+      await AppAssetPreloader.preloadAll(
+        (progress) => lastProgress = progress,
+        prewarmHeroVideo: true,
+      );
+      expect(lastProgress, 1.0);
+    });
+
     test('preloadBelowFoldHomepage is idempotent', () async {
       await AppAssetPreloader.preloadBelowFoldHomepage();
       await AppAssetPreloader.preloadBelowFoldHomepage();

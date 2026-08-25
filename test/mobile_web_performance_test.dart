@@ -38,7 +38,7 @@ void main() {
 
 
 
-  test('shouldPrewarmHeroVideoDuringBootstrap is false off web', () {
+  test('shouldPrewarmHeroVideoDuringBootstrap defaults off (explicit opt-in)', () {
     expect(MobileWebPerformance.shouldPrewarmHeroVideoDuringBootstrap(), isFalse);
     expect(MobileWebPerformance.shouldPrewarmHeroVideo(), isFalse);
   });

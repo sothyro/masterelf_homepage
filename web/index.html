@@ -57,6 +57,12 @@
 </head>
 <body>
   <div id="splash"><img src="logomono.png" alt="Master Elf Feng Shui"></div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var splash = document.getElementById('splash');
+      if (splash) splash.remove();
+    });
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

@@ -12,6 +12,7 @@ import 'services/connectivity_service.dart';
 import 'services/error_logging_service.dart';
 import 'services/error_service.dart';
 import 'services/hero_video_platform.dart';
+import 'screens/home/home_load_coordinator.dart';
 import 'utils/app_asset_preloader.dart';
 import 'utils/hero_video_preloader.dart';
 
@@ -45,9 +46,9 @@ Future<void> _initFirebase() async {
   }
 }
 
-/// Keeps the loading screen visible until images, fonts, and the hero video
-/// are ready AND the homepage has fully mounted and painted underneath it,
-/// so dismissal never reveals a page that is still building.
+/// Keeps the loading screen visible until critical images, fonts, and the
+/// eager homepage (Hero + Events) have painted. Hero video prewarms in
+/// parallel and does not gate dismiss — poster shows until playable.
 class HeroVideoBootstrap extends StatefulWidget {
   const HeroVideoBootstrap({super.key});
 
@@ -58,7 +59,7 @@ class HeroVideoBootstrap extends StatefulWidget {
 
 class _HeroVideoBootstrapState extends State<HeroVideoBootstrap> {
   static const Duration _fadeDuration = Duration(milliseconds: 400);
-  static const Duration _bootstrapTimeout = Duration(seconds: 20);
+  static const Duration _bootstrapTimeout = Duration(seconds: 12);
 
   /// App mounts under the overlay once fonts are ready so the homepage
   /// builds while the hero video pre-warms.
@@ -72,13 +73,13 @@ class _HeroVideoBootstrapState extends State<HeroVideoBootstrap> {
   @override
   void initState() {
     super.initState();
-    // Only gate on homepage readiness when the app opens on the homepage;
-    // deep links to other routes reveal after assets/fonts/video.
-    final Future<void>? homeGate =
-        bootstrapInitialLocation == '/' ? HomeReadiness.ready : null;
+    // Homepage: wait for paint only. Deep links: assets/fonts only.
+    final isHome = bootstrapInitialLocation == '/';
+    final Future<void>? homeGate = isHome ? HomeReadiness.ready : null;
     AppAssetPreloader.preloadAll(
       _onPreloadProgress,
       waitForFirstPaint: homeGate,
+      prewarmHeroVideo: isHome,
     ).timeout(
       _bootstrapTimeout,
       onTimeout: () => _forceReveal(timedOut: true),
@@ -125,9 +126,12 @@ class _HeroVideoBootstrapState extends State<HeroVideoBootstrap> {
       // Retry autoplay now that the loading overlay is gone; browsers often
       // block muted autoplay while the page is still "obscured".
       unawaited(HeroVideoPlatform.resume());
-      // Progressive-load routes arm coordinators on mount; others preload here.
+      // Progressive-load routes arm coordinators on mount; homepage arms here
+      // so background preload never races hero video under the overlay.
       final entryPath = bootstrapInitialLocation.split('#').first;
-      if (entryPath != '/' && entryPath != '/apps' && entryPath != '/field-work') {
+      if (entryPath == '/') {
+        HomeLoadCoordinator.armAfterReveal();
+      } else if (entryPath != '/apps' && entryPath != '/field-work') {
         AppAssetPreloader.startBackgroundPreload();
       }
     });
